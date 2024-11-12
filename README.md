@@ -1,119 +1,104 @@
-
-
-
-
+<!-- Title of the Project -->
 # SpanishDex Flashcards Web Application
 
+<br>
+ 
+ **Notice**: This application is still currently in the development phase.
 
-
-
+<br>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
-
+SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a space learning algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
 
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* **React**
-* **JavaScript**
-* **Bootstrap**
+- **React**
+- **JavaScript**
+- **Bootstrap**
+
+### Features
+- Creating flashcards and creating decks to store flashcards.
+- Editing and deleting flashcards and decks.
+- Practicing flashcards, which includes being able to:
+  - Practice all weak words. (Weak words are determined by a spaced repetition algorithm. More details below)
+  - Practice weak words in a deck.
+  - Practice all words in a deck.
+- Listening to pronunciation of Spanish words, available when practicing and viewing the cards in the deck.
+- User login functionality for persistence of user activity.
+
+### Spaced Learning Algorithm
+This application uses a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
+When a user is practicing flashcards, SpanishDex asks the user, on a scale from 1 to 5, how well they did in guessing the definition of the word. SpanishDex uses this information to determine when the word should be practiced again.
+</br></br>
+Other factors used to determine this include:
+- The score history for the card
+- The last time the card was practiced
+- Whether the word was practiced on time or not
 
 
+<br>
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Install Locally
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+To run this locally, you will first need npm.
+Run this command to verify its installation:
   ```sh
-  npm install npm@latest -g
+  npm -v
   ```
 
 ### Installation
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/JakinCS/SpanishDex.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
+3. Run the application
    ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
+   npm run dev
    ```
 
-
+<br>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+Content yet to come for this section
 
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-
-
+<br>
 
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+This project is open source. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+If you have a suggestion that would make this better, please fork the repo and create a pull request. Otherwise, you can simply open an issue and tag it with the tag "enhancement".
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git switch -c feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Added an improvement'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
 5. Open a Pull Request
 
 
+<br>
 
 <!-- LICENSE -->
 ## License
@@ -121,7 +106,7 @@ Don't forget to give the project a star! Thanks again!
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
-
+<br>
 
 <!-- CONTACT -->
 ## Contact
@@ -131,7 +116,7 @@ Jakin Stahl - [LinkedIn](https://www.linkedin.com/in/jakinstahl/) - jakinstahl@g
 Project Link: [https://github.com/JakinCS/SpanishDex](https://github.com/JakinCS/SpanishDex)
 
 
-
+<br>
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
