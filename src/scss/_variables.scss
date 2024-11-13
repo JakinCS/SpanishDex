@@ -1,3 +1,32 @@
+
+// ------------------- TYPOGRAPHY --------------------
+
+// Customize font family
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+$font-family-base: "Montserrat", sans-serif;
+
+// Change line height
+$line-height-base: 1.75;
+
+// Define weights. (used later in custom styles)
+$font-weight-lighter:         lighter !default;
+$font-weight-light:           300 !default;
+$font-weight-normal:          400 !default;
+$font-weight-medium:          500 !default;
+$font-weight-semibold:        600 !default;
+$font-weight-bold:            700 !default;
+$font-weight-bolder:          bolder !default;
+
+
+
+
+// Change border radius values
+$border-radius: 0.4375rem;
+
+
+
+// ----------------- COLORS ----------------------
+
 // Override Colors
 $blue: #0069A7;
 $green: #09B473;
@@ -8,19 +37,24 @@ $red: #C11C00;
 $gray: #808080;
 
 
-// Define Greens.
-$green-100: tint-color($green, 80%) !default;
+// Override Greens.
 $green-200: tint-color($green, 60%) !default;
 $green-300: tint-color($green, 40%) !default;
-$green-400: tint-color($green, 20%) !default;
 $green-500: $green !default;
-$green-600: shade-color($green, 20%) !default;
-$green-700: shade-color($green, 40%) !default;
-$green-800: shade-color($green, 60%) !default;
-$green-900: shade-color($green, 80%) !default;
 
+// Create necessary yellow greens
+$yellow-green-200: tint-color($yellow-green, 60%) !default;
+$yellow-green-300: tint-color($yellow-green, 40%) !default;
+$yellow-green-400: tint-color($yellow-green, 20%) !default;
+$yellow-green-500: $yellow-green !default;
 
-// Define Grays
+// Create necessary green yellows
+$green-yellow-200: tint-color($green-yellow, 60%) !default;
+$green-yellow-300: tint-color($green-yellow, 40%) !default;
+$green-yellow-400: tint-color($green-yellow, 20%) !default;
+$green-yellow-500: $green-yellow !default;
+
+// Override Grays
 $white:    #fff !default;
 $gray-100: tint-color($gray, 80%) !default;
 $gray-150: tint-color($gray, 70%) !default;
@@ -35,10 +69,18 @@ $gray-800: shade-color($gray, 60%) !default;
 $gray-900: shade-color($gray, 80%) !default;
 $black:    #000 !default;
 
-
-$primary: $blue;
+// Override theme color variables
 $secondary: $green-300;
 
 
+
+// ----------------- BUTTONS --------------------
+
+// Custom button settings
+$input-btn-padding-y: 0.25rem;
+$input-btn-padding-x: 1.4375rem;
+$input-btn-border-width: 2px;
+
+$btn-font-weight: $font-weight-semibold;
 $btn-hover-bg-shade-amount: 20%;
 $btn-hover-bg-tint-amount: 20%;
