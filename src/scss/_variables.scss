@@ -1,0 +1,44 @@
+// Override Colors
+$blue: #0069A7;
+$green: #09B473;
+$yellow-green: #4FB84C;
+$green-yellow: #95BD26;
+$yellow: #DABF00;
+$red: #C11C00;
+$gray: #808080;
+
+
+// Define Greens.
+$green-100: tint-color($green, 80%) !default;
+$green-200: tint-color($green, 60%) !default;
+$green-300: tint-color($green, 40%) !default;
+$green-400: tint-color($green, 20%) !default;
+$green-500: $green !default;
+$green-600: shade-color($green, 20%) !default;
+$green-700: shade-color($green, 40%) !default;
+$green-800: shade-color($green, 60%) !default;
+$green-900: shade-color($green, 80%) !default;
+
+
+// Define Grays
+$white:    #fff !default;
+$gray-100: tint-color($gray, 80%) !default;
+$gray-150: tint-color($gray, 70%) !default;
+$gray-200: tint-color($gray, 60%) !default;
+$gray-250: tint-color($gray, 50%) !default;
+$gray-300: tint-color($gray, 40%) !default;
+$gray-400: tint-color($gray, 20%) !default;
+$gray-500: $gray !default;
+$gray-600: shade-color($gray, 20%) !default;
+$gray-700: shade-color($gray, 40%) !default;
+$gray-800: shade-color($gray, 60%) !default;
+$gray-900: shade-color($gray, 80%) !default;
+$black:    #000 !default;
+
+
+$primary: $blue;
+$secondary: $green-300;
+
+
+$btn-hover-bg-shade-amount: 20%;
+$btn-hover-bg-tint-amount: 20%;

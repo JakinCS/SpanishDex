@@ -1,0 +1,7 @@
+// Additional map of colors to add to Bootstrap
+$custom-colors: (
+    "yellow-green": $yellow-green
+);
+
+// Merge with Bootstrap's colors
+$theme-colors: map-merge($theme-colors, $custom-colors);
