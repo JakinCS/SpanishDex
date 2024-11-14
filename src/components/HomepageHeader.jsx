@@ -31,13 +31,26 @@ function HomepageHeader() {
     //   </Container>
     // </Navbar>
 
-    <div className="d-flex align-items-center justify-content-between bg-gradient" style={{height: '80px', padding: '0px 50px'}}>
-      <img src={logo} alt="SpanishDex Logo" style={{height: '50px'}}/>
-      <div className="d-flex align-items-center column-gap-25">
-        <Button variant="outline-primary">Create Account</Button>
-        <Button variant="primary">Log In</Button>
-      </div>
-    </div>
+    // <div className="d-flex align-items-center justify-content-between bg-gradient py-4 px-50 border-bottom border-gray-150 border-2">
+    //   <img src={logo} alt="SpanishDex Logo" style={{height: '3.125rem'}}/>
+    //   <div className="d-flex align-items-center column-gap-25">
+    //     <Button variant="outline-primary">Create Account</Button>
+    //     <Button variant="primary">Log In</Button>
+    //   </div>
+    // </div>
+
+    <Navbar expand="lg" className="bg-gradient">
+      <Navbar.Brand>
+        <img src={logo} alt="SpanishDex Logo" style={{height: '3.125rem'}}/>
+      </Navbar.Brand>      
+      <Navbar.Toggle aria-controls="homepage-nav" />
+      <Navbar.Collapse id="homepage-nav">
+        <Nav className="ms-auto my-2 column-gap-25 row-gap-3">
+          <Nav.Link className="ms-auto"><Button variant="outline-primary">Create Account</Button></Nav.Link>
+          <Nav.Link className="ms-auto"><Button variant="primary">Log In</Button></Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
 

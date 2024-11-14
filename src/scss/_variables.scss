@@ -88,6 +88,7 @@ $spacers: (
   4: $spacer * 1.5,
   5: $spacer * 3,
   25: $spacer * 2.5,
+  50: $spacer * 5,
 );
 
 
@@ -102,6 +103,22 @@ $input-btn-border-width: 2px;
 $btn-font-weight: $font-weight-semibold;
 $btn-hover-bg-shade-amount: 20%;
 $btn-hover-bg-tint-amount: 20%;
+
+
+
+
+
+/* ------------------- NAV BAR --------------------- */
+
+$navbar-padding-y: $spacer * 1.5;
+$navbar-padding-x: $spacer * 5;
+$navbar-brand-padding-y: 0;
+
+$navbar-nav-link-padding-x: 0rem;
+
+$nav-link-padding-y: 0;
+$nav-link-padding-x: 0;
+
 
 
 
