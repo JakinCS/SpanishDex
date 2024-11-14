@@ -20,9 +20,6 @@ $font-weight-bolder:          bolder !default;
 
 
 
-// Change border radius values
-$border-radius: 0.4375rem;
-
 
 
 // ----------------- COLORS ----------------------
@@ -30,11 +27,15 @@ $border-radius: 0.4375rem;
 // Override Colors
 $blue: #0069A7;
 $green: #09B473;
-$yellow-green: #4FB84C;
-$green-yellow: #95BD26;
 $yellow: #DABF00;
 $red: #C11C00;
+
+// New Colors
 $gray: #808080;
+$yellow-green: #4FB84C;
+$green-yellow: #95BD26;
+$almost-white: #F2F5F7;
+$gradient: linear-gradient(to right, #FFFFFF, #F9FAFB);
 
 
 // Override Greens.
@@ -84,3 +85,20 @@ $input-btn-border-width: 2px;
 $btn-font-weight: $font-weight-semibold;
 $btn-hover-bg-shade-amount: 20%;
 $btn-hover-bg-tint-amount: 20%;
+
+
+
+
+/* --------------------- SPACING --------------------- */
+
+
+
+
+
+/* -------------- MISCELLANEOUS ----------------  */
+
+// Change the background color of the body
+$body-bg: $almost-white;
+
+// Change border radius values
+$border-radius: 0.4375rem;
