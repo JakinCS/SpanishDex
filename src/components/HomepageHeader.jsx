@@ -33,7 +33,7 @@ function HomepageHeader() {
 
     <div className="d-flex align-items-center justify-content-between bg-gradient" style={{height: '80px', padding: '0px 50px'}}>
       <img src={logo} alt="SpanishDex Logo" style={{height: '50px'}}/>
-      <div className="d-flex align-items-center column-gap-3">
+      <div className="d-flex align-items-center column-gap-25">
         <Button variant="outline-primary">Create Account</Button>
         <Button variant="primary">Log In</Button>
       </div>

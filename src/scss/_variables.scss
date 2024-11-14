@@ -8,6 +8,7 @@ $font-family-base: "Montserrat", sans-serif;
 // Change line height
 $line-height-base: 1.75;
 
+
 // Define weights. (used later in custom styles)
 $font-weight-lighter:         lighter !default;
 $font-weight-light:           300 !default;
@@ -75,6 +76,22 @@ $secondary: $green-300;
 
 
 
+
+/* --------------------- SPACING --------------------- */
+
+$spacer: 0.625rem;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  25: $spacer * 2.5,
+);
+
+
+
 // ----------------- BUTTONS --------------------
 
 // Custom button settings
@@ -85,12 +102,6 @@ $input-btn-border-width: 2px;
 $btn-font-weight: $font-weight-semibold;
 $btn-hover-bg-shade-amount: 20%;
 $btn-hover-bg-tint-amount: 20%;
-
-
-
-
-/* --------------------- SPACING --------------------- */
-
 
 
 
