@@ -1,28 +1,4 @@
 
-// ------------------- TYPOGRAPHY --------------------
-
-// Customize font family
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-$font-family-base: "Montserrat", sans-serif;
-
-// Change line height
-$line-height-base: 1.75;
-
-
-// Define weights. (used later in custom styles)
-$font-weight-lighter:         lighter !default;
-$font-weight-light:           300 !default;
-$font-weight-normal:          400 !default;
-$font-weight-medium:          500 !default;
-$font-weight-semibold:        600 !default;
-$font-weight-bold:            700 !default;
-$font-weight-bolder:          bolder !default;
-
-
-
-
-
-
 // ----------------- COLORS ----------------------
 
 // Override Colors
@@ -38,6 +14,9 @@ $green-yellow: #95BD26;
 $almost-white: #F2F5F7;
 $gradient: linear-gradient(to right, #FFFFFF, #F9FAFB);
 
+
+// Override Blues.
+$blue-900: shade-color($blue, 80%);
 
 // Override Greens.
 $green-200: tint-color($green, 60%) !default;
@@ -77,6 +56,33 @@ $secondary: $green-300;
 
 
 
+
+// ------------------- TYPOGRAPHY --------------------
+
+// Customize font family
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+$font-family-base: "Montserrat", sans-serif;
+
+// Change line height
+$line-height-base: 1.75;
+
+// Define weights. (used later in custom styles)
+$font-weight-lighter:         lighter !default;
+$font-weight-light:           300 !default;
+$font-weight-normal:          400 !default;
+$font-weight-medium:          500 !default;
+$font-weight-semibold:        600 !default;
+$font-weight-bold:            700 !default;
+$font-weight-bolder:          bolder !default;
+
+// Change body color
+$body-color: $blue-900;
+
+
+
+
+
+
 /* --------------------- SPACING --------------------- */
 
 $spacer: 0.625rem;
@@ -110,14 +116,27 @@ $btn-hover-bg-tint-amount: 20%;
 
 /* ------------------- NAV BAR --------------------- */
 
+// Navbar padding
 $navbar-padding-y: $spacer * 1.5;
 $navbar-padding-x: $spacer * 5;
+
+// Navbar logo padding
 $navbar-brand-padding-y: 0;
 
+// Navbar links padding
 $navbar-nav-link-padding-x: 0rem;
-
 $nav-link-padding-y: 0;
 $nav-link-padding-x: 0;
+
+// Navbar burger menu icon (toggler)
+
+$navbar-toggler-padding-y: $spacer * .5;
+$navbar-toggler-padding-x: $spacer * .5;
+$navbar-toggler-transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out;
+$navbar-light-icon-color: $body-color;
+
+$navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-light-icon-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>") !default;
+
 
 
 
