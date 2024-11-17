@@ -11,7 +11,8 @@ $red: #C11C00;
 $gray: #808080;
 $yellow-green: #4FB84C;
 $green-yellow: #95BD26;
-$almost-white: #F2F5F7;
+$very-light-blue: #F2F5F7;
+$almost-white: #F6F8F9;
 $gradient: linear-gradient(to right, #FFFFFF, #F9FAFB);
 
 
@@ -66,17 +67,35 @@ $font-family-base: "Montserrat", sans-serif;
 // Change line height
 $line-height-base: 1.75;
 
-// Define weights. (used later in custom styles)
-$font-weight-lighter:         lighter !default;
-$font-weight-light:           300 !default;
-$font-weight-normal:          400 !default;
-$font-weight-medium:          500 !default;
-$font-weight-semibold:        600 !default;
-$font-weight-bold:            700 !default;
-$font-weight-bolder:          bolder !default;
+// Variable for base font size
+$font-size-base: 1rem;
+
+// Heading font sizes
+$h1-font-size:                $font-size-base * 2;
+$h2-font-size:                $font-size-base * 1.5;
+$h3-font-size:                $font-size-base * 1.25;
+$h4-font-size:                $font-size-base;
+$h5-font-size:                $font-size-base;
+$h6-font-size:                $font-size-base;
+
+// Define weights
+$font-weight-lighter:         lighter;
+$font-weight-light:           300;
+$font-weight-normal:          400;
+$font-weight-medium:          500;
+$font-weight-semibold:        600;
+$font-weight-bold:            700;
+$font-weight-bolder:          bolder;
 
 // Change body color
 $body-color: $blue-900;
+
+// Heading font weight
+$headings-font-weight: $font-weight-semibold;
+
+// Heading & Paragraph margin bottom
+$headings-margin-bottom: 0;
+$paragraph-margin-bottom: 0;
 
 
 
@@ -94,7 +113,10 @@ $spacers: (
   4: $spacer * 1.5,
   5: $spacer * 3,
   25: $spacer * 2.5,
+  40: $spacer * 4,
   50: $spacer * 5,
+  80: $spacer * 8,
+  100: $spacer * 10,
 );
 
 
@@ -142,10 +164,16 @@ $navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3
 
 
 
-/* -------------- MISCELLANEOUS ----------------  */
+/* ------------- BORDER STYLES --------------- */
 
-// Change the background color of the body
-$body-bg: $almost-white;
+// Change default border color
+$border-color: $gray-250;
 
 // Change border radius values
 $border-radius: 0.4375rem;
+
+
+/* -------------- MISCELLANEOUS ----------------  */
+
+// Change the background color of the body
+$body-bg: $very-light-blue;

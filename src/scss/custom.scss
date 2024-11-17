@@ -20,17 +20,28 @@
 // --------------- CUSTOM STYLES -----------------------
   
 
+// Custom background styles
+
 .bg-gradient {
     background: $gradient;
+}
+
+.bg-white {
+    background: #FFF
+}
+
+.bg-almost-white {
+    background: $almost-white;
 }
 
 
 // Navbar toggler styles
 
-.navbar-toggler {
-    // background-color: $gray-100;
-}
-
 .navbar-toggler:hover {
     background-color: $gray-100;
+}
+
+// Heading line height styles
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    line-height: 1.5;
 }
