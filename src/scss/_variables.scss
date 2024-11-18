@@ -112,6 +112,7 @@ $spacers: (
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
+  20: $spacer *2,
   25: $spacer * 2.5,
   40: $spacer * 4,
   50: $spacer * 5,
@@ -163,7 +164,6 @@ $navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3
 
 
 
-
 /* ------------- BORDER STYLES --------------- */
 
 // Change default border color
@@ -173,7 +173,37 @@ $border-color: $gray-250;
 $border-radius: 0.4375rem;
 
 
+
+
+
+/* ----------------- FORM STYLES ------------------- */
+
+// background
+$input-bg: $white;
+
+// border
+$input-border-width:  1px;
+
+// Input padding
+$input-padding-x: $spacer * 2;
+$input-padding-y: 0.625rem;
+
+// Form label margin bottom
+$form-label-margin-bottom: 0.3125rem;
+
+// font weight
+$input-font-weight: $font-weight-light;
+
+// Focus styling
+$input-focus-border-color: $gray;
+
+
+
+
 /* -------------- MISCELLANEOUS ----------------  */
 
 // Change the background color of the body
 $body-bg: $very-light-blue;
+
+// Change box shadow used for focus states
+$focus-ring-box-shadow: none;
