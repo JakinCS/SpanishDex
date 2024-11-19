@@ -21,7 +21,6 @@
   
 
 // Custom background styles
-
 .bg-gradient {
     background: $gradient;
 }
@@ -35,11 +34,17 @@
 }
 
 
-// Navbar toggler styles
+// Extra padding for body to adjust for fixed header
+body {
+    padding-top: 5.125rem;
+}
 
+
+// Navbar toggler styles
 .navbar-toggler:hover {
     background-color: $gray-100;
 }
+
 
 // Heading line height styles
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {

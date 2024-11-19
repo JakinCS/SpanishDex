@@ -5,7 +5,7 @@ import logo from '../assets/logo.svg';
 
 function HomepageHeader() {
   return (
-    <Navbar expand="lg" className="bg-gradient border-bottom border-gray-150 border-2">
+    <Navbar expand="lg" fixed='top' className="bg-gradient border-bottom border-gray-150 border-2">
       <Navbar.Brand>
         <img src={logo} alt="SpanishDex Logo" style={{height: '3.125rem'}}/>
       </Navbar.Brand>      
