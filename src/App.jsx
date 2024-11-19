@@ -3,6 +3,7 @@ import HomepageHeader from './components/HomepageHeader'
 import HomepageSection from './components/HomepageSection'
 import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'
+import HomepageFooter from './components/HomepageFooter';
 import Button from 'react-bootstrap/Button'
 import screenshot from './assets/app-screenshot.jpg'
 import flashcardsImage from './assets/flashcards-example.png';
@@ -76,6 +77,7 @@ function App() {
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
         <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>
       </HomepageSection>
+      <HomepageFooter></HomepageFooter>
     </>
   )
 }

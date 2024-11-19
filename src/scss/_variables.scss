@@ -75,7 +75,7 @@ $h1-font-size:                $font-size-base * 2;
 $h2-font-size:                $font-size-base * 1.5;
 $h3-font-size:                $font-size-base * 1.25;
 $h4-font-size:                $font-size-base;
-$h5-font-size:                $font-size-base;
+$h5-font-size:                $font-size-base * 0.875;
 $h6-font-size:                $font-size-base;
 
 // Define weights
@@ -112,7 +112,7 @@ $spacers: (
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
-  20: $spacer *2,
+  20: $spacer * 2,
   25: $spacer * 2.5,
   40: $spacer * 4,
   50: $spacer * 5,
