@@ -20,7 +20,7 @@ function App() {
           It is the perfect tool for those who want to memorize new vocabulary quicker and retain old vocabulary longer. 
           Start using SpanishDex today for free!
         </p> 
-        <Button variant='primary'>Get Started</Button>  
+        <Button variant='secondary'>Get Started</Button>  
       </HomepageSection>
       <HomepageSectionColumns 
         py='80' backgroundColor='white' 

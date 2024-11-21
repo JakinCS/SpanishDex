@@ -17,8 +17,8 @@ function HomepageFooter() {
         </Col>
         <Col className='col-auto ms-md-auto'>
           <Nav className="ms-auto column-gap-20">
-            <Nav.Link href="mailto:jakinstahl@gmail.com"><Image height={30} src={mail} alt='Mail icon'></Image></Nav.Link>
-            <Nav.Link href="https://www.linkedin.com/in/jakinstahl" target='_blank'><Image height={30} src={linkedin} alt='LinkedIn icon'></Image></Nav.Link>
+            <Nav.Link href="mailto:jakinstahl@gmail.com" className='rounded-1'><Image height={30} src={mail} alt='Mail icon'></Image></Nav.Link>
+            <Nav.Link href="https://www.linkedin.com/in/jakinstahl" target='_blank' className='rounded-1'><Image height={30} src={linkedin} alt='LinkedIn icon'></Image></Nav.Link>
           </Nav>
         </Col>
       </Row>
