@@ -17,7 +17,7 @@ $gradient: linear-gradient(to right, #FFFFFF, #F9FAFB);
 
 
 // Override Blues.
-$blue-900: shade-color($blue, 80%);
+$blue-900: shade-color($blue, 80%);  // #001521
 $blue-600: shade-color($blue, 20%);
 
 // Override Greens.
@@ -90,7 +90,7 @@ $font-weight-semibold:        600;
 $font-weight-bold:            700;
 $font-weight-bolder:          bolder;
 
-// Change body color
+// Change body font color
 $body-color: $blue-900;
 
 // Heading font weight
@@ -173,7 +173,6 @@ $navbar-toggler-padding-x: $spacer * .5;
 $navbar-toggler-transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out;
 $navbar-light-icon-color: $body-color;
 
-$navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-light-icon-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>") !default;
 
 
 
@@ -219,6 +218,3 @@ $input-focus-border-color: $gray;
 
 // Change the background color of the body
 $body-bg: $very-light-blue;
-
-// Change box shadow used for focus states
-// $focus-ring-box-shadow: none;
