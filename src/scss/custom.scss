@@ -14,8 +14,6 @@
 @import 'bootstrap/scss/bootstrap.scss';
 
 
-// @import './buttons.scss';
-
 
 // --------------- CUSTOM STYLES -----------------------
   
@@ -33,12 +31,21 @@
     background: $almost-white;
 }
 
-
 // Extra padding for body to adjust for fixed header
 body {
     padding-top: 5.125rem;
 }
 
+// Heading line height styles
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    line-height: 1.5;
+}
+
+
+
+
+
+/* ------------------- NAVBAR -------------------- */
 
 // Navbar toggler styles
 .navbar-toggler:hover, .navbar-toggler:focus-visible {
@@ -54,11 +61,11 @@ body {
     outline-offset: 5px;
 }
 
-// Heading line height styles
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-    line-height: 1.5;
-}
 
+
+
+
+/* ------------------ BUTTONS ------------------- */
 
 // Custom button focus-visible state styling
 @each $colorName, $color in $theme-colors {
@@ -68,7 +75,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
         box-shadow: none;
     }
 }
-
 
 // Special override styling for icon Buttons
 
@@ -98,9 +104,20 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .show-menu-icon span {
     background-image: url('../assets/icons/menu.svg') !important;
-
 }
 
 .show-close-icon span {
     background-image: url('../assets/icons/close.svg') !important;
+}
+
+
+
+
+
+/* ------------------ FORMS ------------------- */
+
+.form-control:focus, .form-control:focus-visible {
+    outline: $primary solid $btn-focus-width;
+    outline-offset: .3125rem;
+    box-shadow: none;
 }

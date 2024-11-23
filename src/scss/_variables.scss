@@ -143,7 +143,8 @@ $btn-active-bg-tint-amount:       25%;
 $btn-active-border-shade-amount:  30%;
 $btn-active-border-tint-amount:   15%;
 
-$btn-focus-width: .125em;
+$input-btn-focus-width: .125rem;
+$btn-focus-width: .125rem;
 
 $input-btn-focus-box-shadow: 0 0 0 .125rem $primary;
 
@@ -207,9 +208,6 @@ $form-label-margin-bottom: 0.3125rem;
 
 // font weight
 $input-font-weight: $font-weight-light;
-
-// Focus styling
-$input-focus-border-color: $gray;
 
 
 
