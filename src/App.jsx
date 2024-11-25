@@ -1,11 +1,9 @@
 import './scss/custom.scss'
-import Homepage from './pages/Homepage'
 
 function App() {
 
   return (
     <>
-      <Homepage />
     </>
   )
 }
