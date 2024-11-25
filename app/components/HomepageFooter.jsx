@@ -1,12 +1,10 @@
+'use client'
+
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-// Icons
-import mail from '../assets/icons/mail.svg';
-import linkedin from '../assets/icons/linkedin.svg'
 
 function HomepageFooter() {
   return (
@@ -17,8 +15,8 @@ function HomepageFooter() {
         </Col>
         <Col className='col-auto ms-md-auto'>
           <Nav className="ms-auto column-gap-20">
-            <Nav.Link href="mailto:jakinstahl@gmail.com" className='rounded-1'><Image height={30} src={mail} alt='Mail icon'></Image></Nav.Link>
-            <Nav.Link href="https://www.linkedin.com/in/jakinstahl" target='_blank' className='rounded-1'><Image height={30} src={linkedin} alt='LinkedIn icon'></Image></Nav.Link>
+            <Nav.Link href="mailto:jakinstahl@gmail.com" className='rounded-1'><Image height={30} src={'/icons/mail.svg'} alt='Mail icon'></Image></Nav.Link>
+            <Nav.Link href="https://www.linkedin.com/in/jakinstahl" target='_blank' className='rounded-1'><Image height={30} src={'/icons/linkedin.svg'} alt='LinkedIn icon'></Image></Nav.Link>
           </Nav>
         </Col>
       </Row>

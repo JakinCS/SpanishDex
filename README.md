@@ -15,6 +15,7 @@ SpanishDex is a flashcards web application. This application is built specifical
 ### Built With
 
 - **React**
+- **Next**
 - **JavaScript**
 - **Bootstrap**
 

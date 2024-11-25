@@ -1,11 +1,9 @@
-import HomepageHeader from '../components/HomepageHeader'
-import HomepageSection from '../components/HomepageSection'
-import HomepageSectionColumns from '../components/HomepageSectionColumns'
-import HomepageContactForm from '../components/HomepageContactForm'
-import HomepageFooter from '../components/HomepageFooter';
+import HomepageHeader from './components/HomepageHeader'
+import HomepageSection from './components/HomepageSection'
+import HomepageSectionColumns from './components/HomepageSectionColumns'
+import HomepageContactForm from './components/HomepageContactForm'
+import HomepageFooter from './components/HomepageFooter';
 import Button from 'react-bootstrap/Button'
-import screenshot from '../assets/app-screenshot.jpg'
-import flashcardsImage from '../assets/flashcards-example.png';
 
 function Homepage() {
 
@@ -23,7 +21,7 @@ function Homepage() {
       </HomepageSection>
       <HomepageSectionColumns 
         py='80' backgroundColor='white' 
-        image={screenshot} imageBorder={true} 
+        image={'/app-screenshot.jpg'} imageBorder={true} 
         imageAlt='SpanishDex dashboard screenshot' 
         imagePosition='left' headingText='Simple Interface'
       >
@@ -40,7 +38,7 @@ function Homepage() {
       </HomepageSectionColumns>
       <HomepageSectionColumns 
         py='80' backgroundColor='almost-white'
-        image={flashcardsImage} imageBorder={false}
+        image={'/flashcards-example.png'} imageBorder={false}
         imageAlt='SpanishDex flashcards example'
         imagePosition='right' headingText='Spaced Repetition'
       >
@@ -76,7 +74,7 @@ function Homepage() {
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
         <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>
       </HomepageSection>
-      <HomepageFooter></HomepageFooter>
+      <HomepageFooter />
     </>
   )
 }

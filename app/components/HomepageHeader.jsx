@@ -1,7 +1,8 @@
+'use client'
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import logo from '../assets/logo.svg';
 
 import { useState } from 'react';
 
@@ -16,7 +17,7 @@ function HomepageHeader() {
   return (
     <Navbar expand="lg" fixed='top' className="bg-gradient border-bottom border-gray-150 border-2">
       <Navbar.Brand>
-        <img src={logo} alt="SpanishDex Logo" style={{height: '3.125rem'}}/>
+        <img src={'/logo.svg'} alt="SpanishDex Logo" style={{height: '3.125rem'}}/>
       </Navbar.Brand>      
       <Navbar.Toggle onClick={toggleMenuOpenState} aria-controls="homepage-nav" className={(menuOpenState === 'open' ? 'show-close-icon' : 'show-menu-icon') + ' border-0'}/>
       <Navbar.Collapse id="homepage-nav">
