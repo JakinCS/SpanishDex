@@ -1,9 +1,8 @@
 import Image from "next/image";
+import Homepage from "./Homepage";
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-warning">Hello There!</h1>      
-    </div>
+    <Homepage />
   );
 }

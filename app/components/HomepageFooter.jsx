@@ -5,8 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 // Icons
-import mail from '../assets/icons/mail.svg';
-import linkedin from '../assets/icons/linkedin.svg'
+import mail from '../../public/icons/mail.svg';
+import linkedin from '../../public/icons/linkedin.svg'
 
 function HomepageFooter() {
   return (

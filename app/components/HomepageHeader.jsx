@@ -1,7 +1,9 @@
+'use client'
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import logo from '../assets/logo.svg';
+import logo from '../../public/logo.svg';
 
 import { useState } from 'react';
 

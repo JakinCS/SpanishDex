@@ -71,12 +71,12 @@ function Homepage() {
           </p>
         </div>
       </HomepageSection>
-      <HomepageSection py='80' backgroundColor='almost-white'>
+      {/* <HomepageSection py='80' backgroundColor='almost-white'>
         <h2 className='text-center'>Contact</h2>
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
         <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>
-      </HomepageSection>
-      <HomepageFooter></HomepageFooter>
+      </HomepageSection> */}
+      {/* <HomepageFooter /> */}
     </>
   )
 }
