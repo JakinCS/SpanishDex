@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<!-- Title of the Project -->
+# SpanishDex Flashcards Web Application
 
-## Getting Started
+<br>
+ 
+ **Notice**: This application is still currently in the development phase.
 
-First, run the development server:
+<br>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a space learning algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Built With
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **React**
+- **Next**
+- **JavaScript**
+- **Bootstrap**
 
-## Learn More
+### Features
+- Creating flashcards and creating decks to store flashcards.
+- Editing and deleting flashcards and decks.
+- Practicing flashcards, which includes being able to:
+  - Practice all weak words. (Weak words are determined by a spaced repetition algorithm. More details below)
+  - Practice weak words in a deck.
+  - Practice all words in a deck.
+- Listening to pronunciation of Spanish words, available when practicing and viewing the cards in the deck.
+- User login functionality for persistence of user activity.
 
-To learn more about Next.js, take a look at the following resources:
+### Spaced Learning Algorithm
+This application uses a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
+When a user is practicing flashcards, SpanishDex asks the user, on a scale from 1 to 5, how well they did in guessing the definition of the word. SpanishDex uses this information to determine when the word should be practiced again.
+</br></br>
+Other factors used to determine this include:
+- The score history for the card
+- The last time the card was practiced
+- Whether the word was practiced on time or not
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<br>
 
-## Deploy on Vercel
+<!-- GETTING STARTED -->
+## Install Locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+
+To run this locally, you will first need npm.
+Run this command to verify its installation:
+  ```sh
+  npm -v
+  ```
+
+### Installation
+
+_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/JakinCS/SpanishDex.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Run the application
+   ```sh
+   npm run dev
+   ```
+
+<br>
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Content yet to come for this section
+
+
+
+<br>
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+This project is open source. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. Otherwise, you can simply open an issue and tag it with the tag "enhancement".
+
+1. Fork the Project
+2. Create your Feature Branch (`git switch -c feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Added an improvement'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
+
+
+<br>
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+
+<br>
+
+<!-- CONTACT -->
+## Contact
+
+Jakin Stahl - [LinkedIn](https://www.linkedin.com/in/jakinstahl/) - jakinstahl@gmail.com
+
+Project Link: [https://github.com/JakinCS/SpanishDex](https://github.com/JakinCS/SpanishDex)
+
+
+<br>
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* [Article - Spaced Repetition Algorithm](https://freshcardsapp.com/srs/write-your-own-algorithm.html)
+* [README Template by Othneil Drew](https://github.com/othneildrew/Best-README-Template)
+
+
+
