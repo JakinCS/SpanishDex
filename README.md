@@ -2,10 +2,22 @@
 # SpanishDex Flashcards Web Application
 
 <br>
- 
- **Notice**: This application is still currently in the development phase.
+
+<figure>
+ <p>
+  <img src="ProductScreenshot.jpg" alt="Logo">
+  <i>SpanishDex Dashboard</i>
+ </p>
+</figure>
 
 <br>
+ 
+⚠️ **Notice**: This application is still currently in the development phase. See the [Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?node-id=526-6854&node-type=canvas&viewport=255%2C203%2C0.3&t=Zm7Bkl52VzJ6oVi6-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=526%3A6854) to get a glimpse at what's to come.
+
+<br>
+
+
+
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -15,10 +27,11 @@ SpanishDex is a flashcards web application. This application is built specifical
 ### Built With
 
 - **React**
+- **Next**
 - **JavaScript**
 - **Bootstrap**
 
-### Features
+### Project Future Features (the vision)
 - Creating flashcards and creating decks to store flashcards.
 - Editing and deleting flashcards and decks.
 - Practicing flashcards, which includes being able to:
@@ -28,8 +41,15 @@ SpanishDex is a flashcards web application. This application is built specifical
 - Listening to pronunciation of Spanish words, available when practicing and viewing the cards in the deck.
 - User login functionality for persistence of user activity.
 
+### Interactive Prototype!
+
+This application is still in the development phase. If you want to see what the application will look like, please take a look at the prototype.
+I created the prototype in Figma. It is high-quality, and I put a lot of effort into making it *interactive*. Check it out!
+
+[Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?node-id=526-5542&node-type=canvas&viewport=255%2C203%2C0.3&t=Zm7Bkl52VzJ6oVi6-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=526%3A6854)
+
 ### Spaced Learning Algorithm
-This application uses a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
+This application will use a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
 When a user is practicing flashcards, SpanishDex asks the user, on a scale from 1 to 5, how well they did in guessing the definition of the word. SpanishDex uses this information to determine when the word should be practiced again.
 </br></br>
 Other factors used to determine this include:
@@ -43,8 +63,7 @@ Other factors used to determine this include:
 <!-- GETTING STARTED -->
 ## Install Locally
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+If you want to get a local copy of this project up and running, follow these example steps.
 
 ### Prerequisites
 
@@ -55,8 +74,6 @@ Run this command to verify its installation:
   ```
 
 ### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Clone the repo
    ```sh
@@ -111,7 +128,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Jakin Stahl - [LinkedIn](https://www.linkedin.com/in/jakinstahl/) - jakinstahl@gmail.com
 
-Project Link: [https://github.com/JakinCS/SpanishDex](https://github.com/JakinCS/SpanishDex)
+Project Link: [github.com/JakinCS/SpanishDex](https://github.com/JakinCS/SpanishDex)
 
 
 <br>
