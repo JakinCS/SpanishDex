@@ -1,4 +1,4 @@
-import HomepageHeader from './components/HomepageHeader'
+import HomepageHeader from './components/HomepageHeader/HomepageHeader'
 import HomepageSection from './components/HomepageSection'
 import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'

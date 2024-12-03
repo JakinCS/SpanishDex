@@ -1,6 +1,3 @@
-'use client'
-
-import Nav from 'react-bootstrap/Nav';
 import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
@@ -14,10 +11,10 @@ function HomepageFooter() {
           <p className='fs-5'>Copyright © 2024 SpanishDex &nbsp;•&nbsp;  <span className='fw-medium text-nowrap'>Created by Jakin Stahl</span></p>
         </Col>
         <Col className='col-auto ms-md-auto'>
-          <Nav className="ms-auto column-gap-20">
-            <Nav.Link href="mailto:jakinstahl@gmail.com" className='rounded-1'><Image height={30} src={'/icons/mail.svg'} alt='Mail icon'></Image></Nav.Link>
-            <Nav.Link href="https://www.linkedin.com/in/jakinstahl" target='_blank' className='rounded-1'><Image height={30} src={'/icons/linkedin.svg'} alt='LinkedIn icon'></Image></Nav.Link>
-          </Nav>
+          <nav>
+            <a href="mailto:jakinstahl@gmail.com" className='me-20'><Image height={30} src={'/icons/mail.svg'} alt='Mail icon'></Image></a>
+            <a href="https://www.linkedin.com/in/jakinstahl" target='_blank'><Image height={30} src={'/icons/linkedin.svg'} alt='LinkedIn icon'></Image></a>
+          </nav>
         </Col>
       </Row>
     </Container>      
