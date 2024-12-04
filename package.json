@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "packageManager": "npm@10.7.0",
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
+  },
   "dependencies": {
     "bootstrap": "^5.3.3",
     "next": "15.0.3",
