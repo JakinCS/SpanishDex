@@ -1,7 +1,9 @@
 import { MongoClient } from "mongodb";
 
 
-export async function GET(req, res) {
+export async function GET(req) {
+
+    console.log("MONGODB_URI:", process.env.MONGODB_URI);
 
     const client = new MongoClient(process.env.MONGODB_URI);
 
@@ -13,16 +15,13 @@ export async function GET(req, res) {
         const collection = database.collection('users');
         const userData = await collection.find().toArray();
 
-        // res.json(userData);
+        await client.close()
         return Response.json(userData);
 
     } catch (error) {
         console.log(error);
-        // res.json({message: 'Error! Problem when getting users'})
-        return Response.json({message: 'Error! Problem when getting users'})
-    } finally {
-        await client.close()
-    }
 
-    res.json()
+        await client.close()
+        return Response.json({message: 'Error! Problem when getting users. ' + error})
+    }
 }
