@@ -16,11 +16,11 @@ function LogInModal(props) {
           {/* <h2>Log In</h2> */}
           <p>Log in to SpanishDex with your existing account.</p>
           <Form>
-            <Form.Group className="mb-5" controlId="userName">
+            <Form.Group className="mb-5" controlId="userUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
               <Form.Control type="text" placeholder="username or email" />
             </Form.Group>
-            <Form.Group className="mb-5" controlId="userEmail">
+            <Form.Group className="mb-5" controlId="userPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Form.Control type="password" placeholder="password" />
               <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>

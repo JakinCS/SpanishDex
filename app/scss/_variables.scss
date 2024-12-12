@@ -239,9 +239,11 @@ $input-font-weight: $font-weight-light;
 
 /* ----------------------- MODALS ------------------------- */
 
-// $modal-inner-padding: $spacer * 5;
 $modal-inner-padding: $spacer * 0;
 $modal-header-padding: 0;
+
+$modal-header-padding-y: 1.5rem; // Used in calculations for modal close button
+$modal-header-padding-x: 1.5rem; // Used in calculations for modal close button
 
 $modal-header-border-width: 0;
 
@@ -254,6 +256,22 @@ $modal-xl: 1140px;
 $modal-backdrop-opacity: .25;
 
 $modal-transition: transform .15s ease-in-out;
+
+
+
+
+/* ------------------- CLOSE BUTTON ----------------------- */
+
+// $btn-close-width:            1em;
+// $btn-close-height:           $btn-close-width;
+// $btn-close-padding-x:        .5em;
+// $btn-close-padding-y:        $btn-close-padding-x;
+// $btn-close-color:            $black !default;
+// $btn-close-focus-shadow:     $focus-ring-box-shadow !default;
+$btn-close-opacity:          1;
+$btn-close-hover-opacity:    1;
+$btn-close-disabled-opacity: .5 !default;
+// $btn-close-white-filter:     invert(1) grayscale(100%) brightness(200%) !default;
 
 
 

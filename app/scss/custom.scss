@@ -122,6 +122,12 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     box-shadow: none;
 }
 
+// Fix password field dots
+input[type="password"]:not(:placeholder-shown) {
+    font-family: sans-serif;
+    letter-spacing: .125rem;
+}
+
 
 
 
@@ -143,10 +149,39 @@ a {
 
 .modal-content {
     padding: 3.125rem;
+    box-shadow: 1.5px 2px 4px 0px #09B473;
 }
 
 .modal-header {
     margin-bottom: 1.875rem;
+}
+
+/* Modal Close Button */
+
+// .modal-header .btn-close:hover, .modal-header .btn-close:focus-visible, .modal-header .btn-close:focus {
+//     background-color: $gray-100;
+//     border-color: $gray-100;
+//     outline-color: $gray;
+//     box-shadow: none;
+// }
+
+// .modal-header .btn-close:active {
+//     background-color: $gray-150;
+//     border-color: $gray-150;
+// }
+
+// Navbar toggler styles
+.modal-header .btn-close:hover, .modal-header .btn-close:focus-visible, .modal-header .btn-close:focus {
+    background-color: $gray-100;
+}
+.modal-header .btn-close:focus {
+    box-shadow: none;
+}
+.modal-header .btn-close:focus-visible {
+    // outline: green solid 2px;
+    box-shadow: none;
+    outline: $gray-500 solid 2px;
+    outline-offset: 5px;
 }
 
 
