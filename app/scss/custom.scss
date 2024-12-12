@@ -121,3 +121,34 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     outline-offset: .3125rem;
     box-shadow: none;
 }
+
+
+
+
+/* ----------------- TYPOGRAPHY ----------------- */
+
+/* -- Links -- */
+
+a {
+    font-weight: 500;
+    transition: color .15s ease-in-out
+}
+
+
+
+
+/* -------------------- MODALS ------------------- */
+
+/* Adjusting spacing */
+
+.modal-content {
+    padding: 3.125rem;
+}
+
+.modal-header {
+    margin-bottom: 1.875rem;
+}
+
+
+
+

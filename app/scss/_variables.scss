@@ -119,6 +119,12 @@ $headings-font-weight: $font-weight-semibold;
 $headings-margin-bottom: 0;
 $paragraph-margin-bottom: 0;
 
+// Change link styles
+
+$link-color:                              $blue-900;
+$link-decoration:                         none;
+$link-hover-color:                        $green;
+
 
 
 
@@ -227,6 +233,28 @@ $form-label-margin-bottom: 0.3125rem;
 
 // font weight
 $input-font-weight: $font-weight-light;
+
+
+
+
+/* ----------------------- MODALS ------------------------- */
+
+// $modal-inner-padding: $spacer * 5;
+$modal-inner-padding: $spacer * 0;
+$modal-header-padding: 0;
+
+$modal-header-border-width: 0;
+
+$modal-content-bg: $white;
+$modal-sm: 300px;
+$modal-md: 650px;
+$modal-lg: 800px;
+$modal-xl: 1140px;
+
+$modal-backdrop-opacity: .25;
+
+$modal-transition: transform .15s ease-in-out;
+
 
 
 
