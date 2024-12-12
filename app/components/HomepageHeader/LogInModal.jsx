@@ -13,7 +13,6 @@ function LogInModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          {/* <h2>Log In</h2> */}
           <p>Log in to SpanishDex with your existing account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="userUsername">

@@ -20,6 +20,7 @@ function NavbarToggle() {
         (menuOpenState === "open" ? "show-close-icon" : "show-menu-icon") +
         " border-0"
       }
+      style={{marginRight: '0px !important'}} // Fixes margin issue that occurs when modals are open
     />
   );
 }
