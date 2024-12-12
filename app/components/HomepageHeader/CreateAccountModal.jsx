@@ -5,41 +5,46 @@ import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
 
-function LogInModal(props) {
+function CreateAccountModal(props) {
   return (
     <Modal show={props.show} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
-        <Modal.Title as='h2'>Log In</Modal.Title>
+        <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <p>Log in to SpanishDex with your existing account.</p>
+          <p>Sign up for a SpanishDex account.</p>
           <Form>
-            <Form.Group className="mb-5" controlId="userUsernameEmail">
-              <Form.Label className="fw-medium">Username or Email</Form.Label>
-              <Form.Control type="text" placeholder="username or email" />
+            <Form.Group className="mb-5" controlId="userUsername">
+              <Form.Label className="fw-medium">Username</Form.Label>
+              <Form.Control type="text" placeholder="username" />
+            </Form.Group>
+            <Form.Group className="mb-5" controlId="userEmail">
+              <Form.Label className="fw-medium">Email (optional)</Form.Label>
+              <Form.Control type="text" placeholder="email" />
             </Form.Group>
             <Form.Group className="mb-5" controlId="userPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Form.Control type="password" placeholder="password" />
-              <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
-                <a href="#">Forgot Password?</a>
-              </p>
+            </Form.Group>
+            <Form.Group className="mb-5" controlId="userConfirmPassword">
+              <Form.Label className="fw-medium">Confirm Password</Form.Label>
+              <Form.Control type="password" placeholder="password" />
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               <Button variant="gray" onClick={props.handleClose}>
                 Cancel
               </Button>
               <Button variant="primary" onClick={props.handleClose}>
-                Log In
+                Sign Up
               </Button>
             </Container>
           </Form>
-          <p>Don’t have an account? <a href='#'>Sign Up</a></p>
+          <p>Already have an account? <a href='#'>Log In</a></p>
         </Stack>
       </Modal.Body>
     </Modal>
   );
 }
 
-export default LogInModal;
+export default CreateAccountModal;

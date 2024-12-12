@@ -2,9 +2,8 @@
 
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import LogInButton from "./LogInButton";
 import NavbarToggle from "./NavbarToggle";
+import HeaderButtons from "./HeaderButtons";
 
 function HomepageHeader() {
 
@@ -25,10 +24,7 @@ function HomepageHeader() {
         <NavbarToggle />
         <Navbar.Collapse id="homepage-nav">
           <Nav className="ms-auto my-2 column-gap-25 row-gap-3">
-            <Button className="ms-auto" variant="outline-primary">
-              Create Account
-            </Button>
-            <LogInButton />
+            <HeaderButtons />
           </Nav>
         </Navbar.Collapse>
       </Navbar>
