@@ -15,11 +15,11 @@ function LogInModal(props) {
         <Stack gap={5}>
           <p>Log in to SpanishDex with your existing account.</p>
           <Form>
-            <Form.Group className="mb-5" controlId="userUsernameEmail">
+            <Form.Group className="mb-5" controlId="logInUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
               <Form.Control type="text" placeholder="username or email" />
             </Form.Group>
-            <Form.Group className="mb-5" controlId="userPassword">
+            <Form.Group className="mb-5" controlId="logInPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Form.Control type="password" placeholder="password" />
               <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
@@ -35,7 +35,7 @@ function LogInModal(props) {
               </Button>
             </Container>
           </Form>
-          <p>Don’t have an account? <a href='#'>Sign Up</a></p>
+          <p>Don’t have an account? <a href='#' onClick={() => {props.handleClose(); props.openSignUpModal()}}>Sign Up</a></p>
         </Stack>
       </Modal.Body>
     </Modal>

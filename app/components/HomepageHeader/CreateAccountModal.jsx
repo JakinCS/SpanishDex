@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
 
 function CreateAccountModal(props) {
+
+
   return (
     <Modal show={props.show} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
@@ -15,19 +17,19 @@ function CreateAccountModal(props) {
         <Stack gap={5}>
           <p>Sign up for a SpanishDex account.</p>
           <Form>
-            <Form.Group className="mb-5" controlId="userUsername">
+            <Form.Group className="mb-5" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
               <Form.Control type="text" placeholder="username" />
             </Form.Group>
-            <Form.Group className="mb-5" controlId="userEmail">
+            <Form.Group className="mb-5" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
               <Form.Control type="text" placeholder="email" />
             </Form.Group>
-            <Form.Group className="mb-5" controlId="userPassword">
+            <Form.Group className="mb-5" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Form.Control type="password" placeholder="password" />
             </Form.Group>
-            <Form.Group className="mb-5" controlId="userConfirmPassword">
+            <Form.Group className="mb-5" controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
               <Form.Control type="password" placeholder="password" />
             </Form.Group>
@@ -40,7 +42,7 @@ function CreateAccountModal(props) {
               </Button>
             </Container>
           </Form>
-          <p>Already have an account? <a href='#'>Log In</a></p>
+          <p>Already have an account? <a href="#" onClick={() => {props.handleClose(); props.openLogInModal()}}>Log In</a></p>
         </Stack>
       </Modal.Body>
     </Modal>

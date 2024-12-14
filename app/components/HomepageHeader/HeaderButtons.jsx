@@ -28,8 +28,8 @@ const HeaderButtons = () => {
       <CreateAccountButton openModal={openSignUpModal}/>
       <LogInButton openModal={openLogInModal} />
 
-      <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState}/>
-      <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} />
+      <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
+      <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} />
     </>
   );
 };

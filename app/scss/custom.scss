@@ -184,6 +184,9 @@ a {
     outline-offset: 5px;
 }
 
-
+// FIX for modal not centered issue
+div[role="dialog"].modal {
+    padding-right: 0 !important;
+}
 
 
