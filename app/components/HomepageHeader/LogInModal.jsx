@@ -23,7 +23,7 @@ function LogInModal(props) {
               <Form.Label className="fw-medium">Password</Form.Label>
               <Form.Control type="password" placeholder="password" />
               <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
-                <a href="#">Forgot Password?</a>
+                <a href="#" onClick={() => {props.handleClose(); props.openResetPasswordModal()}}>Forgot Password?</a>
               </p>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
