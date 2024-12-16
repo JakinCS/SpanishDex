@@ -4,8 +4,15 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
+import IconButton from "../IconButton";
+import { useState } from "react";
 
 function LogInModal(props) {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevState => !prevState);
+  }
+
   return (
     <Modal show={props.show} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
@@ -21,7 +28,14 @@ function LogInModal(props) {
             </Form.Group>
             <Form.Group className="mb-5" controlId="logInPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
-              <Form.Control type="password" placeholder="password" />
+              <Container className="d-flex gap-3 p-0">
+                <div className="w-100">
+                  <Form.Control type={showPassword ? 'text' : 'password'} placeholder="password" />
+                </div>
+                <div className="d-flex align-items-center">
+                  <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
+                </div>
+              </Container>              
               <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
                 <a href="#" onClick={() => {props.handleClose(); props.openResetPasswordModal()}}>Forgot Password?</a>
               </p>
