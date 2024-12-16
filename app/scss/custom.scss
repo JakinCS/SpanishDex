@@ -61,6 +61,14 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     outline-offset: 5px;
 }
 
+.show-menu-icon span {
+    background-image: url('/icons/menu.svg') !important;
+}
+
+.show-close-icon span {
+    background-image: url('/icons/close.svg') !important;
+}
+
 
 
 
@@ -76,11 +84,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     }
 }
 
-// Special override styling for icon Buttons
+// Special styling for icon Buttons
 
 .btn.icon-button {
-    padding-left: 0.375rem;
-    padding-right: 0.375rem;
+    padding: 0.1875rem;
 }
 
 .btn.btn-light.icon-button:hover, .btn.btn-light.icon-button:focus-visible {
@@ -94,20 +101,30 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     border-color: $gray-150;
 }
 
-.icon-button.fill-white svg {
-    fill: white;
+// For btn-light and danger classes combined
+.btn.btn-light.danger.icon-button {
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, 
+                border-color .15s ease-in-out, box-shadow .15s ease-in-out,
+                filter .15s ease-in-out;
+}
+.btn.btn-light.danger.icon-button:hover, .btn.btn-light.danger.icon-button:focus-visible {
+    background-color: $danger;
+    border-color: $danger;
+    outline-color: shade-color($danger, 20%);
+    & img {
+        filter: brightness(0%) invert(1)
+    }
+}
+.btn.btn-light.danger.icon-button:active {
+    background-color: shade-color($danger, 20%);
+    border-color: shade-color($danger, 20%);
+    & img {
+        filter: brightness(0%) invert(1)
+    }
 }
 
-.icon-button.fill-dark svg {
-    fill: $blue-900;
-}
-
-.show-menu-icon span {
-    background-image: url('/icons/menu.svg') !important;
-}
-
-.show-close-icon span {
-    background-image: url('/icons/close.svg') !important;
+.icon-button.fill-white img {
+    filter: brightness(0%) invert(1)
 }
 
 

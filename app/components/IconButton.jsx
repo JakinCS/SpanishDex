@@ -1,14 +1,18 @@
+import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 
-function IconButton(props) {
+function IconButton({iconFillColor, iconSrc, danger, className, ...otherProps}) {
     // Additional classes
-    let newClass = [
+    let newClasses = [
         'icon-button',
-        props.iconColor === 'white' || props.iconColor === 'light' ? 'fill-white' : 'fill-dark'
+        (iconFillColor === 'white' || iconFillColor === 'light') && 'fill-white',
+        danger && 'danger'
     ].join(' ');
 
     return (
-        <Button {...props} className={props.className ? props.className + ' ' + newClass : newClass}></Button>
+        <Button {...otherProps} className={className ? className + ' ' + newClasses : newClasses}>
+            <Image height='30' src={iconSrc} />
+        </Button>
     )
 }
 
