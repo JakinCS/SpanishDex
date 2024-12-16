@@ -4,9 +4,19 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
+import IconButton from "../IconButton";
+import { useState } from 'react'
 
 function CreateAccountModal(props) {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevState => !prevState);
+  }
 
+  const [showPassword2, setShowPassword2] = useState(false);
+  const togglePassword2Visibility = () => {
+    setShowPassword2(prevState => !prevState);
+  }
 
   return (
     <Modal show={props.show} onHide={props.handleClose} backdrop="static" centered>
@@ -27,11 +37,25 @@ function CreateAccountModal(props) {
             </Form.Group>
             <Form.Group className="mb-5" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
-              <Form.Control type="password" placeholder="password" />
+              <Container className="d-flex gap-3 p-0">
+                <div className="w-100">
+                  <Form.Control type={showPassword ? 'text' : 'password'} placeholder="password" />
+                </div>
+                <div className="d-flex align-items-center">
+                  <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
+                </div>
+              </Container>
             </Form.Group>
             <Form.Group className="mb-5" controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
-              <Form.Control type="password" placeholder="password" />
+              <Container className="d-flex gap-3 p-0">
+                <div className="w-100">
+                  <Form.Control type={showPassword2 ? 'text' : 'password'} placeholder="password" />
+                </div>
+                <div className="d-flex align-items-center">
+                  <IconButton variant='light' iconSrc={showPassword2 ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePassword2Visibility}/>           
+                </div>
+              </Container>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               <Button variant="gray" onClick={props.handleClose}>
