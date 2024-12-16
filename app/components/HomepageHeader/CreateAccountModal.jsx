@@ -19,7 +19,7 @@ function CreateAccountModal(props) {
   }
 
   return (
-    <Modal show={props.show} onHide={props.handleClose} backdrop="static" centered>
+    <Modal show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false)}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>

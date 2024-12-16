@@ -11,13 +11,8 @@ const ResetPasswordModal = (props) => {
 
   const [showSuccess, setShowSuccess] = useState(false)
 
-  const exitModal = () => {
-    props.handleClose();
-    setShowSuccess(false);
-  }
-
   return (
-    <Modal show={props.show} onHide={exitModal} backdrop="static" centered>
+    <Modal show={props.show} onShow={() => setShowSuccess(false)} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Reset Password</Modal.Title>
       </Modal.Header>
@@ -38,15 +33,15 @@ const ResetPasswordModal = (props) => {
             }            
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               {showSuccess ?
-                <Button variant="gray" onClick={exitModal}>
+                <Button variant="gray" onClick={props.handleClose}>
                   Close
                 </Button> :
-                <Button variant="gray" onClick={() => {exitModal(); props.openLogInModal()}}>
+                <Button variant="gray" onClick={() => {props.handleClose(); props.openLogInModal()}}>
                   Back
                 </Button>
               }
               {showSuccess ?
-                <Button variant="primary" onClick={() => {exitModal(); props.openLogInModal()}}>
+                <Button variant="primary" onClick={() => {props.handleClose(); props.openLogInModal()}}>
                   Return To Log In
                 </Button> :
                 <Button variant="primary" onClick={() => {setShowSuccess(true)}}>

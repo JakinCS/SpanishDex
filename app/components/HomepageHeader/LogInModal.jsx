@@ -14,7 +14,7 @@ function LogInModal(props) {
   }
 
   return (
-    <Modal show={props.show} onHide={props.handleClose} backdrop="static" centered>
+    <Modal show={props.show} onShow={() => setShowPassword(false)} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Log In</Modal.Title>
       </Modal.Header>
