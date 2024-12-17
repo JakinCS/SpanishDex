@@ -151,6 +151,19 @@ input[type="text"]:not(:placeholder-shown) {
     font-weight: 400;
 }
 
+// Form invalid field styles
+.form-control.is-invalid {
+    border-width: 2px;
+    &:focus, &:focus-visible {
+        outline-color: tint-color($danger, 40%);
+        box-shadow: none;
+    }
+}
+
+.invalid-feedback {
+    font-weight: $font-weight-semibold;
+}
+
 
 
 
