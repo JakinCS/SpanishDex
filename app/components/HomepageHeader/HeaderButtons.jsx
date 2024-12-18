@@ -1,9 +1,10 @@
-import CreateAccountButton from "./CreateAccountButton"
+'use client'
+
 import CreateAccountModal from "./CreateAccountModal"
-import LogInButton from "./LogInButton"
 import LogInModal from "./LogInModal"
-import { useState } from "react";
 import ResetPasswordModal from "./ResetPasswordModal";
+import Button from 'react-bootstrap/Button'
+import { useState } from "react";
 
 const HeaderButtons = () => {
   const [logInModalOpenState, setLogInModalOpenState] = useState(false);
@@ -35,8 +36,12 @@ const HeaderButtons = () => {
 
   return (
     <>
-      <CreateAccountButton openModal={openSignUpModal}/>
-      <LogInButton openModal={openLogInModal} />
+      <Button className="ms-auto" id='createAccountButton' variant="outline-primary" onClick={openSignUpModal}>
+        Create Account
+      </Button>
+      <Button className="ms-auto" variant="primary" onClick={openLogInModal}>
+        Log In
+      </Button>
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
       <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} openResetPasswordModal={openResetPasswordModal}/>

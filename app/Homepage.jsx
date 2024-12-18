@@ -3,7 +3,7 @@ import HomepageSection from './components/HomepageSection'
 import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'
 import HomepageFooter from './components/HomepageFooter';
-import Button from 'react-bootstrap/Button'
+import GetStartedButton from './components/GetStartedButton';
 
 function Homepage() {
 
@@ -17,7 +17,7 @@ function Homepage() {
           It is the perfect tool for those who want to memorize new vocabulary quicker and retain old vocabulary longer. 
           Start using SpanishDex today for free!
         </p> 
-        <Button variant='secondary'>Get Started</Button>  
+        <GetStartedButton />
       </HomepageSection>
       <HomepageSectionColumns 
         py='80' backgroundColor='white' 
