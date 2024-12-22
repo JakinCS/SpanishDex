@@ -18,8 +18,15 @@ function CreateAccountModal(props) {
     setShowPassword2(prevState => !prevState);
   }
 
-  // State for storing the state of the form
+  // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
+    isLoading: false,
+    serverError: false,
+    serverMessage: '',
+  })
+
+  // State for storing the state of the form values
+  const [formValues, setFormValues] = useState({
     username: {value: '', valid: null, message: null}, 
     email: {value: '', valid: null, message: null},
     password: {value: '', valid: null, errorType: null, message: null},
@@ -27,10 +34,10 @@ function CreateAccountModal(props) {
   })
 
   // Functions to update the value of the username and password fields' states
-  const updateUsernameValue = (e) => setFormState((prevState) => ({...prevState, username: {...prevState.username, value: e.target.value}}))
-  const updateEmailValue = (e) => setFormState(prevState => ({...prevState, email: {...prevState.email, value: e.target.value}}))
-  const updatePasswordValue = (e) => setFormState((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value}}))
-  const updatePassword2Value = (e) => setFormState((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
+  const updateUsernameValue = (e) => setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: e.target.value}}))
+  const updateEmailValue = (e) => setFormValues(prevState => ({...prevState, email: {...prevState.email, value: e.target.value}}))
+  const updatePasswordValue = (e) => setFormValues((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value}}))
+  const updatePassword2Value = (e) => setFormValues((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
   
   // Function to check and update the validity of the username
   /* 
@@ -38,7 +45,7 @@ function CreateAccountModal(props) {
     General RegEx: no spaces before, in-between, or afterwards  
   */
   const validateUsername = () => {
-    const currUsername = formState.username.value;
+    const currUsername = formValues.username.value;
 
     let isValid = true;
     let message = '';
@@ -63,19 +70,19 @@ function CreateAccountModal(props) {
       message = 'Username is invalid'
     }
     
-    setFormState(prevState => ({...prevState, username: {...prevState.username, valid: isValid, message: message}}));
+    setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: isValid, message: message}}));
   }
 
   // Function to ensure email field contains a valid email
   const validateEmail = () => {
-    const currEmail = formState.email.value;
+    const currEmail = formValues.email.value;
 
     let regexExpression = /^([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])$/
   
     if (currEmail == '' || regexExpression.test(currEmail)) {
-      setFormState(prevState => ({...prevState, email: {...prevState.email, valid: true}}))
+      setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: true}}))
     } else {
-      setFormState(prevState => ({...prevState, email: {...prevState.email, valid: false, message: 'Invalid email address'}}))
+      setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: false, message: 'Invalid email address'}}))
     }
   }
 
@@ -106,18 +113,18 @@ function CreateAccountModal(props) {
   // This function checks whether the two password fields are match.
   // Also, this function will update the state based on the results.
   const checkPasswordsMatch = () => {
-    if (formState.password.value != formState.password2.value) return false;
+    if (formValues.password.value != formValues.password2.value) return false;
     return true;    
   }  
 
   // This function handles the validation of the first password field
   const validatePassword1 = () => {
-    const passwordValue = formState.password.value; // Current value of this password field
+    const passwordValue = formValues.password.value; // Current value of this password field
     const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
 
     if (!passwordValid.isValid) {
       // If it isn't valid, display an error. No other logic needs to run.
-      setFormState(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
+      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
       return;
     }
 
@@ -129,33 +136,33 @@ function CreateAccountModal(props) {
       Also, even if the fields DON'T match, a 'matching error' isn't necessary if:
        1. The other field is displaying a different error 
        2. The other field has not be touched yet */
-    if (matchesOtherField || (!formState.password2.valid && formState.password2.errorType === 'reg') || formState.password2.valid === null) {
+    if (matchesOtherField || (!formValues.password2.valid && formValues.password2.errorType === 'reg') || formValues.password2.valid === null) {
       // Remove errors for the this field
-      setFormState(prevState => ({...prevState, password: {...prevState.password, valid: true, errorType: ''}}))
+      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: true, errorType: ''}}))
 
       // If the other field currently displays a "matching error", remove it because the fields now match.
-      if (!formState.password2.valid && formState.password2.errorType === 'matching') {
-        setFormState(prevState => ({...prevState, password2: {...prevState.password2, valid: true, errorType: ''}}))
+      if (!formValues.password2.valid && formValues.password2.errorType === 'matching') {
+        setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: true, errorType: ''}}))
       }
     } else { // Otherwise, this field needs a 'matching error'. So display one.
 
-      setFormState(prevState => ({...prevState, password: {...prevState.password, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
+      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
 
       // If the other field is current showing to be valid, it needs a matching error too.
-      if (formState.password2.valid) {
-        setFormState(prevState => ({...prevState, password2: {...prevState.password2, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
+      if (formValues.password2.valid) {
+        setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
       }
     }
   }
   
   // This function handles the validation of the second password field
   const validatePassword2 = () => {
-    const passwordValue = formState.password2.value; // Current value of this password field
+    const passwordValue = formValues.password2.value; // Current value of this password field
     const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
 
     if (!passwordValid.isValid) {
       // If it isn't valid, display an error. No other logic needs to run.
-      setFormState(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
+      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
       return;
     }
 
@@ -167,27 +174,27 @@ function CreateAccountModal(props) {
       Also, even if the fields DON'T match, a 'matching error' isn't necessary if:
        1. The other field is displaying a different error 
        2. The other field has not be touched yet */
-    if (matchesOtherField || (!formState.password.valid && formState.password.errorType === 'reg') || formState.password.valid === null) {
+    if (matchesOtherField || (!formValues.password.valid && formValues.password.errorType === 'reg') || formValues.password.valid === null) {
       // Remove errors for the this field
-      setFormState(prevState => ({...prevState, password2: {...prevState.password2, valid: true, errorType: ''}}))
+      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: true, errorType: ''}}))
 
       // If the other field currently displays a "matching error", remove it because the fields now match.
-      if (!formState.password.valid && formState.password.errorType === 'matching') {
-        setFormState(prevState => ({...prevState, password: {...prevState.password, valid: true, errorType: ''}}))
+      if (!formValues.password.valid && formValues.password.errorType === 'matching') {
+        setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: true, errorType: ''}}))
       }
     } else { // Otherwise, this field needs a 'matching error'. So display one.
 
-      setFormState(prevState => ({...prevState, password2: {...prevState.password2, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
+      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
 
       // If the other field is current showing to be valid, it needs a matching error too.
-      if (formState.password.valid) {
-        setFormState(prevState => ({...prevState, password: {...prevState.password, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
+      if (formValues.password.valid) {
+        setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
       }
     }
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
-  const resetFormState = () => {setFormState({
+  const resetFormValues = () => {setFormValues({
     username: {value: '', valid: null, message: null}, 
     email: {value: '', valid: null, message: null},
     password: {value: '', valid: null, message: null},
@@ -195,63 +202,110 @@ function CreateAccountModal(props) {
   })}
 
 
+  const createAccount = async () => {
+    let bodyToSend = {
+      username: formValues.username.value, 
+      email: formValues.email.value, 
+      password: formValues.password.value,
+      password2: formValues.password2.value
+    }
+
+    console.log('button clicked sending', bodyToSend)
+
+    // Set loading state
+    setFormState(prevState => ({...prevState, isLoading: true}));
+
+    try {
+      // const response = await fetch('/api/auth/signup')
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        body: JSON.stringify(bodyToSend)
+      })
+
+      console.log(response)
+
+      if (!response.ok && response.headers.get('content-type') === 'application/json') {
+        const json = await response.json();
+        throw(json.error);
+      } else if (!response.ok) {
+        throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
+      }
+
+      const json = await response.json();
+
+      console.log('response', json, response.status)
+      
+      setFormState(prevState => ({...prevState, serverError: false}))
+
+    } catch (error) {
+      console.log(error);
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error}))
+    } finally {
+      setFormState(prevState => ({...prevState, isLoading: false}));
+    }    
+
+    // props.handleClose()
+  }
+
+
   return (
-    <Modal show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetFormState()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetFormValues()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
+          <div className={formState.serverError ? 'd-block' : 'd-none'}>Error: {formState.serverError ? formState.serverMessage : ''}</div>
           <p>Sign up for a SpanishDex account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
-              <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formState.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
+              <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
               <Form.Control.Feedback type="invalid">
-                {formState.username.message}
+                {formValues.username.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-5" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
-              <Form.Control onBlur={validateEmail} onChange={updateEmailValue} className={formState.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
+              <Form.Control onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
               <Form.Control.Feedback type="invalid">
-                {formState.email.message}
+                {formValues.email.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-5" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
-                  <Form.Control type={showPassword ? 'text' : 'password'} placeholder="password" onBlur={validatePassword1} onChange={updatePasswordValue} className={formState.password.valid === false && 'is-invalid'} />
+                  <Form.Control type={showPassword ? 'text' : 'password'} placeholder="password" onBlur={validatePassword1} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} />
                 </div>
                 <div className="d-flex align-items-center">
                   <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
                 </div>
               </Container>
-              <Form.Control.Feedback className={formState.password.valid === false && 'd-block'} type="invalid">
-                {formState.password.message}
+              <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
+                {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-5" controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
-                  <Form.Control type={showPassword2 ? 'text' : 'password'} placeholder="password" onBlur={validatePassword2} onChange={updatePassword2Value} className={formState.password2.valid === false && 'is-invalid'} />
+                  <Form.Control type={showPassword2 ? 'text' : 'password'} placeholder="password" onBlur={validatePassword2} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
                 </div>
                 <div className="d-flex align-items-center">
                   <IconButton variant='light' iconSrc={showPassword2 ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePassword2Visibility}/>           
                 </div>
               </Container>
-              <Form.Control.Feedback className={formState.password2.valid === false && 'd-block'} type="invalid">
-                {formState.password2.message}
+              <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
+                {formValues.password2.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               <Button variant="gray" onClick={props.handleClose}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={props.handleClose} disabled={!(formState.username.valid && formState.email.valid && formState.password.valid && formState.password2.valid)}>
-                Sign Up
+              <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid)}>
+                {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
               </Button>
             </Container>
           </Form>

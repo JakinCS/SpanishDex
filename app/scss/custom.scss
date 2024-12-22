@@ -226,3 +226,28 @@ div[role="dialog"].modal {
 }
 
 
+
+
+/* ------------------- CSS Spinner ------------------- */
+
+.loader {
+    width: 28px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side, white 94%,#0000) top/5px 5px no-repeat,
+      conic-gradient(#0000 30%, white);
+    mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+  }
+  @keyframes l13{ 
+    100%{transform: rotate(1turn)}
+  }
+
+
+
+
+
+
