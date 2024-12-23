@@ -1,37 +1,11 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { MongoClient } from "mongodb";
+import sanitize from 'mongo-sanitize';
 
 
 // Variable for holding the error message
 let errorMessage = 'Sign up failed. Please try again. If problem persists, try again later.'
-let status = 500;
-
-// Function for determining whether the username is valid or not.
-const validateUsername = (username) => {
-    // Check for general errors in the username
-    if (username.length < 2 || username.length > 25 || !/^\w+$/.test(username)) return {valid: false, message: 'Please enter a valid username'};
-
-    return {valid: true, message: ''};
-}
-
-// Function for determining whether the email is valid or not.
-const validateEmail = (email) => {
-  let regexExpression = /^([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])$/
-
-  if (email.length != 0 && !regexExpression.test(email)) return {valid: false, message: 'Please enter a valid email address'};
-
-  return {valid: true, message: ''};
-}
-
-// Function for determining whether the password is valid or not.
-const validatePassword = (password1, password2) => {
-  if (password1.length < 6 || password1.length > 1024) return {valid: false, message: 'Password is too short or too long'};
-
-  if (password1 !== password2) return {valid: false, message: 'The two passwords do not match'};
-
-  return {valid: true, message: ''};
-}
 
 // Function for validating the input data
 const validateInputs = async ({username, email, password, password2}, db_collection) => {
@@ -73,6 +47,10 @@ export async function POST(request) {
     const {username, email, password, password2} = await request.json();
     console.log({username, email, password, password2})
 
+    // Sanitize the input data as a safety measure
+    const cleanUsername = sanitize(username);
+    const cleanEmail = sanitize(email);  
+
     // Connect to the database
     await client.connect();
 
@@ -80,7 +58,7 @@ export async function POST(request) {
     const collection = database.collection('users');
 
     // Validate the input data
-    let validationResult = await validateInputs({username, email, password, password2}, collection);
+    let validationResult = await validateInputs({username: cleanUsername, email: cleanEmail, password, password2}, collection);
     if (!validationResult.valid) {
       errorMessage = 'Sign up failed. ' + validationResult.message;
       await client.close();
@@ -88,13 +66,13 @@ export async function POST(request) {
     }
     
     // Convert the email to lower case
-    const lowercaseEmail = email.toLowerCase();
+    const lowercaseEmail = cleanEmail.toLowerCase();
     
     // Hash the password
     const hashedPassword = await hash(password, 10);
 
     // Insert the user into the database
-    const result = await collection.insertOne({username, lowercaseEmail, password: hashedPassword, date_created: new Date()})
+    const result = await collection.insertOne({username: cleanUsername, email: lowercaseEmail, password: hashedPassword, date_created: new Date()})
 
     console.log(result)
 
