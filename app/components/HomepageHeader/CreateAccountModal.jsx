@@ -5,6 +5,7 @@ import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
 import IconButton from "../IconButton";
+import Alert from "react-bootstrap/Alert";
 import { useState } from 'react'
 
 function CreateAccountModal(props) {
@@ -23,6 +24,7 @@ function CreateAccountModal(props) {
     isLoading: false,
     serverError: false,
     serverMessage: '',
+    errorAcknowledged: false
   })
 
   // State for storing the state of the form values
@@ -210,10 +212,18 @@ function CreateAccountModal(props) {
       password2: formValues.password2.value
     }
 
-    console.log('button clicked sending', bodyToSend)
+    // Firstly, double check that the form is valid beforehand as a safety measure.
+    validateUsername();
+    validateEmail();
+    validatePassword1();
+    validatePassword2();
+    if (!formValues.username.valid || !formValues.email.valid || !formValues.password.valid || !formValues.password2.valid) return;
+
 
     // Set loading state
-    setFormState(prevState => ({...prevState, isLoading: true}));
+    setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
+
+    let responseStatus; // Holds the status of the response
 
     try {
       // const response = await fetch('/api/auth/signup')
@@ -222,24 +232,34 @@ function CreateAccountModal(props) {
         body: JSON.stringify(bodyToSend)
       })
 
-      console.log(response)
+      // Set the reponse status for error handling
+      responseStatus = response.status;
 
+      // Check if the response is ok. If it is not, AND if the response is in JSON, throw the error within the JSON object.
       if (!response.ok && response.headers.get('content-type') === 'application/json') {
         const json = await response.json();
         throw(json.error);
-      } else if (!response.ok) {
+      } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
         throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
       }
 
       const json = await response.json();
-
-      console.log('response', json, response.status)
       
+      // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
 
     } catch (error) {
-      console.log(error);
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error}))
+      console.log('error caught: ' + error);
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error, errorAcknowledged: false}))
+
+      // If the error is a 409, set the error state for those form fields
+      if (responseStatus === 409) {
+        if (error.search(/username/i) > -1) {
+          setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: false, message: 'This username is already taken. Please choose another username'}}))
+        } else if (error.search(/email/i) > -1) {
+          setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: false, message: 'This email is already used by another account. Please choose another one'}}))
+        }
+      }
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
     }    
@@ -254,8 +274,11 @@ function CreateAccountModal(props) {
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Stack gap={5}>
-          <div className={formState.serverError ? 'd-block' : 'd-none'}>Error: {formState.serverError ? formState.serverMessage : ''}</div>
+        <Stack gap={5}>          
+          <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
+            <Alert.Heading>Error</Alert.Heading>
+            {formState.serverMessage}
+          </Alert>
           <p>Sign up for a SpanishDex account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="createAccountUsername">

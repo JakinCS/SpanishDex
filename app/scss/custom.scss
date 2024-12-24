@@ -194,19 +194,7 @@ a {
 
 /* Modal Close Button */
 
-// .modal-header .btn-close:hover, .modal-header .btn-close:focus-visible, .modal-header .btn-close:focus {
-//     background-color: $gray-100;
-//     border-color: $gray-100;
-//     outline-color: $gray;
-//     box-shadow: none;
-// }
-
-// .modal-header .btn-close:active {
-//     background-color: $gray-150;
-//     border-color: $gray-150;
-// }
-
-// Navbar toggler styles
+// modal close button toggler styles
 .modal-header .btn-close:hover, .modal-header .btn-close:focus-visible, .modal-header .btn-close:focus {
     background-color: $gray-100;
 }
@@ -223,6 +211,46 @@ a {
 // FIX for modal not centered issue
 div[role="dialog"].modal {
     padding-right: 0 !important;
+}
+
+
+
+
+/* ------------------- ALERTS ------------------- */
+
+.alert-danger {
+    background-color: white;
+    border-color: $danger;
+    color: $body-color;
+    font-weight: $font-weight-medium;
+}
+.alert-danger .h4 {
+    line-height: 1;
+    padding-bottom: $spacer;
+    color: $danger;
+}
+.alert-danger .btn-close {
+    padding: 0.75rem;
+    margin: 0.5rem;
+    // background-image: url('/icons/close.svg');
+    transition: background-color .15s ease-in-out;
+    &:hover, &:focus-visible, &:focus {
+        background-color: tint-color($danger, 80%);
+    }
+    &:focus {
+        box-shadow: none;
+    }
+    &:focus-visible {
+        box-shadow: none;
+        outline: tint-color($danger, 40%) solid 2px;
+        outline-offset: 5px;
+    }
+    &:active {
+        background-color: tint-color($danger, 60%);
+    }
+}
+.alert-dismissible {
+    padding-right: $spacer * 2;
 }
 
 

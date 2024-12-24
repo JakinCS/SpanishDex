@@ -58,7 +58,7 @@ export async function POST(request) {
     const collection = database.collection('users');
 
     // Validate the input data
-    let validationResult = await validateInputs({username: cleanUsername, email: cleanEmail, password, password2}, collection);
+    let validationResult = await validateInputs({username: cleanUsername + '#', email: cleanEmail, password, password2}, collection);
     if (!validationResult.valid) {
       errorMessage = 'Sign up failed. ' + validationResult.message;
       await client.close();
