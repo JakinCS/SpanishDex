@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
 import IconButton from "../IconButton";
 import Alert from "react-bootstrap/Alert";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function CreateAccountModal(props) {
   // State for keeping track of password show/hide state
@@ -26,6 +26,19 @@ function CreateAccountModal(props) {
     serverMessage: '',
     errorAcknowledged: false
   })
+
+  // Use effect hook for disabling the modal close button (when the form is being submitted)
+  // This effect hook is necessary because the button code is not accessible in this JSX file.
+  useEffect(() => {
+    console.log("effect!")
+    if (document.querySelector('#signUpModal .btn-close') !== null) {
+      if (formState.isLoading) {
+        document.querySelector('#signUpModal .btn-close').disabled = true;
+      } else {
+        document.querySelector('#signUpModal .btn-close').disabled = false;
+      }
+    }
+  }, [formState.isLoading])
 
   // State for storing the state of the form values
   const [formValues, setFormValues] = useState({
@@ -269,7 +282,7 @@ function CreateAccountModal(props) {
 
 
   return (
-    <Modal show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetFormValues()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal id='signUpModal' show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetFormValues()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
@@ -324,10 +337,10 @@ function CreateAccountModal(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              <Button variant="gray" onClick={props.handleClose}>
+              <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid)}>
+              <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
                 {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
               </Button>
             </Container>
