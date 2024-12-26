@@ -213,27 +213,75 @@ div[role="dialog"].modal {
     padding-right: 0 !important;
 }
 
+// Class styling for when the success message is shown on a modal
+.modal-disabled {
+    & .modal-header, & .modal-body > .vstack {
+        opacity: .15;
+        pointer-events: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+.modal-content .modal-header, .modal-content .modal-body > .vstack { // Add transitions for opacity
+    transition: opacity .15s ease-in-out;
+}
+
+.modal-success-message {
+    position: absolute;
+    width: 100%; 
+    top: 35%;
+    z-index: 2;
+    transition: opacity .15s ease-in-out;
+    &.show {
+        opacity: 1;
+    }
+    &.hide {
+        opacity: 0;
+    }
+
+    & > * {
+        margin: 0 auto;
+    }
+    & h2, & p {
+        text-align: center;
+    }
+}
+
+
 
 
 
 /* ------------------- ALERTS ------------------- */
 
-.alert-danger {
+.alert {
     background-color: white;
-    border-color: $danger;
     color: $body-color;
     font-weight: $font-weight-medium;
+
+    & .h4 {
+        line-height: 1;
+        padding-bottom: $spacer;
+    }
+    & .btn-close {
+        padding: 0.75rem;
+        margin: 0.5rem;
+        transition: background-color .15s ease-in-out;
+    }
 }
-.alert-danger .h4 {
-    line-height: 1;
-    padding-bottom: $spacer;
-    color: $danger;
+
+.alert-dismissible {
+    padding-right: $spacer * 2;
 }
-.alert-danger .btn-close {
-    padding: 0.75rem;
-    margin: 0.5rem;
-    // background-image: url('/icons/close.svg');
-    transition: background-color .15s ease-in-out;
+
+.alert-danger {
+    border-color: $danger;
+    & .h4 {
+        color: $danger;
+    }
+}
+
+.alert-danger .btn-close {    
     &:hover, &:focus-visible, &:focus {
         background-color: tint-color($danger, 80%);
     }
@@ -250,8 +298,28 @@ div[role="dialog"].modal {
     }
 }
 
-.alert-dismissible {
-    padding-right: $spacer * 2;
+.alert-success {
+    border-color: $success;
+    & .h4 {
+        color: $success;
+    }
+}
+
+.alert-success .btn-close {    
+    &:hover, &:focus-visible, &:focus {
+        background-color: tint-color($success, 80%);
+    }
+    &:focus {
+        box-shadow: none;
+    }
+    &:focus-visible {
+        box-shadow: none;
+        outline: tint-color($success, 40%) solid 2px;
+        outline-offset: 5px;
+    }
+    &:active {
+        background-color: tint-color($success, 60%);
+    }
 }
 
 

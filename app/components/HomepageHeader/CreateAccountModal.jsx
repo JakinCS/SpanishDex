@@ -6,9 +6,12 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
 import IconButton from "../IconButton";
 import Alert from "react-bootstrap/Alert";
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function CreateAccountModal(props) {
+  // References the success message div
+  const successMessageDiv = useRef(null);
+
   // State for keeping track of password show/hide state
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -24,13 +27,13 @@ function CreateAccountModal(props) {
     isLoading: false,
     serverError: false,
     serverMessage: '',
-    errorAcknowledged: false
+    errorAcknowledged: false,
+    showSuccess: false
   })
 
   // Use effect hook for disabling the modal close button (when the form is being submitted)
   // This effect hook is necessary because the button code is not accessible in this JSX file.
   useEffect(() => {
-    console.log("effect!")
     if (document.querySelector('#signUpModal .btn-close') !== null) {
       if (formState.isLoading) {
         document.querySelector('#signUpModal .btn-close').disabled = true;
@@ -209,13 +212,21 @@ function CreateAccountModal(props) {
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
-  const resetFormValues = () => {setFormValues({
-    username: {value: '', valid: null, message: null}, 
-    email: {value: '', valid: null, message: null},
-    password: {value: '', valid: null, message: null},
-    password2: {value: '', valid: null, message: null}
-  })}
-
+  const resetState = () => {
+    setFormValues({
+      username: {value: '', valid: null, message: null}, 
+      email: {value: '', valid: null, message: null},
+      password: {value: '', valid: null, message: null},
+      password2: {value: '', valid: null, message: null}
+    });
+    setFormState({
+      isLoading: false,
+      serverError: false,
+      serverMessage: '',
+      errorAcknowledged: false,
+      showSuccess: false
+    });
+  }
 
   const createAccount = async () => {
     let bodyToSend = {
@@ -259,7 +270,9 @@ function CreateAccountModal(props) {
       const json = await response.json();
       
       // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false}))
+      setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
+
+      const closeModal = setTimeout(props.handleClose, 2000);
 
     } catch (error) {
       console.log('error caught: ' + error);
@@ -276,17 +289,19 @@ function CreateAccountModal(props) {
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
     }    
-
-    // props.handleClose()
   }
 
 
   return (
-    <Modal id='signUpModal' show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetFormValues()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal id='signUpModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <div ref={successMessageDiv} className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
+          <h2 className="text-success mb-3">Success</h2>
+          <p className="fw-medium">Your account has been created</p>
+        </div>
         <Stack gap={5}>          
           <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
             <Alert.Heading>Error</Alert.Heading>
