@@ -235,9 +235,11 @@ div[role="dialog"].modal {
     transition: opacity .15s ease-in-out;
     &.show {
         opacity: 1;
+        display: block;
     }
     &.hide {
         opacity: 0;
+        display: none;
     }
 
     & > * {

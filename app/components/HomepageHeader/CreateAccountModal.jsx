@@ -6,11 +6,9 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
 import IconButton from "../IconButton";
 import Alert from "react-bootstrap/Alert";
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function CreateAccountModal(props) {
-  // References the success message div
-  const successMessageDiv = useRef(null);
 
   // State for keeping track of password show/hide state
   const [showPassword, setShowPassword] = useState(false);
@@ -298,7 +296,7 @@ function CreateAccountModal(props) {
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div ref={successMessageDiv} className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
+        <div className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
           <h2 className="text-success mb-3">Success</h2>
           <p className="fw-medium">Your account has been created</p>
         </div>

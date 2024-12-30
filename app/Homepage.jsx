@@ -4,12 +4,16 @@ import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'
 import HomepageFooter from './components/HomepageFooter';
 import GetStartedButton from './components/GetStartedButton';
+import { getServerSession } from 'next-auth';
 
-function Homepage() {
+async function Homepage() {
+
+  // Get session information
+  const session = await getServerSession();
 
   return (
     <>
-      <HomepageHeader />
+      <HomepageHeader session={session}/>
       <HomepageSection py='100' backgroundColor='almost-white'>
         <h1 className="text-center" style={{maxWidth: '43.75rem'}}>Flashcards Built for Maximized Learning</h1>
         <p className="text-center" style={{maxWidth: '43.75rem'}}>

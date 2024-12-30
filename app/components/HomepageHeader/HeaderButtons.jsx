@@ -5,8 +5,10 @@ import LogInModal from "./LogInModal"
 import ResetPasswordModal from "./ResetPasswordModal";
 import Button from 'react-bootstrap/Button'
 import { useState } from "react";
+import { getServerSession } from 'next-auth';
+import { signOut } from "next-auth/react";
 
-const HeaderButtons = () => {
+const HeaderButtons = (props) => {
   const [logInModalOpenState, setLogInModalOpenState] = useState(false);
 
   const openLogInModal = () => {
@@ -34,14 +36,24 @@ const HeaderButtons = () => {
     setResetPasswordModalOpenState(false);
   }
 
+  // const session = await getServerSession();
+      
+  console.log(props.session)
+
   return (
     <>
       <Button className="ms-auto" id='createAccountButton' variant="outline-primary" onClick={openSignUpModal}>
         Create Account
       </Button>
-      <Button className="ms-auto" variant="primary" onClick={openLogInModal}>
-        Log In
-      </Button>
+      { !!props.session ?
+        <Button className="ms-auto" variant="primary" onClick={() => {signOut()}}>
+          Log Out
+        </Button>
+        :
+        <Button className="ms-auto" variant="primary" onClick={openLogInModal}>
+          Log In
+        </Button>
+      }
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
       <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} openResetPasswordModal={openResetPasswordModal}/>

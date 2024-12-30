@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavbarToggle from "./NavbarToggle";
 import HeaderButtons from "./HeaderButtons";
 
-function HomepageHeader() {
+function HomepageHeader(props) {
 
   return (
     <>
@@ -24,7 +24,7 @@ function HomepageHeader() {
         <NavbarToggle />
         <Navbar.Collapse id="homepage-nav">
           <Nav className="ms-auto my-2 column-gap-25 row-gap-3">
-            <HeaderButtons />
+            <HeaderButtons session={props.session}/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
