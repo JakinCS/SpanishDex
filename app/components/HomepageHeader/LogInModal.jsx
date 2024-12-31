@@ -8,8 +8,10 @@ import Alert from "react-bootstrap/Alert";
 import IconButton from "../IconButton";
 import { useEffect, useState } from "react";
 import { signIn } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 function LogInModal(props) {
+  const router = useRouter();
 
   // State for the status of the show/hide password button
   const [showPassword, setShowPassword] = useState(false);
@@ -113,8 +115,6 @@ function LogInModal(props) {
 
     try {
 
-      // await new Promise(resolve => setTimeout(resolve, 5000));
-
       const response = await signIn('credentials', {
         username: bodyToSend.username,
         password: bodyToSend.password,
@@ -136,8 +136,8 @@ function LogInModal(props) {
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
 
-      const closeModal = setTimeout(()=>{setFormState(prevState => ({...prevState, showSuccess: false}))}, 2000);
-      // const closeModal = setTimeout(props.handleClose, 2000);
+      // Redirect to the dashboard
+      const redirect = setTimeout(() => {router.push('/dashboard')}, 1500)
 
     } catch (error) {
       console.log('error caught: ' + error);

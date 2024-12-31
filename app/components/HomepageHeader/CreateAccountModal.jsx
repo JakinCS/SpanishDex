@@ -7,8 +7,11 @@ import Container from "react-bootstrap/Container"
 import IconButton from "../IconButton";
 import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from 'react'
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function CreateAccountModal(props) {
+  const router = useRouter();
 
   // State for keeping track of password show/hide state
   const [showPassword, setShowPassword] = useState(false);
@@ -270,7 +273,22 @@ function CreateAccountModal(props) {
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
 
-      const closeModal = setTimeout(props.handleClose, 2000);
+      const signInResponse = await signIn('credentials', {
+        username: bodyToSend.username,
+        password: bodyToSend.password,
+        redirect: false,
+      })
+
+      if (signInResponse.ok) {
+        // Redirect to the dashboard
+        router.push('/dashboard');
+      } else {
+        // If the sign in fails, close the modal and open the log in modal
+        props.handleClose()
+        props.openLogInModal()
+      }
+
+      // const closeModal = setTimeout(props.handleClose, 2000);
 
     } catch (error) {
       console.log('error caught: ' + error);
@@ -298,7 +316,9 @@ function CreateAccountModal(props) {
       <Modal.Body>
         <div className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
           <h2 className="text-success mb-3">Success</h2>
-          <p className="fw-medium">Your account has been created</p>
+          <p className="fw-medium mb-4">Account created. Logging you in now.</p>
+          <div className="loader-dots"></div>
+          <span className="visually-hidden">Loading...</span>
         </div>
         <Stack gap={5}>          
           <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>

@@ -28,19 +28,18 @@ const handler = NextAuth({
         const database = client.db('spanishdex');
         const collection = database.collection('users');
 
-        const userSearchResult = await collection.findOne({username: { $regex: `^${cleanUsername}$`, $options: 'i' }})
-        const userSearchResult2 = await collection.findOne({email: { $regex: `^${cleanUsername}$`, $options: 'i' }})
+        const userSearchResult = await collection.findOne({ $or: [{username: { $regex: `^${cleanUsername}$`, $options: 'i' }}, {email: { $regex: `^${cleanUsername}$`, $options: 'i' }}] } )
 
-        if (!userSearchResult && !userSearchResult2) {
+        if (!userSearchResult) {
           await client.close();
           return null
         }
-
-        const passwordCorrect = await compare(credentials.password, userSearchResult.password);
+        
+        const passwordCorrect = await compare(credentials?.password || "", userSearchResult.password);
 
         if (passwordCorrect) {
           await client.close();
-          return { id: userSearchResult._id, username: userSearchResult.username }
+          return { name: userSearchResult.username }
         }
 
         await client.close();
