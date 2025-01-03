@@ -394,6 +394,8 @@ div[role="dialog"].modal {
 .profile-picture > img {
     height: $spacer * 4;
     width: $spacer * 4;
+    margin-left: auto;
+    display: block;
 }
 
 .profile-picture:focus-visible {

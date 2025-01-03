@@ -1,14 +1,15 @@
 'use client'
 
-import CreateAccountModal from "./CreateAccountModal"
-import LogInModal from "./LogInModal"
-import ResetPasswordModal from "./ResetPasswordModal";
+import CreateAccountModal from "../modals/CreateAccountModal"
+import LogInModal from "../modals/LogInModal"
+import ResetPasswordModal from "../modals/ResetPasswordModal";
 import Button from 'react-bootstrap/Button'
 import { useState } from "react";
-import { signOut } from "next-auth/react";
 import ProfileDropdown from "./ProfileDropdown";
+import LogOutModal from "../modals/LogOutModal";
 
 const HeaderButtons = (props) => {
+  // Log In Modal State
   const [logInModalOpenState, setLogInModalOpenState] = useState(false);
 
   const openLogInModal = () => {
@@ -18,6 +19,7 @@ const HeaderButtons = (props) => {
     setLogInModalOpenState(false);
   };
 
+  // Sign Up Modal State
   const [signUpModalOpenState, setSignUpModalOpenState] = useState(false);
 
   const openSignUpModal = () => {
@@ -27,6 +29,7 @@ const HeaderButtons = (props) => {
     setSignUpModalOpenState(false);
   };
 
+  // Reset Password Modal State
   const [resetPasswordModalOpenState, setResetPasswordModalOpenState] = useState(false);
 
   const openResetPasswordModal = () => {
@@ -34,6 +37,16 @@ const HeaderButtons = (props) => {
   }
   const closeResetPasswordModal = () => {
     setResetPasswordModalOpenState(false);
+  }
+
+  // Log Out Modal State
+  const [logOutModalOpenState, setLogOutModalOpenState] = useState(false);
+
+  const openLogOutModal = () => {
+    setLogOutModalOpenState(true);
+  }
+  const closeLogOutModal = () => {
+    setLogOutModalOpenState(false);
   }
       
   console.log(props.session)
@@ -51,20 +64,18 @@ const HeaderButtons = (props) => {
       }
 
       { !!props.session ?
-        <Button className="ms-auto" variant="primary" onClick={() => {signOut()}}>
-          Log Out
-        </Button>
+        <ProfileDropdown className="ms-auto" onClick={openLogOutModal}/>
         :
         <Button className="ms-auto" variant="primary" onClick={openLogInModal}>
           Log In
         </Button>
       }
-
-      <ProfileDropdown className="ms-auto"/>
+      
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
       <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} openResetPasswordModal={openResetPasswordModal}/>
       <ResetPasswordModal handleClose={closeResetPasswordModal} show={resetPasswordModalOpenState} openLogInModal={openLogInModal}/>
+      <LogOutModal handleClose={closeLogOutModal} show={logOutModalOpenState}/>
     </>
   );
 };
