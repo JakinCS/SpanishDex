@@ -240,6 +240,7 @@ $form-feedback-icon-invalid:  none;
 
 
 
+
 /* ----------------------- MODALS ------------------------- */
 
 $modal-inner-padding: $spacer * 0;
@@ -259,6 +260,28 @@ $modal-xl: 1140px;
 $modal-backdrop-opacity: .25;
 
 $modal-transition: transform .15s ease-in-out;
+
+
+
+
+
+/* ------------------- DROPDOWNS ------------------- */
+
+$dropdown-min-width: 9.375rem;
+$dropdown-padding-x: 0.625rem;
+$dropdown-padding-y: 0.625rem;
+$dropdown-spacer: .625rem;
+$dropdown-bg: $white;
+$dropdown-border-color: $gray-150;
+$dropdown-border-width: 0.125rem;
+
+$dropdown-link-hover-bg: $gray-100;
+$dropdown-link-active-color: $blue-900;
+$dropdown-link-active-bg: $gray-100;
+
+$dropdown-item-padding-y: 0.25rem;
+$dropdown-item-padding-x: $spacer;
+
 
 
 

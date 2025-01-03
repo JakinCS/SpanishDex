@@ -6,6 +6,7 @@ import ResetPasswordModal from "./ResetPasswordModal";
 import Button from 'react-bootstrap/Button'
 import { useState } from "react";
 import { signOut } from "next-auth/react";
+import ProfileDropdown from "./ProfileDropdown";
 
 const HeaderButtons = (props) => {
   const [logInModalOpenState, setLogInModalOpenState] = useState(false);
@@ -59,9 +60,7 @@ const HeaderButtons = (props) => {
         </Button>
       }
 
-      <div className="rounded-circle" style={{height: '40px', width: '40px', backgroundImage: 'url(/profilepic.jpg)', backgroundSize: 'cover', backgroundPosition: 'center'}}>
-
-      </div>
+      <ProfileDropdown className="ms-auto"/>
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
       <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} openResetPasswordModal={openResetPasswordModal}/>

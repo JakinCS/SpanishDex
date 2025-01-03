@@ -254,6 +254,26 @@ div[role="dialog"].modal {
 
 
 
+/* ------------------- DROPDOWNS ------------------- */
+
+.dropdown-menu > a {
+    border-radius: 0.4375rem;
+
+    &.danger-item {
+        color: $danger;
+        font-weight: $font-weight-medium;
+        &:hover, &:focus, &:active, &.active {
+            background-color: $white;
+            border: solid 2px $danger;
+            padding: 0.125rem .5rem;
+        }
+    }
+}
+
+
+
+
+
 /* ------------------- ALERTS ------------------- */
 
 .alert {
@@ -363,6 +383,31 @@ div[role="dialog"].modal {
       60%{background-position:0%  50%, 50% 100%,100%   0%}
       80%{background-position:0%  50%, 50%  50%,100% 100%}
   }
+
+
+
+
+
+
+  /* ------------------- Navbar Profile Picture ------------------- */
+
+.profile-picture > img {
+    height: $spacer * 4;
+    width: $spacer * 4;
+}
+
+.profile-picture:focus-visible {
+    outline: 0.125rem solid $blue-900;
+    outline-offset: 0.125rem;
+    border-radius: .4375rem;
+}
+
+.profile-picture:hover, .profile-picture:focus-visible, .profile-picture:focus {
+    & > img {
+        filter: brightness(0.9);
+    }
+}
+
 
 
 
