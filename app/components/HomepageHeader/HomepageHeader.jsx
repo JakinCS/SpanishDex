@@ -24,7 +24,7 @@ function HomepageHeader(props) {
         <NavbarToggle />
         <Navbar.Collapse id="homepage-nav">
           <Nav className="ms-auto my-2 column-gap-25 row-gap-3">
-            <HeaderButtons session={props.session}/>
+            <HeaderButtons user={props.user}/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

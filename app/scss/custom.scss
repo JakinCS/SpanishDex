@@ -256,6 +256,10 @@ div[role="dialog"].modal {
 
 /* ------------------- DROPDOWNS ------------------- */
 
+.dropdown-menu {
+    max-width: 17.5rem;
+}
+
 .dropdown-menu > a {
     border-radius: 0.4375rem;
 
@@ -268,6 +272,11 @@ div[role="dialog"].modal {
             padding: 0.125rem .5rem;
         }
     }
+}
+
+.dropdown-menu > p {
+    padding: 0.1875rem 0.625rem;
+    word-wrap: break-word;
 }
 
 
@@ -398,6 +407,17 @@ div[role="dialog"].modal {
     display: block;
 }
 
+.profile-picture > div {
+    height: $spacer * 4;
+    width: $spacer * 4;
+    margin-left: auto;
+    display: block;
+    & > span {
+        font-size: 1.5rem;
+        font-weight: $font-weight-medium;
+    }
+}
+
 .profile-picture:focus-visible {
     outline: 0.125rem solid $blue-900;
     outline-offset: 0.125rem;
@@ -405,6 +425,7 @@ div[role="dialog"].modal {
 }
 
 .profile-picture:hover, .profile-picture:focus-visible, .profile-picture:focus {
+    color: initial;
     & > img {
         filter: brightness(0.9);
     }

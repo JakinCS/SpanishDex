@@ -61,10 +61,8 @@ function LogOutModal(props) {
 
     } catch (error) {
       console.log('error caught: ' + error);
-      setFormState(prevState => ({...prevState, error: true, errorMessage: 'Sign out failed. Please try again.', errorAcknowledged: false}))
+      setFormState(prevState => ({...prevState, error: true, errorMessage: 'Sign out failed. Please try again.', errorAcknowledged: false, isLoading: false}));
 
-    } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
     }
   }
 

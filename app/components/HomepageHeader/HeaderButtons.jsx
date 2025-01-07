@@ -48,12 +48,10 @@ const HeaderButtons = (props) => {
   const closeLogOutModal = () => {
     setLogOutModalOpenState(false);
   }
-      
-  console.log(props.session)
 
   return (
     <>
-      { !!props.session ? 
+      { !!props.user ? 
         <Button className="ms-auto" id='dashboardButton' variant="outline-primary" >
           Go To Dashboard
         </Button>
@@ -63,8 +61,8 @@ const HeaderButtons = (props) => {
         </Button>
       }
 
-      { !!props.session ?
-        <ProfileDropdown className="ms-auto" onClick={openLogOutModal}/>
+      { !!props.user ?
+        <ProfileDropdown className="ms-auto" user={props.user} onClick={openLogOutModal}/>
         :
         <Button className="ms-auto" variant="primary" onClick={openLogInModal}>
           Log In
