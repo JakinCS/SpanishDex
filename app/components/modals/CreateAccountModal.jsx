@@ -251,7 +251,6 @@ function CreateAccountModal(props) {
     let responseStatus; // Holds the status of the response
 
     try {
-      // const response = await fetch('/api/auth/signup')
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         body: JSON.stringify(bodyToSend)
