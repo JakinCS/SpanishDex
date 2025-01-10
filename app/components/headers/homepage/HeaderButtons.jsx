@@ -1,12 +1,12 @@
 'use client'
 
-import CreateAccountModal from "../modals/CreateAccountModal"
-import LogInModal from "../modals/LogInModal"
-import ResetPasswordModal from "../modals/ResetPasswordModal";
+import CreateAccountModal from "../../modals/CreateAccountModal"
+import LogInModal from "../../modals/LogInModal"
+import ResetPasswordModal from "../../modals/ResetPasswordModal";
 import Button from 'react-bootstrap/Button'
 import { useState } from "react";
-import ProfileDropdown from "./ProfileDropdown";
-import LogOutModal from "../modals/LogOutModal";
+import ProfileDropdown from "../ProfileDropdown";
+import LogOutModal from "../../modals/LogOutModal";
 
 const HeaderButtons = (props) => {
   // Log In Modal State

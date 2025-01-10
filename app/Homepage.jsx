@@ -1,32 +1,14 @@
-import HomepageHeader from './components/HomepageHeader/HomepageHeader'
 import HomepageSection from './components/HomepageSection'
 import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'
 import HomepageFooter from './components/HomepageFooter';
 import GetStartedButton from './components/GetStartedButton';
-import { getServerSession } from 'next-auth';
-import { MongoClient } from 'mongodb';
 
 async function Homepage() {
-
-  // Get session information
-  const session = await getServerSession();
-
-  let findResult;
-
-  if (!!session) {
-    const client = new MongoClient(process.env.MONGODB_URI);
-    const database = client.db('spanishdex');
-    const collection = database.collection('users');
-    findResult = await collection.findOne({username: session.user.name}, {projection: {_id: 0, username: 1, profile_picture: 1, profile_colors: 1}});
-  } else {
-    findResult = false;
-  }
 
 
   return (
     <>
-      <HomepageHeader user={findResult}/>
       <HomepageSection py='100' backgroundColor='almost-white'>
         <h1 className="text-center" style={{maxWidth: '43.75rem'}}>Flashcards Built for Maximized Learning</h1>
         <p className="text-center" style={{maxWidth: '43.75rem'}}>

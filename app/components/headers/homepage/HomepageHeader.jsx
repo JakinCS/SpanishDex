@@ -2,7 +2,7 @@
 
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavbarToggle from "./NavbarToggle";
+import NavbarToggle from "../NavbarToggle";
 import HeaderButtons from "./HeaderButtons";
 
 function HomepageHeader(props) {

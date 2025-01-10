@@ -1,4 +1,3 @@
-
 const ResetPassword = async ({ params }) => {
 
   const { token } = await params;
