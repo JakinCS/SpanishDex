@@ -39,12 +39,15 @@ export async function POST(request) {
       return NextResponse.json({ success: true }, { status: 200 })
     }
 
+    // Create the reset token and the expiration date
     const resetToken = crypto.randomBytes(20).toString('hex');
     const databaseResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
     const tokenExpirationDate = Date.now() + 3600000; // Expire the token in 1 hour.
 
+    // Add the reset token and expiration date information to the database
     const updateResult = await collection.updateOne({email: lowercaseEmail}, { $set: {reset_token: databaseResetToken, reset_token_expiry: tokenExpirationDate}})
 
+    // create a URL for the user to use to reset their password
     const resetURL = `${process.env.NEXTAUTH_URL}/reset-password/${resetToken}`
 
     console.log(resetURL)
@@ -55,7 +58,7 @@ export async function POST(request) {
       to: lowercaseEmail,
       from: 'SpanishDex <spanishdex@gmail.com>',
       subject: 'Reset your SpanishDex password',
-      html: email_template('www.google.com')
+      html: email_template(resetURL)
     }
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
