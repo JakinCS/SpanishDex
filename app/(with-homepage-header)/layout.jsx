@@ -1,8 +1,9 @@
 import { getServerSession } from 'next-auth';
 import { MongoClient } from 'mongodb';
 import HomepageHeader from '../components/headers/homepage/HomepageHeader';
+import HomepageFooter from '../components/HomepageFooter';
 
-export default async function homepageHeaderLayout({ children }) {
+export default async function homepageLayout({ children }) {
 
   // Get session information
   const session = await getServerSession();
@@ -18,10 +19,22 @@ export default async function homepageHeaderLayout({ children }) {
     findResult = false;
   }
 
+  const containerStyles = {
+    height: 'calc(100vh - 82px)',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'space-between'
+  }
+
   return (
     <>
       <HomepageHeader user={findResult}/>
-      {children}
+      <div style={containerStyles}>
+        <div>
+          {children}
+        </div>      
+        <HomepageFooter />
+      </div>
     </>
   );
 }

@@ -73,7 +73,6 @@ async function Homepage() {
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
         <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>
       </HomepageSection>
-      <HomepageFooter />
     </>
   )
 }

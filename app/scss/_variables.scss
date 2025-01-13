@@ -57,6 +57,9 @@ $primary: $blue;
 $secondary: $green-300;
 $light: #FFFFFF00;
 
+// Change the background color of the body
+$body-bg: $almost-white;
+
 
 
 
@@ -308,6 +311,3 @@ $btn-close-disabled-opacity: .5 !default;
 
 
 /* -------------- MISCELLANEOUS ----------------  */
-
-// Change the background color of the body
-$body-bg: $very-light-blue;

@@ -130,7 +130,6 @@ function CreateAccountModal(props) {
   }
 
   // This function checks whether the two password fields are match.
-  // Also, this function will update the state based on the results.
   const checkPasswordsMatch = () => {
     if (formValues.password.value != formValues.password2.value) return false;
     return true;    
