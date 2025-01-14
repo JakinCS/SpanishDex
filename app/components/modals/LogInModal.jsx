@@ -106,8 +106,6 @@ function LogInModal(props) {
       password: formValues.password.value
     }
 
-    console.log(bodyToSend)
-
     // Set loading state to show a loading spinner
     setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
 
@@ -120,8 +118,6 @@ function LogInModal(props) {
         password: bodyToSend.password,
         redirect: false,
       })
-
-      console.log(response);
 
       let responseStatus = response.status;
 
@@ -140,7 +136,6 @@ function LogInModal(props) {
       const redirect = setTimeout(() => {router.push('/dashboard')}, 1500)
 
     } catch (error) {
-      console.log('error caught: ' + error);
       setFormState(prevState => ({...prevState, serverError: true, serverMessage: error, errorAcknowledged: false}))
 
     } finally {

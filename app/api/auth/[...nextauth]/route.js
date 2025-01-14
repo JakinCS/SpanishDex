@@ -15,8 +15,6 @@ const handler = NextAuth({
         password: {}
       },
       async authorize(credentials, req) {
-        console.log({ credentials })
-
         // Define the client variable, holding a new MongoClient instance  
         const client = new MongoClient(process.env.MONGODB_URI);
 

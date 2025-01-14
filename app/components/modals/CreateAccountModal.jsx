@@ -211,6 +211,7 @@ function CreateAccountModal(props) {
     }
   }
 
+  let serverError = '';  // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   // Function for resetting the state of the form (useful when triggered on 'modal open')
   const resetState = () => {
     setFormValues({
@@ -261,6 +262,7 @@ function CreateAccountModal(props) {
       // Check if the response is ok. If it is not, AND if the response is in JSON, throw the error within the JSON object.
       if (!response.ok && response.headers.get('content-type') === 'application/json') {
         const json = await response.json();
+        serverError = JSON.stringify(json.serverError);
         throw(json.error);
       } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
         throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
@@ -286,10 +288,7 @@ function CreateAccountModal(props) {
         props.openLogInModal()
       }
 
-      // const closeModal = setTimeout(props.handleClose, 2000);
-
     } catch (error) {
-      console.log('error caught: ' + error);
       setFormState(prevState => ({...prevState, serverError: true, serverMessage: error, errorAcknowledged: false}))
 
       // If the error is a 409, set the error state for those form fields
@@ -323,6 +322,7 @@ function CreateAccountModal(props) {
             <Alert.Heading>Error</Alert.Heading>
             {formState.serverMessage}
           </Alert>
+          <p className="d-none hiddenError">{serverError}</p>
           <p>Sign up for a SpanishDex account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="createAccountUsername">

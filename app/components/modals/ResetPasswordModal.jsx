@@ -49,6 +49,7 @@ const ResetPasswordModal = (props) => {
     });
   }
 
+  let serverError = ''; // holds the raw server error for putting in a hidden paragraph for debugging purposes.
   // Handles the sending of the reset password email.
   const handleSendEmail = async (e) => {
     e.preventDefault();
@@ -60,7 +61,7 @@ const ResetPasswordModal = (props) => {
 
       // await new Promise((resolve) => {setTimeout(resolve, 2000)})
 
-      const response = await fetch('/api/auth/resetpassword', {
+      const response = await fetch('/api/auth/request-reset-password', {
         method: 'POST',
         body: JSON.stringify({email: email})
       })
@@ -76,7 +77,7 @@ const ResetPasswordModal = (props) => {
 
 
     } catch (error) {
-      console.log('error caught: ' + error);
+      serverError = JSON.stringify(error);
       setFormState(prevState => ({...prevState, error: true, errorMessage: 'Email failed to send. Please try again.', errorAcknowledged: false}));
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
@@ -94,6 +95,7 @@ const ResetPasswordModal = (props) => {
             <Alert.Heading>Error</Alert.Heading>
             {formState.errorMessage}
           </Alert>
+          <p className="d-none hiddenError">{serverError}</p>
           <p>Please enter your email address below, and we will send you an email with instructions for resetting your password.</p>
           <Form>
             <Form.Group className='mb-5' controlId="resetPasswordEmail">

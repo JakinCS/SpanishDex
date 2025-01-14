@@ -46,7 +46,6 @@ export async function POST(request) {
 
   try {
     const {username, email, password, password2} = await request.json();
-    console.log({username, email, password, password2})
 
     // Sanitize the input data as a safety measure
     const cleanUsername = sanitize(username);
@@ -63,7 +62,7 @@ export async function POST(request) {
     if (!validationResult.valid) {
       errorMessage = 'Sign up failed. ' + validationResult.message;
       await client.close();
-      return NextResponse.json({ error: errorMessage }, { status: validationResult.status });
+      return NextResponse.json({ error: errorMessage, serverError: errorMessage }, { status: validationResult.status });
     }
     
     // Convert the email to lower case
@@ -78,15 +77,12 @@ export async function POST(request) {
     // Insert the user into the database
     const result = await collection.insertOne({username: cleanUsername, email: lowercaseEmail, password: hashedPassword, date_created: new Date(), profile_picture: null, profile_colors: [userColor, contrastedColor(userColor)]})
 
-    console.log(result)
-
     await client.close();
     return NextResponse.json({ userid: result.insertedId, message: 'Sign up successful' }, {status: 201})
 
   } catch (error) {
-    console.log(error)
     await client.close();
-    return NextResponse.json({ error: errorMessage }, { status: 500 })
+    return NextResponse.json({ error: errorMessage, serverError: error }, { status: 500 })
   }
   
 }

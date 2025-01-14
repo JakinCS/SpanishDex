@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import sanitize from 'mongo-sanitize';
 import { MongoClient } from "mongodb";
-import nodemailer from 'nodemailer';
 import sgMail from '@sendgrid/mail';
 import email_template from './emailtemplate';
 
@@ -25,16 +24,13 @@ export async function POST(request) {
     
     // Convert the email to lower case
     const lowercaseEmail = cleanEmail.toLowerCase();
-    console.log(lowercaseEmail)
 
     // Check for a user that has that email
     let searchResult = await collection.findOne({email: lowercaseEmail});
-    console.log(searchResult)
 
     // Return early if no user exists with that email.
     // Return success so that the user doesn't know if the email exists in the database.
     if (!searchResult) {
-      console.log('Not found')
       await client.close();
       return NextResponse.json({ success: true }, { status: 200 })
     }
@@ -50,8 +46,6 @@ export async function POST(request) {
     // create a URL for the user to use to reset their password
     const resetURL = `${process.env.NEXTAUTH_URL}/reset-password/${resetToken}`
 
-    console.log(resetURL)
-
     const body = "Reset your password by clicking on the following url: " + resetURL;
 
     const emailOptions = {
@@ -66,11 +60,8 @@ export async function POST(request) {
     try {
       // Send the email using the transport with the options.
       const sendResponse = await sgMail.send(emailOptions)
-      console.log(sendResponse)
 
     } catch(error) {
-      console.log(error)
-
       // Remove the reset token and expiry if the email fails to send
       const removeResult = await collection.updateOne({email: lowercaseEmail}, { $set: {reset_token: null, reset_token_expiry: null}})
     }
@@ -79,7 +70,6 @@ export async function POST(request) {
     return NextResponse.json({ success: true }, { status: 200 })
 
   } catch (error) {
-    console.log(error)
     await client.close();
     return NextResponse.json({ error: error }, { status: 500 })
   }

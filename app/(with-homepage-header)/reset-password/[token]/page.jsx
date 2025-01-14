@@ -1,19 +1,67 @@
+
 import HomepageSection from "@/app/components/HomepageSection";
 import ResetPasswordForm from "@/app/components/ResetPasswordForm";
+import crypto from "crypto";
+import { MongoClient } from "mongodb";
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation'
 
 const ResetPassword = async ({ params }) => {
 
+  // Get session information
+  const session = await getServerSession();
+
+  // If someone is logged in, redirect to the dashboard. There's no need to reset the password
+  if (!!session) {
+    redirect(`/dashboard`)
+  }
+
   const { token } = await params;
 
-  console.log(token)
+  const verifyToken = async () => {
+    // Define the client variable, holding a new MongoClient instance  
+    const client = new MongoClient(process.env.MONGODB_URI);
+
+    try {
+      // Connect to the database
+      await client.connect();
+      const database = client.db('spanishdex');
+      const collection = database.collection('users');
+
+      const hashedToken = crypto.createHash("sha256").update(token).digest('hex');
+
+      const user = await collection.findOne({reset_token: hashedToken, reset_token_expiry: {$gt: Date.now()}})
+
+      if (!user) {
+        await client.close();
+        return {error: true, errorMessage: 'Your reset password link is invalid or it has expired.', userData: {}}
+      }
+      return {error: false, errorMessage: '', userUsername: user.username}
+
+    } catch (error) {
+      await client.close();
+      return {error: true, errorMessage: 'Unexpected error occurred. Please try again later.', serverError: error, userData: {}}
+    }
+  }
+
+  const results = await verifyToken();
 
   return (
-    <>
-      <HomepageSection py='80' backgroundColor='almost-white'>
-        <h1 className="fs-2">Reset Password</h1>
-        <p>Enter your new password below.</p>
-        <ResetPasswordForm />
-      </HomepageSection>
+    <>      
+      {
+        results.error ?
+        <HomepageSection py='80' backgroundColor='almost-white'>
+          <h1 className="fs-2">Reset Password</h1>
+          <p className="text-danger fw-semibold">Error: {results.errorMessage}</p>
+          <p className="d-none">{results.serverError}</p> {/* This paragraph holds the full version (if available) of any error */}
+        </HomepageSection>
+        :
+        <HomepageSection py='80' backgroundColor='almost-white'>
+          <h1 className="fs-2">Reset Password</h1>
+          <p>Enter your new password below.</p>
+          <ResetPasswordForm username={results.userUsername} token={token}/>
+        </HomepageSection>
+      }
     </>
   )
 }

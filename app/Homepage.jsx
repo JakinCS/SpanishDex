@@ -1,7 +1,6 @@
 import HomepageSection from './components/HomepageSection'
 import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'
-import HomepageFooter from './components/HomepageFooter';
 import GetStartedButton from './components/GetStartedButton';
 
 async function Homepage() {
