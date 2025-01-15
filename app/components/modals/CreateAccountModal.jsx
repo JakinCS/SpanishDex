@@ -211,7 +211,6 @@ function CreateAccountModal(props) {
     }
   }
 
-  let serverError = '';  // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   // Function for resetting the state of the form (useful when triggered on 'modal open')
   const resetState = () => {
     setFormValues({
@@ -228,7 +227,8 @@ function CreateAccountModal(props) {
       showSuccess: false
     });
   }
-
+  
+  const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   const createAccount = async () => {
     let bodyToSend = {
       username: formValues.username.value, 
@@ -262,7 +262,7 @@ function CreateAccountModal(props) {
       // Check if the response is ok. If it is not, AND if the response is in JSON, throw the error within the JSON object.
       if (!response.ok && response.headers.get('content-type') === 'application/json') {
         const json = await response.json();
-        serverError = JSON.stringify(json.serverError);
+        setServerError(JSON.stringify(json.serverError));
         throw(json.error);
       } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
         throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
@@ -289,7 +289,7 @@ function CreateAccountModal(props) {
       }
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error, errorAcknowledged: false}))
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
 
       // If the error is a 409, set the error state for those form fields
       if (responseStatus === 409) {
@@ -322,7 +322,7 @@ function CreateAccountModal(props) {
             <Alert.Heading>Error</Alert.Heading>
             {formState.serverMessage}
           </Alert>
-          <p className="d-none hiddenError">{serverError}</p>
+          <p className="d-none text-break hiddenError">{serverError}</p>
           <p>Sign up for a SpanishDex account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="createAccountUsername">

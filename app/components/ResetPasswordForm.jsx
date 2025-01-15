@@ -135,6 +135,7 @@ const ResetPasswordForm = (props) => {
   }
 
 
+  const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   // The function run when the 'Reset Password' button is clicked.
   // This function handles the resetting of the user password.
   const handleResetPassword = async (e) => {
@@ -162,8 +163,11 @@ const ResetPasswordForm = (props) => {
       // If there is a problem with the response, then throw an error.
       if (!response.ok && response.headers.get('content-type') === 'application/json') {
         const json = await response.json();
+        setServerError(JSON.stringify(json.serverError));
+
         if (response.status == 400) throw(json.error);
-      } else if (!response.ok) {
+      }      
+      if (!response.ok) {
         throw('Password reset failed. Error: ' + response.status + '. Please try again later.');
       }
             
@@ -177,7 +181,7 @@ const ResetPasswordForm = (props) => {
       })
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error, errorAcknowledged: false}))
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
 
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
@@ -197,6 +201,7 @@ const ResetPasswordForm = (props) => {
           <Alert.Heading>Success</Alert.Heading>
           Password has been reset successfully.
         </Alert>
+        <p className="d-none text-break hiddenError">{serverError}</p>
         <Form.Group className="mb-5" controlId="newPassword">
           <Form.Label className="fw-medium">Password</Form.Label>
           <Container className="d-flex gap-3 p-0">

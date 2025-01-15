@@ -42,7 +42,7 @@ function LogOutModal(props) {
   }
 
 
-  let serverError = ''; // holds the raw server error for putting in a hidden paragraph for debugging purposes.
+  const [serverError, setServerError] = useState(''); // holds the raw server error for putting in a hidden paragraph for debugging purposes.
   // Function for handling the logging in of the user.
   const logIn = async () => {
 
@@ -61,7 +61,7 @@ function LogOutModal(props) {
       router.push('/');
 
     } catch (error) {
-      serverError = JSON.stringify(error);
+      setServerError(JSON.stringify(error));
       setFormState(prevState => ({...prevState, error: true, errorMessage: 'Sign out failed. Please try again.', errorAcknowledged: false, isLoading: false}));
 
     }
@@ -78,7 +78,7 @@ function LogOutModal(props) {
             <Alert.Heading>Error</Alert.Heading>
             {formState.errorMessage}
           </Alert>
-          <p className="d-none hiddenError">{serverError}</p>
+          <p className="d-none text-break hiddenError">{serverError}</p>
           <p>Are you sure you want to log out of SpanishDex?</p>
           <Container fluid className="d-flex gap-4 justify-content-end p-0">
             <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>

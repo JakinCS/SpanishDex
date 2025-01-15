@@ -136,7 +136,7 @@ function LogInModal(props) {
       const redirect = setTimeout(() => {router.push('/dashboard')}, 1500)
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error, errorAcknowledged: false}))
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
 
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));

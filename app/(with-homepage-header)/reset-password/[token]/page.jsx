@@ -40,7 +40,7 @@ const ResetPassword = async ({ params }) => {
 
     } catch (error) {
       await client.close();
-      return {error: true, errorMessage: 'Unexpected error occurred. Please try again later.', serverError: error, userData: {}}
+      return {error: true, errorMessage: 'Unexpected error occurred. Please try again later.', serverError: error.toString(), userData: {}}
     }
   }
 
@@ -53,7 +53,7 @@ const ResetPassword = async ({ params }) => {
         <HomepageSection py='80' backgroundColor='almost-white'>
           <h1 className="fs-2">Reset Password</h1>
           <p className="text-danger fw-semibold">Error: {results.errorMessage}</p>
-          <p className="d-none">{results.serverError}</p> {/* This paragraph holds the full version (if available) of any error */}
+          <p className="d-none text-break">{results.serverError}</p> {/* This paragraph holds the full version (if available) of any error */}
         </HomepageSection>
         :
         <HomepageSection py='80' backgroundColor='almost-white'>
