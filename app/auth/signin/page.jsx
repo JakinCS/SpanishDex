@@ -10,7 +10,7 @@ const SignIn = async () => {
   const session = await getServerSession(options);
 
   return (
-    <div className='mx-auto mt-50' style={{maxWidth: '35rem'}}>
+    <div className='mx-auto mt-50' style={{maxWidth: '31.25rem'}}>
       {!!session ? 
         <div className='mt-25 bg-white p-50 rounded text-center'>
           <h1 className='fs-2 pb-5'>Log In</h1>

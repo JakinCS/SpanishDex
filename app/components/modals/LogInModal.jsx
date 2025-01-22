@@ -9,6 +9,8 @@ import IconButton from "../IconButton";
 import { useEffect, useState } from "react";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import GoogleAuthButton from "../GoogleAuthButton";
+import OrSeparator from "../OrSeparator";
 
 function LogInModal(props) {
   const router = useRouter();
@@ -22,6 +24,7 @@ function LogInModal(props) {
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
+    loadingType: '',
     serverError: false,
     serverMessage: '',
     errorAcknowledged: false,
@@ -84,6 +87,7 @@ function LogInModal(props) {
     });
     setFormState({
       isLoading: false,
+      loadingType: '',
       serverError: false,
       serverMessage: '',
       errorAcknowledged: false,
@@ -91,6 +95,28 @@ function LogInModal(props) {
     });
   }
 
+
+  // This function handles the logging in with Google logic
+  const logInWithGoogle = async () => {
+
+    // Set loading state to show a loading spinner
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
+
+    try {      
+      // Run the signIn function to log in with Google
+      await signIn('google', {callbackUrl: '/dashboard'})
+
+      // Success. Now set the server error state to false.
+      setFormState(prevState => ({...prevState, serverError: false}))
+
+    } catch (error) {
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+
+    } finally {
+      setFormState(prevState => ({...prevState, isLoading: false}));
+    }
+
+  }
 
   // Function for handling the logging in of the user.
   const logIn = async () => {
@@ -107,7 +133,7 @@ function LogInModal(props) {
     }
 
     // Set loading state to show a loading spinner
-    setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
 
     try {
 
@@ -148,7 +174,7 @@ function LogInModal(props) {
   }
 
   return (
-    <Modal id='logInModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size='sm' id='logInModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Log In</Modal.Title>
       </Modal.Header>
@@ -162,7 +188,6 @@ function LogInModal(props) {
             <Alert.Heading>Error</Alert.Heading>
             {formState.serverMessage}
           </Alert>
-          <p>Log in to SpanishDex with your existing account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="logInUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
@@ -171,7 +196,7 @@ function LogInModal(props) {
                 Username is required
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="logInPassword">
+            <Form.Group controlId="logInPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
@@ -191,16 +216,12 @@ function LogInModal(props) {
                 }
               </p>
             </Form.Group>
-            <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={logIn} disabled={!(formValues.username.valid && formValues.password.valid) || formState.isLoading}>
-                {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
-              </Button>
-              <Button variant="primary" onClick={()=>{signIn('google', {callbackUrl: '/dashboard'})}}>Google</Button>
-            </Container>
           </Form>
+          <Button variant="primary" onClick={logIn} disabled={!(formValues.username.valid && formValues.password.valid) || formState.isLoading}>
+            {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
+          </Button>
+          <OrSeparator />
+          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={logInWithGoogle}/>
           <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <a href='#' onClick={() => {props.handleClose(); props.openSignUpModal()}}>Sign Up</a>}</p>
         </Stack>
       </Modal.Body>

@@ -40,7 +40,7 @@ const SignOut = () => {
   }
 
   return (
-    <div className='mx-auto mt-50' style={{maxWidth: '35rem'}}>
+    <div className='mx-auto mt-50' style={{maxWidth: '31.25rem'}}>
       <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
         <Alert.Heading>Error</Alert.Heading>
         {formState.serverMessage}

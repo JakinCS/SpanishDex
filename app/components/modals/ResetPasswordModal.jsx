@@ -79,7 +79,7 @@ const ResetPasswordModal = (props) => {
   }
 
   return (
-    <Modal id='resetPasswordModal' show={props.show} onShow={resetState} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size='sm' id='resetPasswordModal' show={props.show} onShow={resetState} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Reset Password</Modal.Title>
       </Modal.Header>
@@ -90,14 +90,14 @@ const ResetPasswordModal = (props) => {
             {formState.errorMessage}
           </Alert>
           <p className="d-none text-break hiddenError">{serverError}</p>
-          <p>Please enter your email address below, and we will send you an email with instructions for resetting your password.</p>
+          <p>Please enter your email address below, and we'll send you a link to reset your password.</p>
           <Form>
             <Form.Group className='mb-5' controlId="resetPasswordEmail">
               <Form.Label className="fw-medium">Email Address</Form.Label>
               <Form.Control type="text" onChange={(e) => setEmail(e.target.value)} placeholder="email address" />
             </Form.Group>     
 
-            {formState.showSuccess && <p className="mb-5">Email sent. If you don't receive the email, you can {!email || formState.isLoading ? <span className="fw-medium">resend the email</span> : <a href="" onClick={handleSendEmail}>resend the email</a>}.</p>} 
+            {formState.showSuccess && <p className="mb-5">Email sent.<br /> Didn't receive the email? {!email || formState.isLoading ? <span className="fw-medium">Resend Email</span> : <a href="" onClick={handleSendEmail}>Resend Email</a>}</p>} 
 
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               {formState.showSuccess ?

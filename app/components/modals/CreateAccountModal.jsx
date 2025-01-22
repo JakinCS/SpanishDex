@@ -9,6 +9,8 @@ import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from 'react'
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import GoogleAuthButton from "../GoogleAuthButton";
+import OrSeparator from "../OrSeparator";
 
 function CreateAccountModal(props) {
   const router = useRouter();
@@ -26,6 +28,7 @@ function CreateAccountModal(props) {
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
+    loadingType: '',
     serverError: false,
     serverMessage: '',
     errorAcknowledged: false,
@@ -221,14 +224,39 @@ function CreateAccountModal(props) {
     });
     setFormState({
       isLoading: false,
+      loadingType: '',
       serverError: false,
       serverMessage: '',
       errorAcknowledged: false,
       showSuccess: false
     });
   }
+
+
+  // This function handles the logging in with Google logic
+  const signUpWithGoogle = async () => {
+
+    // Set loading state to show a loading spinner
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
+
+    try {      
+      // Run the signIn function to log in with Google
+      await signIn('google', {callbackUrl: '/dashboard'})
+
+      // Success. Now set the server error state to false.
+      setFormState(prevState => ({...prevState, serverError: false}))
+
+    } catch (error) {
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+
+    } finally {
+      setFormState(prevState => ({...prevState, isLoading: false}));
+    }
+
+  }
   
   const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
+  // This function handles the logic for creating an account. It runs on the click of the sign up button
   const createAccount = async () => {
     let bodyToSend = {
       username: formValues.username.value, 
@@ -246,7 +274,7 @@ function CreateAccountModal(props) {
 
 
     // Set loading state
-    setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
 
     let responseStatus; // Holds the status of the response
 
@@ -306,7 +334,7 @@ function CreateAccountModal(props) {
 
 
   return (
-    <Modal id='signUpModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size='sm' id='signUpModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Create Account</Modal.Title>
       </Modal.Header>
@@ -323,7 +351,6 @@ function CreateAccountModal(props) {
             {formState.serverMessage}
           </Alert>
           <p className="d-none text-break hiddenError">{serverError}</p>
-          <p>Sign up for a SpanishDex account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
@@ -353,7 +380,7 @@ function CreateAccountModal(props) {
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="createAccountPassword2">
+            <Form.Group controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
@@ -367,15 +394,12 @@ function CreateAccountModal(props) {
                 {formValues.password2.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
-                {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
-              </Button>
-            </Container>
           </Form>
+          <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
+            {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
+          </Button>
+          <OrSeparator />
+          <GoogleAuthButton buttonText='signup' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={signUpWithGoogle}/>
           <p>Already have an account? {formState.isLoading ? <span className="fw-medium">Log In</span> : <a href="#" onClick={() => {props.handleClose(); props.openLogInModal()}}>Log In</a>}</p>
         </Stack>
       </Modal.Body>

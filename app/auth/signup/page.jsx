@@ -10,6 +10,8 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import OrSeparator from '@/app/components/OrSeparator';
+import GoogleAuthButton from '@/app/components/GoogleAuthButton';
 
 
 const SignUp = () => {
@@ -19,6 +21,7 @@ const SignUp = () => {
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
+    loadingType: '',
     serverError: false,
     serverMessage: '',
     errorAcknowledged: false
@@ -204,6 +207,28 @@ const SignUp = () => {
     }
   }
 
+
+  // This function handles the logging in with Google logic
+  const signUpWithGoogle = async () => {
+
+    // Set loading state to show a loading spinner
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
+
+    try {      
+      // Run the signIn function to log in with Google
+      await signIn('google', {callbackUrl: '/dashboard'})
+
+      // Success. Now set the server error state to false.
+      setFormState(prevState => ({...prevState, serverError: false}))
+
+    } catch (error) {
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+
+    } finally {
+      setFormState(prevState => ({...prevState, isLoading: false}));
+    }
+
+  }
   
   const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   const createAccount = async () => {
@@ -223,7 +248,7 @@ const SignUp = () => {
 
 
     // Set loading state
-    setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
 
     let responseStatus; // Holds the status of the response
 
@@ -280,7 +305,7 @@ const SignUp = () => {
 
 
   return (
-    <div className='mx-auto mt-50' style={{maxWidth: '35rem'}}>
+    <div className='mx-auto mt-50' style={{maxWidth: '31.25rem'}}>
       <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
         <Alert.Heading>Error</Alert.Heading>
         {formState.serverMessage}
@@ -289,7 +314,6 @@ const SignUp = () => {
         <Stack gap={5}>        
           <h1 className='fs-2'>Create Account</h1>
           <p className="d-none text-break hiddenError">{serverError}</p>
-          <p>Sign up for a SpanishDex account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
@@ -319,7 +343,7 @@ const SignUp = () => {
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="createAccountPassword2">
+            <Form.Group controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
@@ -333,18 +357,12 @@ const SignUp = () => {
                 {formValues.password2.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              {formState.isLoading ? 
-                <Button variant="gray" disabled={true}>Cancel</Button> :
-                <Link href='/' role='button' className='btn btn-gray'>
-                  Cancel
-                </Link>
-              }
-              <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
-                {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
-              </Button>
-            </Container>
           </Form>
+          <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
+            {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
+          </Button>
+          <OrSeparator />
+          <GoogleAuthButton buttonText='signup' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={signUpWithGoogle}/>
           <p>Already have an account? {formState.isLoading ? <span className="fw-medium">Log In</span> : <Link href='/auth/signin'>Log In</Link>}</p>
         </Stack>
       </div>

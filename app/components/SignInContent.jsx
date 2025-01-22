@@ -10,6 +10,8 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import GoogleAuthButton from './GoogleAuthButton';
+import OrSeparator from './OrSeparator';
 
 
 const SignInContent = () => {
@@ -21,6 +23,7 @@ const SignInContent = () => {
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
+    loadingType: '',
     serverError: false,
     serverMessage: '',
     errorAcknowledged: false
@@ -68,6 +71,28 @@ const SignInContent = () => {
   }
 
 
+  // This function handles the logging in with Google logic
+  const logInWithGoogle = async () => {
+
+    // Set loading state to show a loading spinner
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
+
+    try {      
+      // Run the signIn function to log in with Google
+      await signIn('google', {callbackUrl: '/dashboard'})
+
+      // Success. Now set the server error state to false.
+      setFormState(prevState => ({...prevState, serverError: false}))
+
+    } catch (error) {
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+
+    } finally {
+      setFormState(prevState => ({...prevState, isLoading: false}));
+    }
+
+  }
+
   // Function to control the login functionality for the form on submit.
   const logIn = async () => {
 
@@ -77,7 +102,7 @@ const SignInContent = () => {
     if (!formValues.username.valid || !formValues.password.valid) return;
 
     // Set loading state to show a loading spinner
-    setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
+    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
 
     try {
 
@@ -124,7 +149,6 @@ const SignInContent = () => {
       <div className='mt-25 bg-white p-50 rounded'>
         <Stack gap={5}>
           <h1 className='fs-2'>Log In</h1>
-          <p>Log in to SpanishDex with your existing account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="logInUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
@@ -133,7 +157,7 @@ const SignInContent = () => {
                 Username is required
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="logInPassword">
+            <Form.Group controlId="logInPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
@@ -153,19 +177,12 @@ const SignInContent = () => {
                 }
               </p>
             </Form.Group>
-            <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              { formState.isLoading ? 
-                <Button variant="gray" disabled={true}>Cancel</Button> :
-                <Link href='/' role='button' className='btn btn-gray'>
-                  Cancel
-                </Link>
-              }
-              <Button variant="primary" onClick={logIn} disabled={!(formValues.username.valid && formValues.password.valid) || formState.isLoading}>
-                {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
-              </Button>
-              <Button variant="primary" onClick={()=>{signIn('google', {callbackUrl: callbackUrl})}}>Google</Button>
-            </Container>
-          </Form>
+          </Form>          
+          <Button variant="primary" onClick={logIn} disabled={!(formValues.username.valid && formValues.password.valid) || formState.isLoading}>
+            {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
+          </Button>
+          <OrSeparator />
+          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={logInWithGoogle}/>
           <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <Link href='/auth/signup'>Sign Up</Link>}</p>
         </Stack>
       </div>

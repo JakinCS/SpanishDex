@@ -12,7 +12,7 @@ async function Dashboard() {
         <h1>Dashboard</h1>  
         <br />  
         {!!session ? 
-          <p>You are logged in as {session.user.username}</p>
+          <p>You are logged in as {session.user.username} {session.user.email}</p>
           :
           <p>You are not logged in</p>
         }

@@ -128,6 +128,118 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 }
 
 
+/* Google authentication button */
+.gsi-material-button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    user-select: none;
+    appearance: none;
+    background-color: #f2f2f2;
+    background-image: none;
+    border: none;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', arial, sans-serif;
+    font-size: 1rem;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+    transition: background-color .218s, border-color .218s, box-shadow .218s;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    max-width: 400px;
+    min-width: min-content;
+}
+
+.gsi-material-button .gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+}
+
+.gsi-material-button .gsi-material-button-content-wrapper {
+    -webkit-align-items: center;
+    align-items: center;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.gsi-material-button .gsi-material-button-contents {
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+
+.gsi-material-button .gsi-material-button-state {
+    -webkit-transition: opacity .218s;
+    transition: opacity .218s;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.gsi-material-button:disabled {
+    cursor: default;
+    background-color: #f2f2f2b0;
+}
+
+.gsi-material-button:disabled .gsi-material-button-state {
+    background-color: #1f1f1f1f;
+}
+
+.gsi-material-button:disabled .gsi-material-button-contents {
+    opacity: 38%;
+}
+
+.gsi-material-button:disabled .gsi-material-button-icon {
+    opacity: 38%;
+}
+
+.gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+.gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+    background-color: #001d35;
+    opacity: 12%;
+}
+
+.gsi-material-button:not(:disabled):hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+
+.gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+    background-color: #001d35;
+    opacity: 8%;
+}
+  
+
+
 
 
 
@@ -359,6 +471,7 @@ div[role="dialog"].modal {
 /* ------------------- CSS Spinner ------------------- */
 
 .loader {
+    margin: 0px auto;
     width: 28px;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -369,10 +482,27 @@ div[role="dialog"].modal {
     animation: l13 1s infinite linear;
     -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
     animation: l13 1s infinite linear;
-  }
-  @keyframes l13{ 
+}
+@keyframes l13{ 
     100%{transform: rotate(1turn)}
-  }
+}
+
+.loader-gray {
+    margin: 0px auto;
+    width: 28px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side, #555 94%,#0000) top/5px 5px no-repeat,
+      conic-gradient(#0000 30%, #555);
+    mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+}
+@keyframes l13{ 
+    100%{transform: rotate(1turn)}
+}
 
 
 .loader-dots {
@@ -385,13 +515,13 @@ div[role="dialog"].modal {
       var(--_g) 100% 50%;
     background-size: calc(100%/3) 50%;
     animation: l3 1s infinite linear;
-  }
-  @keyframes l3 {
-      20%{background-position:0%   0%, 50%  50%,100%  50%}
-      40%{background-position:0% 100%, 50%   0%,100%  50%}
-      60%{background-position:0%  50%, 50% 100%,100%   0%}
-      80%{background-position:0%  50%, 50%  50%,100% 100%}
-  }
+}
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
 
 
 
