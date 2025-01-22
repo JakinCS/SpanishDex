@@ -8,18 +8,13 @@ export default async function homepageLayout({ children }) {
 
   // Get session information
   const session = await getServerSession(options);
-  
-  console.log("layout")
-  console.log(session)
 
   let findResult;
 
   if (!!session) {
     if (session.user.username && session.user.profile_colors) { // Means that the session information already contains the necessary information 
-      console.log("layout. no database call")
       findResult = session.user
     } else { // The user probably used oAuth. Query the database for more information.
-      console.log("layout. database call")
       const client = new MongoClient(process.env.MONGODB_URI);
       try {
         const database = client.db('spanishdex');

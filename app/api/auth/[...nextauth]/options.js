@@ -100,7 +100,6 @@ export const options = {
           const collection = database.collection('users');
 
           const findResult = await collection.findOne({ email: user.email });
-          console.log(findResult)
 
           // If the user can't be found in the database, create a new user in the database
           if (!findResult) {
@@ -127,7 +126,6 @@ export const options = {
         } catch (error) {
           // If something fails, return false, which will reject their log in attempt.
           // This forces them to try again. (As it is important to have a user record in the database)
-          console.log('signIn callback error: ' + error)
           await client.close();
           return false
         }        

@@ -315,21 +315,21 @@ const SignUp = () => {
           <h1 className='fs-2'>Create Account</h1>
           <p className="d-none text-break hiddenError">{serverError}</p>
           <Form>
-            <Form.Group className="mb-5" controlId="createAccountUsername">
+            <Form.Group className="mb-20" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
               <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
               <Form.Control.Feedback type="invalid">
                 {formValues.username.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="createAccountEmail">
+            <Form.Group className="mb-20" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
               <Form.Control onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
               <Form.Control.Feedback type="invalid">
                 {formValues.email.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="createAccountPassword">
+            <Form.Group className="mb-20" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">

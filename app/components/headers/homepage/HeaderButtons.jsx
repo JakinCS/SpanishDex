@@ -7,7 +7,6 @@ import Button from 'react-bootstrap/Button'
 import { useState } from "react";
 import ProfileDropdown from "../ProfileDropdown";
 import LogOutModal from "../../modals/LogOutModal";
-import { useSession } from "next-auth/react";
 
 const HeaderButtons = (props) => {
   // Log In Modal State
@@ -50,7 +49,6 @@ const HeaderButtons = (props) => {
     setLogOutModalOpenState(false);
   }
 
-  console.log(props.user)
   return (
     <>
       { !!props.user ? 

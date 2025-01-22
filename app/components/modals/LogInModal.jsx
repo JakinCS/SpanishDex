@@ -155,7 +155,6 @@ function LogInModal(props) {
             throw('Log in failed. Error: ' + response.status + '. Please try again later.')
           }
         }
-        console.log(response.url)
       }      
       
       // Success. Now set the server error state to false.
@@ -189,7 +188,7 @@ function LogInModal(props) {
             {formState.serverMessage}
           </Alert>
           <Form>
-            <Form.Group className="mb-5" controlId="logInUsername">
+            <Form.Group className="mb-20" controlId="logInUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
               <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
               <Form.Control.Feedback type="invalid">

@@ -150,7 +150,7 @@ const SignInContent = () => {
         <Stack gap={5}>
           <h1 className='fs-2'>Log In</h1>
           <Form>
-            <Form.Group className="mb-5" controlId="logInUsername">
+            <Form.Group className="mb-20" controlId="logInUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
               <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
               <Form.Control.Feedback type="invalid">
