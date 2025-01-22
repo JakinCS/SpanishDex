@@ -34,13 +34,13 @@ const ResetPassword = async ({ params }) => {
 
       if (!user) {
         await client.close();
-        return {error: true, errorMessage: 'Your reset password link is invalid or it has expired.', userData: {}}
+        return {error: true, errorMessage: 'Your reset password link is invalid or it has expired.', userUsername: ''}
       }
       return {error: false, errorMessage: '', userUsername: user.username}
 
     } catch (error) {
       await client.close();
-      return {error: true, errorMessage: 'Unexpected error occurred. Please try again later.', serverError: error.toString(), userData: {}}
+      return {error: true, errorMessage: 'Unexpected error occurred. Please try again later.', serverError: error.toString(), userUsername: ''}
     }
   }
 

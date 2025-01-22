@@ -1,6 +1,7 @@
 import './scss/custom.scss';
 import { Montserrat } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import AuthProvider from './context/AuthProvider';
 
 const montserrat = Montserrat({
   subsets: ['latin']
@@ -15,7 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html className={montserrat.className} lang="en">
       <body>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <SpeedInsights />
       </body>
     </html>

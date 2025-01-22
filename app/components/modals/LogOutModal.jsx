@@ -6,10 +6,8 @@ import Container from "react-bootstrap/Container"
 import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from "react";
 import { signOut } from 'next-auth/react';
-import { useRouter } from "next/navigation";
 
 function LogOutModal(props) {
-  const router = useRouter();
 
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
@@ -44,21 +42,18 @@ function LogOutModal(props) {
 
   const [serverError, setServerError] = useState(''); // holds the raw server error for putting in a hidden paragraph for debugging purposes.
   // Function for handling the logging in of the user.
-  const logIn = async () => {
+  const logOut = async () => {
 
     // Set loading state to show a loading spinner
     setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
 
     try {
 
-      // Sign the user out
-      await signOut();
+      // Sign the user out and redirect to the homepage
+      await signOut({ callbackUrl: '/' });
     
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, error: false}))
-
-      // Redirect to the homepage
-      router.push('/');
 
     } catch (error) {
       setServerError(JSON.stringify(error));
@@ -84,7 +79,7 @@ function LogOutModal(props) {
             <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
               Cancel
             </Button>
-            <Button variant="danger" onClick={logIn} disabled={formState.isLoading}>
+            <Button variant="danger" onClick={logOut} disabled={formState.isLoading}>
               {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log Out'}
             </Button>
           </Container>

@@ -30,9 +30,11 @@ const validateInputs = async ({username, email, password, password2}, db_collect
   }
   
   // Check whether the email already exists in the database
-  const emailFindResult = await db_collection.findOne({email: email.toLowerCase()})
-  if (emailFindResult != null) {
-    return {valid: false, status: 409, message: 'An account already exists with that email address. Please choose a different email address'}
+  if (email !== '') {
+    const emailFindResult = await db_collection.findOne({email: email.toLowerCase()})
+    if (emailFindResult != null) {
+      return {valid: false, status: 409, message: 'An account already exists with that email address. Please choose a different email address'}
+    }  
   }    
 
   // All is good at this point in the code. Return that the input data is valid.

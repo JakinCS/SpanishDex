@@ -1,44 +1,30 @@
 'use client'
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Stack from "react-bootstrap/Stack"
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container"
-import Alert from "react-bootstrap/Alert";
-import IconButton from "../IconButton";
-import { useEffect, useState } from "react";
+
+import Stack from 'react-bootstrap/Stack';
+import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import IconButton from '@/app/components/IconButton';
 import { signIn } from 'next-auth/react';
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
-function LogInModal(props) {
+
+const SignInContent = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+
   const router = useRouter();
-
-  // State for the status of the show/hide password button
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
-  }
 
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
     serverError: false,
     serverMessage: '',
-    errorAcknowledged: false,
-    showSuccess: false
+    errorAcknowledged: false
   })
-
-  // Use effect hook for disabling the modal close button (when the form is being submitted)
-  // This effect hook is necessary because the button code is not accessible in this JSX file.
-  useEffect(() => {
-    if (document.querySelector('#logInModal .btn-close') !== null) {
-      if (formState.isLoading) {
-        document.querySelector('#logInModal .btn-close').disabled = true;
-      } else {
-        document.querySelector('#logInModal .btn-close').disabled = false;
-      }
-    }
-  }, [formState.isLoading])
 
   // State for storing the validity of the form
   const [formValues, setFormValues] = useState({
@@ -48,7 +34,6 @@ function LogInModal(props) {
 
   const updateUsernameValue = (e) => setFormValues(prevState => ({...prevState, username: {...prevState.username, value: e.target.value}}))
   const updatePasswordValue = (e) => setFormValues(prevState => ({...prevState, password: {...prevState.password, value: e.target.value}}))
-  
 
   // Function to check and update the validity of the username/email (can't be blank)
   const validateUsername = () => {
@@ -76,35 +61,20 @@ function LogInModal(props) {
     setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: isValid}}))
   }
 
-  // Function for resetting the state of the form (useful when triggered on 'modal open')
-  const resetState = () => {
-    setFormValues({
-      username: {value: '', valid: null}, 
-      password: {value: '', valid: null}
-    });
-    setFormState({
-      isLoading: false,
-      serverError: false,
-      serverMessage: '',
-      errorAcknowledged: false,
-      showSuccess: false
-    });
+  // State for the status of the show/hide password button
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevState => !prevState);
   }
 
 
-  // Function for handling the logging in of the user.
+  // Function to control the login functionality for the form on submit.
   const logIn = async () => {
 
     // Firstly, double check that the form is valid beforehand as a safety measure.
     validateUsername();
     validatePassword();
     if (!formValues.username.valid || !formValues.password.valid) return;
-
-    // Store the object that will be sent to the api
-    let bodyToSend = {
-      username: formValues.username.value,
-      password: formValues.password.value
-    }
 
     // Set loading state to show a loading spinner
     setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
@@ -113,10 +83,10 @@ function LogInModal(props) {
 
       // const response = await signIn('google')
       const response = await signIn('credentials', {
-        username: bodyToSend.username,
-        password: bodyToSend.password,
+        username: formValues.username.value,
+        password: formValues.password.value,
         redirect: false,
-        callbackUrl: '/dashboard'
+        callbackUrl: callbackUrl
       })
 
       if (response) {
@@ -129,15 +99,13 @@ function LogInModal(props) {
             throw('Log in failed. Error: ' + response.status + '. Please try again later.')
           }
         }
-        console.log(response.url)
       }      
       
       // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
+      setFormState(prevState => ({...prevState, serverError: false}))
 
       // Redirect to the dashboard
-      router.push('/dashboard')
-      // const redirect = setTimeout(() => {router.push('/dashboard')}, 1500)
+      router.push(callbackUrl)
 
     } catch (error) {
       setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
@@ -148,20 +116,14 @@ function LogInModal(props) {
   }
 
   return (
-    <Modal id='logInModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
-      <Modal.Header closeButton>
-        <Modal.Title as='h2'>Log In</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
-          <h2 className="text-success mb-3">Success</h2>
-          <p className="fw-medium">You are now logged in</p>
-        </div>
+    <>
+      <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
+        <Alert.Heading>Error</Alert.Heading>
+        {formState.serverMessage}
+      </Alert>
+      <div className='mt-25 bg-white p-50 rounded'>
         <Stack gap={5}>
-          <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
-            <Alert.Heading>Error</Alert.Heading>
-            {formState.serverMessage}
-          </Alert>
+          <h1 className='fs-2'>Log In</h1>
           <p>Log in to SpanishDex with your existing account.</p>
           <Form>
             <Form.Group className="mb-5" controlId="logInUsername">
@@ -177,7 +139,7 @@ function LogInModal(props) {
                 <div className="w-100">
                   <Form.Control type={showPassword ? 'text' : 'password'} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center">  
                   <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
                 </div>
               </Container>    
@@ -187,25 +149,28 @@ function LogInModal(props) {
               <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
                 { formState.isLoading ? 
                   <span className="fw-medium">Forgot Password?</span> :
-                  <a href="#" onClick={() => {props.handleClose(); props.openResetPasswordModal()}}>Forgot Password?</a>
+                  <Link href='/auth/forgot-password'>Forgot Password?</Link>
                 }
               </p>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
-                Cancel
-              </Button>
+              { formState.isLoading ? 
+                <Button variant="gray" disabled={true}>Cancel</Button> :
+                <Link href='/' role='button' className='btn btn-gray'>
+                  Cancel
+                </Link>
+              }
               <Button variant="primary" onClick={logIn} disabled={!(formValues.username.valid && formValues.password.valid) || formState.isLoading}>
                 {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
               </Button>
-              <Button variant="primary" onClick={()=>{signIn('google', {callbackUrl: '/dashboard'})}}>Google</Button>
+              <Button variant="primary" onClick={()=>{signIn('google', {callbackUrl: callbackUrl})}}>Google</Button>
             </Container>
           </Form>
-          <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <a href='#' onClick={() => {props.handleClose(); props.openSignUpModal()}}>Sign Up</a>}</p>
+          <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <Link href='/auth/signup'>Sign Up</Link>}</p>
         </Stack>
-      </Modal.Body>
-    </Modal>
-  );
+      </div>
+    </>
+  )
 }
 
-export default LogInModal;
+export default SignInContent;

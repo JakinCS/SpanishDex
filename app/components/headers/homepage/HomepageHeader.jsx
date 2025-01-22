@@ -12,7 +12,7 @@ function HomepageHeader(props) {
       <Navbar
         expand="lg"
         fixed="top"
-        className="bg-gradient border-bottom border-gray-150 border-2"
+        className="app-header bg-gradient border-bottom border-gray-150 border-2"
       >
         <Navbar.Brand>
           <img

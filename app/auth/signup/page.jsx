@@ -1,48 +1,29 @@
 'use client'
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Stack from "react-bootstrap/Stack"
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container"
-import IconButton from "../IconButton";
-import Alert from "react-bootstrap/Alert";
-import { useEffect, useState } from 'react'
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-function CreateAccountModal(props) {
+import Stack from 'react-bootstrap/Stack';
+import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import IconButton from '@/app/components/IconButton';
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
+
+const SignUp = () => {
+  
   const router = useRouter();
-
-  // State for keeping track of password show/hide state
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
-  }
-  const [showPassword2, setShowPassword2] = useState(false);
-  const togglePassword2Visibility = () => {
-    setShowPassword2(prevState => !prevState);
-  }
 
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
     serverError: false,
     serverMessage: '',
-    errorAcknowledged: false,
-    showSuccess: false
+    errorAcknowledged: false
   })
 
-  // Use effect hook for disabling the modal close button (when the form is being submitted)
-  // This effect hook is necessary because the button code is not accessible in this JSX file.
-  useEffect(() => {
-    if (document.querySelector('#signUpModal .btn-close') !== null) {
-      if (formState.isLoading) {
-        document.querySelector('#signUpModal .btn-close').disabled = true;
-      } else {
-        document.querySelector('#signUpModal .btn-close').disabled = false;
-      }
-    }
-  }, [formState.isLoading])
 
   // State for storing the state of the form values
   const [formValues, setFormValues] = useState({
@@ -58,6 +39,18 @@ function CreateAccountModal(props) {
   const updatePasswordValue = (e) => setFormValues((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value}}))
   const updatePassword2Value = (e) => setFormValues((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
   
+
+  // State for keeping track of password show/hide state
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevState => !prevState);
+  }
+  const [showPassword2, setShowPassword2] = useState(false);
+  const togglePassword2Visibility = () => {
+    setShowPassword2(prevState => !prevState);
+  }
+
+
   // Function to check and update the validity of the username
   /* 
     Min Length: 2,   Max Length: 25,   Characters: numbers, letters, underscores
@@ -211,22 +204,6 @@ function CreateAccountModal(props) {
     }
   }
 
-  // Function for resetting the state of the form (useful when triggered on 'modal open')
-  const resetState = () => {
-    setFormValues({
-      username: {value: '', valid: null, message: null}, 
-      email: {value: '', valid: true, message: null},
-      password: {value: '', valid: null, message: null},
-      password2: {value: '', valid: null, message: null}
-    });
-    setFormState({
-      isLoading: false,
-      serverError: false,
-      serverMessage: '',
-      errorAcknowledged: false,
-      showSuccess: false
-    });
-  }
   
   const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   const createAccount = async () => {
@@ -267,11 +244,9 @@ function CreateAccountModal(props) {
       } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
         throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
       }
-
-      const json = await response.json();
       
       // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
+      setFormState(prevState => ({...prevState, serverError: false}))
 
       const signInResponse = await signIn('credentials', {
         username: bodyToSend.username,
@@ -283,9 +258,8 @@ function CreateAccountModal(props) {
         // Redirect to the dashboard
         router.push('/dashboard');
       } else {
-        // If the sign in fails, close the modal and open the log in modal
-        props.handleClose()
-        props.openLogInModal()
+        // If the sign in fails, redirect to the sign in page
+        router.push('/auth/signin')
       }
 
     } catch (error) {
@@ -306,22 +280,14 @@ function CreateAccountModal(props) {
 
 
   return (
-    <Modal id='signUpModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); setShowPassword2(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
-      <Modal.Header closeButton>
-        <Modal.Title as='h2'>Create Account</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
-          <h2 className="text-success mb-3">Success</h2>
-          <p className="fw-medium mb-4">Account created. Logging you in now.</p>
-          <div className="loader-dots"></div>
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        <Stack gap={5}>          
-          <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
-            <Alert.Heading>Error</Alert.Heading>
-            {formState.serverMessage}
-          </Alert>
+    <div className='mx-auto mt-50' style={{maxWidth: '35rem'}}>
+      <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
+        <Alert.Heading>Error</Alert.Heading>
+        {formState.serverMessage}
+      </Alert>
+      <div className='mt-25 bg-white p-50 rounded'>
+        <Stack gap={5}>        
+          <h1 className='fs-2'>Create Account</h1>
           <p className="d-none text-break hiddenError">{serverError}</p>
           <p>Sign up for a SpanishDex account.</p>
           <Form>
@@ -345,7 +311,7 @@ function CreateAccountModal(props) {
                 <div className="w-100">
                   <Form.Control type={showPassword ? 'text' : 'password'} placeholder="password" onBlur={validatePassword1} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} />
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center">        
                   <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
                 </div>
               </Container>
@@ -359,7 +325,7 @@ function CreateAccountModal(props) {
                 <div className="w-100">
                   <Form.Control type={showPassword2 ? 'text' : 'password'} placeholder="password" onBlur={validatePassword2} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center">       
                   <IconButton variant='light' iconSrc={showPassword2 ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePassword2Visibility}/>           
                 </div>
               </Container>
@@ -368,19 +334,22 @@ function CreateAccountModal(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
-                Cancel
-              </Button>
+              {formState.isLoading ? 
+                <Button variant="gray" disabled={true}>Cancel</Button> :
+                <Link href='/' role='button' className='btn btn-gray'>
+                  Cancel
+                </Link>
+              }
               <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
                 {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
               </Button>
             </Container>
           </Form>
-          <p>Already have an account? {formState.isLoading ? <span className="fw-medium">Log In</span> : <a href="#" onClick={() => {props.handleClose(); props.openLogInModal()}}>Log In</a>}</p>
+          <p>Already have an account? {formState.isLoading ? <span className="fw-medium">Log In</span> : <Link href='/auth/signin'>Log In</Link>}</p>
         </Stack>
-      </Modal.Body>
-    </Modal>
-  );
+      </div>
+    </div>
+  )
 }
 
-export default CreateAccountModal;
+export default SignUp

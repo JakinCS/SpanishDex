@@ -10,8 +10,6 @@ import { useEffect, useState } from "react";
 
 const ResetPasswordModal = (props) => {
 
-  const [showSuccess, setShowSuccess] = useState(false)
-
   // State for keeping track of the state of the form (loading status, errors, successes)
   const [formState, setFormState] = useState({
     isLoading: false,
@@ -59,8 +57,6 @@ const ResetPasswordModal = (props) => {
 
     try {
 
-      // await new Promise((resolve) => {setTimeout(resolve, 2000)})
-
       const response = await fetch('/api/auth/request-reset-password', {
         method: 'POST',
         body: JSON.stringify({email: email})
@@ -69,8 +65,6 @@ const ResetPasswordModal = (props) => {
       if (!response.ok) {
         throw("Error code: " + response.status);
       }
-
-      // throw("bad error")
     
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, error: false, showSuccess: true}));

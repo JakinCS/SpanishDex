@@ -32,7 +32,7 @@
 }
 
 // Extra padding for body to adjust for fixed header
-body {
+body:has(.app-header) {
     padding-top: 5.125rem;
 }
 
