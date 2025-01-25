@@ -74,6 +74,29 @@ export const options = {
         // Update the token with information from the user object.
         if (account.provider === 'credentials') {
           token = {...token, username: user.username, image: user.profile_picture, colors: user.profile_colors}
+        } else if (account.provider === 'google') {
+
+          // Go find some more information about this google user from the database
+
+          const client = new MongoClient(process.env.MONGODB_URI);
+
+          let findResult;
+          try {
+            const database = client.db('spanishdex');
+            const collection = database.collection('users');
+            findResult = await collection.findOne({email: user.email}, {projection: {_id: 0, email: 1, username: 1, profile_picture: 1, profile_colors: 1}});
+            
+          } catch (error) {
+            findResult.profile_picture = null;
+            findResult.username = user.email; // Put the email in as a replacement username
+            findResult.profile_colors = [ "#CF7000", "#000000" ]; // Give some generic profile picture color information
+
+          } finally {
+            await client.close();
+          }
+
+          token = {...token, username: findResult.username, image: findResult.profile_picture, colors: findResult.profile_colors}
+
         }
       }
       return token
@@ -83,6 +106,7 @@ export const options = {
       // Update the session with information from the token. (avoids an extra call to the database to retrieve this information later)
       if (session.user) {
         session.user = {...session.user, username: token.username, profile_picture: token.image, profile_colors: token.colors}
+        
       }
       return session;
     },
@@ -91,6 +115,7 @@ export const options = {
     // Then, create a record in the database for the person
     async signIn({ user, account }) { 
       if (account.provider === 'google') {
+        
         // Define the client variable, holding a new MongoClient instance  
         const client = new MongoClient(process.env.MONGODB_URI);
 
