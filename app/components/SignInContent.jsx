@@ -152,7 +152,7 @@ const SignInContent = () => {
           <Form>
             <Form.Group className="mb-20" controlId="logInUsername">
               <Form.Label className="fw-medium">Username or Email</Form.Label>
-              <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
+              <Form.Control value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
               <Form.Control.Feedback type="invalid">
                 Username is required
               </Form.Control.Feedback>
@@ -161,7 +161,7 @@ const SignInContent = () => {
               <Form.Label className="fw-medium">Password</Form.Label>
               <Container className="d-flex gap-3 p-0">
                 <div className="w-100">
-                  <Form.Control type={showPassword ? 'text' : 'password'} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
+                  <Form.Control value={formValues.password.value} type={showPassword ? 'text' : 'password'} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
                 </div>
                 <div className="d-flex align-items-center">  
                   <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           

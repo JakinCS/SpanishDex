@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import { useState } from "react";
 import ProfileDropdown from "../ProfileDropdown";
 import LogOutModal from "../../modals/LogOutModal";
+import Link from "next/link";
 
 const HeaderButtons = (props) => {
   // Log In Modal State
@@ -49,24 +50,29 @@ const HeaderButtons = (props) => {
     setLogOutModalOpenState(false);
   }
 
+
   return (
     <>
       { !!props.user ? 
-        <Button className="ms-auto" id='dashboardButton' variant="outline-primary" >
-          Go To Dashboard
-        </Button>
+        <>
+          <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
+            <span className="d-none d-md-block">Go To Dashboard</span>
+            <span className="d-block d-md-none">Dashboard</span>
+          </Link>
+          <ProfileDropdown className="ms-auto" user={props.user} onClick={openLogOutModal}/>
+        </>
         :
-        <Button className="ms-auto" id='createAccountButton' variant="outline-primary" onClick={openSignUpModal}>
-          Create Account
-        </Button>
-      }
-
-      { !!props.user ?
-        <ProfileDropdown className="ms-auto" user={props.user} onClick={openLogOutModal}/>
-        :
-        <Button className="ms-auto" variant="primary" onClick={openLogInModal}>
-          Log In
-        </Button>
+        <>
+          <Button className="ms-auto d-none d-md-block" variant="outline-primary" onClick={openLogInModal}>
+            Log In
+          </Button>
+          <a href="#" className="navbar-link d-block d-md-none py-2 ps-2 fw-semibold text-primary" onClick={openLogInModal}>Log In</a>
+          
+          <Button className="ms-auto" id='createAccountButton' variant="primary" onClick={openSignUpModal}>
+            <span className="d-none d-md-block">Create Account</span>
+            <span className="d-block d-md-none">Sign Up</span>
+          </Button>
+        </>
       }
       
 

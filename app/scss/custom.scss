@@ -47,6 +47,24 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 /* ------------------- NAVBAR -------------------- */
 
+// Navbar padding. Adjusting it based on screen width
+
+@media (min-width: 576px) {
+    .navbar:has(.navbar-brand) {
+        padding-left: 3.125rem;
+        padding-right: 3.125rem;
+    }
+}
+
+
+// Nav bar link (Log in link) style
+.navbar-link:hover, .navbar-link:focus, .navbar-link:focus-visible, .navbar-link:active {
+    text-decoration: underline 2px;
+    text-underline-offset: 2px;
+}
+
+
+
 // Navbar toggler styles
 .navbar-toggler:hover, .navbar-toggler:focus-visible {
     background-color: $gray-100;
@@ -67,6 +85,46 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .show-close-icon span {
     background-image: url('/icons/close.svg') !important;
+}
+
+
+  /* --- Navbar Profile Picture --- */
+
+.profile-picture > img {
+    height: $spacer * 4;
+    width: $spacer * 4;
+    margin-left: auto;
+    display: block;
+    transition: filter 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.profile-picture > div {
+    height: $spacer * 4;
+    width: $spacer * 4;
+    margin-left: auto;
+    display: block;
+    transition: box-shadow 0.15s ease-in-out;
+    & > span {
+        font-size: 1.5rem;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.profile-picture:focus-visible {
+    outline: 0.125rem solid $blue-900;
+    outline-offset: 0.125rem;
+    border-radius: .4375rem;
+}
+
+.profile-picture:hover, .profile-picture:focus-visible, .profile-picture:focus {
+    color: initial;
+    & > img {
+        filter: brightness(0.9);
+        box-shadow: gray 0 2px 5px 0px;
+    }
+    & > div {
+        box-shadow: inset 0 0 0 99999px rgba(0,0,0,0.1), gray 0 2px 5px 0px;
+    }
 }
 
 
@@ -528,38 +586,7 @@ div[role="dialog"].modal {
 
 
 
-  /* ------------------- Navbar Profile Picture ------------------- */
 
-.profile-picture > img {
-    height: $spacer * 4;
-    width: $spacer * 4;
-    margin-left: auto;
-    display: block;
-}
-
-.profile-picture > div {
-    height: $spacer * 4;
-    width: $spacer * 4;
-    margin-left: auto;
-    display: block;
-    & > span {
-        font-size: 1.5rem;
-        font-weight: $font-weight-medium;
-    }
-}
-
-.profile-picture:focus-visible {
-    outline: 0.125rem solid $blue-900;
-    outline-offset: 0.125rem;
-    border-radius: .4375rem;
-}
-
-.profile-picture:hover, .profile-picture:focus-visible, .profile-picture:focus {
-    color: initial;
-    & > img {
-        filter: brightness(0.9);
-    }
-}
 
 
 

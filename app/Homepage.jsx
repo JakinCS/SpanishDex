@@ -5,7 +5,6 @@ import GetStartedButton from './components/GetStartedButton';
 
 async function Homepage() {
 
-
   return (
     <>
       <HomepageSection py='100' backgroundColor='almost-white'>
@@ -16,6 +15,7 @@ async function Homepage() {
           Start using SpanishDex today for free!
         </p> 
         <GetStartedButton />
+        
       </HomepageSection>
       <HomepageSectionColumns 
         py='80' backgroundColor='white' 
