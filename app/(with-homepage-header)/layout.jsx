@@ -9,6 +9,8 @@ export default async function homepageLayout({ children }) {
   // Get session information
   const session = await getServerSession(options);
 
+  console.log("Layout page: ", session);
+
   let findResult;
 
   if (!!session) {

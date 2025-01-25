@@ -7,6 +7,8 @@ import HeaderButtons from "./HeaderButtons";
 
 function HomepageHeader(props) {
 
+  console.log("Homepage Header: ", props.user);
+
   return (
     <>
       <Navbar

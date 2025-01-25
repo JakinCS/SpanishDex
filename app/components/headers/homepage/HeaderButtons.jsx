@@ -50,6 +50,7 @@ const HeaderButtons = (props) => {
     setLogOutModalOpenState(false);
   }
 
+  console.log("Header Buttons: ", props.user);
 
   return (
     <>
