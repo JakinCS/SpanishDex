@@ -67,6 +67,7 @@ export const options = {
       }
     })
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, trigger, account, user, session }) {
       if (account) {
