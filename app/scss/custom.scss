@@ -32,7 +32,7 @@
 }
 
 // Extra padding for body to adjust for fixed header
-body {
+body:has(.app-header) {
     padding-top: 5.125rem;
 }
 
@@ -46,6 +46,24 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 
 /* ------------------- NAVBAR -------------------- */
+
+// Navbar padding. Adjusting it based on screen width
+
+@media (min-width: 576px) {
+    .navbar:has(.navbar-brand) {
+        padding-left: 3.125rem;
+        padding-right: 3.125rem;
+    }
+}
+
+
+// Nav bar link (Log in link) style
+.navbar-link:hover, .navbar-link:focus, .navbar-link:focus-visible, .navbar-link:active {
+    text-decoration: underline 2px;
+    text-underline-offset: 2px;
+}
+
+
 
 // Navbar toggler styles
 .navbar-toggler:hover, .navbar-toggler:focus-visible {
@@ -67,6 +85,46 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 .show-close-icon span {
     background-image: url('/icons/close.svg') !important;
+}
+
+
+  /* --- Navbar Profile Picture --- */
+
+.profile-picture > img {
+    height: $spacer * 4;
+    width: $spacer * 4;
+    margin-left: auto;
+    display: block;
+    transition: filter 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.profile-picture > div {
+    height: $spacer * 4;
+    width: $spacer * 4;
+    margin-left: auto;
+    display: block;
+    transition: box-shadow 0.15s ease-in-out;
+    & > span {
+        font-size: 1.5rem;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.profile-picture:focus-visible {
+    outline: 0.125rem solid $blue-900;
+    outline-offset: 0.125rem;
+    border-radius: .4375rem;
+}
+
+.profile-picture:hover, .profile-picture:focus-visible, .profile-picture:focus {
+    color: initial;
+    & > img {
+        filter: brightness(0.9);
+        box-shadow: gray 0 2px 5px 0px;
+    }
+    & > div {
+        box-shadow: inset 0 0 0 99999px rgba(0,0,0,0.1), gray 0 2px 5px 0px;
+    }
 }
 
 
@@ -126,6 +184,118 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .icon-button.fill-white img {
     filter: brightness(0%) invert(1)
 }
+
+
+/* Google authentication button */
+.gsi-material-button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    user-select: none;
+    appearance: none;
+    background-color: #f2f2f2;
+    background-image: none;
+    border: none;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', arial, sans-serif;
+    font-size: 1rem;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+    transition: background-color .218s, border-color .218s, box-shadow .218s;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    max-width: 400px;
+    min-width: min-content;
+}
+
+.gsi-material-button .gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+}
+
+.gsi-material-button .gsi-material-button-content-wrapper {
+    -webkit-align-items: center;
+    align-items: center;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.gsi-material-button .gsi-material-button-contents {
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+
+.gsi-material-button .gsi-material-button-state {
+    -webkit-transition: opacity .218s;
+    transition: opacity .218s;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.gsi-material-button:disabled {
+    cursor: default;
+    background-color: #f2f2f2b0;
+}
+
+.gsi-material-button:disabled .gsi-material-button-state {
+    background-color: #1f1f1f1f;
+}
+
+.gsi-material-button:disabled .gsi-material-button-contents {
+    opacity: 38%;
+}
+
+.gsi-material-button:disabled .gsi-material-button-icon {
+    opacity: 38%;
+}
+
+.gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+.gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+    background-color: #001d35;
+    opacity: 12%;
+}
+
+.gsi-material-button:not(:disabled):hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+
+.gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+    background-color: #001d35;
+    opacity: 8%;
+}
+  
 
 
 
@@ -194,19 +364,7 @@ a {
 
 /* Modal Close Button */
 
-// .modal-header .btn-close:hover, .modal-header .btn-close:focus-visible, .modal-header .btn-close:focus {
-//     background-color: $gray-100;
-//     border-color: $gray-100;
-//     outline-color: $gray;
-//     box-shadow: none;
-// }
-
-// .modal-header .btn-close:active {
-//     background-color: $gray-150;
-//     border-color: $gray-150;
-// }
-
-// Navbar toggler styles
+// modal close button toggler styles
 .modal-header .btn-close:hover, .modal-header .btn-close:focus-visible, .modal-header .btn-close:focus {
     background-color: $gray-100;
 }
@@ -224,5 +382,214 @@ a {
 div[role="dialog"].modal {
     padding-right: 0 !important;
 }
+
+// Class styling for when the success message is shown on a modal
+.modal-disabled {
+    & .modal-header, & .modal-body > .vstack {
+        opacity: .15;
+        pointer-events: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+.modal-content .modal-header, .modal-content .modal-body > .vstack { // Add transitions for opacity
+    transition: opacity .15s ease-in-out;
+}
+
+.modal-success-message {
+    position: absolute;
+    width: 100%; 
+    top: 35%;
+    z-index: 2;
+    transition: opacity .15s ease-in-out;
+    &.show {
+        opacity: 1;
+        display: block;
+    }
+    &.hide {
+        opacity: 0;
+        display: none;
+    }
+
+    & > * {
+        margin: 0 auto;
+    }
+    & h2, & p {
+        text-align: center;
+    }
+}
+
+
+
+
+
+/* ------------------- DROPDOWNS ------------------- */
+
+.dropdown-menu {
+    max-width: 17.5rem;
+}
+
+.dropdown-menu > a {
+    border-radius: 0.4375rem;
+
+    &.danger-item {
+        color: $danger;
+        font-weight: $font-weight-medium;
+        &:hover, &:focus, &:active, &.active {
+            background-color: $white;
+            border: solid 2px $danger;
+            padding: 0.125rem .5rem;
+        }
+    }
+}
+
+.dropdown-menu > p {
+    padding: 0.1875rem 0.625rem;
+    word-wrap: break-word;
+}
+
+
+
+
+
+/* ------------------- ALERTS ------------------- */
+
+.alert {
+    background-color: white;
+    color: $body-color;
+    font-weight: $font-weight-medium;
+
+    & .h4 {
+        line-height: 1;
+        padding-bottom: $spacer;
+    }
+    & .btn-close {
+        padding: 0.75rem;
+        margin: 0.5rem;
+        transition: background-color .15s ease-in-out;
+    }
+}
+
+.alert-dismissible {
+    padding-right: $spacer * 2;
+}
+
+.alert-danger {
+    border-color: $danger;
+    & .h4 {
+        color: $danger;
+    }
+}
+
+.alert-danger .btn-close {    
+    &:hover, &:focus-visible, &:focus {
+        background-color: tint-color($danger, 80%);
+    }
+    &:focus {
+        box-shadow: none;
+    }
+    &:focus-visible {
+        box-shadow: none;
+        outline: tint-color($danger, 40%) solid 2px;
+        outline-offset: 5px;
+    }
+    &:active {
+        background-color: tint-color($danger, 60%);
+    }
+}
+
+.alert-success {
+    border-color: $success;
+    & .h4 {
+        color: $success;
+    }
+}
+
+.alert-success .btn-close {    
+    &:hover, &:focus-visible, &:focus {
+        background-color: tint-color($success, 80%);
+    }
+    &:focus {
+        box-shadow: none;
+    }
+    &:focus-visible {
+        box-shadow: none;
+        outline: tint-color($success, 40%) solid 2px;
+        outline-offset: 5px;
+    }
+    &:active {
+        background-color: tint-color($success, 60%);
+    }
+}
+
+
+
+
+/* ------------------- CSS Spinner ------------------- */
+
+.loader {
+    margin: 0px auto;
+    width: 28px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side, white 94%,#0000) top/5px 5px no-repeat,
+      conic-gradient(#0000 30%, white);
+    mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+}
+@keyframes l13{ 
+    100%{transform: rotate(1turn)}
+}
+
+.loader-gray {
+    margin: 0px auto;
+    width: 28px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side, #555 94%,#0000) top/5px 5px no-repeat,
+      conic-gradient(#0000 30%, #555);
+    mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 5px),#000 0);
+    animation: l13 1s infinite linear;
+}
+@keyframes l13{ 
+    100%{transform: rotate(1turn)}
+}
+
+
+.loader-dots {
+    width: 60px;
+    aspect-ratio: 2.5;
+    --_g: no-repeat radial-gradient(circle closest-side,#001521 90%,#0000);
+    background: 
+      var(--_g) 0%   50%,
+      var(--_g) 50%  50%,
+      var(--_g) 100% 50%;
+    background-size: calc(100%/3) 50%;
+    animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 

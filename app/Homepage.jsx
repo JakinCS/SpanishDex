@@ -1,15 +1,12 @@
-import HomepageHeader from './components/HomepageHeader/HomepageHeader'
 import HomepageSection from './components/HomepageSection'
 import HomepageSectionColumns from './components/HomepageSectionColumns'
 import HomepageContactForm from './components/HomepageContactForm'
-import HomepageFooter from './components/HomepageFooter';
 import GetStartedButton from './components/GetStartedButton';
 
-function Homepage() {
+async function Homepage() {
 
   return (
     <>
-      <HomepageHeader />
       <HomepageSection py='100' backgroundColor='almost-white'>
         <h1 className="text-center" style={{maxWidth: '43.75rem'}}>Flashcards Built for Maximized Learning</h1>
         <p className="text-center" style={{maxWidth: '43.75rem'}}>
@@ -18,10 +15,11 @@ function Homepage() {
           Start using SpanishDex today for free!
         </p> 
         <GetStartedButton />
+        
       </HomepageSection>
       <HomepageSectionColumns 
         py='80' backgroundColor='white' 
-        image={'/app-screenshot.jpg'} imageBorder={true} 
+        image={'/images/app-screenshot.jpg'} imageBorder={true} 
         imageAlt='SpanishDex dashboard screenshot' 
         imagePosition='left' headingText='Simple Interface'
       >
@@ -38,7 +36,7 @@ function Homepage() {
       </HomepageSectionColumns>
       <HomepageSectionColumns 
         py='80' backgroundColor='almost-white'
-        image={'/flashcards-example.png'} imageBorder={false}
+        image={'/images/flashcards-example.png'} imageBorder={false}
         imageAlt='SpanishDex flashcards example'
         imagePosition='right' headingText='Spaced Repetition'
       >
@@ -74,7 +72,6 @@ function Homepage() {
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
         <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>
       </HomepageSection>
-      <HomepageFooter />
     </>
   )
 }

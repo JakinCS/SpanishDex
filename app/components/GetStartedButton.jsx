@@ -3,13 +3,13 @@
 import Button from 'react-bootstrap/Button'
 
 const GetStartedButton = () => {
-  const activateCreateAccountButton = () => {
-    const createAccountButton = document.getElementById('createAccountButton')
-    createAccountButton.click();
+  const activateOtherButton = () => {
+    const otherButton = document.getElementById('createAccountButton') || document.getElementById('dashboardButton');
+    otherButton.click();
   }
 
   return (
-    <Button variant='secondary' onClick={activateCreateAccountButton}>Get Started</Button>
+    <Button variant='secondary' onClick={activateOtherButton}>Get Started</Button>
   )
 }
 
