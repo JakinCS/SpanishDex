@@ -9,8 +9,6 @@ export default async function homepageLayout({ children }) {
   // Get session information
   const session = await getServerSession(options);
 
-  console.log("Layout page: ", session);
-
   let findResult;
 
   if (!!session) {
@@ -47,6 +45,7 @@ export default async function homepageLayout({ children }) {
   return (
     <>
       <HomepageHeader user={findResult}/>
+      <div className='d-none'>{!!session ? JSON.stringify(session) : 'no session'}</div>
       <div style={containerStyles}>
         <div>
           {children}
