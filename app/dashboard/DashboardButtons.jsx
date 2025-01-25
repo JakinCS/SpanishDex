@@ -1,15 +1,13 @@
 "use client"
 import { signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Button from 'react-bootstrap/Button'
 
 
 const DashboardButtons = () => {
-  const router = useRouter()
-
   return (
     <>
-      <Button variant='outline-primary' onClick={() => router.push('/')} className='me-3'>Home</Button>
+      <Link href='/' role='button' className='btn btn-outline-primary me-3'>Home</Link>
       <Button variant='outline-danger' onClick={() => signOut({ callbackUrl: '/' })}>Log Out</Button>
     </>
   )
