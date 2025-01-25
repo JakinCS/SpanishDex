@@ -57,6 +57,9 @@ $primary: $blue;
 $secondary: $green-300;
 $light: #FFFFFF00;
 
+// Change the background color of the body
+$body-bg: $almost-white;
+
 
 
 
@@ -119,6 +122,12 @@ $headings-font-weight: $font-weight-semibold;
 $headings-margin-bottom: 0;
 $paragraph-margin-bottom: 0;
 
+// Change link styles
+
+$link-color:                              $blue-900;
+$link-decoration:                         none;
+$link-hover-color:                        $green;
+
 
 
 
@@ -176,7 +185,8 @@ $input-btn-focus-box-shadow: 0 0 0 .125rem $primary;
 
 // Navbar padding
 $navbar-padding-y: $spacer * 1.5;
-$navbar-padding-x: $spacer * 5;
+
+$navbar-padding-x: $spacer * 2.5;
 
 // Navbar logo padding
 $navbar-brand-padding-y: 0;
@@ -228,10 +238,77 @@ $form-label-margin-bottom: 0.3125rem;
 // font weight
 $input-font-weight: $font-weight-light;
 
+// Invalid form field styles
+$form-feedback-icon-invalid:  none;
+
+
+
+
+
+/* ----------------------- MODALS ------------------------- */
+
+$modal-inner-padding: $spacer * 0;
+$modal-header-padding: 0;
+
+$modal-header-padding-y: 1.5rem; // Used in calculations for modal close button
+$modal-header-padding-x: 1.5rem; // Used in calculations for modal close button
+
+$modal-header-border-width: 0;
+
+$modal-content-bg: $white;
+$modal-sm: 500px;
+$modal-md: 650px;
+$modal-lg: 800px;
+$modal-xl: 1140px;
+
+$modal-backdrop-opacity: .25;
+
+$modal-transition: transform .15s ease-in-out;
+
+
+
+
+
+/* ------------------- DROPDOWNS ------------------- */
+
+$dropdown-min-width: 9.375rem;
+$dropdown-padding-x: 0.625rem;
+$dropdown-padding-y: 0.625rem;
+$dropdown-spacer: .625rem;
+$dropdown-bg: $white;
+$dropdown-border-color: $gray-150;
+$dropdown-border-width: 0.125rem;
+
+$dropdown-link-hover-bg: $gray-100;
+$dropdown-link-active-color: $blue-900;
+$dropdown-link-active-bg: $gray-100;
+
+$dropdown-item-padding-y: 0.25rem;
+$dropdown-item-padding-x: $spacer;
+
+
+
+
+
+/* ------------------- ALERTS ---------------------- */
+
+$alert-padding-y: $spacer * 2;
+$alert-padding-x: $spacer * 2;
+$alert-border-width: 0.125rem;
+$alert-margin-bottom: 0;
+
+
+
+
+
+/* ------------------- CLOSE BUTTON ----------------------- */
+
+$btn-close-opacity:          1;
+$btn-close-hover-opacity:    1;
+$btn-close-disabled-opacity: .5 !default;
+
+
 
 
 
 /* -------------- MISCELLANEOUS ----------------  */
-
-// Change the background color of the body
-$body-bg: $very-light-blue;
