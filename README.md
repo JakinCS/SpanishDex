@@ -22,24 +22,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a space learning algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
+SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a spaced learning algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
 
 ### Built With
 
-- **React**
-- **Next**
-- **JavaScript**
+- **Next.js**
 - **Bootstrap**
-
-### Project Future Features (the vision)
-- Creating flashcards and creating decks to store flashcards.
-- Editing and deleting flashcards and decks.
-- Practicing flashcards, which includes being able to:
-  - Practice all weak words. (Weak words are determined by a spaced repetition algorithm. More details below)
-  - Practice weak words in a deck.
-  - Practice all words in a deck.
-- Listening to pronunciation of Spanish words, available when practicing and viewing the cards in the deck.
-- User login functionality for persistence of user activity.
+- **MongoDB**
 
 ### Interactive Prototype!
 
@@ -47,6 +36,34 @@ This application is still in the development phase. If you want to see what the 
 I created the prototype in Figma. It is high-quality, and I put a lot of effort into making it *interactive*. Check it out!
 
 [Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?node-id=526-5542&node-type=canvas&viewport=255%2C203%2C0.3&t=Zm7Bkl52VzJ6oVi6-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=526%3A6854)
+
+### Project Vision (features)
+ - Have a homepage describing the purpose of the application and pointing the user to sign up or log in.
+ - Give the users and option to contact the website owner with a form right on the homepage.
+ - Provide two sign up or log in options:
+   - Authenticate with a username and password.
+   - Authenticate with Google OAuth.
+ - Allow the users to reset their password if they forgot. 
+ - Have a dashboard with a list of the user's flashcard decks along with some statistics
+ - Ability to create flashcards and make decks to store the flashcards
+ - Have a page for each flashcard deck. This pages lists the flashcards in the deck and gives the user the option to listen to the Spanish word's pronunciation
+ - Be able to edit and delete flashcards and decks
+ - Allow the user to practice flashcards:
+   - They could practice all their weak words contained in all their decks. (Weak words are determined by a spaced repetition algorithm. More details below)
+   - They could practice all the weak words of an individual deck.
+   - They could aslo practice all the words of an individual deck.
+ - Have an account page where the user can edit their username, email, password and profile picture.
+
+### Project Status (completed features)
+ - The homepage is fully completed except for the functionality of the contact form.
+ - Authentication is implemented
+   - I used Auth.js for authentication, implementing the Credentials and OAuth providers
+   - User accounts are stored in MongoDB
+   - Users can log out and log in seamlessly.
+ - Users can now reset their password.
+   - First they enter their email into a form.
+   - An email is sent to their inbox with a link that is used to reset their password.
+   - I used Sendgrid to send emails.
 
 ### Spaced Learning Algorithm
 This application will use a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
