@@ -12,8 +12,8 @@ function HomepageFooter() {
         </Col>
         <Col className='col-auto ms-md-auto'>
           <nav>
-            <a href="mailto:jakinstahl@gmail.com" className='me-20'><Image height={30} src={'/icons/mail.svg'} alt='Mail icon'></Image></a>
-            <a href="https://www.linkedin.com/in/jakinstahl" target='_blank'><Image height={30} src={'/icons/linkedin.svg'} alt='LinkedIn icon'></Image></a>
+            <a href="mailto:jakinstahl@gmail.com" className='me-20 blue-link'><Image height={30} src={'/icons/mail.svg'} alt='Mail icon'></Image></a>
+            <a href="https://www.linkedin.com/in/jakinstahl" className='blue-link' target='_blank'><Image height={30} src={'/icons/linkedin.svg'} alt='LinkedIn icon'></Image></a>
           </nav>
         </Col>
       </Row>
