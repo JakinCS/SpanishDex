@@ -84,11 +84,24 @@ If you want to get a local copy of this project up and running, follow these exa
 
 ### Prerequisites
 
+#### NPM
 To run this locally, you will first need npm.
 Run this command to verify its installation:
   ```sh
   npm -v
   ```
+
+#### MongoDB
+You will need MongoDB to run this app correctly.
+You have two options:
+ 1. Install MongoDB locally. [Download MongoDB](https://www.mongodb.com/try/download/community). Follow [this guide](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#run-mongodb-community-edition-as-a-windows-service) for more information.
+ 2. Use MongoDB Atlas. [Get Atlas](https://www.mongodb.com/products/platform/atlas-database?tck=docs_mongosh)
+
+#### Sendgrid (optional)
+If you want this app to be able to send emails (password reset emails), you will first need a Sendgrid account. [https://sendgrid.com/](https://sendgrid.com/) Then, you will need to create an API key (you will use this later).
+
+#### Google OAuth (optional)
+In order to sign in or sign up with Google OAuth, you will need to set up OAuth in your Google Developers Console. [http://console.developers.google.com/](http://console.developers.google.com/). You can follow [this article](https://blog.rebex.net/howto-register-gmail-oauth) to set it up or find a different one that works better for you. The important details are the **client ID** and **client secret** which you will get once you've set up OAuth. You will need these two pieces of information later.
 
 ### Installation
 
@@ -96,11 +109,31 @@ Run this command to verify its installation:
    ```sh
    git clone https://github.com/JakinCS/SpanishDex.git
    ```
-2. Install NPM packages
+2. Switch to the correct directory by running:
+   ```
+   cd .\SpanishDex\
+   ```
+3. Install NPM packages
    ```sh
    npm install
    ```
-3. Run the application
+4. Add environment variables
+   - Create a ```.env.local``` file in the root directory of the application.
+   - Add the **MONGODB_URI** environment variable. Set it equal to mongodb://localhost:27017 (using the default port) if you are running MongoDB locally.
+     ```
+     mongodb://localhost:27017
+     ```
+     If you are using MongoDB Altas, set it equal to the connection URI (this is found in the connection instructions for the database cluster). It will look like this:
+     ```
+     mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.<appId>.mongodb.net/<DBNAME>?retryWrites=true&w=majority
+     ```
+   - Add the **NEXTAUTH_URL** environment variable. Set it equal to the URL from which the application is run. For a local installation it is simply: ```http://localhost:3000```
+   - Add the **NEXTAUTH_SECRET** environment variable. Set it equal to a random value.
+     You can generate it with this command: ```openssl rand -base64 32```, or use this link: [https://generate-secret.vercel.app/32](https://generate-secret.vercel.app/32)
+   - Add the **SENDGRID_API_KEY** environment variable (optional). If you created a Sendgrid account, set this equal to the API key you created earlier.
+   - Add the **AUTH_GOOGLE_ID** environment variable (optional). If you decided to set up Google OAuth, then you will need to put the client ID here.
+   - Add the **AUTH_GOOGLE_SECRET** environment variable (optional). Set this equal to the client secret.
+5. Run the application
    ```sh
    npm run dev
    ```
@@ -110,7 +143,9 @@ Run this command to verify its installation:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Content yet to come for this section
+Navigate to [spanishdex.vercel.app](https://spanishdex.vercel.app) to use the production version of the application on the web.
+<br/>
+If you are running this application locally, navigate to [localhost:3000](http://localhost:3000) (or similar).
 
 
 
