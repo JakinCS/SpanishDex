@@ -21,6 +21,7 @@ function HomepageHeader() {
             <Image
               alt="SpanishDex Logo"
               src={spanishdex}
+              priority={true}
               style={{ height: "3.125rem", width: "auto" }}
             />
           </Link>
@@ -29,7 +30,8 @@ function HomepageHeader() {
           <Link href="/" className='blue-link'>
             <Image
               src={spanishdexIcon}
-              alt="SpanishDex Logo"              
+              alt="SpanishDex Logo"  
+              priority={true}            
               style={{ height: "3.125rem", width: 'auto' }}
             />
           </Link>
