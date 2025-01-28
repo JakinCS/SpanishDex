@@ -19,15 +19,20 @@ function HomepageFooter() {
             <Image
               alt="SpanishDex Logo"
               src={spanishdex}
-              priority={true}
+              placeholder="blur"
+              blurDataURL={'/logo.svg'}
               style={{ height: "3.125rem", width: "auto" }}
             />
           </Link>
         </Col>
         <Col xs='12' sm='auto' className='d-flex align-items-center justify-content-center ms-sm-auto'>
           <nav>
-            <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'><Image width={30} height={30} src={mail} alt='Mail icon'></Image></a>
-            <a href="https://www.linkedin.com/in/jakinstahl" className='ps-2 py-3 blue-link' target='_blank'><Image width={30} height={30} src={linkedin} alt='LinkedIn icon'></Image></a>
+            <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'>
+              <Image width={30} height={30} src={mail} alt='Mail icon'></Image>
+              </a>
+            <a href="https://www.linkedin.com/in/jakinstahl" className='ps-2 py-3 blue-link' target='_blank'>
+              <Image width={30} height={30} src={linkedin} alt='LinkedIn icon'></Image>
+            </a>
           </nav>
         </Col>
       </Row>

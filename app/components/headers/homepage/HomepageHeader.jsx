@@ -21,7 +21,9 @@ function HomepageHeader() {
             <Image
               alt="SpanishDex Logo"
               src={spanishdex}
-              priority={true}
+              // priority={true}
+              placeholder="blur"
+              blurDataURL={'/logo.svg'}
               style={{ height: "3.125rem", width: "auto" }}
             />
           </Link>
@@ -31,7 +33,9 @@ function HomepageHeader() {
             <Image
               src={spanishdexIcon}
               alt="SpanishDex Logo"  
-              priority={true}            
+              // priority={true}
+              placeholder="blur"
+              blurDataURL={'/logo-icon.svg'}            
               style={{ height: "3.125rem", width: 'auto' }}
             />
           </Link>
