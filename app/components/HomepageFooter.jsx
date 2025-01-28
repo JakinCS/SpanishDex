@@ -24,10 +24,10 @@ function HomepageFooter() {
             />
           </Link>
         </Col>
-        <Col xs='12' sm='auto' className='d-flex align-items-center justify-content-center ms-sm-auto py-0 py-sm-0'>
+        <Col xs='12' sm='auto' className='d-flex align-items-center justify-content-center ms-sm-auto'>
           <nav>
-            <a href="mailto:jakinstahl@gmail.com" className='me-20 blue-link'><Image width={30} height={30} src={mail} alt='Mail icon'></Image></a>
-            <a href="https://www.linkedin.com/in/jakinstahl" className='blue-link' target='_blank'><Image width={30} height={30} src={linkedin} alt='LinkedIn icon'></Image></a>
+            <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'><Image width={30} height={30} src={mail} alt='Mail icon'></Image></a>
+            <a href="https://www.linkedin.com/in/jakinstahl" className='ps-2 py-3 blue-link' target='_blank'><Image width={30} height={30} src={linkedin} alt='LinkedIn icon'></Image></a>
           </nav>
         </Col>
       </Row>
