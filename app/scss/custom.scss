@@ -542,16 +542,20 @@ a {
     transition: color .15s ease-in-out, outline .15s ease-in-out;
 }
 
-a:focus, a:focus-visible {
+a:focus:not([role="button"]), a:focus-visible:not([role="button"]) {
     color: $green;
 }
 
-a:focus-visible {
+a:focus-visible:not([role="button"]) {
     outline-color: $green;
 }
 
-a:active {
+a:active:not([role="button"]) {
     color: shade-color($green, 20%);
+}
+
+a.blue-link:hover, a.blue-link:focus, a.blue-link:focus-visible, a.blue-link:active {
+    color: $primary;
 }
 
 a.blue-link:focus-visible {
