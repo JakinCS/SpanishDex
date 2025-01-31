@@ -9,7 +9,7 @@ import rightArrow from "@/public/icons/arrow_right.svg";
 import downArrow from "@/public/icons/arrow_down.svg";
 import { useState } from "react";
 
-const error = ({ error, reset }) => {
+const Error = ({ error, reset }) => {
 
   const [showError, setShowError] = useState(false);
 
@@ -50,4 +50,4 @@ const error = ({ error, reset }) => {
   )
 }
 
-export default error
+export default Error
