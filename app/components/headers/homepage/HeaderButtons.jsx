@@ -10,7 +10,7 @@ import LogOutModal from "../../modals/LogOutModal";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-const HeaderButtons = () => {
+const HeaderButtons = (props) => {
   const { data: session } =  useSession();
 
   // Log In Modal State
@@ -53,15 +53,20 @@ const HeaderButtons = () => {
     setLogOutModalOpenState(false);
   }
 
+  const tempUserInfo = {
+    username: " ...loading",
+    profile_colors: [ "#cccccc", "#000000" ]
+  }
+
   return (
     <>
-      { !!session?.user ? 
+      { props.isLoggedIn ? 
         <>
           <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
             <span className="d-none d-md-block">Go To Dashboard</span>
             <span className="d-block d-md-none">Dashboard</span>
           </Link>
-          <ProfileDropdown className="ms-auto" user={session.user} onClick={openLogOutModal}/>
+          <ProfileDropdown className="ms-auto" user={session?.user || tempUserInfo} onClick={openLogOutModal}/>
         </>
         :
         <>

@@ -9,7 +9,7 @@ import spanishdexIcon from "@/public/logo-icon.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-function HomepageHeader() {
+function HomepageHeader(props) {
   return (
     <>
       <Navbar
@@ -42,7 +42,7 @@ function HomepageHeader() {
         <NavbarToggle />
         <Navbar.Collapse id="homepage-nav">
           <Nav className="ms-auto my-2 column-gap-25 row-gap-3 align-items-center">
-            <HeaderButtons />
+            <HeaderButtons isLoggedIn={props.isLoggedIn}/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

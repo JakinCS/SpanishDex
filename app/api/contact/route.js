@@ -24,8 +24,7 @@ export async function POST(request) {
     
     try {
       // Send the email using the transport with the options.
-      const sendResponse = await sgMail.send(emailOptions)      
-      console.log(sendResponse)
+      const sendResponse = await sgMail.send(emailOptions)     
 
     } catch(error) {
       return NextResponse.json({ error: "Error occurred sending the message. Please try again.", serverError: error }, { status: 500 })
