@@ -55,15 +55,15 @@ I created the prototype in Figma. It is high-quality, and I put a lot of effort 
  - Have an account page where the user can edit their username, email, password and profile picture.
 
 ### Project Status (completed features)
- - The homepage is fully completed except for the functionality of the contact form.
+ - The homepage is fully completed including the functionality of the contact form.
  - Authentication is implemented
-   - I used Auth.js for authentication, implementing the Credentials and OAuth providers
+   - I used Auth.js for authentication, utilizing the Credentials and OAuth providers
    - User accounts are stored in MongoDB
    - Users can log out and log in seamlessly.
  - Users can now reset their password.
    - First they enter their email into a form.
    - An email is sent to their inbox with a link that is used to reset their password.
-   - I used Sendgrid to send emails.
+   - I use Sendgrid to send emails for password resetting.
 
 ### Spaced Learning Algorithm
 This application will use a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
