@@ -73,7 +73,7 @@ const HeaderButtons = (props) => {
           <Button className="ms-auto d-none d-md-block" variant="outline-primary" onClick={openLogInModal}>
             Log In
           </Button>
-          <a href="#" className="navbar-link d-block d-md-none py-2 px-2 fw-semibold text-primary" style={{marginRight: '-0.3125rem'}} onClick={(e) => {e.preventDefault(); openLogInModal()}}>Log In</a>
+          <a href="#" className="navbar-link blue-link d-block d-md-none py-2 px-2 fw-semibold text-primary" style={{marginRight: '-0.3125rem'}} onClick={(e) => {e.preventDefault(); openLogInModal()}}>Log In</a>
           
           <Button className="ms-auto" id='createAccountButton' variant="primary" onClick={openSignUpModal}>
             <span className="d-none d-md-block">Create Account</span>

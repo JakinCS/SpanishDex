@@ -30,7 +30,7 @@ function HomepageFooter() {
             <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'>
               <Image width={30} height={30} src={mail} alt='Mail icon'></Image>
               </a>
-            <a href="https://www.linkedin.com/in/jakinstahl" className='ps-2 py-3 blue-link' target='_blank'>
+            <a href="https://www.linkedin.com/in/jakinstahl" className='px-2 py-3 blue-link' style={{marginRight: '-5px'}} target='_blank'>
               <Image width={30} height={30} src={linkedin} alt='LinkedIn icon'></Image>
             </a>
           </nav>
