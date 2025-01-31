@@ -59,12 +59,12 @@ const ForgotPassword = () => {
 
 
   return (
-    <div className='mx-auto mt-50' style={{maxWidth: '31.25rem'}}>
-      <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
+    <>
+      <Alert className="mb-4" variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
         <Alert.Heading>Error</Alert.Heading>
         {formState.serverMessage}
       </Alert>
-      <div className='mt-25 bg-white p-50 rounded'>
+      <div className='bg-white p-50 rounded'>
         <Stack gap={5}>
           <h1 className='fs-2'>Reset Password</h1>
           <p className="d-none text-break hiddenError">{serverError}</p>
@@ -122,7 +122,7 @@ const ForgotPassword = () => {
           </Form>
         </Stack>
       </div>
-    </div>
+    </>
   )
 }
 

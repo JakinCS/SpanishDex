@@ -10,7 +10,7 @@ import LogOutModal from "../../modals/LogOutModal";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-const HeaderButtons = () => {
+const HeaderButtons = (props) => {
   const { data: session } =  useSession();
 
   // Log In Modal State
@@ -53,22 +53,27 @@ const HeaderButtons = () => {
     setLogOutModalOpenState(false);
   }
 
+  const tempUserInfo = {
+    username: " ...loading",
+    profile_colors: [ "#cccccc", "#000000" ]
+  }
+
   return (
     <>
-      { !!session?.user ? 
+      { props.isLoggedIn ? 
         <>
           <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
             <span className="d-none d-md-block">Go To Dashboard</span>
             <span className="d-block d-md-none">Dashboard</span>
           </Link>
-          <ProfileDropdown className="ms-auto" user={session.user} onClick={openLogOutModal}/>
+          <ProfileDropdown className="ms-auto" user={session?.user || tempUserInfo} onClick={openLogOutModal}/>
         </>
         :
         <>
           <Button className="ms-auto d-none d-md-block" variant="outline-primary" onClick={openLogInModal}>
             Log In
           </Button>
-          <a href="#" className="navbar-link d-block d-md-none py-2 ps-2 fw-semibold text-primary" onClick={openLogInModal}>Log In</a>
+          <a href="#" className="navbar-link blue-link d-block d-md-none py-2 px-2 fw-semibold text-primary" style={{marginRight: '-0.3125rem'}} onClick={(e) => {e.preventDefault(); openLogInModal()}}>Log In</a>
           
           <Button className="ms-auto" id='createAccountButton' variant="primary" onClick={openSignUpModal}>
             <span className="d-none d-md-block">Create Account</span>

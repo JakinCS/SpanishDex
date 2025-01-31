@@ -131,6 +131,7 @@ In order to sign in or sign up with Google OAuth, you will need to set up OAuth 
    - Add the **NEXTAUTH_SECRET** environment variable. Set it equal to a random value.
      You can generate it with this command: ```openssl rand -base64 32```, or use this link: [https://generate-secret.vercel.app/32](https://generate-secret.vercel.app/32)
    - Add the **SENDGRID_API_KEY** environment variable (optional). If you created a Sendgrid account, set this equal to the API key you created earlier.
+   - Add the **CONTACT_EMAIL** environment variable (optional). Again, this is only if you set up Sendgrid. Set this variable equal to your email. This will be the receiving email of any messages sent through the contact form on the homepage or contact modal.
    - Add the **AUTH_GOOGLE_ID** environment variable (optional). If you decided to set up Google OAuth, then you will need to put the client ID here.
    - Add the **AUTH_GOOGLE_SECRET** environment variable (optional). Set this equal to the client secret.
 5. Run the application

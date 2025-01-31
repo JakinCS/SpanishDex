@@ -46,8 +46,6 @@ export async function POST(request) {
     // create a URL for the user to use to reset their password
     const resetURL = `${process.env.NEXTAUTH_URL}/reset-password/${resetToken}`
 
-    const body = "Reset your password by clicking on the following url: " + resetURL;
-
     const emailOptions = {
       to: lowercaseEmail,
       from: 'SpanishDex <spanishdex@gmail.com>',
