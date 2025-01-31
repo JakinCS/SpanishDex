@@ -155,7 +155,7 @@ function HomepageContactForm(props) {
 
   return (
     <Form {...props}>
-      <Alert className='mb-20' variant="danger" show={formState.serverError && formState.errorAcknowledged === false} dismissible>
+      <Alert className='mb-20' variant="danger" show={formState.serverError && formState.errorAcknowledged === false} onClose={acknowledgeErrorBanner} dismissible>
         <Alert.Heading>Error</Alert.Heading>
         {formState.serverMessage || 'An error occurred while submitting the form. Please try again later.'}
       </Alert>
