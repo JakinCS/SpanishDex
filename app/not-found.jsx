@@ -2,12 +2,10 @@ import spanishdex from "@/public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import HomepageSection from "./components/HomepageSection";
-// import { getServerSession } from 'next-auth';
 import { auth } from "@/auth"
 
 const NotFound = async () => {
   // Get session information
-  // const session = await getServerSession();
   const session = await auth();
 
   return (

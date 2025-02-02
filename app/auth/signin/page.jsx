@@ -1,6 +1,4 @@
 import SignInContent from '@/app/components/SignInContent';
-import { options } from '@/app/api/auth/[...nextauth]/options';
-// import { getServerSession } from 'next-auth';
 import { auth } from "@/auth"
 import Link from 'next/link';
 
@@ -8,7 +6,6 @@ import Link from 'next/link';
 const SignIn = async () => {
 
   // Get session information. If the user is already logged in, different content will be rendered.
-  // const session = await getServerSession(options);
   const session = await auth();
 
   return (

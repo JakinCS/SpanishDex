@@ -1,12 +1,9 @@
-// import { getServerSession } from 'next-auth';
-// import { options } from '../api/auth/[...nextauth]/options';
 import DashboardButtons from './DashboardButtons';
 import { auth } from "@/auth"
 
 async function Dashboard() {
 
     // Get session information
-    // const session = await getServerSession(options);
     const session = await auth();
 
     return (

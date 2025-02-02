@@ -3,14 +3,12 @@ import HomepageSection from "@/app/components/HomepageSection";
 import ResetPasswordForm from "@/app/components/ResetPasswordForm";
 import crypto from "crypto";
 import { MongoClient } from "mongodb";
-// import { getServerSession } from 'next-auth';
 import { auth } from "@/auth"
 import { redirect } from 'next/navigation'
 
 const ResetPassword = async ({ params }) => {
 
   // Get session information
-  // const session = await getServerSession();
   const session = await auth();
 
   // If someone is logged in, redirect to the dashboard. There's no need to reset the password
