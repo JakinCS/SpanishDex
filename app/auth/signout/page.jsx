@@ -27,7 +27,7 @@ const SignOut = () => {
 
     try {
       // Sign the user out and redirect to the homepage
-      await signOut({ callbackUrl: '/' });
+      await signOut({ redirectTo: '/' });
     
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, error: false}))

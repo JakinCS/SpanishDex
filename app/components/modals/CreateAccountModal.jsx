@@ -241,7 +241,7 @@ function CreateAccountModal(props) {
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {callbackUrl: '/dashboard'})
+      await signIn('google', {redirectTo: '/dashboard'})
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))

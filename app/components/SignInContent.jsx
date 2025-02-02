@@ -79,7 +79,7 @@ const SignInContent = () => {
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {callbackUrl: '/dashboard'})
+      await signIn('google', {redirectTo: '/dashboard'})
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
@@ -111,7 +111,7 @@ const SignInContent = () => {
         username: formValues.username.value,
         password: formValues.password.value,
         redirect: false,
-        callbackUrl: callbackUrl
+        redirectTo: callbackUrl
       })
 
       if (response) {
