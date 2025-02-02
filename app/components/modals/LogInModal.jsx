@@ -104,7 +104,7 @@ function LogInModal(props) {
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {callbackUrl: '/dashboard'})
+      await signIn('google', {redirectTo: '/dashboard'})
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
@@ -142,7 +142,7 @@ function LogInModal(props) {
         username: bodyToSend.username,
         password: bodyToSend.password,
         redirect: false,
-        callbackUrl: '/dashboard'
+        redirectTo: '/dashboard'
       })
 
       if (response) {

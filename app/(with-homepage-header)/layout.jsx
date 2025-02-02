@@ -1,10 +1,12 @@
 import HomepageHeader from '../components/headers/homepage/HomepageHeader';
 import HomepageFooter from '../components/HomepageFooter';
-import { getServerSession } from 'next-auth';
+// import { getServerSession } from 'next-auth';
+import { auth } from "@/auth"
 
 export default async function homepageLayout({ children }) {
   // Get session information
-  const session = await getServerSession();
+  // const session = await getServerSession();
+  const session = await auth();
 
   const containerStyles = {
     height: 'calc(100vh - 82px)',
@@ -15,7 +17,7 @@ export default async function homepageLayout({ children }) {
 
   return (
     <>
-      <HomepageHeader isLoggedIn={!!session}/>
+      <HomepageHeader isLoggedIn={!!session} />
       <div style={containerStyles}>
         <div>
           {children}
