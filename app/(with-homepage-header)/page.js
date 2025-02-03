@@ -1,4 +1,3 @@
-import Homepage from "../Homepage";
 import HomepageSection from '@/components/HomepageSection'
 import HomepageSectionColumns from '@/components/HomepageSectionColumns'
 import HomepageContactForm from '@/components/HomepageContactForm'
