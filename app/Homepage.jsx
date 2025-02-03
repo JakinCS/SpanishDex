@@ -1,7 +1,7 @@
-import HomepageSection from './components/HomepageSection'
-import HomepageSectionColumns from './components/HomepageSectionColumns'
-import HomepageContactForm from './components/HomepageContactForm'
-import GetStartedButton from './components/GetStartedButton';
+import HomepageSection from '@/components/HomepageSection'
+import HomepageSectionColumns from '@/components/HomepageSectionColumns'
+import HomepageContactForm from '@/components/HomepageContactForm'
+import GetStartedButton from '@/components/GetStartedButton';
 
 async function Homepage() {
 

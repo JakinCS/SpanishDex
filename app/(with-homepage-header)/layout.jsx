@@ -1,5 +1,5 @@
-import HomepageHeader from '../components/headers/homepage/HomepageHeader';
-import HomepageFooter from '../components/HomepageFooter';
+import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
+import HomepageFooter from '@/components/HomepageFooter';
 import { auth } from "@/auth"
 
 export default async function homepageLayout({ children }) {

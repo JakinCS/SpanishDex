@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import IconButton from './IconButton';
+import IconButton from '@/components/IconButton';
 import { useState } from 'react';
 
 const ResetPasswordForm = (props) => {

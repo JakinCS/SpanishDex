@@ -5,13 +5,13 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import IconButton from '@/app/components/IconButton';
+import IconButton from '@/components/IconButton';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import GoogleAuthButton from './GoogleAuthButton';
-import OrSeparator from './OrSeparator';
+import GoogleAuthButton from '@/components/GoogleAuthButton';
+import OrSeparator from '@/components/OrSeparator';
 
 
 const SignInContent = () => {

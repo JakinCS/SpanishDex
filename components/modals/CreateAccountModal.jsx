@@ -4,13 +4,13 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container"
-import IconButton from "../IconButton";
+import IconButton from "@/components/IconButton";
 import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from 'react'
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import GoogleAuthButton from "../GoogleAuthButton";
-import OrSeparator from "../OrSeparator";
+import GoogleAuthButton from "@/components/GoogleAuthButton";
+import OrSeparator from "@/components/OrSeparator";
 
 function CreateAccountModal(props) {
   const router = useRouter();

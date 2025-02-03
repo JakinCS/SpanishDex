@@ -1,6 +1,6 @@
 
-import HomepageSection from "@/app/components/HomepageSection";
-import ResetPasswordForm from "@/app/components/ResetPasswordForm";
+import HomepageSection from "@/components/HomepageSection";
+import ResetPasswordForm from "@/components/ResetPasswordForm";
 import crypto from "crypto";
 import { MongoClient } from "mongodb";
 import { auth } from "@/auth"

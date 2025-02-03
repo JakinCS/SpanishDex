@@ -2,8 +2,8 @@
 
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavbarToggle from "../NavbarToggle";
-import HeaderButtons from "./HeaderButtons";
+import NavbarToggle from "@/components/headers/NavbarToggle";
+import HeaderButtons from "@/components/headers/homepage/HeaderButtons";
 import spanishdex from "@/public/logo.svg";
 import spanishdexIcon from "@/public/logo-icon.svg";
 import Image from "next/image";

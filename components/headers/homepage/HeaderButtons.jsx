@@ -1,12 +1,12 @@
 'use client'
 
-import CreateAccountModal from "../../modals/CreateAccountModal"
-import LogInModal from "../../modals/LogInModal"
-import ResetPasswordModal from "../../modals/ResetPasswordModal";
+import CreateAccountModal from "@/components/modals/CreateAccountModal"
+import LogInModal from "@/components/modals/LogInModal"
+import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
 import Button from 'react-bootstrap/Button'
 import { useState } from "react";
-import ProfileDropdown from "../ProfileDropdown";
-import LogOutModal from "../../modals/LogOutModal";
+import ProfileDropdown from "@/components/headers/ProfileDropdown";
+import LogOutModal from "@/components/modals/LogOutModal";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
