@@ -4,7 +4,7 @@ import { auth } from "@/auth"
 import { Suspense } from 'react';
 import HomepageHeaderSkeleton from '@/components/headers/homepage/HomepageHeaderSkeleton';
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 export default function homepageLayout({ children }) {
   // Get session information
@@ -19,9 +19,10 @@ export default function homepageLayout({ children }) {
 
   return (
     <>
-      <Suspense fallback={<HomepageHeaderSkeleton />}>
+      {/* <Suspense fallback={<HomepageHeaderSkeleton />}>
         <HomepageHeader />      
-      </Suspense>
+      </Suspense> */}
+      <HomepageHeader />   
       <div style={containerStyles}>
         <div>
           {children}
