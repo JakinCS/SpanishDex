@@ -60,13 +60,13 @@ const HeaderButtons = (props) => {
 
   return (
     <>
-      { props.isLoggedIn ? 
+      { !!props.sessionInfo ? 
         <>
           <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
             <span className="d-none d-md-block">Go To Dashboard</span>
             <span className="d-block d-md-none">Dashboard</span>
           </Link>
-          <ProfileDropdown className="ms-auto" user={session?.user || tempUserInfo} onClick={openLogOutModal}/>
+          <ProfileDropdown className="ms-auto" user={session?.user || props.sessionInfo.user} onClick={openLogOutModal}/>
         </>
         :
         <>

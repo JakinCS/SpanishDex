@@ -21,7 +21,7 @@
     "generate-password": "^1.7.1",
     "mongo-sanitize": "^1.1.0",
     "mongodb": "^6.11.0",
-    "next": "^15.1.0",
+    "next": "^15.2.0-canary.37",
     "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-bootstrap": "^2.10.5",

@@ -18,7 +18,7 @@ export default function Homepage() {
       </HomepageSection>
       <HomepageSectionColumns 
         py='80' backgroundColor='white' 
-        image={'/images/app-screenshot.jpg'} imageBorder={true} 
+        image={'screenshot'} imageBorder={true} 
         imageAlt='SpanishDex dashboard screenshot' 
         imagePosition='left' headingText='Simple Interface'
       >
@@ -35,7 +35,7 @@ export default function Homepage() {
       </HomepageSectionColumns>
       <HomepageSectionColumns 
         py='80' backgroundColor='almost-white'
-        image={'/images/flashcards-example.png'} imageBorder={false}
+        image={'flashcards'} imageBorder={false}
         imageAlt='SpanishDex flashcards example'
         imagePosition='right' headingText='Spaced Repetition'
       >
