@@ -60,7 +60,7 @@ const HeaderButtons = (props) => {
 
   return (
     <>
-      { !!props.sessionInfo ? 
+      { !!props.sessionInfo || !!session?.user ? 
         <>
           <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
             <span className="d-none d-md-block">Go To Dashboard</span>
