@@ -5,9 +5,8 @@ import Google from "next-auth/providers/google"
 import { MongoClient } from "mongodb";
 import sanitize from 'mongo-sanitize';
 import { compare, hash } from 'bcrypt';
-import { contrastedColor, randomColor } from "@/app/utils/colorTools";
-import { generate3RandomNumbers } from '@/app/utils/randomNumbers';
 import { generate } from "generate-password";
+import { generateRandomNumbers, randomColorPair } from './lib/utils';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -114,12 +113,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
           // If the user can't be found in the database, create a new user in the database
           if (!findResult) {
-            const username = user.name.replaceAll(' ', '') + generate3RandomNumbers(); // generate a username for them.
+            const username = user.name.replaceAll(' ', '') + generateRandomNumbers(3); // generate a username for them.
 
             const password = generate({ length: 16, numbers: true }); // generate a random password for them
             const hashedPassword = await hash(password, 10);
-
-            const userColor = randomColor();
 
             // Add the user to the database.
             const addUser = await collection.insertOne({ 
@@ -128,7 +125,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
               password: hashedPassword, 
               date_created: new Date(),
               profile_picture: null, 
-              profile_colors: [userColor, contrastedColor(userColor)]
+              profile_colors: randomColorPair()
             })
 
             await client.close()

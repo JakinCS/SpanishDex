@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { MongoClient } from "mongodb";
 import sanitize from 'mongo-sanitize';
-import { contrastedColor, randomColor } from "@/app/utils/colorTools";
+import { randomColorPair } from "@/lib/utils";
 
 
 // Variable for holding the error message
@@ -73,11 +73,15 @@ export async function POST(request) {
     // Hash the password
     const hashedPassword = await hash(password, 10);
 
-    // Get color for profile for the user.
-    const userColor = randomColor();
-
     // Insert the user into the database
-    const result = await collection.insertOne({username: cleanUsername, email: lowercaseEmail, password: hashedPassword, date_created: new Date(), profile_picture: null, profile_colors: [userColor, contrastedColor(userColor)]})
+    const result = await collection.insertOne({
+      username: cleanUsername, 
+      email: lowercaseEmail, 
+      password: hashedPassword, 
+      date_created: new Date(), 
+      profile_picture: null, 
+      profile_colors: randomColorPair()
+    })
 
     await client.close();
     return NextResponse.json({ userid: result.insertedId, message: 'Sign up successful' }, {status: 201})
