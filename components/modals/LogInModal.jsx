@@ -147,14 +147,12 @@ function LogInModal(props) {
       console.log("sign in response", response)
 
       if (response) {
-        let responseStatus = response.status;
-
+        if (response.error === 'CredentialsSignin') {
+          throw('Log in failed. Incorrect username or password. Please try again.');
+        }
+        
         if (!response.ok) {
-          if (responseStatus === 401) {
-            throw('Log in failed. Incorrect username or password. Please try again.');
-          } else {
-            throw('Log in failed. Error: ' + response.status + '. Please try again later.')
-          }
+          throw('Log in failed. Error: ' + response.status + '. Please try again later.')
         }
       }      
       

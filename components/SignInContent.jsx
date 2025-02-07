@@ -124,16 +124,14 @@ const SignInContent = () => {
       })
 
       if (response) {
-        let responseStatus = response.status;
-
-        if (!response.ok) {
-          if (responseStatus === 401) {
-            throw('Log in failed. Incorrect username or password. Please try again.');
-          } else {
-            throw('Log in failed. Error: ' + response.status + '. Please try again later.')
-          }
+        if (response.error === 'CredentialsSignin') {
+          throw('Log in failed. Incorrect username or password. Please try again.');
         }
-      }      
+        
+        if (!response.ok) {
+          throw('Log in failed. Error: ' + response.status + '. Please try again later.')
+        }
+      }   
       
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
