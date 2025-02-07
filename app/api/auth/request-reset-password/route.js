@@ -44,7 +44,7 @@ export async function POST(request) {
     const updateResult = await collection.updateOne({email: lowercaseEmail}, { $set: {reset_token: databaseResetToken, reset_token_expiry: tokenExpirationDate}})
 
     // create a URL for the user to use to reset their password
-    const resetURL = `${process.env.NEXTAUTH_URL}/reset-password/${resetToken}`
+    const resetURL = `${process.env.APP_URL}/reset-password/${resetToken}`
 
     const emailOptions = {
       to: lowercaseEmail,

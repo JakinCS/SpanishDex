@@ -137,13 +137,14 @@ function LogInModal(props) {
 
     try {
 
-      // const response = await signIn('google')
       const response = await signIn('credentials', {
         username: bodyToSend.username,
         password: bodyToSend.password,
         redirect: false,
         redirectTo: '/dashboard'
       })
+
+      console.log("sign in response", response)
 
       if (response) {
         let responseStatus = response.status;
@@ -162,7 +163,6 @@ function LogInModal(props) {
 
       // Redirect to the dashboard
       router.push('/dashboard')
-      // const redirect = setTimeout(() => {router.push('/dashboard')}, 1500)
 
     } catch (error) {
       setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))

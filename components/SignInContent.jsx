@@ -70,6 +70,13 @@ const SignInContent = () => {
     setShowPassword(prevState => !prevState);
   }
 
+  // This function resets the form values (clears the form)
+  const clearForm = () => {
+    setFormValues({
+      username: {value: '', valid: null},
+      password: {value: '', valid: null}
+    })
+  } 
 
   // This function handles the logging in with Google logic
   const logInWithGoogle = async () => {
@@ -83,6 +90,8 @@ const SignInContent = () => {
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
+
+      clearForm();
 
     } catch (error) {
       setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
@@ -128,6 +137,8 @@ const SignInContent = () => {
       
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
+
+      clearForm();
 
       // Redirect to the dashboard
       router.push(callbackUrl)

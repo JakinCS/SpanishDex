@@ -207,6 +207,16 @@ const SignUp = () => {
     }
   }
 
+  // function to clear the form
+  const clearForm = () => {
+    // Clear the form
+    setFormValues({
+      username: {value: '', valid: null, message: null}, 
+      email: {value: '', valid: true, message: null},
+      password: {value: '', valid: null, errorType: null, message: null},
+      password2: {value: '', valid: null, errorType: null, message: null}
+    })
+  }
 
   // This function handles the logging in with Google logic
   const signUpWithGoogle = async () => {
@@ -220,6 +230,8 @@ const SignUp = () => {
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
+
+      clearForm();
 
     } catch (error) {
       setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
@@ -278,6 +290,8 @@ const SignUp = () => {
         password: bodyToSend.password,
         redirect: false,
       })
+
+      clearForm();
 
       if (signInResponse.ok) {
         // Redirect to the dashboard
@@ -367,68 +381,6 @@ const SignUp = () => {
         </Stack>
       </div>
     </>
-    // <div className='mx-auto mt-50' style={{maxWidth: '31.25rem'}}>
-    //   <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
-    //     <Alert.Heading>Error</Alert.Heading>
-    //     {formState.serverMessage}
-    //   </Alert>
-    //   <div className='mt-25 bg-white p-50 rounded'>
-    //     <Stack gap={5}>        
-    //       <h1 className='fs-2'>Create Account</h1>
-    //       <p className="d-none text-break hiddenError">{serverError}</p>
-    //       <Form>
-    //         <Form.Group className="mb-20" controlId="createAccountUsername">
-    //           <Form.Label className="fw-medium">Username</Form.Label>
-    //           <Form.Control value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
-    //           <Form.Control.Feedback type="invalid">
-    //             {formValues.username.message}
-    //           </Form.Control.Feedback>
-    //         </Form.Group>
-    //         <Form.Group className="mb-20" controlId="createAccountEmail">
-    //           <Form.Label className="fw-medium">Email (optional)</Form.Label>
-    //           <Form.Control value={formValues.email.value} onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
-    //           <Form.Control.Feedback type="invalid">
-    //             {formValues.email.message}
-    //           </Form.Control.Feedback>
-    //         </Form.Group>
-    //         <Form.Group className="mb-20" controlId="createAccountPassword">
-    //           <Form.Label className="fw-medium">Password</Form.Label>
-    //           <Container className="d-flex gap-3 p-0">
-    //             <div className="w-100">
-    //               <Form.Control value={formValues.password.value} type={showPassword ? 'text' : 'password'} placeholder="password" onBlur={validatePassword1} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} />
-    //             </div>
-    //             <div className="d-flex align-items-center">        
-    //               <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
-    //             </div>
-    //           </Container>
-    //           <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
-    //             {formValues.password.message}
-    //           </Form.Control.Feedback>
-    //         </Form.Group>
-    //         <Form.Group controlId="createAccountPassword2">
-    //           <Form.Label className="fw-medium">Confirm Password</Form.Label>
-    //           <Container className="d-flex gap-3 p-0">
-    //             <div className="w-100">
-    //               <Form.Control value={formValues.password2.value} type={showPassword2 ? 'text' : 'password'} placeholder="password" onBlur={validatePassword2} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
-    //             </div>
-    //             <div className="d-flex align-items-center">       
-    //               <IconButton variant='light' iconSrc={showPassword2 ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePassword2Visibility}/>           
-    //             </div>
-    //           </Container>
-    //           <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
-    //             {formValues.password2.message}
-    //           </Form.Control.Feedback>
-    //         </Form.Group>
-    //       </Form>
-    //       <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
-    //         {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
-    //       </Button>
-    //       <OrSeparator />
-    //       <GoogleAuthButton buttonText='signup' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={signUpWithGoogle}/>
-    //       <p>Already have an account? {formState.isLoading ? <span className="fw-medium">Log In</span> : <Link href='/auth/signin'>Log In</Link>}</p>
-    //     </Stack>
-    //   </div>
-    // </div>
   )
 }
 
