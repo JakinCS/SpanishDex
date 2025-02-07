@@ -58,6 +58,13 @@ const HeaderButtons = (props) => {
     profile_colors: [ "#cccccc", "#000000" ]
   }
 
+  console.log({
+    props: props.sessionInfo,
+    component: session?.user
+  })
+
+  console.log((!!props.sessionInfo || !!session?.user))
+
   return (
     <>
       { !!props.sessionInfo || !!session?.user ? 
