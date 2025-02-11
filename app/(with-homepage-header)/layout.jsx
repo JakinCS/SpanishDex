@@ -1,14 +1,8 @@
 import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
 import HomepageFooter from '@/components/HomepageFooter';
-import { auth } from "@/auth"
-import { Suspense } from 'react';
-import HomepageHeaderSkeleton from '@/components/headers/homepage/HomepageHeaderSkeleton';
-
-// export const experimental_ppr = true;
+import AuthProvider from '../context/AuthProvider';
 
 export default function homepageLayout({ children }) {
-  // Get session information
-  // const session = await auth();
 
   const containerStyles = {
     height: 'calc(100vh - 82px)',
@@ -19,16 +13,15 @@ export default function homepageLayout({ children }) {
 
   return (
     <>
-      {/* <Suspense fallback={<HomepageHeaderSkeleton />}>
-        <HomepageHeader />      
-      </Suspense> */}
-      <HomepageHeader />   
-      <div style={containerStyles}>
-        <div>
-          {children}
-        </div>      
-        <HomepageFooter />
-      </div>
+      <AuthProvider>
+        <HomepageHeader />   
+        <div style={containerStyles}>
+            <div>
+              {children}
+            </div>            
+          <HomepageFooter />
+        </div>
+      </AuthProvider>  
     </>
   );
 }

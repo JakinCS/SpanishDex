@@ -144,8 +144,6 @@ function LogInModal(props) {
         redirectTo: '/dashboard'
       })
 
-      console.log("sign in response", response)
-
       if (response) {
         if (response.error === 'CredentialsSignin') {
           throw('Log in failed. Incorrect username or password. Please try again.');

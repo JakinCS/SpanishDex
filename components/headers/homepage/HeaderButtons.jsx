@@ -52,12 +52,7 @@ const HeaderButtons = (props) => {
   const closeLogOutModal = () => {
     setLogOutModalOpenState(false);
   }
-
-  const tempUserInfo = {
-    username: " ...loading",
-    profile_colors: [ "#cccccc", "#000000" ]
-  }
-
+  
   console.log({
     props: props.sessionInfo,
     component: session?.user
