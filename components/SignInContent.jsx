@@ -173,7 +173,7 @@ const SignInContent = () => {
                   <Form.Control value={formValues.password.value} type={showPassword ? 'text' : 'password'} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
                 </div>
                 <div className="d-flex align-items-center">  
-                  <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} onClick={togglePasswordVisibility}/>           
+                  <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
                 </div>
               </Container>    
               <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">

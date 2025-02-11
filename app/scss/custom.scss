@@ -335,6 +335,7 @@ input[type="text"]:not(:placeholder-shown) {
 
 .invalid-feedback {
     font-weight: $font-weight-semibold;
+    margin-bottom: -0.625rem;
 }
 
 
