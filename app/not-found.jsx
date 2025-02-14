@@ -2,11 +2,8 @@ import spanishdex from "@/public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import HomepageSection from "@/components/HomepageSection";
-import { auth } from "@/auth"
 
 const NotFound = async () => {
-  // Get session information
-  const session = await auth();
 
   return (
     <div>
@@ -25,11 +22,7 @@ const NotFound = async () => {
         <h1 className="text-center">Page Not Found</h1>
         <p className="text-center">Could not find requested resource. </p>
         <div className="d-block d-sm-flex column-gap-25">
-          {!!session ? 
-            <Link href="/dashboard" role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Go To Dashboard</Link> 
-            :
-            <Link href="/" role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Return Home</Link>
-          }
+          <Link href="/" role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Return Home</Link>
         </div>
 
       </HomepageSection>

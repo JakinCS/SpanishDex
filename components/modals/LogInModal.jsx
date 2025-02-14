@@ -7,10 +7,10 @@ import Container from "react-bootstrap/Container"
 import Alert from "react-bootstrap/Alert";
 import IconButton from "@/components/IconButton";
 import { useEffect, useState } from "react";
-import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
 import OrSeparator from "@/components/OrSeparator";
+import { logInWithCredentials, logInWithGoogle } from "@/lib/actions";
 
 function LogInModal(props) {
   const router = useRouter();
@@ -97,14 +97,14 @@ function LogInModal(props) {
 
 
   // This function handles the logging in with Google logic
-  const logInWithGoogle = async () => {
+  const googleLogIn = async () => {
 
     // Set loading state to show a loading spinner
     setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {redirectTo: '/dashboard'})
+      await logInWithGoogle()
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
@@ -137,31 +137,21 @@ function LogInModal(props) {
 
     try {
 
-      const response = await signIn('credentials', {
-        username: bodyToSend.username,
-        password: bodyToSend.password,
-        redirect: false,
-        redirectTo: '/dashboard'
-      })
+      const response = await logInWithCredentials(bodyToSend.username, bodyToSend.password);
 
-      if (response) {
-        if (response.error === 'CredentialsSignin') {
-          throw('Log in failed. Incorrect username or password. Please try again.');
-        }
-        
-        if (!response.ok) {
-          throw('Log in failed. Error: ' + response.status + '. Please try again later.')
-        }
-      }      
-      
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
+      if (!response.success) {
+        setFormState(prevState => ({...prevState, serverError: true, serverMessage: response.message.toString(), errorAcknowledged: false}))
 
-      // Redirect to the dashboard
-      router.push('/dashboard')
+      } else {
+        // Success. Now set the server error state to false.
+        setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
+
+        // Redirect to the dashboard
+        router.push('/dashboard')
+      }
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: "Sign in failed. Unexpected error occurred.", errorAcknowledged: false}))
 
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
@@ -216,7 +206,7 @@ function LogInModal(props) {
             {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
           </Button>
           <OrSeparator />
-          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={logInWithGoogle}/>
+          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={googleLogIn}/>
           <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <a href='#' onClick={() => {props.handleClose(); props.openSignUpModal()}}>Sign Up</a>}</p>
         </Stack>
       </Modal.Body>

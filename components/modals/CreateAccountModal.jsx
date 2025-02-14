@@ -7,10 +7,10 @@ import Container from "react-bootstrap/Container"
 import IconButton from "@/components/IconButton";
 import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from 'react'
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
 import OrSeparator from "@/components/OrSeparator";
+import { logInWithCredentials, logInWithGoogle } from "@/lib/actions";
 
 function CreateAccountModal(props) {
   const router = useRouter();
@@ -241,7 +241,7 @@ function CreateAccountModal(props) {
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {redirectTo: '/dashboard'})
+      await logInWithGoogle()
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
@@ -295,22 +295,16 @@ function CreateAccountModal(props) {
       } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
         throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
       }
-
-      const json = await response.json();
       
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
 
-      const signInResponse = await signIn('credentials', {
-        username: bodyToSend.username,
-        password: bodyToSend.password,
-        redirect: false,
-      })
 
-      if (signInResponse.ok) {
-        // Redirect to the dashboard
-        router.push('/dashboard');
-      } else {
+      // LOG IN the user now
+      
+      const signInResponse = await logInWithCredentials(bodyToSend.username, bodyToSend.password, {redirect: true, redirectTo: '/dashboard'})
+
+      if (!signInResponse.success) {
         // If the sign in fails, close the modal and open the log in modal
         props.handleClose()
         props.openLogInModal()

@@ -6,12 +6,12 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import IconButton from '@/components/IconButton';
-import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import GoogleAuthButton from '@/components/GoogleAuthButton';
 import OrSeparator from '@/components/OrSeparator';
+import { logInWithCredentials, logInWithGoogle } from '@/lib/actions';
 
 
 const SignInContent = () => {
@@ -79,14 +79,14 @@ const SignInContent = () => {
   } 
 
   // This function handles the logging in with Google logic
-  const logInWithGoogle = async () => {
+  const googleLogIn = async () => {
 
     // Set loading state to show a loading spinner
     setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {redirectTo: '/dashboard'})
+      await logInWithGoogle({ redirectTo: callbackUrl });
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
@@ -115,34 +115,27 @@ const SignInContent = () => {
 
     try {
 
-      // const response = await signIn('google')
-      const response = await signIn('credentials', {
-        username: formValues.username.value,
-        password: formValues.password.value,
-        redirect: false,
-        redirectTo: callbackUrl
-      })
+      const response = await logInWithCredentials(formValues.username.value, formValues.password.value, {redirect: true, redirectTo: callbackUrl})
 
-      if (response) {
-        if (response.error === 'CredentialsSignin') {
-          throw('Log in failed. Incorrect username or password. Please try again.');
-        }
+      if (!response.success) {
+        setFormState(prevState => ({...prevState, serverError: true, serverMessage: response.message.toString(), errorAcknowledged: false}))
         
-        if (!response.ok) {
-          throw('Log in failed. Error: ' + response.status + '. Please try again later.')
-        }
-      }   
-      
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false}))
+      } else {
+        // Success. Now set the server error state to false.
+        setFormState(prevState => ({...prevState, serverError: false}))
 
-      clearForm();
+        clearForm();
 
-      // Redirect to the dashboard
-      router.push(callbackUrl)
+        // Redirect to the dashboard
+        router.push(callbackUrl)
+      }
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+      if (error.toString().includes('NEXT_REDIRECT')) {
+        throw(error)
+      }
+
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: "Sign in failed. Unexpected error occurred.", errorAcknowledged: false}))
 
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
@@ -191,7 +184,7 @@ const SignInContent = () => {
             {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
           </Button>
           <OrSeparator />
-          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={logInWithGoogle}/>
+          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={googleLogIn}/>
           <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <Link href='/auth/signup'>Sign Up</Link>}</p>
         </Stack>
       </div>

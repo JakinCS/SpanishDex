@@ -31,14 +31,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         const collection = database.collection('users');
 
         const userSearchResult = await collection.findOne({ $or: [{username: { $regex: `^${cleanUsername}$`, $options: 'i' }}, {email: { $regex: `^${cleanUsername}$`, $options: 'i' }}] } )
-        console.log("found?: ", userSearchResult)
+        
         if (!userSearchResult) {
           await client.close();
           return null
         }
         
         const passwordCorrect = await compare(credentials?.password || "", userSearchResult.password);
-        console.log("password comparison result? ", passwordCorrect)
 
         if (!passwordCorrect) {
           await client.close();

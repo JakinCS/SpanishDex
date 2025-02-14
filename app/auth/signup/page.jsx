@@ -6,12 +6,12 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import IconButton from '@/components/IconButton';
-import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OrSeparator from '@/components/OrSeparator';
 import GoogleAuthButton from '@/components/GoogleAuthButton';
+import { logInWithCredentials, logInWithGoogle } from '@/lib/actions';
 
 
 const SignUp = () => {
@@ -226,7 +226,7 @@ const SignUp = () => {
 
     try {      
       // Run the signIn function to log in with Google
-      await signIn('google', {redirectTo: '/dashboard'})
+      await logInWithGoogle()
 
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
@@ -285,18 +285,14 @@ const SignUp = () => {
       // Success. Now set the server error state to false.
       setFormState(prevState => ({...prevState, serverError: false}))
 
-      const signInResponse = await signIn('credentials', {
-        username: bodyToSend.username,
-        password: bodyToSend.password,
-        redirect: false,
-      })
+
+      // LOG IN the user now
+
+      const signInResponse = await logInWithCredentials(bodyToSend.username, bodyToSend.password, { redirectTo: "/dashboard" })
 
       clearForm();
 
-      if (signInResponse.ok) {
-        // Redirect to the dashboard
-        router.push('/dashboard');
-      } else {
+      if (!signInResponse.success) {
         // If the sign in fails, redirect to the sign in page
         router.push('/auth/signin')
       }
