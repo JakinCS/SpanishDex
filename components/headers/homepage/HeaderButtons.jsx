@@ -52,12 +52,6 @@ const HeaderButtons = () => {
   const closeLogOutModal = () => {
     setLogOutModalOpenState(false);
   }
-  
-  console.log({
-    component: session
-  })
-
-  console.log((!!session?.user))
 
   return (
     <>

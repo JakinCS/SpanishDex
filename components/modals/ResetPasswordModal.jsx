@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from "react";
+import { sendResetPasswordMessage } from "@/lib/actions";
 
 const ResetPasswordModal = (props) => {
 
@@ -57,22 +58,19 @@ const ResetPasswordModal = (props) => {
 
     try {
 
-      const response = await fetch('/api/auth/request-reset-password', {
-        method: 'POST',
-        body: JSON.stringify({email: email})
-      })
+      const response = await sendResetPasswordMessage(email);
 
-      if (!response.ok) {
-        throw("Error code: " + response.status);
+      if (!response.success) {
+        setServerError(response.error);
+        setFormState(prevState => ({...prevState, error: true, errorMessage: response.message, errorAcknowledged: false}));
+      } else if (response.success) {
+        // Success. Now set the server error state to false.
+        setFormState(prevState => ({...prevState, error: false, showSuccess: true}));
       }
-    
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, error: false, showSuccess: true}));
-
 
     } catch (error) {
       setServerError(JSON.stringify(error));
-      setFormState(prevState => ({...prevState, error: true, errorMessage: 'Email failed to send. Please try again.', errorAcknowledged: false}));
+      setFormState(prevState => ({...prevState, error: true, errorMessage: 'Email failed to send. Unexpected error occurred', errorAcknowledged: false}));
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
     }

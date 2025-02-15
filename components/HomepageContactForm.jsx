@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Alert from "react-bootstrap/Alert";
 import { useState } from 'react';
+import { sendContactFormMessage } from '@/lib/actions';
+import { isEmailValid } from '@/lib/utils';
 
 function HomepageContactForm(props) {
 
@@ -32,47 +34,25 @@ function HomepageContactForm(props) {
 
   // This function validates the input string to ensure it is a valid name
   const validateName = (name) => {
-    let isValid = false;
-    let message = '';
+    const stateChange = name.trim().length === 0 ? {valid: false, message: 'Name is required'} : {valid: true, message: ''}
 
-    if (name.trim().length === 0) {
-      message = 'Name is required'
-    } else {
-      isValid = true;
-    }
-
-    setFormValues((prev) => ({...prev, name: {...prev.name, valid: isValid, message: message}}));
+    setFormValues((prev) => ({...prev, name: {...prev.name, ...stateChange}}));
   }
 
   // This function validates the input string to ensure it is a valid email
-  const validateEmail = (email) => {
-    let regexExpression = /^([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])$/
-    let isValid = false;
-    let message = '';
-
-    if (email.trim().length === 0) {
-      message = 'Email address is required';
-    } else if (!regexExpression.test(email)) {
-      message = 'Invalid email address'
-    } else {
-      isValid = true;
+  const validateEmail = (email) => {   
+    if (email.trim().length === 0) setFormValues((prev) => ({...prev, email: {...prev.email, valid: false, message: "Email address is required"}}));
+    else {
+      const validationResult = isEmailValid(email)
+      setFormValues((prev) => ({...prev, email: {...prev.email, valid: validationResult.valid, message: validationResult.message}}));
     }
-
-    setFormValues((prev) => ({...prev, email: {...prev.email, valid: isValid, message: message}}));
   }
 
   // This function validates the input string to ensure it is a valid comment
   const validateComments = (comment) => {
-    let isValid = false;
-    let message = '';
+    const newStateValues = comment.trim().length === 0 ? {valid: false, message: 'Message field is required'} : {valid: true, message: ''}
 
-    if (comment.trim().length === 0) {
-      message = 'Message field is required'
-    } else {
-      isValid = true;
-    }
-
-    setFormValues((prev) => ({...prev, comments: {...prev.comments, valid: isValid, message: message}}));
+    setFormValues((prev) => ({...prev, comments: {...prev.comments, ...newStateValues}}));
   }
 
   // This function effectively closes the error banner by setting the errorAcknowledged form state value to true
@@ -118,35 +98,24 @@ function HomepageContactForm(props) {
     }))
 
     try {
-      // Query the contact API
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        contentType: 'application/json',
-        body: JSON.stringify({
-          name: formValues.name.value,
-          email: formValues.email.value,
-          comment: formValues.comments.value,
-        })
-      })
+      const response = await sendContactFormMessage(formValues.name.value, formValues.email.value, formValues.comments.value);
 
-      // Check if the response is ok. If it is not, AND if the response is in JSON, throw the error found in the JSON object.
-      if (!response.ok && response.headers.get('content-type') === 'application/json') {
-        const json = await response.json();
-        setServerError(JSON.stringify(json.serverError));
-        throw(json.error);
-      } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
-        throw('Message failed to send. Please try again later. Error: ' + response.status + '.');
+      if (!response.success) {
+        setServerError(response.error);
+
+        // Update the form state to show that an error occurred
+        setFormState((prev) => ({...prev, serverError: true, serverMessage: response.message, errorAcknowledged: false}))
+      } else if (response.success) {
+        // Update the form state to show that the form was successfully submitted
+        setFormState((prev) => ({...prev, serverError: false, showSuccess: true, successAcknowledged: false}))
+
+        // Reset the form values
+        resetForm();
       }
-
-      // Update the form state to show that the form was successfully submitted
-      setFormState((prev) => ({...prev, serverError: false, showSuccess: true, successAcknowledged: false}))
-
-      // Reset the form values
-      resetForm();
 
     } catch (error) {
       // Update the form state to show that an error occurred
-      setFormState((prev) => ({...prev, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+      setFormState((prev) => ({...prev, serverError: true, serverMessage: "Unexpected error occurred. Please try again.", errorAcknowledged: false}))
     } finally {
       // Update the form state to show that the form is no longer loading
       setFormState((prev) => ({...prev, isLoading: false}))

@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import IconButton from '@/components/IconButton';
 import { useState } from 'react';
+import { isPasswordValid } from '@/lib/utils';
+import { resetPassword } from '@/lib/actions';
 
 const ResetPasswordForm = (props) => {
 
@@ -38,34 +40,15 @@ const ResetPasswordForm = (props) => {
   const togglePassword2Visibility = () => {
     setShowPassword2(prevState => !prevState);
   }
-  
-  // Function to check whether a password string is valid
-  const isPasswordValid = (passwordStr) => {
-    let isValid = true;
-    let message = '';
-
-    if (passwordStr.length === 0) {
-      isValid = false;
-      message = 'Password is required'
-    } else if (passwordStr.length < 6) {
-      isValid = false;
-      message = 'Password must be at least 6 characters'
-    } else if (passwordStr.length > 1024) {
-      isValid = false;
-      message = 'Password length cannot exceed 1024 characters'
-    }
-
-    return {isValid, message}
-  }
 
   // This function handles the validation of the first password field
   const validatePassword1 = () => {
     const passwordValue = formValues.password.value; // Current value of this password field
     const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
 
-    if (!passwordValid.isValid) {
+    if (!passwordValid.valid) {
       // If it isn't valid, display an error. No other logic needs to run.
-      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
+      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.valid, errorType: 'reg', message: passwordValid.message}}))
       return;
     }
 
@@ -101,9 +84,9 @@ const ResetPasswordForm = (props) => {
     const passwordValue = formValues.password2.value; // Current value of this password field
     const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
 
-    if (!passwordValid.isValid) {
+    if (!passwordValid.valid) {
       // If it isn't valid, display an error. No other logic needs to run.
-      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
+      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.valid, errorType: 'reg', message: passwordValid.message}}))
       return;
     }
 
@@ -150,38 +133,27 @@ const ResetPasswordForm = (props) => {
     setFormState(prevState => ({...prevState, isLoading: !prevState.isLoading, errorAcknowledged: true, successAcknowledged: true}));
 
     try {
+      const response = await resetPassword(props.username, formValues.password.value, props.token)
 
-      const response = await fetch('/api/auth/reset-password', {
-        method: 'POST',
-        body: JSON.stringify({
-          username: props.username, 
-          password: formValues.password.value,
-          token: props.token
+      // If there is a problem with the password reset, then show an error
+      if (!response.success) {
+        if (response.error) setServerError(response.error);
+
+        setFormState(prevState => ({...prevState, serverError: true, serverMessage: response.message, errorAcknowledged: false}))
+      } else if (response.success) {
+        // Success. Now set the server error state to false.
+        setFormState(prevState => ({...prevState, serverError: false, showSuccess: true, successAcknowledged: false}))
+
+        // Reset the form
+        setFormValues({
+          password: {value: '', valid: null, errorType: null, message: null},
+          password2: {value: '', valid: null, errorType: null, message: null}
         })
-      })
-
-      // If there is a problem with the response, then throw an error.
-      if (!response.ok && response.headers.get('content-type') === 'application/json') {
-        const json = await response.json();
-        setServerError(JSON.stringify(json.serverError));
-
-        if (response.status == 400) throw(json.error);
-      }      
-      if (!response.ok) {
-        throw('Password reset failed. Error: ' + response.status + '. Please try again later.');
       }
-            
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false, showSuccess: true, successAcknowledged: false}))
-
-      // Reset the form
-      setFormValues({
-        password: {value: '', valid: null, errorType: null, message: null},
-        password2: {value: '', valid: null, errorType: null, message: null}
-      })
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+      setServerError(error.toString())
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: "Unexpected error occurred. Please try again", errorAcknowledged: false}))
 
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
