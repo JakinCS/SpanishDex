@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import IconButton from '@/components/IconButton';
 import { useState } from 'react';
-import { isPasswordValid } from '@/lib/utils';
+import { handlePasswordValidCheck } from '@/lib/utils';
 import { resetPassword } from '@/lib/actions';
 
 const ResetPasswordForm = (props) => {
@@ -41,92 +41,15 @@ const ResetPasswordForm = (props) => {
     setShowPassword2(prevState => !prevState);
   }
 
-  // This function handles the validation of the first password field
-  const validatePassword1 = () => {
-    const passwordValue = formValues.password.value; // Current value of this password field
-    const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
-
-    if (!passwordValid.valid) {
-      // If it isn't valid, display an error. No other logic needs to run.
-      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.valid, errorType: 'reg', message: passwordValid.message}}))
-      return;
-    }
-
-    /* At this point, this field is otherwise valid. 
-    But check to see if the two fields are matching in value */
-    const matchesOtherField = (formValues.password.value == formValues.password2.value);
-
-    /* If the fields match, don't display a 'matching error' and set the state to valid for this field. 
-      Also, even if the fields DON'T match, a 'matching error' isn't necessary if:
-       1. The other field is displaying a different error 
-       2. The other field has not be touched yet */
-    if (matchesOtherField || (!formValues.password2.valid && formValues.password2.errorType === 'reg') || formValues.password2.valid === null) {
-      // Remove errors for the this field
-      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: true, errorType: ''}}))
-
-      // If the other field currently displays a "matching error", remove it because the fields now match.
-      if (!formValues.password2.valid && formValues.password2.errorType === 'matching') {
-        setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: true, errorType: ''}}))
-      }
-    } else { // Otherwise, this field needs a 'matching error'. So display one.
-
-      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
-
-      // If the other field is current showing to be valid, it needs a matching error too.
-      if (formValues.password2.valid) {
-        setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
-      }
-    }
-  }
-
-  // This function handles the validation of the second password field
-  const validatePassword2 = () => {
-    const passwordValue = formValues.password2.value; // Current value of this password field
-    const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
-
-    if (!passwordValid.valid) {
-      // If it isn't valid, display an error. No other logic needs to run.
-      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.valid, errorType: 'reg', message: passwordValid.message}}))
-      return;
-    }
-
-    /* At this point, this field is otherwise valid. 
-    But check to see if the two fields are matching in value */
-    const matchesOtherField = (formValues.password.value == formValues.password2.value);
-
-    /* If the fields match, don't display a 'matching error' and set the state to valid for this field. 
-      Also, even if the fields DON'T match, a 'matching error' isn't necessary if:
-       1. The other field is displaying a different error 
-       2. The other field has not be touched yet */
-    if (matchesOtherField || (!formValues.password.valid && formValues.password.errorType === 'reg') || formValues.password.valid === null) {
-      // Remove errors for the this field
-      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: true, errorType: ''}}))
-
-      // If the other field currently displays a "matching error", remove it because the fields now match.
-      if (!formValues.password.valid && formValues.password.errorType === 'matching') {
-        setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: true, errorType: ''}}))
-      }
-    } else { // Otherwise, this field needs a 'matching error'. So display one.
-
-      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
-
-      // If the other field is current showing to be valid, it needs a matching error too.
-      if (formValues.password.valid) {
-        setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: false, errorType: 'matching', message: 'Passwords must match'}}))
-      }
-    }
-  }
-
-
   const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   // The function run when the 'Reset Password' button is clicked.
   // This function handles the resetting of the user password.
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
-    // Double check that the form really is valid by running the password 1 and 2 validation functions
-    validatePassword1();
-    validatePassword2();
+    // Double check that the form really is valid by running the password validation function
+    handlePasswordValidCheck(formValues, setFormValues, 1)
+    handlePasswordValidCheck(formValues, setFormValues, 2)
     if (!formValues.password.valid || !formValues.password2.valid) return;
 
     // Set loading state
@@ -158,7 +81,6 @@ const ResetPasswordForm = (props) => {
     } finally {
       setFormState(prevState => ({...prevState, isLoading: false}));
     }    
-
   }
 
 
@@ -178,7 +100,7 @@ const ResetPasswordForm = (props) => {
           <Form.Label className="fw-medium">Password</Form.Label>
           <Container className="d-flex gap-3 p-0">
             <div className="w-100">
-              <Form.Control type={showPassword ? 'text' : 'password'} placeholder="Enter new password" value={formValues.password.value} onBlur={validatePassword1} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} />
+              <Form.Control type={showPassword ? 'text' : 'password'} placeholder="Enter new password" value={formValues.password.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} />
             </div>
             <div className="d-flex align-items-center">
               <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
@@ -193,7 +115,7 @@ const ResetPasswordForm = (props) => {
           <Form.Label className="fw-medium">Confirm Password</Form.Label>
           <Container className="d-flex gap-3 p-0">
             <div className="w-100">
-              <Form.Control type={showPassword2 ? 'text' : 'password'} placeholder="Confirm password" value={formValues.password2.value} onBlur={validatePassword2} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
+              <Form.Control type={showPassword2 ? 'text' : 'password'} placeholder="Confirm password" value={formValues.password2.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
             </div>
             <div className="d-flex align-items-center">
               <IconButton variant='light' iconSrc={showPassword2 ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePassword2Visibility}/>           
