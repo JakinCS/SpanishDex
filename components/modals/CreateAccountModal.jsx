@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from "next/navigation";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
 import OrSeparator from "@/components/OrSeparator";
-import { logInWithCredentials, logInWithGoogle } from "@/lib/actions";
+import { createAccount, logInWithCredentials, logInWithGoogle } from "@/lib/actions";
+import { isEmailValid, isPasswordValid, isUsernameValid } from "@/lib/utils";
 
 function CreateAccountModal(props) {
   const router = useRouter();
@@ -62,74 +63,17 @@ function CreateAccountModal(props) {
   const updatePassword2Value = (e) => setFormValues((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
   
   // Function to check and update the validity of the username
-  /* 
-    Min Length: 2,   Max Length: 25,   Characters: numbers, letters, underscores
-    General RegEx: no spaces before, in-between, or afterwards  
-  */
   const validateUsername = () => {
-    const currUsername = formValues.username.value;
-
-    let isValid = true;
-    let message = '';
-
-    if (currUsername.trim().length === 0) {
-      isValid = false;
-      message = 'Username is required'
-    } else if (currUsername.length < 2) {
-      isValid = false;
-      message = 'The username must be at least 2 characters'
-    } else if (currUsername.length > 25) {
-      isValid = false;
-      message = 'The username cannot be longer than 25 characters'
-    } else if (/ +/.test(currUsername)) {
-      isValid = false;
-      message = 'Please do not use spaces in your username'
-    } else if (/\W+/.test(currUsername)) {
-      isValid = false;
-      message = 'Please only use letters, numbers and underscores'
-    } else if (!/^\w+$/.test(currUsername)) {
-      isValid = false;
-      message = 'Username is invalid'
-    }
+    const result = isUsernameValid(formValues.username.value);
     
-    setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: isValid, message: message}}));
+    setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: result.valid, message: result.message}}));
   }
 
   // Function to ensure email field contains a valid email
   const validateEmail = () => {
-    const currEmail = formValues.email.value;
-
-    let regexExpression = /^([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])$/
-  
-    if (currEmail == '' || regexExpression.test(currEmail)) {
-      setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: true}}))
-    } else {
-      setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: false, message: 'Invalid email address'}}))
-    }
-  }
-
-  // Function to check whether a password string is valid
-  /* 
-    Min Length: 6
-    Max Length: 1024
-    Characters: any
-  */
-  const isPasswordValid = (passwordStr) => {
-    let isValid = true;
-    let message = '';
-
-    if (passwordStr.length === 0) {
-      isValid = false;
-      message = 'Password is required'
-    } else if (passwordStr.length < 6) {
-      isValid = false;
-      message = 'Password must be at least 6 characters'
-    } else if (passwordStr.length > 1024) {
-      isValid = false;
-      message = 'Password length cannot exceed 1024 characters'
-    }
-
-    return {isValid, message}
+    const result = isEmailValid(formValues.email.value);
+    
+    setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: result.valid, message: result.message}}))
   }
 
   // This function checks whether the two password fields are match.
@@ -143,9 +87,9 @@ function CreateAccountModal(props) {
     const passwordValue = formValues.password.value; // Current value of this password field
     const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
 
-    if (!passwordValid.isValid) {
+    if (!passwordValid.valid) {
       // If it isn't valid, display an error. No other logic needs to run.
-      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
+      setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: passwordValid.valid, errorType: 'reg', message: passwordValid.message}}))
       return;
     }
 
@@ -181,9 +125,9 @@ function CreateAccountModal(props) {
     const passwordValue = formValues.password2.value; // Current value of this password field
     const passwordValid = isPasswordValid(passwordValue);  // Check if this field is valid (besides checking whether it matches other field)
 
-    if (!passwordValid.isValid) {
+    if (!passwordValid.valid) {
       // If it isn't valid, display an error. No other logic needs to run.
-      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.isValid, errorType: 'reg', message: passwordValid.message}}))
+      setFormValues(prevState => ({...prevState, password2: {...prevState.password2, valid: passwordValid.valid, errorType: 'reg', message: passwordValid.message}}))
       return;
     }
 
@@ -257,7 +201,7 @@ function CreateAccountModal(props) {
   
   const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
   // This function handles the logic for creating an account. It runs on the click of the sign up button
-  const createAccount = async () => {
+  const handleCreateAccount = async () => {
     let bodyToSend = {
       username: formValues.username.value, 
       email: formValues.email.value, 
@@ -276,28 +220,21 @@ function CreateAccountModal(props) {
     // Set loading state
     setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
 
-    let responseStatus; // Holds the status of the response
-
     try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        body: JSON.stringify(bodyToSend)
-      })
+      const response = await createAccount(bodyToSend.username, bodyToSend.email, bodyToSend.password, bodyToSend.password2)
 
-      // Set the reponse status for error handling
-      responseStatus = response.status;
+      if (!response.success) {
+        if (response.errorType === "USERNAME_DUPLICATE") {
+          setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: false, message: "Please choose a different username"}}))
+        } else if (response.errorType === "EMAIL_DUPLICATE") {
+          setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: false, message: "Please choose a different email address"}}))
+        }
 
-      // Check if the response is ok. If it is not, AND if the response is in JSON, throw the error within the JSON object.
-      if (!response.ok && response.headers.get('content-type') === 'application/json') {
-        const json = await response.json();
-        setServerError(JSON.stringify(json.serverError));
-        throw(json.error);
-      } else if (!response.ok) { // Otherwise, throw a generic error message based off the response status.
-        throw('Sign up failed. Error: ' + response.status + '. Please try again later.');
+        setFormState(prevState => ({...prevState, serverError: true, serverMessage: response.message, errorAcknowledged: false}))
+        return;
+      } else {
+        setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
       }
-      
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
 
 
       // LOG IN the user now
@@ -311,18 +248,11 @@ function CreateAccountModal(props) {
       }
 
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
+      setServerError(error.toString());
+      setFormState(prevState => ({...prevState, serverError: true, serverMessage: "Sign up failed. Unexpected error occurred. Please try again.", errorAcknowledged: false}))
 
-      // If the error is a 409, set the error state for those form fields
-      if (responseStatus === 409) {
-        if (error.search(/username/i) > -1) {
-          setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: false, message: 'This username is already taken. Please choose another username'}}))
-        } else if (error.search(/email/i) > -1) {
-          setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: false, message: 'This email is already used by another account. Please choose another one'}}))
-        }
-      }
     } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
+      setFormState(prevState => ({ ...prevState, isLoading: false }));
     }    
   }
 
@@ -389,7 +319,7 @@ function CreateAccountModal(props) {
               </Form.Control.Feedback>
             </Form.Group>
           </Form>
-          <Button variant="primary" onClick={createAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
+          <Button variant="primary" onClick={handleCreateAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
             {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
           </Button>
           <OrSeparator />
