@@ -3,30 +3,20 @@
 import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import IconButton from '@/components/IconButton';
-import { useState } from 'react';
+import { useActionState, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OrSeparator from '@/components/OrSeparator';
 import GoogleAuthButton from '@/components/GoogleAuthButton';
 import { createAccount, logInWithCredentials, logInWithGoogle } from '@/lib/actions';
 import { handlePasswordValidCheck, isEmailValid, isUsernameValid } from '@/lib/utils';
+import PasswordInput from '@/components/PasswordInput';
 
 
 const SignUp = () => {
   
   const router = useRouter();
-
-  // State for keeping track of the state of the form (loading status, errors, successes)
-  const [formState, setFormState] = useState({
-    isLoading: false,
-    loadingType: '',
-    serverError: false,
-    serverMessage: '',
-    errorAcknowledged: false
-  })
 
   // State for storing the state of the form values
   const [formValues, setFormValues] = useState({
@@ -41,17 +31,6 @@ const SignUp = () => {
   const updateEmailValue = (e) => setFormValues(prevState => ({...prevState, email: {...prevState.email, value: e.target.value}}))
   const updatePasswordValue = (e) => setFormValues((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value}}))
   const updatePassword2Value = (e) => setFormValues((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
-  
-
-  // State for keeping track of password show/hide state
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
-  }
-  const [showPassword2, setShowPassword2] = useState(false);
-  const togglePassword2Visibility = () => {
-    setShowPassword2(prevState => !prevState);
-  }
 
   // Function to check and update the validity of the username
   const validateUsername = () => {
@@ -78,51 +57,21 @@ const SignUp = () => {
     })
   }
 
-  // This function handles the logging in with Google logic
-  const signUpWithGoogle = async () => {
+  // State for the visibility of the "account created" message.
+  // This message is only displayed when the log in action fails after a successful account creation.
+  const [showAccountCreated, setShowAccountCreated] = useState(false)
 
-    // Set loading state to show a loading spinner
-    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
+  const [error, setError] = useState({show: false, message: '', hiddenMsg: ''})
 
-    try {      
-      // Run the signIn function to log in with Google
-      await logInWithGoogle()
-
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false}))
-
-      clearForm();
-
-    } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
-
-    } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
-    }
-
-  }
-  
-  const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
-  const handleCreateAccount = async () => {
-    let bodyToSend = {
-      username: formValues.username.value, 
-      email: formValues.email.value, 
-      password: formValues.password.value,
-      password2: formValues.password2.value
-    }
-
-    // Firstly, double check that the form is valid beforehand as a safety measure.
-    validateUsername();
-    validateEmail();
-    handlePasswordValidCheck(formValues, setFormValues, 1)
-    handlePasswordValidCheck(formValues, setFormValues, 2)
-    if (!formValues.username.valid || !formValues.email.valid || !formValues.password.valid || !formValues.password2.valid) return;
-
-    // Set loading state
-    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
+  // This function is what is run when the user wants to create an account without Google
+  const handleSubmitForm1 = async (prevState, fieldValues) => {
+    const username = fieldValues.get("username")
+    const email = fieldValues.get("email");
+    const password1 = fieldValues.get("password1")
+    const password2 = fieldValues.get("password2")
 
     try {
-      const response = await createAccount(bodyToSend.username, bodyToSend.email, bodyToSend.password, bodyToSend.password2);
+      const response = await createAccount(username, email, password1, password2);
 
       if (!response.success) {
         // Display an error on the username or email input field if one of them has a specific duplicate error
@@ -132,96 +81,113 @@ const SignUp = () => {
           setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: false, message: "Please choose a different email address"}}))
         }
 
-        // Set the form state to display an error banner
-        setFormState(prevState => ({...prevState, serverError: true, serverMessage: response.message, errorAcknowledged: false}))
-        return;
-      } else {
-        // Success. Now set the server error state to false.
-        setFormState(prevState => ({...prevState, serverError: false}))
-      }
+        // Set the error state to display an error banner
+        setError({show: true, message: response.message, hiddenMsg: response?.error.toString()})
 
+        return {status: "ERROR"};
+      }
 
       // LOG IN the user now
 
-      const signInResponse = await logInWithCredentials(bodyToSend.username, bodyToSend.password, { redirectTo: "/dashboard" })
+      const signInResponse = await logInWithCredentials(username, password1, { redirectTo: "/dashboard" })
 
       clearForm();
 
       if (!signInResponse.success) {
+        // Communicate to the user that the account creation was successful prior to redirecting to the sign in page
+        setShowAccountCreated(true);
+
+        // Wait a second before redirecting
+        await new Promise(res => { setTimeout(() => { res() }, 1000) })
+
         // If the sign in fails, redirect to the sign in page
         router.push('/auth/signin')
       }
 
-    } catch (error) {
-      setServerError(error.toString())
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: "Sign up failed. Unexpected error occurred. Please try again.", errorAcknowledged: false}))
+      setError((prev) => ({...prev, show: false}))
+      return {status: 'SUCCESS'}
 
-    } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
-    }    
+    } catch (error) {
+      setError({show: true, message: "Sign up failed. Unexpected error occurred. Please try again.", hiddenMsg: error.toString()})
+      return {status: 'ERROR'}
+    }
   }
 
+  const [form1State, form1Action, form1Pending] = useActionState(handleSubmitForm1, {status: 'INITIAL'})
+
+  // This function is what is run when the user wants to createa an account with Google
+  const handleSubmitForm2 = async (prevState) => {
+    try {
+      // Run the signIn function to log in with Google
+      await logInWithGoogle();
+
+      clearForm();
+
+      setError((prev) => ({...prev, show: false}))
+      return {status: 'SUCCESS'} 
+ 
+    } catch (error) {
+      setError({show: true, message: "Sign in failed. Unexpected error occurred.", hiddenMsg: error.toString()})
+      return {status: 'ERROR'}
+    }
+  }
+
+  const [form2State, form2Action, form2Pending] = useActionState(handleSubmitForm2, {status: 'INITIAL'})
 
   return (
     <>
-      <Alert className='mb-4' variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
+      <Alert className='mb-4' variant="danger" show={(form1State.status === "ERROR" || form2State.status === "ERROR") && !(form1Pending || form2Pending) && error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
         <Alert.Heading>Error</Alert.Heading>
-        {formState.serverMessage}
+        {error.message}
       </Alert>
       <div className='bg-white p-50 rounded'>
-        <Stack gap={5}>        
+        <div className={'modal-success-message ' + (showAccountCreated ? 'show' : 'hide')} style={{left: 0}}>
+          <h2 className="text-success mb-3">Success</h2>
+          <p className="fw-medium">Your account is created</p>
+        </div>
+        <Stack gap={5} style={showAccountCreated ? {opacity: '.15', pointerEvents: 'none', WebkitUserSelect: 'none', msUserSelect: 'none', userSelect: 'none'} : {}}>        
           <h1 className='fs-2'>Create Account</h1>
-          <p className="d-none text-break hiddenError">{serverError}</p>
-          <Form>
+          <p className="d-none text-break hiddenError">{error.hiddenMsg}</p>
+          <Form action={form1Action}>
             <Form.Group className="mb-20" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
-              <Form.Control value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
+              <Form.Control name='username' value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
               <Form.Control.Feedback type="invalid">
                 {formValues.username.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
-              <Form.Control value={formValues.email.value} onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
+              <Form.Control name='email' value={formValues.email.value} onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
               <Form.Control.Feedback type="invalid">
                 {formValues.email.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
-              <Container className="d-flex gap-3 p-0">
-                <div className="w-100">
-                  <Form.Control value={formValues.password.value} type={showPassword ? 'text' : 'password'} placeholder="password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} />
-                </div>
-                <div className="d-flex align-items-center">        
-                  <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
-                </div>
-              </Container>
+              <PasswordInput name="password1" value={formValues.password.value} placeholder="password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'}/>
               <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="createAccountPassword2">
+            <Form.Group className='mb-5' controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
-              <Container className="d-flex gap-3 p-0">
-                <div className="w-100">
-                  <Form.Control value={formValues.password2.value} type={showPassword2 ? 'text' : 'password'} placeholder="password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
-                </div>
-                <div className="d-flex align-items-center">       
-                  <IconButton variant='light' iconSrc={showPassword2 ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePassword2Visibility}/>           
-                </div>
-              </Container>
+              <PasswordInput name="password2" value={formValues.password2.value} placeholder="password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'}/>
               <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
                 {formValues.password2.message}
               </Form.Control.Feedback>
             </Form.Group>
+            <div className='d-flex flex-column'>
+              <Button variant="primary" type='submit' disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || form1Pending || form2Pending}>
+                {form1Pending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
+              </Button>
+            </div>
           </Form>
-          <Button variant="primary" onClick={handleCreateAccount} disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || formState.isLoading}>
-            {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
-          </Button>
           <OrSeparator />
-          <GoogleAuthButton buttonText='signup' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={signUpWithGoogle}/>
-          <p>Already have an account? {formState.isLoading ? <span className="fw-medium">Log In</span> : <Link href='/auth/signin'>Log In</Link>}</p>
+          <Form action={form2Action} className='d-flex flex-column'>
+            <GoogleAuthButton type='submit' buttonText='signup' isLoading={form1Pending || form2Pending} hasSpinner={form2Pending}/>
+          </Form>
+          <p>Already have an account? {form1Pending || form2Pending ? <span className="fw-medium">Log In</span> : <Link href='/auth/signin'>Log In</Link>}</p>
         </Stack>
       </div>
     </>

@@ -4,21 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Alert from "react-bootstrap/Alert";
-import { useState } from 'react';
+import { useActionState, useState } from 'react';
 import { sendContactFormMessage } from '@/lib/actions';
 import { isEmailValid } from '@/lib/utils';
 
 function HomepageContactForm(props) {
-
-  // Store the state of the form itself.
-  const [formState, setFormState] = useState({
-    isLoading: false,
-    serverError: false,
-    serverMessage: '',
-    errorAcknowledged: false,
-    showSuccess: false,
-    successAcknowledged: false,
-  })
 
   // Store the state of the values of the form.
   const [formValues, setFormValues] = useState({
@@ -55,108 +45,81 @@ function HomepageContactForm(props) {
     setFormValues((prev) => ({...prev, comments: {...prev.comments, ...newStateValues}}));
   }
 
-  // This function effectively closes the error banner by setting the errorAcknowledged form state value to true
-  const acknowledgeErrorBanner = () => {
-    setFormState(prevState => ({...prevState, errorAcknowledged: true}))
+  // State for the show/hide status of the error and success banners.
+  const [showBanners, setShowBanners] = useState({error: false, success: false})
+
+  // Function that hides all banners
+  const hideBanners = () => {
+    setShowBanners({error: false, success: false});
   }
 
-  // This function effectively closes the success banner by setting the successAcknowledged form state value to true
-  const acknowledgeSuccessBanner = () => {
-    setFormState(prevState => ({...prevState, successAcknowledged: true}))
-  }
-  
-  // This function does a complete reset of the form values state
-  const resetForm = () => {
-    setFormValues({
-      name: {value: '', valid: null, message: ''},
-      email: {value: '', valid: null, message: ''},
-      comments: {value: '', valid: null, message: ''},
-    })
-  }
-
-
-  const [serverError, setServerError] = useState(''); // Holds the raw version of the server error. (stored in a hidden paragraph for debugging purposes)
-  
-  // Function to handle the contact form submission
-  const submitContactForm = async (e) => {
-    e.preventDefault();
-
-    // Double check the validity of the form
-    validateName(formValues.name.value);
-    validateEmail(formValues.email.value);
-    validateComments(formValues.comments.value);
-    if (!(formValues.name.valid && formValues.email.valid && formValues.comments.valid)) {
-      return;
-    }
-
-    // Update the form state to show that the form is loading. Also remove any error or success banners that are showing
-    setFormState((prev) => ({
-      ...prev,
-      isLoading: true,
-      errorAcknowledged: true,
-      successAcknowledged: true
-    }))
+  const handleSubmitForm = async (prevState, fieldValues) => {
+    const name = fieldValues.get('name');
+    const email = fieldValues.get('email');
+    const comment = fieldValues.get('comment');
 
     try {
       const response = await sendContactFormMessage(formValues.name.value, formValues.email.value, formValues.comments.value);
 
       if (!response.success) {
-        setServerError(response.error);
-
-        // Update the form state to show that an error occurred
-        setFormState((prev) => ({...prev, serverError: true, serverMessage: response.message, errorAcknowledged: false}))
+        setShowBanners({error: true, success: false})
+        return {error: response.message, hiddenError: response.error, status: "ERROR", values: {name, email, comment}}
       } else if (response.success) {
-        // Update the form state to show that the form was successfully submitted
-        setFormState((prev) => ({...prev, serverError: false, showSuccess: true, successAcknowledged: false}))
+        setShowBanners({error: false, success: true})
 
-        // Reset the form values
-        resetForm();
-      }
+        // Reset the form
+        setFormValues({
+          name: {value: '', valid: null, message: ''},
+          email: {value: '', valid: null, message: ''},
+          comments: {value: '', valid: null, message: ''},
+        })
+
+        return {error: '', hiddenError: '', status: "SUCCESS", values: {name: '', email: '', comment: ''}}
+      } 
 
     } catch (error) {
-      // Update the form state to show that an error occurred
-      setFormState((prev) => ({...prev, serverError: true, serverMessage: "Unexpected error occurred. Please try again.", errorAcknowledged: false}))
-    } finally {
-      // Update the form state to show that the form is no longer loading
-      setFormState((prev) => ({...prev, isLoading: false}))
+      setShowBanners({error: true, success: false})
+      return {error: 'Unexpected error occurred. Please try again', hiddenError: error.toString(), status: "ERROR", values: {name, email, comment}}
     }
   }
+ 
+  const [formState, formAction, isPending] = useActionState(handleSubmitForm, {error: '', hiddenError: '', status: 'INITIAL', values: {name: '', email: '', comment: ''}})
 
   return (
-    <Form {...props}>
-      <Alert className='mb-20' variant="danger" show={formState.serverError && formState.errorAcknowledged === false} onClose={acknowledgeErrorBanner} dismissible>
+    <Form action={formAction} {...props}>
+      <Alert className='mb-20' variant="danger" show={formState.status === "ERROR" && showBanners.error} onClose={() => setShowBanners((prevState) => ({...prevState, error: false}))} dismissible>
         <Alert.Heading>Error</Alert.Heading>
-        {formState.serverMessage || 'An error occurred while submitting the form. Please try again later.'}
+        {formState.error}
       </Alert>
-      <Alert className='mb-20' variant="success" show={formState.showSuccess && formState.successAcknowledged === false} onClose={acknowledgeSuccessBanner} dismissible>
+      <Alert className='mb-20' variant="success" show={formState.status === "SUCCESS" && showBanners.success} onClose={() => setShowBanners((prevState) => ({...prevState, success: false}))} dismissible>
         <Alert.Heading>Success</Alert.Heading>
         Your message has been sent successfully.
       </Alert>
-      <p className="d-none text-break hiddenError">{serverError}</p>
+      <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
       <Form.Group className="mb-20" controlId="userName">
         <Form.Label className="fw-medium">Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter your name" value={formValues.name.value} className={formValues.name.valid === false && 'is-invalid'} onChange={ updateNameValue } onBlur={(e)=>validateName(e.target.value)}/>
+        <Form.Control name='name' type="text" placeholder="Enter your name" value={formValues.name.value} className={formValues.name.valid === false && 'is-invalid'} onChange={ updateNameValue } onBlur={(e)=>validateName(e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           {formValues.name.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-20" controlId="userEmail">
         <Form.Label className="fw-medium">Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter your email" value={formValues.email.value} className={formValues.email.valid === false && 'is-invalid'} onChange={ updateEmailValue } onBlur={(e)=>validateEmail(e.target.value)}/>
+        <Form.Control name='email' type="email" placeholder="Enter your email" value={formValues.email.value} className={formValues.email.valid === false && 'is-invalid'} onChange={ updateEmailValue } onBlur={(e)=>validateEmail(e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           {formValues.email.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5" controlId="userMessage">
         <Form.Label className="fw-medium">Comments or Questions</Form.Label>
-        <Form.Control as='textarea' rows='5' placeholder="Write your message" value={formValues.comments.value} className={formValues.comments.valid === false && 'is-invalid'} onChange={ updateCommentsValue } onBlur={(e)=>validateComments(e.target.value)}/>
+        <Form.Control name='comment' as='textarea' rows='5' placeholder="Write your message" value={formValues.comments.value} className={formValues.comments.valid === false && 'is-invalid'} onChange={ updateCommentsValue } onBlur={(e)=>validateComments(e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           {formValues.comments.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Container fluid className='d-flex justify-content-center'>
-        <Button variant="primary" type="submit" onClick={submitContactForm} disabled={formState.isLoading || !(formValues.name.valid && formValues.email.valid && formValues.comments.valid)}>
-          {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Submit'}
+        <Button variant="primary" onClick={hideBanners} type="submit" disabled={isPending || !(formValues.name.valid && formValues.email.valid && formValues.comments.valid)}>
+          {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Submit'}
         </Button>
       </Container>
     </Form>

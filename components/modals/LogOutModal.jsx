@@ -6,7 +6,6 @@ import Container from "react-bootstrap/Container"
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form"
 import { useActionState, useEffect, useState } from "react";
-import { logOut } from "@/lib/actions";
 import { signOut } from "next-auth/react";
 
 function LogOutModal(props) {
@@ -19,17 +18,12 @@ function LogOutModal(props) {
   // Function for handling the logging out of the user
   const handleFormSubmit = async (prevState) => {    
     try {
-      // await logOut('/')
-
       await signOut({redirectTo: '/'})
 
       return { ...prevState, status: "SUCCESS"}
 
     } catch (error) {
-      // if (error.toString().includes('NEXT_REDIRECT')) {
-      //   throw(error)
-      // } 
-      
+
       setServerError(JSON.stringify(error));
       setShowError(true);
       return { ...prevState, error: 'Sign out failed. Please try again.', status: "ERROR"}          

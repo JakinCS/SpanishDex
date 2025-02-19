@@ -3,45 +3,16 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container"
 import Alert from "react-bootstrap/Alert";
-import IconButton from "@/components/IconButton";
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
 import OrSeparator from "@/components/OrSeparator";
 import { logInWithCredentials, logInWithGoogle } from "@/lib/actions";
+import PasswordInput from "../PasswordInput";
 
 function LogInModal(props) {
   const router = useRouter();
-
-  // State for the status of the show/hide password button
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
-  }
-
-  // State for keeping track of the state of the form (loading status, errors, successes)
-  const [formState, setFormState] = useState({
-    isLoading: false,
-    loadingType: '',
-    serverError: false,
-    serverMessage: '',
-    errorAcknowledged: false,
-    showSuccess: false
-  })
-
-  // Use effect hook for disabling the modal close button (when the form is being submitted)
-  // This effect hook is necessary because the button code is not accessible in this JSX file.
-  useEffect(() => {
-    if (document.querySelector('#logInModal .btn-close') !== null) {
-      if (formState.isLoading) {
-        document.querySelector('#logInModal .btn-close').disabled = true;
-      } else {
-        document.querySelector('#logInModal .btn-close').disabled = false;
-      }
-    }
-  }, [formState.isLoading])
 
   // State for storing the validity of the form
   const [formValues, setFormValues] = useState({
@@ -81,133 +52,125 @@ function LogInModal(props) {
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
   const resetState = () => {
+    setError(prev => ({...prev, show: false}))
     setFormValues({
       username: {value: '', valid: null}, 
       password: {value: '', valid: null}
     });
-    setFormState({
-      isLoading: false,
-      loadingType: '',
-      serverError: false,
-      serverMessage: '',
-      errorAcknowledged: false,
-      showSuccess: false
-    });
   }
 
 
-  // This function handles the logging in with Google logic
-  const googleLogIn = async () => {
-
-    // Set loading state to show a loading spinner
-    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'google', errorAcknowledged: true}));
-
-    try {      
-      // Run the signIn function to log in with Google
-      await logInWithGoogle()
-
-      // Success. Now set the server error state to false.
-      setFormState(prevState => ({...prevState, serverError: false}))
-
-    } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: error.toString(), errorAcknowledged: false}))
-
-    } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
-    }
-
-  }
-
-  // Function for handling the logging in of the user.
-  const logIn = async () => {
-
-    // Firstly, double check that the form is valid beforehand as a safety measure.
-    validateUsername();
-    validatePassword();
-    if (!formValues.username.valid || !formValues.password.valid) return;
-
-    // Store the object that will be sent to the api
-    let bodyToSend = {
-      username: formValues.username.value,
-      password: formValues.password.value
-    }
-
-    // Set loading state to show a loading spinner
-    setFormState(prevState => ({...prevState, isLoading: true, loadingType: 'reg', errorAcknowledged: true}));
-
+  const [error, setError] = useState({show: false, message: '', hiddenMsg: ''})
+  
+  // Function to control the login functionality for the form on submit.
+  const handleSubmitForm1 = async (prevState, fieldValues) => {
+    const username = fieldValues.get("username");
+    const password = fieldValues.get("password");
+    
     try {
-
-      const response = await logInWithCredentials(bodyToSend.username, bodyToSend.password);
+      const response = await logInWithCredentials(username, password)
 
       if (!response.success) {
-        setFormState(prevState => ({...prevState, serverError: true, serverMessage: response.message.toString(), errorAcknowledged: false}))
 
-      } else {
-        // Success. Now set the server error state to false.
-        setFormState(prevState => ({...prevState, serverError: false, showSuccess: true}))
+        setError({show: true, message: response.message, hiddenMsg: response?.error.toString()})
+        return {status: "ERROR"}
+      } else if (response.success) {
+        setError((prev) => ({...prev, show: false}))
 
         // Redirect to the dashboard
         router.push('/dashboard')
+
+        return {status: 'SUCCESS'} 
       }
-
+  
     } catch (error) {
-      setFormState(prevState => ({...prevState, serverError: true, serverMessage: "Sign in failed. Unexpected error occurred.", errorAcknowledged: false}))
-
-    } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
+      setError({show: true, message: "Sign in failed. Unexpected error occurred.", hiddenMsg: error.toString()})
+      return {status: 'ERROR'}
     }
   }
 
+  const [form1State, form1Action, form1Pending] = useActionState(handleSubmitForm1, {status: "INITIAL"})
+
+  // This function handles the submitting of the form for logging in with Google  
+  const handleSubmitForm2 = async (prevState) => {    
+    try {
+      // Run the signIn function to log in with Google
+      await logInWithGoogle();
+
+      setError((prev) => ({...prev, show: false}))
+      return {status: 'SUCCESS'} 
+  
+    } catch (error) {
+      setError({show: true, message: "Sign in failed. Unexpected error occurred.", hiddenMsg: error.toString()})
+      return {status: 'ERROR'}
+    }
+  }
+
+  const [form2State, form2Action, form2Pending] = useActionState(handleSubmitForm2, {status: 'INITIAL'})
+
+  // Use effect hook for disabling the modal close button (when the form is being submitted)
+  // This effect hook is necessary because the button code is not directly contained in this JSX file.
+  useEffect(() => {
+    if (document.querySelector('#logInModal .btn-close') !== null) {
+      if (form1Pending || form2Pending) {
+        document.querySelector('#logInModal .btn-close').disabled = true;
+      } else {
+        document.querySelector('#logInModal .btn-close').disabled = false;
+      }
+    }
+  }, [form1Pending, form2Pending])
+
+
   return (
-    <Modal size='sm' id='logInModal' className={formState.showSuccess ? 'modal-disabled' : ''} show={props.show} onShow={() => {setShowPassword(false); resetState()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size='sm' id='logInModal' className={(form1State.status === "SUCCESS" || form2State.status === "SUCCESS") ? 'modal-disabled' : ''} show={props.show} onExited={() => {resetState()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Log In</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className={'modal-success-message ' + (formState.showSuccess ? 'show' : 'hide')}>
+        <div className={'modal-success-message ' + ((form1State.status === "SUCCESS" || form2State.status === "SUCCESS") ? 'show' : 'hide')}>
           <h2 className="text-success mb-3">Success</h2>
           <p className="fw-medium">You are now logged in</p>
         </div>
         <Stack gap={5}>
-          <Alert variant="danger" show={(formState.serverError && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
+          <Alert variant="danger" show={(form1State.status === "ERROR" || form2State.status === "ERROR") && !(form1Pending || form2Pending) && error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
             <Alert.Heading>Error</Alert.Heading>
-            {formState.serverMessage}
+            {error.message}
           </Alert>
-          <Form>
-            <Form.Group className="mb-20" controlId="logInUsername">
-              <Form.Label className="fw-medium">Username or Email</Form.Label>
-              <Form.Control onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
-              <Form.Control.Feedback type="invalid">
-                Username is required
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="logInPassword">
-              <Form.Label className="fw-medium">Password</Form.Label>
-              <Container className="d-flex gap-3 p-0">
-                <div className="w-100">
-                  <Form.Control type={showPassword ? 'text' : 'password'} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
-                </div>
-                <div className="d-flex align-items-center">
-                  <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
-                </div>
-              </Container>    
-              <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
-                Password is required
-              </Form.Control.Feedback>
-              <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
-                { formState.isLoading ? 
-                  <span className="fw-medium">Forgot Password?</span> :
-                  <a href="#" onClick={() => {props.handleClose(); props.openResetPasswordModal()}}>Forgot Password?</a>
-                }
-              </p>
-            </Form.Group>
+          <p className="d-none text-break hiddenError">{error.hiddenMsg}</p>
+          <Form action={form1Action}>
+            <Stack gap={5}>
+              <div>
+                <Form.Group className="mb-20" controlId="logInUsername">
+                  <Form.Label className="fw-medium">Username or Email</Form.Label>
+                  <Form.Control name="username" value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
+                  <Form.Control.Feedback type="invalid">
+                    Username is required
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="logInPassword">
+                  <Form.Label className="fw-medium">Password</Form.Label>
+                  <PasswordInput name="password" value={formValues.password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
+                  <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
+                    Password is required
+                  </Form.Control.Feedback>
+                  <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
+                    { form1Pending || form2Pending ? 
+                      <span className="fw-medium">Forgot Password?</span> :
+                      <a href="#" onClick={(e) => {e.preventDefault(); props.handleClose(); props.openResetPasswordModal()}}>Forgot Password?</a>
+                    }
+                  </p>
+                </Form.Group>
+              </div>        
+              <Button variant="primary" type="submit" disabled={!(formValues.username.valid && formValues.password.valid) || form1Pending || form2Pending}>
+                {form1Pending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
+              </Button>  
+            </Stack>              
           </Form>
-          <Button variant="primary" onClick={logIn} disabled={!(formValues.username.valid && formValues.password.valid) || formState.isLoading}>
-            {formState.isLoading && formState.loadingType === 'reg' ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
-          </Button>
           <OrSeparator />
-          <GoogleAuthButton buttonText='signin' isLoading={formState.isLoading} loadingType={formState.loadingType} onClick={googleLogIn}/>
-          <p>Don’t have an account? {formState.isLoading ? <span className="fw-medium">Sign Up</span> : <a href='#' onClick={() => {props.handleClose(); props.openSignUpModal()}}>Sign Up</a>}</p>
+          <Form action={form2Action} className='d-flex flex-column'>
+            <GoogleAuthButton type="submit" buttonText='signin' isLoading={form1Pending || form2Pending} hasSpinner={form2Pending} />
+          </Form>
+          <p>Don’t have an account? {form1Pending || form2Pending ? <span className="fw-medium">Sign Up</span> : <a href='#' onClick={(e) => {e.preventDefault(); props.handleClose(); props.openSignUpModal()}}>Sign Up</a>}</p>
         </Stack>
       </Modal.Body>
     </Modal>

@@ -5,113 +5,72 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import Alert from "react-bootstrap/Alert";
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { sendResetPasswordMessage } from "@/lib/actions";
 
 const ResetPasswordModal = (props) => {
-
-  // State for keeping track of the state of the form (loading status, errors, successes)
-  const [formState, setFormState] = useState({
-    isLoading: false,
-    error: false,
-    errorMessage: '',
-    errorAcknowledged: false,
-    showSuccess: false
-  });
-
   // Holds the email information
   const [email, setEmail] = useState('');
 
+  // State for overriding the type of the submit/cancel buttons shown and for
+  // overriding the visibility of the feedback. 
+  // (useful for when the modal is re-opened to not have the feedback visible and to have the buttons as their default)
+  const [defaultView, setDefaultView] = useState(true)
+
+  const [formState, formAction, isPending] = useActionState(sendResetPasswordMessage, {error: '', hiddenError: '', status: "INITIAL"})
+
   // Use effect hook for disabling the modal close button (when the form is being submitted)
-  // This effect hook is necessary because the button code is not accessible in this JSX file.
+  // This effect hook is necessary because the button code is not directly in this JSX file.
+  // ALSO, this hook handles the setting of the defaultView.
   useEffect(() => {
     if (document.querySelector('#resetPasswordModal .btn-close') !== null) {
-      if (formState.isLoading) {
+      if (isPending) {
         document.querySelector('#resetPasswordModal .btn-close').disabled = true;
       } else {
         document.querySelector('#resetPasswordModal .btn-close').disabled = false;
       }
     }
-  }, [formState.isLoading])
 
-
-  // Function for resetting the state of the form (useful when triggered on 'modal open')
-  const resetState = () => {
-    setEmail('');
-    setFormState({
-      isLoading: false,
-      error: false,
-      errorMessage: '',
-      errorAcknowledged: false,
-      showSuccess: false
-    });
-  }
-
-  const [serverError, setServerError] = useState(''); // holds the raw server error for putting in a hidden paragraph for debugging purposes.
-  // Handles the sending of the reset password email.
-  const handleSendEmail = async (e) => {
-    e.preventDefault();
-
-    // Set loading state to show a loading spinner
-    setFormState(prevState => ({...prevState, isLoading: true, errorAcknowledged: true}));
-
-    try {
-
-      const response = await sendResetPasswordMessage(email);
-
-      if (!response.success) {
-        setServerError(response.error);
-        setFormState(prevState => ({...prevState, error: true, errorMessage: response.message, errorAcknowledged: false}));
-      } else if (response.success) {
-        // Success. Now set the server error state to false.
-        setFormState(prevState => ({...prevState, error: false, showSuccess: true}));
-      }
-
-    } catch (error) {
-      setServerError(JSON.stringify(error));
-      setFormState(prevState => ({...prevState, error: true, errorMessage: 'Email failed to send. Unexpected error occurred', errorAcknowledged: false}));
-    } finally {
-      setFormState(prevState => ({...prevState, isLoading: false}));
+    if (!isPending) {
+      setDefaultView(false)
     }
-  }
+  }, [isPending])
 
   return (
-    <Modal size='sm' id='resetPasswordModal' show={props.show} onShow={resetState} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size='sm' id='resetPasswordModal' show={props.show} onExited={() => {setEmail(''); setDefaultView(true)}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Reset Password</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <Alert variant="danger" show={(formState.error && formState.errorAcknowledged === false)} onClose={() => setFormState(prevState => ({...prevState, errorAcknowledged: true}))} dismissible>
-            <Alert.Heading>Error</Alert.Heading>
-            {formState.errorMessage}
-          </Alert>
-          <p className="d-none text-break hiddenError">{serverError}</p>
+          <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <p>Please enter your email address below, and we&apos;ll send you a link to reset your password.</p>
-          <Form>
+          <Form action={formAction}>
             <Form.Group className='mb-5' controlId="resetPasswordEmail">
               <Form.Label className="fw-medium">Email Address</Form.Label>
-              <Form.Control type="text" onChange={(e) => setEmail(e.target.value)} placeholder="email address" />
+              <Form.Control name="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email address" />
             </Form.Group>     
 
-            {formState.showSuccess && <p className="mb-5">Email sent.<br /> Didn&apos;t receive the email? {!email || formState.isLoading ? <span className="fw-medium">Resend Email</span> : <a href="" onClick={handleSendEmail}>Resend Email</a>}</p>} 
+            {(formState.status === "SUCCESS" && !defaultView && !isPending) && <p className="mb-5"><span className="fw-semibold text-success">Email Sent</span><br /> Didn&apos;t receive the email? {!email || isPending ? <span className="fw-medium">Resend Email</span> : <a href="" onClick={(e) => {e.preventDefault(); document.getElementById("invisibleSubmit").click()}}>Resend Email</a>}</p>} 
+            <Button id="invisibleSubmit" type="submit" className="d-none visually-hidden"></Button>
+
+            {(formState.status === "ERROR" && !defaultView && !isPending) && <p className="mb-5"><span className="fw-semibold text-danger">Error</span><br /> {formState.error} </p>} 
 
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
-              {formState.showSuccess ?
-                <Button variant="gray" onClick={props.handleClose} disabled={formState.isLoading}>
+              {formState.status === "SUCCESS" && !defaultView ?
+                <Button variant="gray" onClick={props.handleClose} disabled={isPending}>
                   Close
                 </Button> :
-                <Button variant="gray" onClick={() => {props.handleClose(); props.openLogInModal()}} disabled={formState.isLoading}>
+                <Button variant="gray" onClick={() => {props.handleClose(); props.openLogInModal()}} disabled={isPending}>
                   Back
                 </Button>
               }
-              {formState.showSuccess ?
-                <Button variant="primary" onClick={() => {props.handleClose(); props.openLogInModal()}} disabled={formState.isLoading}>
-                  {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Return To Log In'}
+              {formState.status === "SUCCESS" && !defaultView ?
+                <Button variant="primary" onClick={() => {props.handleClose(); props.openLogInModal()}} disabled={isPending}>
+                  {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Return To Log In'}
                 </Button> :
-                <Button variant="primary" onClick={handleSendEmail} disabled={ !email || formState.isLoading}>
-                  {formState.isLoading ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Send Email'}
+                <Button variant="primary" type="submit" disabled={ !email || isPending}>
+                  {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Send Email'}
                 </Button>
               }
             </Container>
