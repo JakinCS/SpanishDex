@@ -1,10 +1,8 @@
-import HomepageHeader from '../components/headers/homepage/HomepageHeader';
-import HomepageFooter from '../components/HomepageFooter';
-import { auth } from "@/auth"
+import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
+import HomepageFooter from '@/components/HomepageFooter';
+import AuthProvider from '../context/AuthProvider';
 
-export default async function homepageLayout({ children }) {
-  // Get session information
-  const session = await auth();
+export default function homepageLayout({ children }) {
 
   const containerStyles = {
     height: 'calc(100vh - 82px)',
@@ -15,13 +13,15 @@ export default async function homepageLayout({ children }) {
 
   return (
     <>
-      <HomepageHeader isLoggedIn={!!session} />
-      <div style={containerStyles}>
-        <div>
-          {children}
-        </div>      
-        <HomepageFooter />
-      </div>
+      <AuthProvider>
+        <HomepageHeader />   
+        <div style={containerStyles}>
+            <div>
+              {children}
+            </div>            
+          <HomepageFooter />
+        </div>
+      </AuthProvider>  
     </>
   );
 }

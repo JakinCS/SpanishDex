@@ -1,5 +1,5 @@
 import Dropdown from 'react-bootstrap/Dropdown';
-import ProfilePictureToggler from './ProfilePictureToggler';
+import ProfilePictureToggler from '@/components/headers/ProfilePictureToggler';
 
 
 const ProfileDropdown = (props) => {

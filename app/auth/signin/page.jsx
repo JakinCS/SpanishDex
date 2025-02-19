@@ -1,4 +1,4 @@
-import SignInContent from '@/app/components/SignInContent';
+import SignInContent from '@/components/SignInContent';
 import { auth } from "@/auth"
 import Link from 'next/link';
 
