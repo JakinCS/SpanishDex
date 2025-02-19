@@ -5,10 +5,10 @@ const GoogleAuthButton = (props) => {
   else if (props.buttonText === 'signup') buttonText = 'Sign up with Google';
 
   return (
-    <button onClick={props.onClick} disabled={props.isLoading} className="gsi-material-button" style={{maxWidth: 'none'}}>
+    <button type={props.type} disabled={props.isLoading} className="gsi-material-button" style={{maxWidth: 'none'}}>
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
-        {props.isLoading && props.loadingType === 'google' ? 
+        {props.hasSpinner ? 
           <div style={{padding: '0rem 1rem'}}><div className="loader-gray"></div><span className="visually-hidden">Loading...</span></div> 
           : 
           <>        

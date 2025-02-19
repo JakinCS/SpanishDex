@@ -1,16 +1,16 @@
 'use client'
 
-import CreateAccountModal from "../../modals/CreateAccountModal"
-import LogInModal from "../../modals/LogInModal"
-import ResetPasswordModal from "../../modals/ResetPasswordModal";
+import CreateAccountModal from "@/components/modals/CreateAccountModal"
+import LogInModal from "@/components/modals/LogInModal"
+import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
 import Button from 'react-bootstrap/Button'
 import { useState } from "react";
-import ProfileDropdown from "../ProfileDropdown";
-import LogOutModal from "../../modals/LogOutModal";
+import ProfileDropdown from "@/components/headers/ProfileDropdown";
+import LogOutModal from "@/components/modals/LogOutModal";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-const HeaderButtons = (props) => {
+const HeaderButtons = () => {
   const { data: session } =  useSession();
 
   // Log In Modal State
@@ -53,22 +53,21 @@ const HeaderButtons = (props) => {
     setLogOutModalOpenState(false);
   }
 
-  const tempUserInfo = {
-    username: " ...loading",
-    profile_colors: [ "#cccccc", "#000000" ]
-  }
-
   return (
     <>
-      { props.isLoggedIn ? 
+      { session === undefined && 
         <>
-          <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
-            <span className="d-none d-md-block">Go To Dashboard</span>
-            <span className="d-block d-md-none">Dashboard</span>
-          </Link>
-          <ProfileDropdown className="ms-auto" user={session?.user || tempUserInfo} onClick={openLogOutModal}/>
-        </>
-        :
+          <Button variant="gray" disabled={true}>
+            <span className="d-none d-md-block opacity-0">Invisible</span>
+            <span className="d-block d-md-none opacity-0">__</span>
+          </Button>
+          <Button variant="gray" disabled={true}>
+            <span className="d-none d-md-block opacity-0">Loading</span>
+            <span className="d-block d-md-none opacity-0">Loading</span>
+          </Button>
+        </> 
+      }
+      { session === null && 
         <>
           <Button className="ms-auto d-none d-md-block" variant="outline-primary" onClick={openLogInModal}>
             Log In
@@ -79,8 +78,18 @@ const HeaderButtons = (props) => {
             <span className="d-none d-md-block">Create Account</span>
             <span className="d-block d-md-none">Sign Up</span>
           </Button>
+        </> 
+      }
+      { !!session && 
+        <>
+          <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
+            <span className="d-none d-md-block">Go To Dashboard</span>
+            <span className="d-block d-md-none">Dashboard</span>
+          </Link>
+          <ProfileDropdown className="ms-auto" user={session?.user} onClick={openLogOutModal}/>
         </>
       }
+      
       
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>

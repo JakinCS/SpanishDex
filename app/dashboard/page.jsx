@@ -1,11 +1,12 @@
-import { getServerSession } from 'next-auth';
-import { options } from '../api/auth/[...nextauth]/options';
-import DashboardButtons from './DashboardButtons';
+import { auth, signOut } from "@/auth"
+import Link from 'next/link'
+import Button from 'react-bootstrap/Button'
+
 
 async function Dashboard() {
 
     // Get session information
-    const session = await getServerSession(options);
+    const session = await auth();
 
     return (
       <>
@@ -17,8 +18,16 @@ async function Dashboard() {
           <p>You are not logged in</p>
         }
         <br />
-        <DashboardButtons />
-        <br />
+        <div className='d-flex column-gap-3'>
+          <Link href='/' role='button' className='btn btn-outline-primary me-3'>Home</Link>
+          <form action={async () => {
+            "use server"
+
+            await signOut({ redirectTo: "/" })
+          }}>
+            <Button variant='outline-danger' type="submit">Log Out</Button>
+          </form>
+        </div>        
         <br />
         <p>The building of the dashboard is still in progress.</p>
       </>

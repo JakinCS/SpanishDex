@@ -1,42 +1,24 @@
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from 'next-auth/providers/credentials'
+import NextAuth from 'next-auth';
+import { authConfig } from './auth.config';
+import Credentials from 'next-auth/providers/credentials';
+import Google from "next-auth/providers/google"
 import { MongoClient } from "mongodb";
-import { compare, hash } from 'bcrypt';
 import sanitize from 'mongo-sanitize';
-import { contrastedColor, randomColor } from "@/app/utils/colorTools";
+import { compare, hash } from 'bcrypt';
 import { generate } from "generate-password";
+import { generateRandomNumbers, randomColorPair } from './lib/utils';
 
-
-// Random 3 number generator
-const generate3RandomNumbers = () => {
-  let rand1 = Math.floor(Math.random() * 10);
-  let rand2 = Math.floor(Math.random() * 10);
-  let rand3 = Math.floor(Math.random() * 10);
-  
-  return `${rand1}${rand2}${rand3}`;
-}
-
-export const options = {
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
-    GoogleProvider({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    }),
-    CredentialsProvider({
-      name: "Credentials",
+    Google,
+    Credentials({
       credentials: {
-        username: {
-          label: "Username:",
-          type: "text",
-          placeholder: "your username"
-        },
-        password: {
-          label: "Password:",
-          type: "password",
-          placeholder: "your password"
-        }
+        username: {},
+        password: {}
       },
       async authorize(credentials) {
+
         // Define the client variable, holding a new MongoClient instance  
         const client = new MongoClient(process.env.MONGODB_URI);
 
@@ -49,7 +31,7 @@ export const options = {
         const collection = database.collection('users');
 
         const userSearchResult = await collection.findOne({ $or: [{username: { $regex: `^${cleanUsername}$`, $options: 'i' }}, {email: { $regex: `^${cleanUsername}$`, $options: 'i' }}] } )
-
+        
         if (!userSearchResult) {
           await client.close();
           return null
@@ -57,19 +39,21 @@ export const options = {
         
         const passwordCorrect = await compare(credentials?.password || "", userSearchResult.password);
 
-        if (passwordCorrect) {
+        if (!passwordCorrect) {
           await client.close();
-          return userSearchResult;
+          return null
         }
 
         await client.close();
-        return null
+        return userSearchResult;
       }
+
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, trigger, account, user, session }) {
+    ...authConfig.callbacks,
+
+    async jwt({ token, account, user }) {
       if (account) {
         // Update the token with information from the user object.
         if (account.provider === 'credentials') {
@@ -129,12 +113,10 @@ export const options = {
 
           // If the user can't be found in the database, create a new user in the database
           if (!findResult) {
-            const username = user.name.replaceAll(' ', '') + generate3RandomNumbers(); // generate a username for them.
+            const username = user.name.replaceAll(' ', '') + generateRandomNumbers(3); // generate a username for them.
 
             const password = generate({ length: 16, numbers: true }); // generate a random password for them
             const hashedPassword = await hash(password, 10);
-
-            const userColor = randomColor();
 
             // Add the user to the database.
             const addUser = await collection.insertOne({ 
@@ -143,7 +125,7 @@ export const options = {
               password: hashedPassword, 
               date_created: new Date(),
               profile_picture: null, 
-              profile_colors: [userColor, contrastedColor(userColor)]
+              profile_colors: randomColorPair()
             })
 
             await client.close()
@@ -159,9 +141,8 @@ export const options = {
 
       return true;
     }
-  },
-  pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signout'
+
   }
-}
+
+})
+
