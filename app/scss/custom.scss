@@ -93,25 +93,18 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
   /* --- Navbar Profile Picture --- */
 
-.profile-picture > img {
-    height: $spacer * 4;
-    width: $spacer * 4;
+.profile-picture > img.profile-circle {
     margin-left: auto;
     display: block;
     transition: filter 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.profile-picture > div {
-    height: $spacer * 4;
-    width: $spacer * 4;
+.profile-picture > div.profile-circle {
     margin-left: auto;
     display: block;
     transition: box-shadow 0.15s ease-in-out;
-    & > span {
-        font-size: 1.5rem;
-        font-weight: $font-weight-medium;
-    }
 }
+
 
 .profile-picture:focus-visible {
     outline: 0.125rem solid $blue-900;
@@ -148,7 +141,15 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 // Special styling for icon Buttons
 
 .btn.icon-button {
+    line-height: 1;
+}
+
+.btn.icon-button-size-1 {
     padding: 0.1875rem;
+}
+
+.btn.icon-button-size-2 {
+    padding: 0.375rem;
 }
 
 .btn.btn-light.icon-button:hover, .btn.btn-light.icon-button:focus-visible {
@@ -312,6 +313,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     box-shadow: none;
 }
 
+form > div:has(input) {
+    line-height: 1;
+}
+
 // Fix password field dots
 input[type="password"]:not(:placeholder-shown) {
     font-family: sans-serif;
@@ -371,6 +376,8 @@ a {
 .modal-header {
     margin-bottom: 1.875rem;
 }
+
+
 
 /* Modal Close Button */
 
@@ -440,7 +447,7 @@ div[role="dialog"].modal {
     max-width: 17.5rem;
 }
 
-.dropdown-menu > a {
+.dropdown-menu > .dropdown-item {
     border-radius: 0.4375rem;
 
     &.danger-item {
@@ -636,10 +643,48 @@ a.blue-link:focus-visible {
 
 
 
+/* -------------------- NON-BOOTSTRAP-RELATED MISCELLANEOUS ---------------------- */
+
+// Top level containers of pages
+.topLevelContainer {
+    padding: 3.75rem 3.125rem;
+
+}
+
+// @media (min-width: 576px) {
+//     .navbar:has(.navbar-brand) {
+//         padding-left: 3.125rem;
+//         padding-right: 3.125rem;
+//     }
+// }
 
 
 
+/* ----- HR Tag ----- */
+hr {
+    border: 1;
+    border-top: 1.5px $gray-150 solid;
+    margin: 0;
+    opacity: 1;
+}
 
+
+/* ----- Back button ----- */
+
+.back-button {
+
+    & > img {
+        transition: filter .15s ease-in-out;
+    }
+
+    &:hover > img, &:focus-visible > img, &:focus > img {
+        filter: brightness(0) saturate(100%) invert(65%) sepia(67%) saturate(4521%) hue-rotate(120deg) brightness(91%) contrast(93%);
+    }
+    
+    &:active > img {
+        filter: brightness(0) saturate(100%) invert(42%) sepia(65%) saturate(6603%) hue-rotate(146deg) brightness(93%) contrast(94%);
+    }
+}
 
 
 

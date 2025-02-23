@@ -14,7 +14,7 @@ import PasswordInput from "../PasswordInput";
 function LogInModal(props) {
   const router = useRouter();
 
-  // State for storing the validity of the form
+  // State for storing the values of the form
   const [formValues, setFormValues] = useState({
     username: {value: '', valid: null},
     password: {value: '', valid: null}

@@ -143,10 +143,14 @@ $spacers: (
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
+  10: $spacer * 1,
+  15: $spacer * 1.5,
   20: $spacer * 2,
   25: $spacer * 2.5,
+  30: $spacer * 3,
   40: $spacer * 4,
   50: $spacer * 5,
+  60: $spacer * 6,
   80: $spacer * 8,
   100: $spacer * 10,
 );
@@ -233,7 +237,7 @@ $input-padding-x: $spacer * 2;
 $input-padding-y: 0.625rem;
 
 // Form label margin bottom
-$form-label-margin-bottom: 0.3125rem;
+$form-label-margin-bottom: 0.625rem;
 
 // font weight
 $input-font-weight: $font-weight-light;

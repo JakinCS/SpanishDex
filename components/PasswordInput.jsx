@@ -18,7 +18,7 @@ const PasswordInput = (props) => {
         <Form.Control type={showPassword ? 'text' : 'password'} {...props}/>
       </div>
       <div className="d-flex align-items-center">
-        <IconButton variant='light' iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
+        <IconButton variant='light' size={'1'} iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
       </div>
     </Container>
   )
