@@ -4,7 +4,6 @@ const ProfileCircle = ({height, profilePicture, profileColors, firstLetter}) => 
   const spanStyles = {
     color: profileColors[1],
     fontSize: `${1.5 * (height / 40)}rem`,
-    cursor: "default",
     fontWeight: "500",
     WebkitUserSelect: "none",
     msUserSelect: "none",

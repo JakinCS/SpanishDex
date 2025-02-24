@@ -62,7 +62,7 @@ export const EditPasswordButton = (props) => {
   )
 }
 
-export const DeleteAccountButton = () => {
+export const DeleteAccountButton = (props) => {
   const [show, setShow] = useState(false);
   const showModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -70,7 +70,7 @@ export const DeleteAccountButton = () => {
   return (
     <>
       <Button variant='outline-danger' onClick={showModal}>Delete Account</Button>
-      <DeleteAccountModal show={show} closeModal={closeModal} />
+      <DeleteAccountModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
 }
