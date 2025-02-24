@@ -6,6 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
 import { isEmailValid } from '@/lib/utils';
+import { editEmail } from '@/lib/actions';
 
 const EditEmailModal = (props) => {
 
@@ -33,24 +34,23 @@ const EditEmailModal = (props) => {
   const handleFormSubmit = async (prevState, fieldValues) => {
     const emailValue = fieldValues.get('email');
 
-    try {
-      // const response = await (Do server action call)
+    if (emailValue.toLowerCase() === props.initialValue.toLowerCase()) {
+      props.closeModal();
+      return {status: 'SUCCESS', error: '', hiddenError: ''}
+    }
 
-      const response = {success: true}
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (Math.random() < 0.5) resolve();
-          reject('error')
-        }, 1000);
-      })
+    try {
+
+      // Call the editEmail server action
+      const response = await editEmail(props.userId, emailValue)
       
       if (!response.success) {
-        setError({show: true, message: response.message, hiddenMsg: response?.error.toString()})
+        setShowError(true)
         return {status: "ERROR", error: response.message, hiddenError: response?.error.toString()}
 
       } else if (response.success) {
         setShowError(false)
-        props.setEmail(emailValue);
+        props.setEmail(emailValue.toLowerCase());
         props.closeModal();
         return {status: 'SUCCESS', error: '', hiddenError: ''}
       }
@@ -90,7 +90,7 @@ const EditEmailModal = (props) => {
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="email">
               <Form.Label className="fw-medium">Email</Form.Label>
-              <Form.Control name="email" type="text" placeholder="email" value={email.value} onBlur={validateEmail} onChange={updateEmailValue} className={email.valid === false && 'is-invalid'} required/>
+              <Form.Control name="email" type="text" placeholder="email" value={email.value} onBlur={validateEmail} onChange={updateEmailValue} className={email.valid === false && 'is-invalid'}/>
               <Form.Control.Feedback type="invalid">
                 {email.message}
               </Form.Control.Feedback>

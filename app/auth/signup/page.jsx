@@ -82,7 +82,7 @@ const SignUp = () => {
         }
 
         // Set the error state to display an error banner
-        setError({show: true, message: response.message, hiddenMsg: response?.error.toString()})
+        setError({show: true, message: response.message, hiddenMsg: response?.error?.toString()})
 
         return {status: "ERROR"};
       }
