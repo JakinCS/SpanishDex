@@ -10,7 +10,7 @@ import EditEmailModal from "./modals/EditEmailModal"
 import EditPasswordModal from "./modals/EditPasswordModal"
 import DeleteAccountModal from "./modals/DeleteAccountModal"
 
-export const EditProfilePictureButton = () => {
+export const EditProfilePictureButton = (props) => {
   const [show, setShow] = useState(false);
   const showModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -18,12 +18,12 @@ export const EditProfilePictureButton = () => {
   return (
     <>
       <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' altTag='Edit icon' onClick={showModal}>Edit</ButtonWithIcon>
-      <EditProfilePictureModal show={show} closeModal={closeModal} />
+      <EditProfilePictureModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
 }
 
-export const EditUsernameButton = () => {
+export const EditUsernameButton = (props) => {
   const [show, setShow] = useState(false);
   const showModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -31,12 +31,12 @@ export const EditUsernameButton = () => {
   return (
     <>
       <IconButton variant='light' size={2} iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
-      <EditUsernameModal show={show} closeModal={closeModal} />
+      <EditUsernameModal show={show} closeModal={closeModal} {...props} />
     </>
   )
 }
 
-export const EditEmailButton = () => {
+export const EditEmailButton = (props) => {
   const [show, setShow] = useState(false);
   const showModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -44,12 +44,12 @@ export const EditEmailButton = () => {
   return (
     <>
       <IconButton variant='light' size={2} iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
-      <EditEmailModal show={show} closeModal={closeModal} />
+      <EditEmailModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
 }
 
-export const EditPasswordButton = () => {
+export const EditPasswordButton = (props) => {
   const [show, setShow] = useState(false);
   const showModal = () => setShow(true);
   const closeModal = () => setShow(false);
@@ -57,7 +57,7 @@ export const EditPasswordButton = () => {
   return (
     <>
       <IconButton variant='light' size={2} iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
-      <EditPasswordModal show={show} closeModal={closeModal} />
+      <EditPasswordModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
 }

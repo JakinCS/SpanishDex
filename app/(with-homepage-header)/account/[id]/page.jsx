@@ -1,14 +1,12 @@
 import AccountPageCard from "@/components/AccountPageCard"
-import IconButton from "@/components/IconButton";
 import Container from "react-bootstrap/Container"
 import Stack from "react-bootstrap/Stack";
-import Button from 'react-bootstrap/Button';
-import ButtonWithIcon from "@/components/ButtonWithIcon";
 import ProfileCircle from "@/components/ProfileCircle";
 import BackButton from "@/components/BackButton";
 import { auth } from "@/auth"
 import Link from "next/link";
-import { DeleteAccountButton, EditEmailButton, EditPasswordButton, EditProfilePictureButton, EditUsernameButton } from "@/components/AccountPageButtons";
+import { DeleteAccountButton, EditPasswordButton, EditProfilePictureButton } from "@/components/AccountPageButtons";
+import { EmailEditSection, UsernameEditSection } from "@/components/AccountPageEditSections";
 
 const AccountPage = async ({ params }) => {
 
@@ -17,8 +15,6 @@ const AccountPage = async ({ params }) => {
 
   // Get session information
   const session = await auth();
-
-  console.log("session", session);
 
   if (session?.user?.id !== userId) {
     return (
@@ -45,7 +41,7 @@ const AccountPage = async ({ params }) => {
           <div className="d-flex justify-content-between align-items-center">
             <div>
               <h3 className="mb-30">Profile Picture</h3>
-              <EditProfilePictureButton />
+              <EditProfilePictureButton userId={userId} />
             </div>
             <ProfileCircle 
               height={120}
@@ -54,29 +50,16 @@ const AccountPage = async ({ params }) => {
               firstLetter={session?.user?.username.slice(0, 1).toUpperCase()}
             />
           </div>         
-
         </AccountPageCard>
         <AccountPageCard className="mb-5">
           <h3 className="mb-5">Account Details</h3>
           <Stack gap={20} className="lh-1">
             <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="fw-medium mb-3">Username</p>
-                <p>{session?.user?.username}</p>
-              </div>
-              <div>
-                <EditUsernameButton />
-              </div>
+              <UsernameEditSection initialValue={session?.user?.username} userId={userId} />
             </div>
             <hr />
             <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="fw-medium mb-3">Email</p>
-                <p>{session?.user?.email || <span className="fst-italic">No email provided yet</span>}</p>
-              </div>
-              <div>
-                <EditEmailButton />
-              </div>
+              <EmailEditSection initialValue={session?.user?.email} userId={userId}/>
             </div>
             <hr />
             <div className="d-flex justify-content-between align-items-center">
@@ -85,7 +68,7 @@ const AccountPage = async ({ params }) => {
                 <p style={{fontFamily: 'sans-serif', letterSpacing: '.125rem'}}>••••••••••</p>
               </div>
               <div>
-                <EditPasswordButton />
+                <EditPasswordButton userId={userId} />
               </div>
             </div>
           </Stack>
@@ -93,7 +76,7 @@ const AccountPage = async ({ params }) => {
         <AccountPageCard className='mb-5'>
           <h3 className="mb-20">Delete Your Account</h3>
           <p className="mb-20">Caution. This action permanently removes your account and all data associated with your account. This action cannot be undone.</p>
-          <DeleteAccountButton />
+          <DeleteAccountButton userId={userId} />
         </AccountPageCard>
         <p className="mb-20"><span className="fw-medium">Account Created:</span> {date}</p>
       </Container>

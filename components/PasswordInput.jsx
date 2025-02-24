@@ -15,7 +15,7 @@ const PasswordInput = (props) => {
   return (
     <Container className="d-flex gap-3 p-0">
       <div className="w-100">
-        <Form.Control type={showPassword ? 'text' : 'password'} {...props}/>
+        <Form.Control {...props} type={showPassword ? 'text' : 'password'}/>
       </div>
       <div className="d-flex align-items-center">
         <IconButton variant='light' size={'1'} iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           

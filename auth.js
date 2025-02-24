@@ -8,7 +8,7 @@ import { compare, hash } from 'bcrypt';
 import { generate } from "generate-password";
 import { generateRandomNumbers, randomColorPair } from './lib/utils';
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { auth, handlers, signIn, signOut, update } = NextAuth({
   ...authConfig,
   providers: [
     Google,
@@ -53,7 +53,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
 
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger, session }) {
+      if (trigger === 'update' && session) {
+        token = {...token, ...session}
+      }
       if (account) {
         // Update the token with information from the user object.
         if (account.provider === 'credentials') {

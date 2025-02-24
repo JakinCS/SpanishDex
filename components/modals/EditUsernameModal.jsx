@@ -6,10 +6,14 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
 import { isUsernameValid } from '@/lib/utils';
+import { editUsername } from '@/lib/actions';
+import { useSession } from 'next-auth/react';
 
 const EditUsernameModal = (props) => {
+  const {session, update} = useSession();
+
   // State for storing the values of the form
-  const [username, setUsername] = useState({value: '', valid: null, message: ''})
+  const [username, setUsername] = useState({value: props.initialValue, valid: null, message: ''})
 
   const updateUsernameValue = (e) => setUsername(prevState => ({...prevState, value: e.target.value}))
 
@@ -22,8 +26,7 @@ const EditUsernameModal = (props) => {
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
   const resetState = () => {
-    setUsername({value: '', valid: null, message: ''});
-    setShowError(false);
+    setUsername({value: props.initialValue, valid: null, message: ''});
   }
 
   // Whether or not the error banner should be displayed. Useful for being able to close the error banner.
@@ -33,23 +36,25 @@ const EditUsernameModal = (props) => {
   const handleFormSubmit = async (prevState, fieldValues) => {
     const usernameValue = fieldValues.get('username');
 
-    try {
-      // const response = await (Do server action call)
+    // If the username hasn't changed, then just return early
+    if (usernameValue === props.initialValue) {
+      props.closeModal();
+      return {status: 'SUCCESS', error: '', hiddenError: ''}
+    }
 
-      const response = {success: true}
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (Math.random() < 0.5) resolve();
-          reject('error')
-        }, 1000);
-      })
+    try {
+      // Call the editUsername server action
+      const response = await editUsername(props.userId, usernameValue);
       
       if (!response.success) {
-        setError({show: true, message: response.message, hiddenMsg: response?.error.toString()})
+        setShowError(true)
         return {status: "ERROR", error: response.message, hiddenError: response?.error.toString()}
 
       } else if (response.success) {
         setShowError(false)
+        update({username: usernameValue})
+        props.setUsername(usernameValue);
+        props.closeModal();
         return {status: 'SUCCESS', error: '', hiddenError: ''}
       }
 
@@ -74,7 +79,7 @@ const EditUsernameModal = (props) => {
   }, [isPending])
 
   return (
-    <Modal id='editUsernameModal' show={props.show} backdrop="static" onExited={resetState} onHide={props.closeModal} centered>
+    <Modal id='editUsernameModal' show={props.show} backdrop="static" onExited={() => setShowError(false)} onEnter={resetState} onHide={props.closeModal} centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Edit Username</Modal.Title>
       </Modal.Header>
