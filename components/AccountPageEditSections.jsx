@@ -1,7 +1,30 @@
 'use client'
 
 import { useState } from "react"
-import { EditEmailButton, EditUsernameButton } from "./AccountPageButtons"
+import { EditEmailButton, EditProfilePictureButton, EditUsernameButton } from "./AccountPageButtons"
+import ProfileCircle from "./ProfileCircle"
+
+
+export const ProfilePictureEditSection = (props) => {
+  const [profilePicture, setProfilePicture] = useState(props.pictureInfo.profilePicture)
+
+  return (
+    <>
+      <div className="d-flex justify-content-between align-items-center">
+        <div>
+          <h3 className="mb-30">Profile Picture</h3>
+          <EditProfilePictureButton pictureInfo={props.pictureInfo} pictureState={profilePicture} setProfilePicture={setProfilePicture} userId={props.userId} />
+        </div>
+        <ProfileCircle
+          height={120}
+          profilePicture={profilePicture}
+          profileColors={props.pictureInfo.profileColors}
+          firstLetter={props.pictureInfo.firstLetter}
+        />
+      </div>
+    </>
+  )
+}
 
 export const UsernameEditSection = (props) => {
   const [usernameValue, setUsernameValue] = useState(props.initialValue || '')

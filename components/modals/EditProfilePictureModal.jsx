@@ -4,23 +4,27 @@ import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
+import ProfileCircle from '../ProfileCircle';
+import ButtonWithIcon from '../ButtonWithIcon';
+import Image from 'next/image';
+// import ReactCrop from 'react-image-crop';
+import ProfilePictureInput from '../ProfilePictureInput';
 
 const EditProfilePictureModal = (props) => {
 
+  // References the input field for the file upload
+  const fileInput = useRef(null)
+
   // State for storing the values of the form
-  const [picture, setPicture] = useState({value: '', valid: null, message: ''})
+  const [picture, setPicture] = useState({value: props.pictureState, valid: null, message: ''})
 
-  const updatePictureValue = (e) => setPicture(prevState => ({...prevState, value: e.target.value}))
-
-  // Function to check and update the validity of the picture
-  const validatePicture = () => {
-    setPicture(prevState => ({...prevState, valid: true, message: 'valid'}));
-  }
+  const [profilePicture, setProfilePicture] = useState(null)
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
   const resetState = () => {
-    setPicture({value: '', valid: null, message: ''});
+    // setProfilePicture(null)
+    setPicture({value: props.pictureState, valid: null, message: ''});
   }
 
   // Whether or not the error banner should be displayed. Useful for being able to close the error banner.
@@ -47,7 +51,7 @@ const EditProfilePictureModal = (props) => {
 
       } else if (response.success) {
         setShowError(false)
-        props.closeModal();
+        // props.closeModal();
         return {status: 'SUCCESS', error: '', hiddenError: ''}
       }
 
@@ -84,18 +88,59 @@ const EditProfilePictureModal = (props) => {
           </Alert>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
-            <Form.Group className="mb-30" controlId="picture">
-              <Form.Label className="fw-medium">Picture</Form.Label>
-              <Form.Control name="picture" type="text" placeholder="picture" value={picture.value} onBlur={validatePicture} onChange={updatePictureValue} className={picture.valid === false && 'is-invalid'} required/>
-              <Form.Control.Feedback type="invalid">
-                {picture.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+
+            <div className='d-flex align-items-center justify-content-between pt-10 pb-20 mb-30'>
+              <div>
+                <p className='mb-20'>Upload or remove your profile picture. <br /> The Image size cannot be larger than _MB.</p>
+                <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='Upload icon' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
+                <ButtonWithIcon size='sm' variant='gray' iconSrc='/icons/close.svg' iconHeight={16} altTag='Close icon' onClick={() => {setProfilePicture(null)}}>Remove</ButtonWithIcon>
+              </div>
+              <div>
+                {/* <ProfileCircle
+                  height={120}
+                  profilePicture={picture.value}
+                  profileColors={props.pictureInfo.profileColors}
+                  firstLetter={props.pictureInfo.firstLetter}
+                /> */}
+
+                {profilePicture ? 
+                         
+                  <Image
+                    src={profilePicture}
+                    height={120}
+                    width={120}
+                    className="profile-circle rounded-circle"
+                    alt="profile picture"
+                    style={{ width: `${120 / 16}rem`, height: `${120 / 16}rem` }}
+                  />
+                  :
+                  <div className="profile-circle rounded-circle d-flex align-items-center justify-content-center" style={{ backgroundColor: props.pictureInfo.profileColors[0], width: `${120 / 16}rem`, height: `${120 / 16}rem` }}>
+                    <span style={{
+                      color: props.pictureInfo.profileColors[1],
+                      fontSize: `${1.5 * (120 / 40)}rem`,
+                      fontWeight: "500",
+                      WebkitUserSelect: "none",
+                      msUserSelect: "none",
+                      userSelect: "none"
+                    }}>
+                      {props.pictureInfo.firstLetter}
+                    </span>
+                  </div>
+                }
+
+              </div>
+            </div>
+            
+            
+            <ProfilePictureInput fileInputRef={fileInput} profilePicture={profilePicture} setProfilePicture={setProfilePicture}/>
+
+            
+
             <Container fluid className="d-flex gap-4 justify-content-end p-0">            
               <Button variant="gray" onClick={props.closeModal} disabled={isPending}>
                 Cancel
               </Button>
-              <Button variant="primary" type='submit' disabled={!picture.valid || isPending}>
+              <Button variant="primary" type='submit' disabled={isPending}>
                 {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Save'}
               </Button>
             </Container>

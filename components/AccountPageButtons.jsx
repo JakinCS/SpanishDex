@@ -17,7 +17,7 @@ export const EditProfilePictureButton = (props) => {
 
   return (
     <>
-      <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' altTag='Edit icon' onClick={showModal}>Edit</ButtonWithIcon>
+      <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon' onClick={showModal}>Edit</ButtonWithIcon>
       <EditProfilePictureModal show={show} closeModal={closeModal} {...props}/>
     </>
   )

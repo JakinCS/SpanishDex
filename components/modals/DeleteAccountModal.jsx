@@ -80,6 +80,8 @@ const DeleteAccountModal = (props) => {
             {formState.error}
           </Alert>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
+          <p>Are you sure you want to delete your account?
+          This action is permanent and <span className='fw-bold'>cannot be undone</span>.</p>
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="password">
               <Form.Label className="fw-medium">Enter Password To Delete</Form.Label>
