@@ -103,6 +103,10 @@ If you want this app to be able to send emails (password reset emails), you will
 #### Google OAuth (optional)
 In order to sign in or sign up with Google OAuth, you will need to set up OAuth in your Google Developers Console. [http://console.developers.google.com/](http://console.developers.google.com/). You can follow [this article](https://blog.rebex.net/howto-register-gmail-oauth) to set it up or find a different one that works better for you. The important details are the **client ID** and **client secret** which you will get once you've set up OAuth. You will need these two pieces of information later.
 
+#### Vercel Blob Store (optional)
+This application uses Vercel's Blob Store to store users' profile pictures. If you do not choose to set this up, it will simply prevent users from uploading their own profile pictures. <br />
+To set up Vercel Blob Store, first sign up for a Vercel account. Then create a project and set up Blob Store for the project's storage option.<br /> Documentation: [https://vercel.com/docs/storage/vercel-blob](https://vercel.com/docs/storage/vercel-blob)
+
 ### Installation
 
 1. Clone the repo
@@ -132,9 +136,10 @@ In order to sign in or sign up with Google OAuth, you will need to set up OAuth 
      You can generate it with this command: ```openssl rand -base64 32```, or use this link: [https://generate-secret.vercel.app/32](https://generate-secret.vercel.app/32)
    - Add the **AUTH_TRUST_HOST** environment variable. Set it equal to 'true'. This variable will ensure that Auth.js works with builds on localhost
    - Add the **SENDGRID_API_KEY** environment variable (optional). If you created a Sendgrid account, set this equal to the API key you created earlier.
-   - Add the **CONTACT_EMAIL** environment variable (optional). Again, this is only if you set up Sendgrid. Set this variable equal to your email. This will be the receiving email of any messages sent through the contact form on the homepage or contact modal.
+   - Add the **CONTACT_EMAIL** environment variable (optional). Again, this is only applicable if you set up Sendgrid. Set this variable equal to your email. This email will be the receiving email of any messages sent through the contact form on the homepage or contact modal.
    - Add the **AUTH_GOOGLE_ID** environment variable (optional). If you decided to set up Google OAuth, then you will need to put the client ID here.
-   - Add the **AUTH_GOOGLE_SECRET** environment variable (optional). Set this equal to the client secret.
+   - Add the **AUTH_GOOGLE_SECRET** environment variable (optional). Set this equal to the Google OAuth client secret.
+   - Add the **BLOB_READ_WRITE_TOKEN** environment variable (optional). This variable is necessary if you want to set up Vercel Blob Store to store profile pictures. You should be able to find the value for this environment variable during the setup process for Vercel Blob Store.
 5. Run the application
    ```sh
    npm run dev
