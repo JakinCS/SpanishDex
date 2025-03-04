@@ -12,7 +12,7 @@ function IconButton({iconFillColor, iconSrc, altTag, danger, className, size, ..
     ].join(' ');
 
     let widthHeight = 30;
-    if (size == 2) widthHeight = 24;
+    if (size === 'sm') widthHeight = 24;
 
     return (
         <Button {...otherProps} className={className ? className + ' ' + newClasses : newClasses}>

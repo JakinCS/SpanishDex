@@ -1,30 +1,30 @@
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col'
 import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useRef, useState } from 'react';
 import ProfileCircle from '../ProfileCircle';
 import ButtonWithIcon from '../ButtonWithIcon';
-import Image from 'next/image';
-// import ReactCrop from 'react-image-crop';
 import ProfilePictureInput from '../ProfilePictureInput';
+import { uploadImage } from '@/lib/actions';
+import { useSession } from 'next-auth/react';
 
 const EditProfilePictureModal = (props) => {
+  const {session, update} = useSession();
 
   // References the input field for the file upload
   const fileInput = useRef(null)
 
-  // State for storing the values of the form
-  const [picture, setPicture] = useState({value: props.pictureState, valid: null, message: ''})
-
-  const [profilePicture, setProfilePicture] = useState(null)
+  // State for keeping track of the profile picture value and whether it is valid or not.
+  const [profilePicture, setProfilePicture] = useState({value: props.pictureState, name: '', valid: null, message: '' })
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
   const resetState = () => {
-    // setProfilePicture(null)
-    setPicture({value: props.pictureState, valid: null, message: ''});
+    setProfilePicture({value: props.pictureState, name: '', valid: null, message: ''})
   }
 
   // Whether or not the error banner should be displayed. Useful for being able to close the error banner.
@@ -32,18 +32,23 @@ const EditProfilePictureModal = (props) => {
 
   // The function that runs when the form is submitted
   const handleFormSubmit = async (prevState, fieldValues) => {
-    const pictureValue = fieldValues.get('picture');
+
+    if (props.pictureState === profilePicture.value) {
+      props.closeModal();
+      return {status: 'SUCCESS', error: '', hiddenError: ''}
+    }
 
     try {
-      // const response = await (Do server action call)
+      const response = await uploadImage(props.userId, {value: profilePicture.value, name: profilePicture.name}, props.pictureState);
 
-      const response = {success: true}
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (Math.random() < 0.5) resolve();
-          reject('error')
-        }, 1000);
-      })
+      // const response = {success: true}
+      // await new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     if (Math.random() < 0.5) resolve();
+      //     reject('error')
+      //   }, 1000);
+      // })
+      // return {status: 'SUCCESS', error: '', hiddenError: ''}
       
       if (!response.success) {
         setShowError(true)
@@ -51,7 +56,13 @@ const EditProfilePictureModal = (props) => {
 
       } else if (response.success) {
         setShowError(false)
-        // props.closeModal();
+
+        update({image: response.data})
+
+        props.setPictureState(response.data)
+
+        props.closeModal();
+
         return {status: 'SUCCESS', error: '', hiddenError: ''}
       }
 
@@ -89,58 +100,38 @@ const EditProfilePictureModal = (props) => {
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
 
-            <div className='d-flex align-items-center justify-content-between pt-10 pb-20 mb-30'>
-              <div>
-                <p className='mb-20'>Upload or remove your profile picture. <br /> The Image size cannot be larger than _MB.</p>
-                <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='Upload icon' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
-                <ButtonWithIcon size='sm' variant='gray' iconSrc='/icons/close.svg' iconHeight={16} altTag='Close icon' onClick={() => {setProfilePicture(null)}}>Remove</ButtonWithIcon>
-              </div>
-              <div>
-                {/* <ProfileCircle
-                  height={120}
-                  profilePicture={picture.value}
-                  profileColors={props.pictureInfo.profileColors}
-                  firstLetter={props.pictureInfo.firstLetter}
-                /> */}
-
-                {profilePicture ? 
-                         
-                  <Image
-                    src={profilePicture}
-                    height={120}
-                    width={120}
-                    className="profile-circle rounded-circle"
-                    alt="profile picture"
-                    style={{ width: `${120 / 16}rem`, height: `${120 / 16}rem` }}
-                  />
-                  :
-                  <div className="profile-circle rounded-circle d-flex align-items-center justify-content-center" style={{ backgroundColor: props.pictureInfo.profileColors[0], width: `${120 / 16}rem`, height: `${120 / 16}rem` }}>
-                    <span style={{
-                      color: props.pictureInfo.profileColors[1],
-                      fontSize: `${1.5 * (120 / 40)}rem`,
-                      fontWeight: "500",
-                      WebkitUserSelect: "none",
-                      msUserSelect: "none",
-                      userSelect: "none"
-                    }}>
-                      {props.pictureInfo.firstLetter}
-                    </span>
+            <Container className='pt-10 pb-20 px-0 mb-30' fluid>
+              <Row className='d-flex align-items-center justify-content-between'>
+                <Col xs={{ order: 1 }} sm={{ order: 0 }}>
+                  <p className='mb-20 text-center text-sm-start'>Upload or remove your profile picture. <br /> The Image size cannot be larger than 4.5MB.</p>
+                  <div className='d-flex justify-content-center justify-content-sm-start'>
+                    <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='Upload icon' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
+                    <ButtonWithIcon size='sm' variant='gray' iconSrc='/icons/close.svg' iconHeight={16} altTag='Close icon' onClick={() => {setProfilePicture({valid: null, name: '', value: null, message: ''})}}>Remove</ButtonWithIcon>
                   </div>
-                }
-
-              </div>
-            </div>
-            
+                  <p className={(profilePicture.valid === false ? 'd-block' : 'd-none') + ' mt-15 fw-medium text-danger text-center text-sm-start'}>{profilePicture.message}</p>
+                </Col>
+                <Col xs={{ order: 0 }} sm={{ span: 'auto', order: 1 }} className='d-flex justify-content-center mb-25 mb-sm-0'>
+                  <ProfileCircle
+                    height={120}
+                    profilePicture={profilePicture.value}
+                    profileColors={props.pictureInfo.profileColors}
+                    firstLetter={props.pictureInfo.firstLetter}
+                  />
+                </Col>
+              </Row>
+            </Container>            
             
             <ProfilePictureInput fileInputRef={fileInput} profilePicture={profilePicture} setProfilePicture={setProfilePicture}/>
 
             
-
             <Container fluid className="d-flex gap-4 justify-content-end p-0">            
-              <Button variant="gray" onClick={props.closeModal} disabled={isPending}>
+              <Button variant="gray" onClick={props.closeModal} className='d-none d-sm-block' disabled={isPending}>
                 Cancel
               </Button>
-              <Button variant="primary" type='submit' disabled={isPending}>
+              <Button variant="primary" type='submit' className='d-none d-sm-block' disabled={isPending}>
+                {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Save'}
+              </Button>
+              <Button variant="primary" type='submit' className='w-100 d-sm-none' disabled={isPending}>
                 {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Save'}
               </Button>
             </Container>

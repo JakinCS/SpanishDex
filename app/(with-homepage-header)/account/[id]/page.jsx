@@ -1,7 +1,6 @@
 import AccountPageCard from "@/components/AccountPageCard"
 import Container from "react-bootstrap/Container"
 import Stack from "react-bootstrap/Stack";
-import ProfileCircle from "@/components/ProfileCircle";
 import BackButton from "@/components/BackButton";
 import { auth } from "@/auth"
 import Link from "next/link";
@@ -39,7 +38,7 @@ const AccountPage = async ({ params }) => {
         style={{ maxWidth: "40.625rem" }}
         fluid
       >
-        <h1 className="mb-60">My Account</h1>
+        <h1 className="text-center text-sm-start mb-60">My Account</h1>
         <AccountPageCard className="mb-5" paddingY="30">
           <ProfilePictureEditSection
             userId={userId}
@@ -51,7 +50,7 @@ const AccountPage = async ({ params }) => {
           />
         </AccountPageCard>
         <AccountPageCard className="mb-5">
-          <h3 className="mb-5">Account Details</h3>
+          <h3 className="mb-5 text-center text-sm-start">Account Details</h3>
           <Stack gap={20} className="lh-1">
             <div className="d-flex justify-content-between align-items-center">
               <UsernameEditSection
@@ -83,15 +82,15 @@ const AccountPage = async ({ params }) => {
           </Stack>
         </AccountPageCard>
         <AccountPageCard className="mb-5">
-          <h3 className="mb-20">Delete Your Account</h3>
-          <p className="mb-20">
+          <h3 className="mb-20 text-center text-sm-start">Delete Your Account</h3>
+          <p className="mb-20 text-center text-sm-start">
             Caution. This action permanently removes your account and all data
             associated with your account. This action cannot be undone.
           </p>
           <DeleteAccountButton userId={userId} />
         </AccountPageCard>
-        <p className="mb-20">
-          <span className="fw-medium">Account Created:</span> {date}
+        <p className="mb-20 text-center text-sm-start">
+          <span className="fw-medium">Account Created:</span> <span className="text-nowrap">{date}</span>
         </p>
       </Container>
     </Container>

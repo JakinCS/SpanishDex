@@ -30,7 +30,7 @@ export const EditUsernameButton = (props) => {
 
   return (
     <>
-      <IconButton variant='light' size={2} iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
+      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
       <EditUsernameModal show={show} closeModal={closeModal} {...props} />
     </>
   )
@@ -43,7 +43,7 @@ export const EditEmailButton = (props) => {
 
   return (
     <>
-      <IconButton variant='light' size={2} iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
+      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
       <EditEmailModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
@@ -56,7 +56,7 @@ export const EditPasswordButton = (props) => {
 
   return (
     <>
-      <IconButton variant='light' size={2} iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
+      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
       <EditPasswordModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
@@ -69,7 +69,8 @@ export const DeleteAccountButton = (props) => {
 
   return (
     <>
-      <Button variant='outline-danger' onClick={showModal}>Delete Account</Button>
+      <Button className="d-none d-sm-block" variant='outline-danger' onClick={showModal}>Delete Account</Button>
+      <Button className="d-block d-sm-none w-100" variant='outline-danger' onClick={showModal}>Delete Account</Button>
       <DeleteAccountModal show={show} closeModal={closeModal} {...props}/>
     </>
   )

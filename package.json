@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
+    "@vercel/blob": "^0.27.2",
     "@vercel/speed-insights": "^1.2.0",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
@@ -25,7 +26,8 @@
     "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0",
     "react-bootstrap": "^2.10.9",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-easy-crop": "^5.4.1"
   },
   "devDependencies": {
     "eslint": "^8",
