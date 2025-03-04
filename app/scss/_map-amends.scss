@@ -7,3 +7,12 @@ $custom-colors: (
 
 // Merge with Bootstrap's colors
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+
+// Additional border width properties
+$custom-border-widths: (
+    "1point5": 1.5px
+);
+
+// Merge with Bootstrap's border widths
+$border-widths: map-merge($border-widths, $custom-border-widths);

@@ -8,7 +8,7 @@ import { compare, hash } from 'bcrypt';
 import { generate } from "generate-password";
 import { generateRandomNumbers, randomColorPair } from './lib/utils';
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { auth, handlers, signIn, signOut, update } = NextAuth({
   ...authConfig,
   providers: [
     Google,
@@ -53,11 +53,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
 
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger, session }) {
+      if (trigger === 'update' && session) {
+        token = {...token, ...session}
+      }
       if (account) {
         // Update the token with information from the user object.
         if (account.provider === 'credentials') {
-          token = {...token, username: user.username, image: user.profile_picture, colors: user.profile_colors}
+          token = {...token, id: user._id, username: user.username, image: user.profile_picture, colors: user.profile_colors, date_created: user.date_created}
         } else if (account.provider === 'google') {
 
           // Go find some more information about this google user from the database
@@ -68,7 +71,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           try {
             const database = client.db('spanishdex');
             const collection = database.collection('users');
-            findResult = await collection.findOne({email: user.email}, {projection: {_id: 0, email: 1, username: 1, profile_picture: 1, profile_colors: 1}});
+            findResult = await collection.findOne({email: user.email}, {projection: {email: 1, username: 1, profile_picture: 1, profile_colors: 1, date_created: 1}});
             
           } catch (error) {
             findResult.profile_picture = null;
@@ -79,7 +82,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             await client.close();
           }
 
-          token = {...token, username: findResult.username, image: findResult.profile_picture, colors: findResult.profile_colors}
+          token = {...token, id: findResult._id, username: findResult.username, image: findResult.profile_picture, colors: findResult.profile_colors, date_created: findResult.date_created}
 
         }
       }
@@ -89,7 +92,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     async session({ token, session }) {
       // Update the session with information from the token. (avoids an extra call to the database to retrieve this information later)
       if (session.user) {
-        session.user = {...session.user, username: token.username, profile_picture: token.image, profile_colors: token.colors}
+        session.user = {...session.user, id: token.id, username: token.username, profile_picture: token.image, profile_colors: token.colors, date_created: token.date_created}
         
       }
       return session;

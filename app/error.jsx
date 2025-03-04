@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import HomepageSection from "@/components/HomepageSection";
 import Button from "react-bootstrap/Button";
-import rightArrow from "@/public/icons/arrow_right.svg";
-import downArrow from "@/public/icons/arrow_down.svg";
+import rightChevron from "@/public/icons/chevron_right.svg";
+import downChevron from "@/public/icons/chevron_down.svg";
 import { useState } from "react";
 
 const Error = ({ error, reset }) => {
@@ -39,7 +39,7 @@ const Error = ({ error, reset }) => {
         <div>
           <div className="d-flex align-items-center justify-content-center">
             <a href="#" className="d-flex align-items-center justify-content-center mb-3 blue-link" onClick={ (e) => {e.preventDefault(); setShowError( (prev) => !prev )} }>
-              <Image width={30} height={30} src={showError ? downArrow : rightArrow} alt='Right arrow'></Image>
+              <Image width={30} height={30} src={showError ? downChevron : rightChevron} alt='Right arrow'></Image>
               <p className="pe-2">Error Message</p>
             </a>            
           </div>          
