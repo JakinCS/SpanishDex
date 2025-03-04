@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ProfileCircle from "../ProfileCircle";
 
 
 const ProfilePictureToggler = ({ onClick, user }, ref) => {
@@ -12,24 +12,12 @@ const ProfilePictureToggler = ({ onClick, user }, ref) => {
         onClick(e);
       }}
     >
-      {user.profile_picture ? (
-        <Image
-          src={`/images/profilepictures/${user.profile_picture}.jpg`}
-          height={100}
-          width={100}
-          className="rounded-circle"
-          alt="profile picture"
-        />
-      ) : (
-        <div
-          className="rounded-circle d-flex align-items-center justify-content-center"
-          style={{ backgroundColor: user.profile_colors[0] }}
-        >
-          <span style={{ color: user.profile_colors[1] }}>
-            {user.username.slice(0, 1).toUpperCase()}
-          </span>
-        </div>
-      )}
+      <ProfileCircle 
+        height={40}
+        profilePicture={user.profile_picture} 
+        profileColors={user.profile_colors} 
+        firstLetter={user.username.slice(0, 1).toUpperCase()}
+      />
     </a>
   );
 };
