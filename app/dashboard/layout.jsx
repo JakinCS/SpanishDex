@@ -1,6 +1,7 @@
 import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
 import HomepageFooter from '@/components/HomepageFooter';
 import AuthProvider from '../context/AuthProvider';
+import DashboardHeader from '@/components/headers/DashboardHeader';
 
 export default function dashboardLayout({ children }) {
 
@@ -14,7 +15,7 @@ export default function dashboardLayout({ children }) {
   return (
     <>
       <AuthProvider>
-        <HomepageHeader />   
+        <DashboardHeader />   
         <div style={containerStyles}>
             <div>
               {children}
