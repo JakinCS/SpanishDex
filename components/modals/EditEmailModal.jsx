@@ -7,8 +7,11 @@ import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
 import { isEmailValid } from '@/lib/utils';
 import { editEmail } from '@/lib/actions';
+import { useSession } from 'next-auth/react';
 
 const EditEmailModal = (props) => {
+
+  const {session, update} = useSession();
 
   // State for storing the values of the form
   const [email, setEmail] = useState({value: props.initialValue, valid: null, message: ''})
@@ -50,7 +53,10 @@ const EditEmailModal = (props) => {
 
       } else if (response.success) {
         setShowError(false)
+
         props.setEmail(emailValue.toLowerCase());
+        update({email: emailValue.toLowerCase()})
+
         props.closeModal();
         return {status: 'SUCCESS', error: '', hiddenError: ''}
       }
