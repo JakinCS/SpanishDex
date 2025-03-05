@@ -94,7 +94,7 @@ const ProfilePictureInput = ({profilePicture, setProfilePicture, ...otherProps})
       <Form.Control ref={otherProps.fileInputRef} type="file" className='visually-hidden' onChange={onFileUpload} accept="image/*"/>  
 
       {(originalPic.url && showCropDialog) &&
-        <div className='position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center'>
+        <div className='position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center' style={{backgroundColor: '#00000044'}}>
           <div style={{width: '650px', height: '80vh'}} className='mx-10 bg-white rounded d-flex flex-column justify-content-between'>
             <div className='d-flex ps-20 pe-10 py-10 align-items-center justify-content-between'>
               <h3>Crop Image</h3>
@@ -133,7 +133,7 @@ const ProfilePictureInput = ({profilePicture, setProfilePicture, ...otherProps})
                     <IconButton variant='light' size='md' iconSrc='/icons/add.svg' altTag={'plus icon'} onClick={ () => setZoom( (prev) => (prev < 3 ? Number.parseFloat(prev) + .1 : prev) ) } />
                   </div>
                 </Col>
-                <Col xs='12' sm='auto' className='d-flex justify-content-center'>
+                <Col xs='12' sm='auto' className='d-flex justify-content-center pb-10 pb-sm-0'>
                   <Button variant='primary' className='w-100' style={{maxWidth: '350px'}} onClick={confirmCroppedArea}>Ok</Button>
                 </Col>                
               </Row>

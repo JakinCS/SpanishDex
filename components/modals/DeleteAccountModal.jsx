@@ -91,10 +91,13 @@ const DeleteAccountModal = (props) => {
               </Form.Control.Feedback>
             </Form.Group>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">            
-              <Button variant="gray" onClick={props.closeModal} disabled={isPending}>
+              <Button variant="gray" className='d-none d-sm-block' onClick={props.closeModal} disabled={isPending}>
                 Cancel
               </Button>
-              <Button variant="danger" type='submit' disabled={!password.valid || isPending}>
+              <Button variant="danger" className='d-none d-sm-block' type='submit' disabled={!password.valid || isPending}>
+                {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Delete Account'}
+              </Button>
+              <Button variant="danger" className='d-block d-sm-none w-100' type='submit' disabled={!password.valid || isPending}>
                 {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Delete Account'}
               </Button>
             </Container>
