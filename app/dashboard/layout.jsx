@@ -1,7 +1,7 @@
 import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
 import HomepageFooter from '@/components/HomepageFooter';
 import AuthProvider from '../context/AuthProvider';
-import DashboardHeader from '@/components/headers/DashboardHeader';
+import DashboardHeader from '@/components/headers/dashboard/DashboardHeader';
 
 export default function dashboardLayout({ children }) {
 
