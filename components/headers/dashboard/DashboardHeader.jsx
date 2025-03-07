@@ -1,10 +1,10 @@
 import Header from "../Header";
-import DashboardButtons from "./DashboardButtons";
+import DashboardHeaderButtons from "./DashboardHeaderButtons";
 
 const DashboardHeader = () => {
   return (
     <Header>
-      <DashboardButtons />
+      <DashboardHeaderButtons />
     </Header>
   );
 }

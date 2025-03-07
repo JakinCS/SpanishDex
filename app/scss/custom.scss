@@ -189,8 +189,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     }
 }
 
-.icon-button.fill-white img {
+.btn.icon-fill-white img.icon {
     filter: brightness(0%) invert(1)
+}
+
+.btn.icon-fill-primary {
+    & img.icon {
+        transition: filter 0.15s ease-in-out;
+    }
+    &:active img.icon, &:hover img.icon, &:focus-visible img.icon {
+        filter: brightness(0%) invert(1);
+    }
 }
 
 

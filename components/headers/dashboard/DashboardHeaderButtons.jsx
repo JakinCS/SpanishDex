@@ -1,72 +1,46 @@
 'use client'
 
+import Button from 'react-bootstrap/Button'
+import IconButton from '@/components/IconButton'
+import { useSession } from "next-auth/react";
+import ProfileDropdown from '../ProfileDropdown';
+import { useState } from 'react';
 import CreateAccountModal from "@/components/modals/CreateAccountModal"
 import LogInModal from "@/components/modals/LogInModal"
 import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
-import Button from 'react-bootstrap/Button'
-import { useState } from "react";
-import ProfileDropdown from "@/components/headers/ProfileDropdown";
-import LogOutModal from "@/components/modals/LogOutModal";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
+import LogOutModal from '@/components/modals/LogOutModal';
+import ButtonWithIcon from '@/components/ButtonWithIcon';
 
-const HeaderButtons = () => {
+const DashboardHeaderButtons = () => {
   const { data: session } =  useSession();
 
   // Log In Modal State
   const [logInModalOpenState, setLogInModalOpenState] = useState(false);
 
-  const openLogInModal = () => {
-    setLogInModalOpenState(true);
-  };
-  const closeLogInModal = () => {
-    setLogInModalOpenState(false);
-  };
+  const openLogInModal = () => setLogInModalOpenState(true);
+  const closeLogInModal = () => setLogInModalOpenState(false);
 
   // Sign Up Modal State
   const [signUpModalOpenState, setSignUpModalOpenState] = useState(false);
 
-  const openSignUpModal = () => {
-    setSignUpModalOpenState(true);
-  };
-  const closeSignUpModal = () => {
-    setSignUpModalOpenState(false);
-  };
+  const openSignUpModal = () => setSignUpModalOpenState(true);
+  const closeSignUpModal = () => setSignUpModalOpenState(false);
 
   // Reset Password Modal State
   const [resetPasswordModalOpenState, setResetPasswordModalOpenState] = useState(false);
 
-  const openResetPasswordModal = () => {
-    setResetPasswordModalOpenState(true);
-  }
-  const closeResetPasswordModal = () => {
-    setResetPasswordModalOpenState(false);
-  }
+  const openResetPasswordModal = () => setResetPasswordModalOpenState(true);
+  const closeResetPasswordModal = () => setResetPasswordModalOpenState(false);
 
   // Log Out Modal State
   const [logOutModalOpenState, setLogOutModalOpenState] = useState(false);
 
-  const openLogOutModal = () => {
-    setLogOutModalOpenState(true);
-  }
-  const closeLogOutModal = () => {
-    setLogOutModalOpenState(false);
-  }
+  const openLogOutModal = () => setLogOutModalOpenState(true);
+  const closeLogOutModal = () => setLogOutModalOpenState(false);
+  
 
   return (
     <>
-      { session === undefined && 
-        <>
-          <Button variant="gray" disabled={true}>
-            <span className="d-none d-md-block opacity-0">Invisible</span>
-            <span className="d-block d-md-none opacity-0">__</span>
-          </Button>
-          <Button variant="gray" disabled={true}>
-            <span className="d-none d-md-block opacity-0">Loading</span>
-            <span className="d-block d-md-none opacity-0">Loading</span>
-          </Button>
-        </> 
-      }
       { session === null && 
         <>
           <Button className="ms-auto d-none d-md-block" variant="outline-primary" onClick={openLogInModal}>
@@ -80,24 +54,31 @@ const HeaderButtons = () => {
           </Button>
         </> 
       }
-      { !!session && 
+      { (!!session || session === undefined) &&
         <>
-          <Link role='button' href='/dashboard' className="btn btn-outline-primary ms-auto" id='dashboardButton' >
-            <span className="d-none d-md-block">Go To Dashboard</span>
-            <span className="d-block d-md-none">Dashboard</span>
-          </Link>
-          <ProfileDropdown className="ms-auto" user={session?.user} onClick={openLogOutModal}/>
+          <IconButton iconFillColor={'white'} variant='primary' iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
+
+          <ButtonWithIcon iconFillColor={'primary'} variant='outline-primary' className='d-none d-sm_md-block' iconSrc='/icons/deck-blue400.svg' iconHeight={24} altTag='Deck icon'>Decks</ButtonWithIcon>
+          <IconButton iconFillColor={'primary'} variant='outline-primary' className='d-block d-sm_md-none' iconSrc={'/icons/deck-blue400.svg'} altTag={'All decks icon'} size={'sm'}/>  
         </>
       }
+
+      { session === undefined &&
+        <div style={{backgroundColor: '#ccc', height: '2.5rem', width: '2.5rem', borderRadius: '100px', opacity: '.65'}}>
+        </div>
+      }
       
-      
+      { !!session && 
+        <ProfileDropdown className="ms-auto" user={session?.user} onClick={openLogOutModal}/>
+      }
+
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
       <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} openResetPasswordModal={openResetPasswordModal}/>
       <ResetPasswordModal handleClose={closeResetPasswordModal} show={resetPasswordModalOpenState} openLogInModal={openLogInModal}/>
       <LogOutModal handleClose={closeLogOutModal} show={logOutModalOpenState}/>
     </>
-  );
-};
+  )
+}
 
-export default HeaderButtons
+export default DashboardHeaderButtons

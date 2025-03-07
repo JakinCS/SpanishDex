@@ -1,10 +1,10 @@
 import Header from "../Header";
-import HeaderButtons from "./HeaderButtons";
+import HomepageHeaderButtons from "./HomepageHeaderButtons";
 
 const HomepageHeader = async () => {
   return (
     <Header>
-      <HeaderButtons />
+      <HomepageHeaderButtons />
     </Header>
   );
 }

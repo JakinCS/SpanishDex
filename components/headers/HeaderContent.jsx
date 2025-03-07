@@ -34,7 +34,7 @@ const HeaderContent = ({ children }) => {
       </Navbar.Brand>
 
       <Navbar.Collapse id="homepage-nav">
-        <Nav className="ms-auto my-2 column-gap-25 row-gap-3 align-items-center">
+        <Nav className="ms-auto my-2 column-gap-20 column-gap-sm-25 row-gap-3 align-items-center">
           {children}
         </Nav>
       </Navbar.Collapse>

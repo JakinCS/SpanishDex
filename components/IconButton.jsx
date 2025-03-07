@@ -7,7 +7,7 @@ function IconButton({iconFillColor, iconSrc, altTag, danger, className, size, ..
     let newClasses = [
         'icon-button',
         'icon-button-size-' + size,
-        (iconFillColor === 'white' || iconFillColor === 'light') && 'fill-white',
+        iconFillColor && `icon-fill-${iconFillColor}`,
         danger && 'danger'
     ].join(' ');
 
@@ -16,7 +16,7 @@ function IconButton({iconFillColor, iconSrc, altTag, danger, className, size, ..
 
     return (
         <Button {...otherProps} className={className ? className + ' ' + newClasses : newClasses}>
-            <Image height={widthHeight} width={widthHeight} alt={altTag} src={iconSrc} />
+            <Image className='icon' height={widthHeight} width={widthHeight} alt={altTag} src={iconSrc} />
         </Button>
     )
 }
