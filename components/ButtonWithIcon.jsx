@@ -2,9 +2,10 @@ import Button from 'react-bootstrap/Button';
 import Image from 'next/image';
 
 const ButtonWithIcon = ({altTag, iconSrc, iconHeight, iconFillColor, children, ...buttonProps}) => {
-  const padding = buttonProps.size === 'sm' ? (26 - iconHeight) / 32 : (32 - iconHeight) / 32;
+  const padding = buttonProps.size === 'sm' ? (26 - iconHeight) / 32 : (36 - Math.max(iconHeight, 16)) / 32;
   buttonProps.style = {
     ...buttonProps.style,
+    lineHeight: '1',
     paddingTop: `${padding}rem`,
     paddingBottom: `${padding}rem`
   }

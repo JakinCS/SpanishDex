@@ -20,6 +20,7 @@ $border-widths: map-merge($border-widths, $custom-border-widths);
 
 // Additional breakpoint properties
 $custom-breakpoints: (
+    xs_sm: 475px,
     sm_md: 672px,
 );
 

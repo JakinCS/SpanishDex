@@ -670,27 +670,6 @@ a.blue-link:focus-visible {
 }
 
 
-// Account page profile picture edit section custom breakpoint styles
-
-.profilePictureRow1 {
-    display: none;
-}
-.profilePictureRow2 {
-    display: flex;
-}
-
-@media (min-width: 475px) {
-    .profilePictureRow1 {
-        display: flex;
-    }
-    .profilePictureRow2 {
-        display: none;
-    }
-}
-
-
-
-
 
 /* ----- HR Tag ----- */
 hr {
@@ -743,16 +722,44 @@ hr {
     border-radius: 50px;
     background: $primary;
     cursor: pointer;
-  }
+}
   
-  .slider::-moz-range-thumb {
+.slider::-moz-range-thumb {
     width: 15px;
     height: 15px;
     border-radius: 50px;
     background: $primary;
     cursor: pointer;
-  }
+}
 
+
+
+/* ------ ICON helper classes -------- */
+
+img.icon.fill-primary {
+    filter: brightness(0) invert(20%) sepia(69%) saturate(2732%) hue-rotate(184deg) brightness(106%) contrast(101%);
+}
+
+
+/* ----- Text decoration underline classes ----- */
+
+.heading-underline-blue-100 {
+    text-decoration: underline solid $blue-100 .125rem;
+    text-underline-offset: .75rem;
+}
+
+
+
+/* ----- Dashboard Flashcard deck card ------ */
+
+.dashboard-deck-card {
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+    transition: box-shadow .15s ease-in-out;
+
+    &:hover {
+        box-shadow: $green-300 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+    }
+}
 
 
 
