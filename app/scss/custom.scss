@@ -660,7 +660,7 @@ a.blue-link:focus-visible {
 
 // Top level containers of pages
 .topLevelContainer {
-    padding: 3.75rem 1.5625rem;
+    padding: 2.5rem 1.5625rem;
 }
 
 @media (min-width: 576px) {
@@ -756,11 +756,123 @@ img.icon.fill-primary {
     box-shadow: #00000026 0rem .125rem .25rem .0625rem;
     transition: box-shadow .15s ease-in-out;
 
-    &:hover {
+    &:hover, &:focus, &:focus-visible {
         box-shadow: $green-300 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:active {
+        box-shadow: $green 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:focus-visible {
+        outline-offset: .5rem;
+    }
+
+}
+
+
+
+/* ------ Max width styles ------ */
+
+// 600px max width for md breakpoint and up
+
+@media (min-width: 768px) {
+    .mw-600 {
+        max-width: 37.5rem;
     }
 }
 
 
+
+/* ----- Dashboard Sort & Search Button ----- */
+
+.sort-search-button {
+    background-color: white;
+    border-color: $gray-150 !important;
+    font-weight: 500;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-100;
+        color: black
+    }
+    &:active {
+        background-color: $gray-150 !important;
+        border-color: shade-color($gray-150, 5%) !important;
+        color: black !important;
+    }
+    &:focus-visible {
+        outline-color: #0005;
+    }
+}
+
+.sort-search-button.selected {
+    background-color: $gray-100;
+    border-color: $gray-150 !important;
+    font-weight: 500;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-150 !important;
+        border-color: shade-color($gray-150, 5%) !important;
+        color: black
+    }
+    &:active {
+        background-color: $gray-200 !important;
+        border-color: shade-color($gray-200, 5%) !important;
+        color: black !important;
+    }
+    &:focus-visible {
+        outline-color: #0005;
+    }
+}
+
+.filter-search-container:has(.sort-search-button.selected) {
+    padding-bottom: 3.75rem !important;
+}
+
+@media (min-width: 672px) {
+    .filter-search-container:has(.sort-search-button.selected) {
+        padding-bottom: 0.9375rem !important;
+    }
+}
+
+
+/* ----- Flashcard deck search input group ----- */
+
+.search-input-group {
+
+    width: 17.1875rem;
+
+    & > * {
+        height: 2.5rem;
+        border: solid .125rem $gray-150;
+    }
+
+    & > input {
+        border-left: none;
+        padding-left: 0;
+
+        &:focus, &:focus-visible {
+            outline: none;
+            border: solid .125rem $gray-250;
+            border-left: none;
+        }
+    }
+
+    & > span {
+        border-right: none; 
+        transition: border .15s ease-in-out;
+    }
+
+    &:has(input:focus) span, &:has(input:focus-visible) span { 
+        border: solid .125rem $gray-250;
+        border-right: none;
+    }
+
+    & > input:autofill, &:has(input:autofill) span {
+        background-color: #E5F0F6;
+    }
+}
 
 

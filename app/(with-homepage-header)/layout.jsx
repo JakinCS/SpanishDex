@@ -16,9 +16,9 @@ export default function homepageLayout({ children }) {
       <AuthProvider>
         <HomepageHeader />   
         <div style={containerStyles}>
-            <div>
-              {children}
-            </div>            
+          <div>
+            {children}
+          </div>            
           <HomepageFooter />
         </div>
       </AuthProvider>  

@@ -13,8 +13,8 @@ function HomepageFooter() {
 
   return (
     <Container fluid className="py-4 px-50 bg-gradient border-top border-gray-150 border-2">
-      <Row className='gy-4 mb-4 mb-lg-0 align-items-center'>
-        <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-start py-4 py-sm-0'>
+      <Row className='gy-4 mb-4 mb-lg-0 align-items-center mx-auto' style={{maxWidth: '87.5rem'}}>
+        <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-start px-0 py-4 py-sm-0'>
           <Link href="/" className='blue-link'>
             <Image
               alt="SpanishDex Logo"
@@ -28,7 +28,7 @@ function HomepageFooter() {
         <Col lg='4' xl='6' className='d-none d-lg-flex justify-content-center'>
           <p className='fs-5 text-center'>Copyright © {year} SpanishDex &nbsp;•&nbsp;  <span className='fw-medium text-nowrap'>Created by Jakin Stahl</span></p>
         </Col>
-        <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-end ms-sm-auto'>
+        <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-end px-0 ms-sm-auto'>
           <nav>
             <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'>
               <Image width={30} height={30} src={mail} alt='Mail icon'></Image>
