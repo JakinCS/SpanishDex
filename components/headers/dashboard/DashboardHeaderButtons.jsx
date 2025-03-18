@@ -56,10 +56,10 @@ const DashboardHeaderButtons = () => {
       }
       { (!!session || session === undefined) &&
         <>
-          <IconButton iconFillColor={'white'} variant='primary' iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
+          <IconButton isLinkButton={true} href='#' className={'btn btn-primary'} iconFillColor={'white'} iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
 
-          <ButtonWithIcon iconFillColor={'primary'} variant='outline-primary' className='d-none d-sm_md-block' iconSrc='/icons/deck-blue400.svg' iconHeight={24} altTag='Deck icon'>Decks</ButtonWithIcon>
-          <IconButton iconFillColor={'primary'} variant='outline-primary' className='d-block d-sm_md-none' iconSrc={'/icons/deck-blue400.svg'} altTag={'All decks icon'} size={'sm'}/>  
+          <ButtonWithIcon isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-none d-sm_md-block' iconSrc='/icons/deck-blue400.svg' iconHeight={24} altTag='Deck icon'>Decks</ButtonWithIcon>
+          <IconButton isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-block d-sm_md-none' iconSrc={'/icons/deck-blue400.svg'} altTag={'All decks icon'} size={'sm'}/>  
         </>
       }
 

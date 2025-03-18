@@ -7,7 +7,7 @@ import IconButton from '../IconButton';
 import { useState } from 'react';
 
 const DeckSearch = () => {
-  const [showSearch, setShowSearch] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
   const toggleShowSearch = () => setShowSearch(prev => !prev)
 
   return (
@@ -20,7 +20,7 @@ const DeckSearch = () => {
         
         </InputGroup>
       </Form>
-      <Form className={!showSearch ? 'd-none' : 'd-block d-sm_md-none px-50 position-absolute start-0 mt-50 w-100'} style={!showSearch ? {display: 'none'} : {display: 'block'}}>
+      <Form className={!showSearch ? 'd-none' : 'd-block d-sm_md-none px-25 px-sm-50 position-absolute start-0 mt-50 w-100'} style={!showSearch ? {display: 'none'} : {display: 'block'}}>
         <InputGroup className='search-input-group w-100'>
           <InputGroup.Text className='px-10'></InputGroup.Text>
           <Form.Control name="search" type="text" placeholder="Search for a deck"/>
