@@ -36,6 +36,7 @@ const DecksArea = ({decks}) => {
                 last_practiced: deck.last_practiced,
                 display_creation_date: deckList.filter === 'creation_date' || (deckList.prevFilter === 'creation_date' && deckList.filter === 'alphabetical')
               }
+              /* NOTE: The display_creation_date property indicates whether the card should display the 'date_created' value or the 'last_practiced' value. */
 
               return (
                 <div key={deck._id} className="col-12 col-md-6 col-lg_xl-4 px-0" style={{minWidth: '18.7519525rem'}}>
@@ -45,6 +46,7 @@ const DecksArea = ({decks}) => {
             })
           }
 
+          {/* Display this section whenever the user has no decks */}
           { deckList.decks.length === 0 && 
             <div className="col mt-4">
               <p className="text-center mb-4">You currently have no flashcard decks.</p>

@@ -3,28 +3,30 @@ import Link from 'next/link';
 
 const DashboardDeck = ({deckData, ...props}) => {
 
+  // This function takes a date string and returns a formatted date string.
+  // The desired outlooks like: '2 Minutes ago', '1 Day Ago', '10 Months Ago', etc
   const getDateString = (date) => {
     if (date == null) return 'not yet practiced'
 
-    const datePast = new Date(date);
+    const datePast = new Date(date); // New date object based on the date parameter
     const dateToday = new Date();
-    const result = dateToday.getTime() - datePast.getTime();
+    const result = dateToday.getTime() - datePast.getTime(); // Difference in time in milliseconds.
 
-    if (result / 60000 < 2) return 'Just Now';
-    if (Math.floor(result / 60000) < 60) return `${Math.floor(result / 60000)} Minutes Ago`;
-    if (Math.floor(result / 3600000) < 24) {
+    if (result / 60000 < 2) return 'Just Now'; // Return this string when time is less than 2 minutes
+    if (Math.floor(result / 60000) < 60) return `${Math.floor(result / 60000)} Minutes Ago`; // Whenever it is less than 60 minutes
+    if (Math.floor(result / 3600000) < 24) { // Whenever it is less than 24 hours
       const calculation = Math.floor(result / 3600000)
       return calculation === 1 ? '1 Hour Ago' : `${calculation} Hours Ago`;
     }
-    if (Math.floor(result / (3600000 * 24)) < 30) {
+    if (Math.floor(result / (3600000 * 24)) < 30) { // Whenever it is less than 30 days
       const calculation = Math.floor(result / (3600000 * 24));
       return calculation === 1 ? '1 Day Ago' : `${calculation} Days Ago`;
     }
-    if (Math.floor(result / (3600000 * 24)) < 366) {
+    if (Math.floor(result / (3600000 * 24)) < 366) { // Whenever it is less than 366 days
       const calculation = datePast.getMonth() < dateToday.getMonth() ? dateToday.getMonth() - datePast.getMonth() : 12 - (datePast.getMonth() - dateToday.getMonth())
       return calculation > 11 ? '1 Year Ago' : calculation === 1 ? '1 Month Ago' : `${calculation} Months Ago`;
     }
-    const yearsAgo = dateToday.getFullYear() - datePast.getFullYear();
+    const yearsAgo = dateToday.getFullYear() - datePast.getFullYear(); // The last resort is to display the time in years
     return yearsAgo === 1 ? '1 Year Ago' : `${yearsAgo} Years Ago`
   }
 

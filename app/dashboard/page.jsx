@@ -1,14 +1,10 @@
 import { auth } from "@/auth"
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import DashboardCard from "@/components/dashboard/DashboardCard";
-import DashboardDeck from "@/components/dashboard/DashboardDeck";
 import TotalsSection from "@/components/dashboard/TotalsSection";
 import Image from "next/image";
 import Link from "next/link";
-import Button from 'react-bootstrap/Button'
 import Stack from 'react-bootstrap/Stack'
-import FilterButton from "@/components/dashboard/FilterButton";
-import DeckSearch from "@/components/dashboard/DeckSearch";
 import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
@@ -16,6 +12,7 @@ import DecksArea from "@/components/dashboard/DecksArea";
 
 async function Dashboard() {
 
+    // This object holds totals information used by variants page components.
     let finalData = {
       decks: [],
       total_decks: 0,
@@ -37,6 +34,7 @@ async function Dashboard() {
 
       const deckCollection = database.collection('decks');
 
+      // Fancy aggregation pipeline for retrieving exactly the right information 
       const pipeline = [
         {
           '$match': {
@@ -90,12 +88,14 @@ async function Dashboard() {
         }
       ]
 
+      // Run the aggregation pipeline and store the results in the finalData object.
       const decksCursor = await deckCollection.aggregate(pipeline);
       finalData.decks = await decksCursor.toArray();
-      console.log(finalData.decks);
 
-      finalData.total_decks = finalData.decks.length;
+      finalData.total_decks = finalData.decks.length; // Calculate total deck number
 
+      // Calculate the number of cards and weak cards.
+      // Also, convert the _id to a string (instead of its default object type)
       finalData.decks.forEach((deck) => {
         finalData.total_cards += deck.cards;
         finalData.total_weakCards += deck.weak_cards;

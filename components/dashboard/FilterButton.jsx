@@ -5,17 +5,21 @@ import FilterMenuToggler from './FilterMenuToggler'
 
 const FilterButton = ({deckList, setDeckList, children, ...otherProps}) => {
 
+  // Reverses the order of the list of decks. Indicates the reversal state. 
   const reverseDeck = () => setDeckList((prev) => {
     return {...prev, decks: prev.decks.toReversed(), reversed: !prev.reversed}
   });
+  // Orders the decks in descending order by the date of creation. Indicates in the state the filter type and the reversal status. 
   const filterDateCreated = () => setDeckList((prev) => {
     let newDeckList = prev.decks.toSorted((a, b) => (new Date(b.date_created)).getTime() - (new Date(a.date_created)).getTime());
     return {decks: newDeckList, filter: 'creation_date', prevFilter: (prev.filter === 'creation_date' ? prev.prevFilter : prev.filter), reversed: false}
   })
+  // Orders the decks in descending order by the date of last practice. Indicates in the state the filter type and the reversal status. 
   const filterRecent = () => setDeckList((prev) => {
     let newDeckList = prev.decks.toSorted((a, b) => (new Date(b.last_practiced)).getTime() - (new Date(a.last_practiced)).getTime());
     return {decks: newDeckList, filter: 'recent', prevFilter: (prev.filter === 'recent' ? prev.prevFilter : prev.filter), reversed: false}
   })
+  // Orders the decks in ascending order alphabetically. Indicates in the state the filter type and the reversal status. 
   const filterAlphabetical = () => setDeckList((prev) => {
     let newDeckList = prev.decks.toSorted((a, b) => (a.title.toLowerCase() > b.title.toLowerCase()) - (a.title.toLowerCase() < b.title.toLowerCase()) );
     return {decks: newDeckList, filter: 'alphabetical', prevFilter: (prev.filter === 'alphabetical' ? prev.prevFilter : prev.filter), reversed: false}
