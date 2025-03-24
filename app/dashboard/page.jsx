@@ -8,6 +8,7 @@ import Stack from 'react-bootstrap/Stack'
 import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
+import BackToTopButton from "@/components/BackToTopButton";
 
 
 async function Dashboard() {
@@ -140,6 +141,8 @@ async function Dashboard() {
         </DashboardCard>
 
         <DecksArea decks={finalData.decks} />
+
+        <BackToTopButton />
 
       </>
     )

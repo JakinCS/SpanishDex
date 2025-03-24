@@ -890,3 +890,31 @@ img.icon.fill-primary {
 }
 
 
+
+/* ---- Back to top button ---- */
+
+.backToTopButton {
+    position: sticky;
+    bottom: 2.5rem;
+    left: 100vw;
+    margin: -3.75rem -.625rem -1.25rem 0rem;
+    z-index: 1000;
+    background-color: $white;
+    border: none;
+    border-radius: .4375rem;
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+    padding: .625rem;
+    transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        box-shadow: $green-300 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:active {
+        box-shadow: $green 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:focus-visible {
+        outline-offset: .5rem;
+    }
+}
