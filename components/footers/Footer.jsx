@@ -4,10 +4,8 @@ import Col from 'react-bootstrap/Col'
 import spanishdex from "@/public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import linkedin from "@/public/icons/linkedin.svg";
-import mail from "@/public/icons/mail.svg";
 
-function HomepageFooter() {
+function Footer({ children }) {
   const date = new Date();
   const year = date.getFullYear();
 
@@ -30,12 +28,7 @@ function HomepageFooter() {
         </Col>
         <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-end px-0 ms-sm-auto'>
           <nav>
-            <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'>
-              <Image width={30} height={30} src={mail} alt='Mail icon'></Image>
-              </a>
-            <a href="https://www.linkedin.com/in/jakinstahl" className='px-2 py-3 blue-link' style={{marginRight: '-5px'}} target='_blank'>
-              <Image width={30} height={30} src={linkedin} alt='LinkedIn icon'></Image>
-            </a>
+            { children }
           </nav>
         </Col>
       </Row>
@@ -48,4 +41,4 @@ function HomepageFooter() {
   );
 }
 
-export default HomepageFooter;
+export default Footer;

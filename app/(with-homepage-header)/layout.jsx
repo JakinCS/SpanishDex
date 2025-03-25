@@ -1,5 +1,5 @@
 import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
-import HomepageFooter from '@/components/HomepageFooter';
+import HomepageFooter from '@/components/footers/HomepageFooter';
 import AuthProvider from '../context/AuthProvider';
 
 export default function homepageLayout({ children }) {
