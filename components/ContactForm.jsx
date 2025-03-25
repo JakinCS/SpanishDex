@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Alert from "react-bootstrap/Alert";
-import { useActionState, useState } from 'react';
+import { useActionState, useState, useEffect } from 'react';
 import { sendContactFormMessage } from '@/lib/actions';
 import { isEmailValid } from '@/lib/utils';
 
-function HomepageContactForm(props) {
+function ContactForm({submitButtonWide, ...props}) {
 
   // Store the state of the values of the form.
   const [formValues, setFormValues] = useState({
@@ -85,6 +85,19 @@ function HomepageContactForm(props) {
  
   const [formState, formAction, isPending] = useActionState(handleSubmitForm, {error: '', hiddenError: '', status: 'INITIAL', values: {name: '', email: '', comment: ''}})
 
+  // ATTENTION: This code is only useful when this component is used in the contact modal.
+  // It disables the modal close button (when the form is being submitted)
+  // This effect hook is necessary because the button code is not accessible in this JSX file.
+  useEffect(() => {
+    if (document.querySelector('#contactModal .btn-close') !== null) {
+      if (isPending) {
+        document.querySelector('#contactModal .btn-close').disabled = true;
+      } else {
+        document.querySelector('#contactModal .btn-close').disabled = false;
+      }
+    }
+  }, [isPending])
+
   return (
     <Form action={formAction} {...props}>
       <Alert className='mb-20' variant="danger" show={formState.status === "ERROR" && showBanners.error} onClose={() => setShowBanners((prevState) => ({...prevState, error: false}))} dismissible>
@@ -117,8 +130,8 @@ function HomepageContactForm(props) {
           {formValues.comments.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <Container fluid className='d-flex justify-content-center'>
-        <Button variant="primary" onClick={hideBanners} type="submit" disabled={isPending || !(formValues.name.valid && formValues.email.valid && formValues.comments.valid)}>
+      <Container fluid className='d-flex p-0 justify-content-center'>
+        <Button variant="primary" onClick={hideBanners} type="submit" className={submitButtonWide ? 'w-100' : ''} disabled={isPending || !(formValues.name.valid && formValues.email.valid && formValues.comments.valid)}>
           {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Submit'}
         </Button>
       </Container>
@@ -126,4 +139,4 @@ function HomepageContactForm(props) {
   );
 }
 
-export default HomepageContactForm;
+export default ContactForm;

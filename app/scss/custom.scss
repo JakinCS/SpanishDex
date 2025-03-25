@@ -326,7 +326,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     box-shadow: none;
 }
 
-form > div:has(input) {
+form > div:has(input), form > div:has(textarea) {
     line-height: 1;
 }
 
@@ -353,7 +353,7 @@ input[type="text"]:not(:placeholder-shown) {
 
 .invalid-feedback {
     font-weight: $font-weight-semibold;
-    margin-bottom: -0.625rem;
+    margin-bottom: -.3125rem;
 }
 
 
