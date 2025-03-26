@@ -1,13 +1,13 @@
-// import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
-import Image from "next/image";
+import Link from 'next/link';
+import Icon from './Icon';
 
-function IconButton({iconFillColor, iconSrc, altTag, danger, className, size, ...otherProps}) {
+function IconButton({isLinkButton, iconFillColor, iconSrc, altTag, danger, className, size, ...otherProps}) {
     // Additional classes
     let newClasses = [
         'icon-button',
         'icon-button-size-' + size,
-        (iconFillColor === 'white' || iconFillColor === 'light') && 'fill-white',
+        iconFillColor && `icon-fill-${iconFillColor}`,
         danger && 'danger'
     ].join(' ');
 
@@ -15,8 +15,13 @@ function IconButton({iconFillColor, iconSrc, altTag, danger, className, size, ..
     if (size === 'sm') widthHeight = 24;
 
     return (
+        isLinkButton ?
+        <Link {...otherProps} role='button' className={className ? className + ' ' + newClasses : newClasses}>
+            <Icon height={widthHeight} alt={altTag} src={iconSrc} />
+        </Link>
+        :
         <Button {...otherProps} className={className ? className + ' ' + newClasses : newClasses}>
-            <Image height={widthHeight} width={widthHeight} alt={altTag} src={iconSrc} />
+            <Icon height={widthHeight} alt={altTag} src={iconSrc} />    
         </Button>
     )
 }

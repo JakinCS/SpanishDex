@@ -1,6 +1,8 @@
-import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
-import HomepageFooter from '@/components/HomepageFooter';
+import HomepageFooter from '@/components/footers/HomepageFooter';
 import AuthProvider from '../context/AuthProvider';
+import DashboardHeader from '@/components/headers/dashboard/DashboardHeader';
+import Container from 'react-bootstrap/Container';
+import DashboardFooter from '@/components/footers/DashboardFooter';
 
 export default function dashboardLayout({ children }) {
 
@@ -14,12 +16,14 @@ export default function dashboardLayout({ children }) {
   return (
     <>
       <AuthProvider>
-        <HomepageHeader />   
+        <DashboardHeader />   
         <div style={containerStyles}>
-            <div>
-              {children}
-            </div>            
-          <HomepageFooter />
+          <Container className="topLevelContainer" fluid>
+            <div style={{maxWidth: '87.5rem', marginLeft: 'auto', marginRight: 'auto',}}>
+              {children} 
+            </div>     
+          </Container>  
+          <DashboardFooter />
         </div>
       </AuthProvider>  
     </>

@@ -189,8 +189,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     }
 }
 
-.icon-button.fill-white img {
+.btn.icon-fill-white img.icon {
     filter: brightness(0%) invert(1)
+}
+
+.btn.icon-fill-primary {
+    & img.icon {
+        transition: filter 0.15s ease-in-out;
+    }
+    &:active img.icon, &:hover img.icon, &:focus-visible img.icon {
+        filter: brightness(0%) invert(1);
+    }
 }
 
 
@@ -317,7 +326,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     box-shadow: none;
 }
 
-form > div:has(input) {
+form > div:has(input), form > div:has(textarea) {
     line-height: 1;
 }
 
@@ -344,9 +353,7 @@ input[type="text"]:not(:placeholder-shown) {
 
 .invalid-feedback {
     font-weight: $font-weight-semibold;
-    &:not(:has(+p.forgot-password)) {
-        margin-bottom: -0.625rem;
-    }
+    margin-bottom: -0.3125rem;
 }
 
 
@@ -663,27 +670,6 @@ a.blue-link:focus-visible {
 }
 
 
-// Account page profile picture edit section custom breakpoint styles
-
-.profilePictureRow1 {
-    display: none;
-}
-.profilePictureRow2 {
-    display: flex;
-}
-
-@media (min-width: 475px) {
-    .profilePictureRow1 {
-        display: flex;
-    }
-    .profilePictureRow2 {
-        display: none;
-    }
-}
-
-
-
-
 
 /* ----- HR Tag ----- */
 hr {
@@ -736,17 +722,199 @@ hr {
     border-radius: 50px;
     background: $primary;
     cursor: pointer;
-  }
+}
   
-  .slider::-moz-range-thumb {
+.slider::-moz-range-thumb {
     width: 15px;
     height: 15px;
     border-radius: 50px;
     background: $primary;
     cursor: pointer;
-  }
+}
 
 
 
+/* ------ ICON helper classes -------- */
+
+img.icon.fill-primary {
+    filter: brightness(0) invert(20%) sepia(69%) saturate(2732%) hue-rotate(184deg) brightness(106%) contrast(101%);
+}
 
 
+/* ----- Text decoration underline classes ----- */
+
+.heading-underline-blue-100 {
+    text-decoration: underline solid $blue-100 .125rem;
+    text-underline-offset: .75rem;
+}
+
+
+
+/* ----- Dashboard Flashcard deck card ------ */
+
+.dashboard-deck-card {
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+    transition: box-shadow .15s ease-in-out;
+
+    &:hover, &:focus, &:focus-visible {
+        box-shadow: $green-300 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:active {
+        box-shadow: $green 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:focus-visible {
+        outline-offset: .5rem;
+    }
+
+}
+
+
+
+/* ------ Max width styles ------ */
+
+// 600px max width for md breakpoint and up
+
+@media (min-width: 768px) {
+    .mw-600 {
+        max-width: 37.5rem;
+    }
+}
+
+
+
+/* ----- Dashboard Sort & Search Button ----- */
+
+.sort-search-button {
+    background-color: white;
+    border-color: $gray-150 !important;
+    font-weight: 500;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-100;
+        color: black
+    }
+    &:active {
+        background-color: $gray-150 !important;
+        border-color: shade-color($gray-150, 5%) !important;
+        color: black !important;
+    }
+    &:focus-visible {
+        outline-color: #0005;
+    }
+}
+
+.sort-search-button.selected {
+    background-color: $gray-100;
+    border-color: $gray-150 !important;
+    font-weight: 500;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-150 !important;
+        border-color: shade-color($gray-150, 5%) !important;
+        color: black
+    }
+    &:active {
+        background-color: $gray-200 !important;
+        border-color: shade-color($gray-200, 5%) !important;
+        color: black !important;
+    }
+    &:focus-visible {
+        outline-color: #0005;
+    }
+}
+
+
+/* ----- Flashcard deck search input group ----- */
+
+.search-input-group {
+
+    width: 17.1875rem;
+
+    & > * {
+        height: 2.5rem;
+        border: solid .125rem $gray-150;
+    }
+
+    & > input {
+        border-left: none;
+        border-right: none;
+        padding-left: 0;
+        padding-right: 0;
+
+        &:focus, &:focus-visible {
+            outline: none;
+            border: solid .125rem $gray-250;
+            border-left: none;
+            border-right: none;
+        }
+    }
+
+    & > span:first-child {
+        border-right: none; 
+        transition: border .15s ease-in-out;
+    }
+
+    & > span:last-child {
+        border-left: none; 
+        transition: border .15s ease-in-out;
+    }
+
+    &:has(input:focus) span:first-child, &:has(input:focus-visible) span:first-child { 
+        border: solid .125rem $gray-250;
+        border-right: none;
+    }
+    
+    &:has(input:focus) span:last-child, &:has(input:focus-visible) span:last-child { 
+        border: solid .125rem $gray-250;
+        border-left: none;
+    }
+
+    & > input:autofill, &:has(input:autofill) span {
+        background-color: #E5F0F6;
+    }
+}
+
+// Clear search button
+.clear-search {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    &:focus-visible {
+        outline-offset: .125rem;
+    }
+}
+
+
+
+/* ---- Back to top button ---- */
+
+.backToTopButton {
+    position: sticky;
+    bottom: 2.5rem;
+    left: 100vw;
+    margin: -3.75rem -.625rem -1.25rem 0rem;
+    z-index: 1000;
+    background-color: $white;
+    border: none;
+    border-radius: .4375rem;
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+    padding: .625rem;
+    transition: box-shadow .15s ease-in-out, background-color .15s ease-in-out, color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        box-shadow: $green-300 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:active {
+        box-shadow: $green 0rem .1875rem 0rem 0rem, #00000026 0rem .125rem .25rem .0625rem;
+        color: $blue-900 !important;
+    }
+    &:focus-visible {
+        outline-offset: .5rem;
+    }
+}

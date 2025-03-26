@@ -1,14 +1,11 @@
-import Navbar from "react-bootstrap/Navbar";
-import HomepageHeaderContent from "./HomepageHeaderContent";
+import Header from "../Header";
+import HomepageHeaderButtons from "./HomepageHeaderButtons";
 
 const HomepageHeader = async () => {
   return (
-    <Navbar
-      fixed="top"
-      className="app-header bg-gradient border-bottom border-gray-150 border-2"
-    >
-      <HomepageHeaderContent />
-    </Navbar>
+    <Header>
+      <HomepageHeaderButtons />
+    </Header>
   );
 }
 

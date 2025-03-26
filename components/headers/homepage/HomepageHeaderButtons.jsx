@@ -10,7 +10,7 @@ import LogOutModal from "@/components/modals/LogOutModal";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
-const HeaderButtons = () => {
+const HomepageHeaderButtons = () => {
   const { data: session } =  useSession();
 
   // Log In Modal State
@@ -57,14 +57,13 @@ const HeaderButtons = () => {
     <>
       { session === undefined && 
         <>
-          <Button variant="gray" disabled={true}>
-            <span className="d-none d-md-block opacity-0">Invisible</span>
-            <span className="d-block d-md-none opacity-0">__</span>
-          </Button>
-          <Button variant="gray" disabled={true}>
-            <span className="d-none d-md-block opacity-0">Loading</span>
-            <span className="d-block d-md-none opacity-0">Loading</span>
-          </Button>
+          <div className='placeholder-glow'>
+            <span className='d-none d-md-block placeholder bg-gray-150 rounded' style={{height: '2.5rem', width: '7.375rem' }}></span>
+            <span className='d-block d-md-none placeholder bg-gray-150 rounded' style={{height: '2.5rem', width: '4.125rem' }}></span>
+          </div>
+          <div className='placeholder-glow'>
+            <span className='d-block placeholder bg-gray-150 rounded' style={{height: '2.5rem', width: '7.3125rem' }}></span>
+          </div>
         </> 
       }
       { session === null && 
@@ -100,4 +99,4 @@ const HeaderButtons = () => {
   );
 };
 
-export default HeaderButtons
+export default HomepageHeaderButtons

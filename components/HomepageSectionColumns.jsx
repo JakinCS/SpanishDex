@@ -10,7 +10,7 @@ import flashcards from "@/public/images/flashcards-example.png";
 function HomepageSectionColumns({py, backgroundColor, image, imageBorder, imageAlt, imagePosition, headingText, children}) {
     return (
         <Container fluid as='section' className={`px-5 py-${py} bg-${backgroundColor} overflow-hidden`}>
-            <Row className='gy-5 gx-40 gx-xl-80 gx-xxl-100 justify-content-center'>
+            <Row className='gy-5 gx-40 gx-xl-80 gx-xxl-100 justify-content-center mx-auto' style={{maxWidth: '87.5rem'}}>
                 <Col xs={{span: 12, order: 0}} sm='11' md='10' lg={{span: '6', order: imagePosition === 'left' ? 0 : 1}} xl='5' className='d-flex flex-column flex-lg-row align-items-center'>
                     <h2 className="mx-auto d-block d-lg-none text-center mb-5">{headingText}</h2>
                     <Image priority={true} width={525} height={375} src={image === 'screenshot' ? screenshot : flashcards} style={{width: '100%', height: 'auto'}} className={imageBorder ? "border border-4 rounded" : ""} alt={imageAlt}/>

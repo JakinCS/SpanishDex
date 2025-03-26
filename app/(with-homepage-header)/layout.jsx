@@ -1,5 +1,5 @@
 import HomepageHeader from '@/components/headers/homepage/HomepageHeader';
-import HomepageFooter from '@/components/HomepageFooter';
+import HomepageFooter from '@/components/footers/HomepageFooter';
 import AuthProvider from '../context/AuthProvider';
 
 export default function homepageLayout({ children }) {
@@ -16,9 +16,9 @@ export default function homepageLayout({ children }) {
       <AuthProvider>
         <HomepageHeader />   
         <div style={containerStyles}>
-            <div>
-              {children}
-            </div>            
+          <div>
+            {children}
+          </div>            
           <HomepageFooter />
         </div>
       </AuthProvider>  

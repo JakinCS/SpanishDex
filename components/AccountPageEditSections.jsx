@@ -14,7 +14,7 @@ export const ProfilePictureEditSection = (props) => {
   return (
     <>
       <Container className="px-0" fluid>
-        <Row className="profilePictureRow1 gap-30">
+        <Row className="gap-30 d-none d-xs_sm-flex">
           <Col className="d-flex align-items-center">
             <div>
               <h3 className="mb-30">Profile Picture</h3>
@@ -39,7 +39,7 @@ export const ProfilePictureEditSection = (props) => {
           </Col>
         </Row>
 
-        <Row className="profilePictureRow2 gap-30">
+        <Row className="gap-30 d-flex d-xs_sm-none">
           <Col className="d-flex justify-content-center" xs='12'><h3>Profile Picture</h3></Col>
           <Col xs='12' className="d-flex justify-content-center">
             <ProfileCircle
