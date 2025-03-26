@@ -9,6 +9,7 @@ import EditProfilePictureModal from "./modals/EditProfilePictureModal"
 import EditEmailModal from "./modals/EditEmailModal"
 import EditPasswordModal from "./modals/EditPasswordModal"
 import DeleteAccountModal from "./modals/DeleteAccountModal"
+import ResetPasswordModal from "./modals/ResetPasswordModal"
 
 export const EditProfilePictureButton = (props) => {
   const [show, setShow] = useState(false);
@@ -54,10 +55,17 @@ export const EditPasswordButton = (props) => {
   const showModal = () => setShow(true);
   const closeModal = () => setShow(false);
 
+  // Reset Password Modal State
+  const [resetPasswordModalOpenState, setResetPasswordModalOpenState] = useState(false);
+  const openResetPasswordModal = () => setResetPasswordModalOpenState(true)
+  const closeResetPasswordModal = () => setResetPasswordModalOpenState(false)
+
   return (
     <>
       <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
-      <EditPasswordModal show={show} closeModal={closeModal} {...props}/>
+      <EditPasswordModal show={show} closeModal={closeModal} openResetPasswordModal={openResetPasswordModal} {...props}/>
+
+      <ResetPasswordModal forAccountPage={true} size='md' handleClose={closeResetPasswordModal} show={resetPasswordModalOpenState} openPreviousModal={showModal}/>
     </>
   )
 }

@@ -153,7 +153,7 @@ function LogInModal(props) {
                   <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
                     Password is required
                   </Form.Control.Feedback>
-                  <p style={{marginTop: '0.3125rem', textAlign: 'right'}}>
+                  <p className="forgot-password" style={{marginTop: '0.3125rem', textAlign: 'right'}}>
                     { form1Pending || form2Pending ? 
                       <span className="fw-medium">Forgot Password?</span> :
                       <a href="#" onClick={(e) => {e.preventDefault(); props.handleClose(); props.openResetPasswordModal()}}>Forgot Password?</a>

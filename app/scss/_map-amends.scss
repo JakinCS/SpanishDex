@@ -16,3 +16,13 @@ $custom-border-widths: (
 
 // Merge with Bootstrap's border widths
 $border-widths: map-merge($border-widths, $custom-border-widths);
+
+
+// Additional breakpoint properties
+$custom-breakpoints: (
+    xs_sm: 475px,
+    sm_md: 672px,
+    lg_xl: 1100px,
+);
+
+$grid-breakpoints: map-merge($grid-breakpoints, $custom-breakpoints);

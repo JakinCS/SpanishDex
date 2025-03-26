@@ -101,7 +101,7 @@ $h2-font-size:                $font-size-base * 1.5;
 $h3-font-size:                $font-size-base * 1.25;
 $h4-font-size:                $font-size-base;
 $h5-font-size:                $font-size-base * 0.875;
-$h6-font-size:                $font-size-base;
+$h6-font-size:                $font-size-base * 0.75;
 
 // Define weights
 $font-weight-lighter:         lighter;
@@ -253,6 +253,11 @@ $input-font-weight: $font-weight-light;
 // Invalid form field styles
 $form-feedback-icon-invalid:  none;
 
+// Input groups
+$input-group-addon-padding-x: 0.9375rem;
+$input-group-addon-bg: white;
+$input-group-addon-border-color: $gray-150;
+
 
 
 
@@ -319,6 +324,14 @@ $btn-close-opacity:          1;
 $btn-close-hover-opacity:    1;
 $btn-close-disabled-opacity: .5 !default;
 
+
+
+
+
+/* ------------------- PLACEHOLDERS ----------------------- */
+
+$placeholder-opacity-max:           .8;
+$placeholder-opacity-min:           .5;
 
 
 

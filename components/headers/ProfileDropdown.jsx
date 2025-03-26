@@ -16,7 +16,7 @@ const ProfileDropdown = (props) => {
       <Dropdown.Menu>
         <p>Welcome,<br />{props.user.username}</p>
         <Dropdown.Divider />
-        <Link href={`/account/${props.user.id}`}className='dropdown-item mb-2'>Account</Link>
+        <Link href={`/account/${props.user.id}`} className='dropdown-item mb-2'>Account</Link>
         {/* <Dropdown.Item eventKey="2">Settings</Dropdown.Item> */}
         <Dropdown.Divider />
         <Dropdown.Item eventKey="3" className='danger-item' onClick={props.onClick}>Log Out</Dropdown.Item>
