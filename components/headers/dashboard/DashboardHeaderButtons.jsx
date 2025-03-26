@@ -64,7 +64,8 @@ const DashboardHeaderButtons = () => {
       }
 
       { session === undefined &&
-        <div style={{backgroundColor: '#ccc', height: '2.5rem', width: '2.5rem', borderRadius: '100px', opacity: '.65'}}>
+        <div className='placeholder-glow'>
+          <span className='d-block placeholder bg-gray-150 rounded-circle' style={{height: '2.5rem', width: '2.5rem' }}></span>
         </div>
       }
       
