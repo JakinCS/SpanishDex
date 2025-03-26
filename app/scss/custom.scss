@@ -353,7 +353,9 @@ input[type="text"]:not(:placeholder-shown) {
 
 .invalid-feedback {
     font-weight: $font-weight-semibold;
-    margin-bottom: -0.3125rem;
+    &:not(:has(+p.forgot-password)) {
+        margin-bottom: -0.3125rem;
+    }
 }
 
 
