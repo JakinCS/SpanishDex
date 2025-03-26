@@ -9,14 +9,14 @@ import Icon from "../Icon";
 
 const ContactModal = ({ show, handleClose }) => {
   return (
-    <Modal size='sm' id='contactModal' show={show} onHide={handleClose} centered>
+    <Modal id='contactModal' show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Contact</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Stack gap={30}>          
           <p>
-            Contact Jakin Stahl using the form below or visit his LinkedIn profile to connect with him.
+            Contact Jakin Stahl using the form below or visit his <a href="https://www.linkedin.com/in/jakinstahl" target='_blank' className="fw-semibold">LinkedIn profile</a> to connect with him.
           </p>
           <HomepageContactForm submitButtonWide={true} />
           <div>
