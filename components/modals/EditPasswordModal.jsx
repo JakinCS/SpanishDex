@@ -102,6 +102,12 @@ const EditPasswordModal = (props) => {
               <Form.Control.Feedback className={formValues.currPassword.valid === false && 'd-block'} type="invalid">
                 {formValues.currPassword.message}
               </Form.Control.Feedback>
+              <p className='fs-5 forgot-password' style={{marginTop: '0.3125rem', marginBottom: '-1.125rem', textAlign: 'right'}}>
+                { isPending ? 
+                  <span className="fw-medium">Forgot Password?</span> :
+                  <a href="#" onClick={(e) => {e.preventDefault(); props.closeModal(); props.openResetPasswordModal()}}>Forgot Password?</a>
+                }
+              </p>
             </Form.Group>
             <Form.Group className="mb-30" controlId="password1">
               <Form.Label className="fw-medium">New Password</Form.Label>

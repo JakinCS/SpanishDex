@@ -94,7 +94,7 @@ const HeaderButtons = () => {
 
       <CreateAccountModal handleClose={closeSignUpModal} show={signUpModalOpenState} openLogInModal={openLogInModal}/>
       <LogInModal handleClose={closeLogInModal} show={logInModalOpenState} openSignUpModal={openSignUpModal} openResetPasswordModal={openResetPasswordModal}/>
-      <ResetPasswordModal handleClose={closeResetPasswordModal} show={resetPasswordModalOpenState} openLogInModal={openLogInModal}/>
+      <ResetPasswordModal handleClose={closeResetPasswordModal} show={resetPasswordModalOpenState} openPreviousModal={openLogInModal}/>
       <LogOutModal handleClose={closeLogOutModal} show={logOutModalOpenState}/>
     </>
   );

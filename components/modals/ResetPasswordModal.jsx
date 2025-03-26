@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 import { useActionState, useEffect, useState } from "react";
 import { sendResetPasswordMessage } from "@/lib/actions";
 
-const ResetPasswordModal = (props) => {
+const ResetPasswordModal = ({forAccountPage, size, ...props}) => {
   // Holds the email information
   const [email, setEmail] = useState('');
 
@@ -37,7 +37,7 @@ const ResetPasswordModal = (props) => {
   }, [isPending])
 
   return (
-    <Modal size='sm' id='resetPasswordModal' show={props.show} onExited={() => {setEmail(''); setDefaultView(true)}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size={size ? size : 'sm'} id='resetPasswordModal' show={props.show} onExited={() => {setEmail(''); setDefaultView(true)}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Reset Password</Modal.Title>
       </Modal.Header>
@@ -58,17 +58,23 @@ const ResetPasswordModal = (props) => {
 
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               {formState.status === "SUCCESS" && !defaultView ?
-                <Button variant="gray" onClick={props.handleClose} disabled={isPending}>
+                <Button className="d-none d-xs_sm-block" variant="gray" onClick={props.handleClose} disabled={isPending}>
                   Close
                 </Button> :
-                <Button variant="gray" onClick={() => {props.handleClose(); props.openLogInModal()}} disabled={isPending}>
+                <Button variant="gray" onClick={() => {props.handleClose(); props.openPreviousModal()}} disabled={isPending}>
                   Back
                 </Button>
               }
               {formState.status === "SUCCESS" && !defaultView ?
-                <Button variant="primary" onClick={() => {props.handleClose(); props.openLogInModal()}} disabled={isPending}>
-                  {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Return To Log In'}
-                </Button> :
+                <>
+                  <Button className="d-none d-xs_sm-block" variant="primary" onClick={() => {props.handleClose(); props.openPreviousModal()}} disabled={isPending}>
+                    {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : (forAccountPage ? 'Return' : 'Return To Log In')}
+                  </Button>
+                  <Button className="d-block d-xs_sm-none w-100" variant="primary" onClick={() => {props.handleClose(); props.openPreviousModal()}} disabled={isPending}>
+                    {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : (forAccountPage ? 'Return' : 'Return To Log In')}
+                  </Button>
+                </>
+                :
                 <Button variant="primary" type="submit" disabled={ !email || isPending}>
                   {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Send Email'}
                 </Button>
