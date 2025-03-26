@@ -5,7 +5,7 @@ import Stack from "react-bootstrap/Stack"
 import HomepageContactForm from "../ContactForm";
 import linkedin from "@/public/icons/linkedin.svg";
 import mail from "@/public/icons/mail.svg";
-import Image from "next/image";
+import Icon from "../Icon";
 
 const ContactModal = ({ show, handleClose }) => {
   return (
@@ -21,10 +21,10 @@ const ContactModal = ({ show, handleClose }) => {
           <HomepageContactForm submitButtonWide={true} />
           <div>
             <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'>
-              <Image src={mail} alt='Mail icon' style={{width: '1.875rem', height: '1.875rem'}}></Image>
+              <Icon height={30} src={mail} alt='Mail icon'/>
             </a>
             <a href="https://www.linkedin.com/in/jakinstahl" className='px-2 py-3 blue-link' style={{marginRight: '-5px'}} target='_blank'>
-              <Image src={linkedin} alt='LinkedIn icon' style={{width: '1.875rem', height: '1.875rem'}}></Image>
+              <Icon height={30} src={linkedin} alt='LinkedIn icon'/>
             </a>
           </div>
         </Stack>

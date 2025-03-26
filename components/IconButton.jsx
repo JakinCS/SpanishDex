@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
-import Image from "next/image";
 import Link from 'next/link';
+import Icon from './Icon';
 
 function IconButton({isLinkButton, iconFillColor, iconSrc, altTag, danger, className, size, ...otherProps}) {
     // Additional classes
@@ -17,11 +17,11 @@ function IconButton({isLinkButton, iconFillColor, iconSrc, altTag, danger, class
     return (
         isLinkButton ?
         <Link {...otherProps} role='button' className={className ? className + ' ' + newClasses : newClasses}>
-            <Image className='icon' height={widthHeight} width={widthHeight} alt={altTag} src={iconSrc} />
+            <Icon height={widthHeight} alt={altTag} src={iconSrc} />
         </Link>
         :
         <Button {...otherProps} className={className ? className + ' ' + newClasses : newClasses}>
-            <Image className='icon' height={widthHeight} width={widthHeight} alt={altTag} src={iconSrc} />
+            <Icon height={widthHeight} alt={altTag} src={iconSrc} />    
         </Button>
     )
 }

@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import Icon from '../Icon';
 
 const DashboardDeck = ({deckData, ...props}) => {
 
@@ -38,11 +38,11 @@ const DashboardDeck = ({deckData, ...props}) => {
         <h4 className='fw-medium lh-1 mb-40'>{deckData.title}</h4>
         <div className='d-flex gap-25'>
           <span className="d-flex align-items-center gap-2 fs-6 fw-medium">
-            <Image className="icon" height={20} width={20} alt={'Flashcard icon'} src={'/icons/cards300.svg'}/>
+            <Icon height={20} src='/icons/cards300.svg' alt="Flashcard icon"/>
             <p><span>{deckData.cards}</span> Total Cards</p>
           </span>
           <span className="d-flex align-items-center gap-2 fs-6 fw-medium">
-            <Image className="icon" height={20} width={20} alt={'Flashcard icon'} src={'/icons/cards300.svg'}/>
+            <Icon height={20} src='/icons/cards300.svg' alt="Flashcard icon"/>
             <p><span>{deckData.weak_cards}</span> Weak Cards</p>
           </span>
         </div>

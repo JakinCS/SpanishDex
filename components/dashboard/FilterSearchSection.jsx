@@ -2,8 +2,8 @@ import FilterButton from "./FilterButton";
 import { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Image from 'next/image';
 import IconButton from '../IconButton';
+import Icon from "../Icon";
 
 const FilterSearchSection = ({ deckList, setDeckList }) => {
   // The show/hide state of the search input field for mobile layouts
@@ -45,11 +45,13 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
 
   const searchBody = (
     <>
-      <InputGroup.Text className='px-10 px-sm_md-15'><Image className="icon d-none d-sm_md-block" height={24} width={24} alt={'Search icon'} src={'/icons/search.svg'} /></InputGroup.Text>
+      <InputGroup.Text className='px-10 px-sm_md-15'>
+        <Icon className="d-none d-sm_md-block" height={24} src='/icons/search.svg' alt="Search icon" />
+      </InputGroup.Text>
       <Form.Control name="search" value={search.value} onChange={updateValueAndSubmit} type="text" placeholder="Search for a deck"/>
       <InputGroup.Text>
         <button className={'clear-search ' + (search.value === '' ? 'd-none' : 'd-flex')} onClick={clearSearch}>
-          <Image className="icon" height={24} width={24} alt={'Search icon'} src={'/icons/cancel.svg'}/>
+          <Icon height={24} alt="Search icon" src="/icons/cancel.svg"/>
         </button>
       </InputGroup.Text>
     </>

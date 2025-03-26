@@ -2,13 +2,13 @@ import { auth } from "@/auth"
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import TotalsSection from "@/components/dashboard/TotalsSection";
-import Image from "next/image";
 import Link from "next/link";
 import Stack from 'react-bootstrap/Stack'
 import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
 import BackToTopButton from "@/components/BackToTopButton";
+import Icon from "@/components/Icon";
 
 
 async function Dashboard() {
@@ -125,7 +125,7 @@ async function Dashboard() {
           <Stack gap={30}>
             <div className="d-flex align-items-center justify-content-between">
               <h3 className="fw-medium heading-underline-blue-100 lh-1"><span className="d-block d-xs_sm-none">Weak Cards</span><span className="d-none d-xs_sm-block">Review Weak Cards</span></h3>
-              <p className="fw-medium"><Image className="icon" height={24} width={24} alt={'Card icon'} src={'/icons/cards300.svg'}/> {finalData.total_weakCards}</p>
+              <p className="fw-medium"><Icon height={24} alt='Card icon' src='/icons/cards300.svg' /> {finalData.total_weakCards}</p>
             </div>          
             {finalData.total_weakCards !== 0 ?
               <>

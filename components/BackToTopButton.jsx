@@ -1,7 +1,7 @@
 'use client'
 
-import Image from "next/image"
 import { useEffect, useState } from "react"
+import Icon from "./Icon"
 
 const BackToTopButton = () => {
   const [showButton, setShowButton] = useState(false)
@@ -25,7 +25,7 @@ const BackToTopButton = () => {
 
   return (
     <button onClick={() => window.scrollTo(0, 0)} className={'backToTopButton flex-column align-items-center ' + (showButton ? 'd-flex' : 'd-none')}>
-      <Image src='/icons/arrow_upward.svg' alt="up arrow" width={24} height={24} style={{height: '1.5rem', width: '1.5rem'}}/>
+      <Icon height={24} src='/icons/arrow_upward.svg' alt="up arrow"/>
       <span className="fs-5 lh-sm"><span id="spanFSReference">Back</span><br />to Top</span>
     </button>
   )
