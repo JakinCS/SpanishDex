@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import IconButton from '../IconButton';
 import Icon from "../Icon";
+import UnderlineContainer from "../UnderlineContainer";
 
 const FilterSearchSection = ({ deckList, setDeckList }) => {
   // The show/hide state of the search input field for mobile layouts
@@ -59,8 +60,8 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
 
 
   return (
-    <div className="filter-search-container py-15 mb-40 border-bottom border-gray-150 border-2">
-      <div className="d-flex align-items-center justify-content-between mb-3 gap-3">
+    <UnderlineContainer className="filter-search-container mb-40">
+      <div className="d-flex align-items-center justify-content-between mb-3 mb-sm_md-0 gap-3">
         <h3 className="fw-medium">{deckList.searchResults == null ? 'All Decks' : (deckList.searchResults.length === 1 ? `1 Result for '${search.value}'` : `${deckList.searchResults.length} Results for '${search.value}'`)}</h3>
         <div className="d-flex">
           <FilterButton className='me-15' setDeckList={setDeckList}>
@@ -80,7 +81,7 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
           {searchBody}
         </InputGroup>
       </Form>
-    </div>
+    </UnderlineContainer>
   )
 }
 

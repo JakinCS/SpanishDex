@@ -33,7 +33,7 @@ const AccountPage = async ({ params }) => {
   return (
     <Container className="topLevelContainer" fluid>
       <div className="mx-auto" style={{maxWidth: '87.5rem'}}>
-        <BackButton />
+        <BackButton className="mb-40"/>
         <Container
           className="mx-auto px-0"
           style={{ maxWidth: "40.625rem" }}

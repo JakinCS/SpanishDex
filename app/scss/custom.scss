@@ -482,6 +482,23 @@ div[role="dialog"].modal {
 }
 
 
+// Special styles for the more button dropdown toggler
+.dropdown:has(.dropdown-menu.show) .moreButtonToggler {
+    background-color: $gray-100 !important;
+    border-color: $gray-100 !important;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-150 !important;
+        border-color: $gray-150 !important;
+    }
+
+    &:active {
+        background-color: $gray-200 !important;
+        border-color: $gray-200 !important;
+    }
+}
+
+
 
 
 
@@ -583,6 +600,22 @@ a.blue-link:hover, a.blue-link:focus, a.blue-link:focus-visible, a.blue-link:act
 
 a.blue-link:focus-visible {
     outline-color: $primary;
+}
+
+
+
+
+
+/* ------------------- TOOLTIPS ------------------- */
+
+div[role="tooltip"].tooltip {
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: -0.25rem;
+
+    & > div.tooltip-inner {
+        border: solid 0.09375rem $gray-150;
+    }
 }
 
 
