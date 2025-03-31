@@ -19,7 +19,7 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
         </div>
       </div>
       <IconButton className="mx-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen icon'/>
-      <StatusIndicator isWeak={cardInfo.weak}/>
+      <StatusIndicator next_practice_date={cardInfo.next_practice_date} isWeak={cardInfo.weak}/>
     </div>
   )
 }
