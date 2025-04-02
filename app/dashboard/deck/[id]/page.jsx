@@ -104,66 +104,13 @@ const DeckPage = async ({ params }) => {
   const formattedLastPracticed = `${lastPracticed.toLocaleString('default', { month: 'long' })} ${lastPracticed.getDate()}, ${lastPracticed.getFullYear()}`;
 
 
-  const sampleCardInfo = [
-    {
-      english: 'To Eat',
-      spanish: 'Comer',
-      weak: false,
-    },
-    {
-      english: 'To Run',
-      spanish: 'Correr',
-      weak: false,
-    },
-    {
-      english: 'To Do',
-      spanish: 'Hacer',
-      weak: true,
-    },
-    {
-      english: 'To Choose',
-      spanish: 'Elegir',
-      weak: false,
-    },
-    {
-      english: 'To Die',
-      spanish: 'Morir',
-      weak: false,
-    },
-    {
-      english: 'To Say',
-      spanish: 'Decir',
-      weak: false,
-    },
-    {
-      english: 'To Walk',
-      spanish: 'Caminar',
-      weak: false,
-    },
-    {
-      english: 'To Think',
-      spanish: 'Pensar',
-      weak: true,
-    },
-    {
-      english: 'To Believe',
-      spanish: 'Creer',
-      weak: true,
-    },
-    {
-      english: 'To Have',
-      spanish: 'Tener',
-      weak: false,
-    },
-  ]
-
   return (
     <>
       <div className='d-flex justify-content-between align-items-center mb-40'>
         <BackButton />
         <div className='d-flex'>
           <ButtonWithIcon isLinkButton={true} className="btn btn-gray me-10" href="#" iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
-          <MoreButton /> 
+          <MoreButton deck={{id: deck._id.toString(), title: deck.title}}/> 
         </div>
       </div>
       <h1 className='mb-25'>{deck.title}</h1>
@@ -198,7 +145,7 @@ const DeckPage = async ({ params }) => {
 
       <UnderlineContainer className='mb-30'>
         <div className="d-flex align-items-center justify-content-between">
-          <h3 className='fw-medium'>All Cards (18)</h3>
+          <h3 className='fw-medium'>All Cards ({deck.cards.length})</h3>
           <ButtonWithIcon isLinkButton={true} className="btn btn-primary" href="#" iconSrc='/icons/add_3.svg' iconHeight={16} altTag='Add icon' iconFillColor="white">Add Cards</ButtonWithIcon>
         </div>
       </UnderlineContainer>

@@ -35,7 +35,6 @@ const DeleteAccountModal = (props) => {
     const passwordValue = fieldValues.get('password');
 
     try {
-      // const response = await (Do server action call)
       const response = await deleteAccount(props.userId, passwordValue)
       
       if (!response.success) {
