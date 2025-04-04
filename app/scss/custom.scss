@@ -807,6 +807,55 @@ img.icon.fill-primary {
 
 
 
+
+/* ----- Width Styles ----- */
+.w-50 {
+    width: 50% !important;
+}
+
+@media (min-width: 475px) {
+    .w-xs_sm-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 576px) {
+    .w-sm-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 672px) {
+    .w-sm_md-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 768px) {
+    .w-md-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 992px) {
+    .w-lg-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 1100px) {
+    .w-lg_xl-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 1200px) {
+    .w-xl-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 1400px) {
+    .w-xxl-50 {
+        width: 50% !important;
+    }
+}
+
+
+
 /* ------ Max width styles ------ */
 
 // 600px max width for md breakpoint and up
