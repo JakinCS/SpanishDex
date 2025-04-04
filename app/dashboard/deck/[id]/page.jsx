@@ -10,16 +10,22 @@ import Link from 'next/link'
 import Button from 'react-bootstrap/Button'
 import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from '@/components/PageErrorMessage'
+import { notFound } from 'next/navigation'
 
 
 const DeckPage = async ({ params }) => {
 
   const { id } = await params
 
+  // Ensure the id is a valid ObjectId format before proceeding
+  if ( !(/^[0-9a-fA-F]+$/.test(id)) || id.length !== 24) {
+    notFound() // Trigger the 404 page in Next.js if the id is invalid
+  }
+
   // Define the client variable, holding a new MongoClient instance  
   const client = new MongoClient(process.env.MONGODB_URI);
 
-  let deck;
+  let queryResult;
 
   try {
     
@@ -83,8 +89,8 @@ const DeckPage = async ({ params }) => {
 
     // Run the aggregation pipeline and store the results in the finalData object.
     const decksCursor = await deckCollection.aggregate(pipeline);
-    deck = (await decksCursor.toArray())[0];
-    console.log(deck)
+    console.log(decksCursor)
+    queryResult = await decksCursor.toArray()
 
     await client.close();
 
@@ -94,6 +100,13 @@ const DeckPage = async ({ params }) => {
       <PageErrorMessage error={error}>Unable to load page. Please try again.</PageErrorMessage>
     )
   }
+
+  if (queryResult.length === 0) {
+    // If no decks found, trigger the 404 page in Next.js
+    notFound()
+  }
+
+  const deck = queryResult[0]
 
   const dateCreated = new Date(deck.date_created);
   // Format the date to a readable format
@@ -167,6 +180,10 @@ const DeckPage = async ({ params }) => {
             )
           })
         }
+
+        {deck.cards.length === 0 && (
+          <p className='text-center'>No cards found in this deck. <br /> Add cards using the button above.</p>
+        )}
 
       </div>
     </>
