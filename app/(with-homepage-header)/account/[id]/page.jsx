@@ -32,14 +32,14 @@ const AccountPage = async ({ params }) => {
 
   return (
     <Container className="topLevelContainer" fluid>
-      <div className="mx-auto" style={{maxWidth: '87.5rem'}}>
+      <div className="mx-auto" style={{maxWidth: '80rem'}}>
         <BackButton className="mb-40"/>
         <Container
           className="mx-auto px-0"
           style={{ maxWidth: "40.625rem" }}
           fluid
         >
-          <h1 className="text-center text-sm-start mb-60">My Account</h1>
+          <h1 className="text-center text-sm-start mb-40 mb-sm-50">My Account</h1>
           <AccountPageCard className="mb-5" paddingY="30">
             <ProfilePictureEditSection
               userId={userId}

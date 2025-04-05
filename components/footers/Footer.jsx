@@ -11,7 +11,7 @@ function Footer({ children }) {
 
   return (
     <Container fluid className="py-4 px-50 bg-gradient border-top border-gray-150 border-2">
-      <Row className='gy-4 mb-4 mb-lg-0 align-items-center mx-auto' style={{maxWidth: '87.5rem'}}>
+      <Row className='gy-4 mb-4 mb-lg-0 align-items-center mx-auto' style={{maxWidth: '80rem'}}>
         <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-start px-0 py-4 py-sm-0'>
           <Link href="/" className='blue-link'>
             <Image

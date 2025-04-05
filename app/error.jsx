@@ -17,7 +17,7 @@ const Error = ({ error, reset }) => {
   return (
     <div>
       <nav className="px-50 py-4 bg-gradient border-bottom border-gray-150 border-2">
-        <Link href="/" className='blue-link'>
+        <Link href="/dashboard" className='blue-link'>
           <Image
             alt="SpanishDex Logo"
             src={spanishdex}
@@ -31,7 +31,7 @@ const Error = ({ error, reset }) => {
         <h1 className="text-center">Unexpected Error Occurred</h1>
         <p className="text-center">We encountered a problem loading this page. <br /> Please try again or come back later.</p>
         <div className="d-block d-sm-flex column-gap-25">
-          <Link href="/" role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Return Home</Link>
+          <Link href="/dashboard" role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Go to Dashboard</Link>
           <Button className="d-block mx-auto" variant="primary" onClick={reset}>Try Again</Button>
         </div>
 

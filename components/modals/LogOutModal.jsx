@@ -59,10 +59,10 @@ function LogOutModal(props) {
           <p>Are you sure you want to log out of SpanishDex?</p>
           <Form action={formAction}>
             <Container fluid className="d-flex gap-4 justify-content-end p-0">            
-              <Button variant="gray" onClick={props.handleClose} disabled={isPending}>
+              <Button variant="gray" className="flex-grow-1 flex-xs_sm-grow-0" onClick={props.handleClose} disabled={isPending}>
                 Cancel
               </Button>
-              <Button variant="danger" type='submit' disabled={isPending}>
+              <Button variant="danger" className="flex-grow-1 flex-xs_sm-grow-0" type='submit' disabled={isPending}>
                 {isPending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log Out'}
               </Button>
             </Container>
