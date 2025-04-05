@@ -12,6 +12,7 @@ import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from '@/components/PageErrorMessage'
 import { notFound } from 'next/navigation'
 import BackToTopButton from '@/components/BackToTopButton'
+import ViewDeckSkeleton from '@/components/skeletons/ViewDeckSkeleton'
 
 
 const DeckPage = async ({ params }) => {
@@ -116,6 +117,7 @@ const DeckPage = async ({ params }) => {
   // Format the date to a readable format
   const formattedLastPracticed = `${lastPracticed.toLocaleString('default', { month: 'long' })} ${lastPracticed.getDate()}, ${lastPracticed.getFullYear()}`;
 
+  
 
   return (
     <>
@@ -175,7 +177,7 @@ const DeckPage = async ({ params }) => {
         </div>
       </UnderlineContainer>
 
-      <div className='mb-30'>
+      <div className='mb-40'>
         {
           deck.cards.map((card, index) => {
             const key = index + 1;

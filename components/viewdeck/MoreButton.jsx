@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import MoreMenuToggler from './MoreMenuToggler'
 import { useState } from 'react'
 import DeleteDeckModal from '../modals/DeleteDeckModal'
+import Link from 'next/link'
 
 const MoreButton = ({deck, children, ...otherProps}) => {
   // Log Out Modal State
@@ -24,9 +25,9 @@ const MoreButton = ({deck, children, ...otherProps}) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu className='mt-10' style={{right: '0'}}>
-          <Dropdown.Item eventKey="1">Edit Deck</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Practice All Cards</Dropdown.Item>
-          <Dropdown.Item eventKey="3">Practice Weak Cards</Dropdown.Item>
+          <Link href={`#`} className='dropdown-item mb-2'>Edit Deck</Link>
+          <Link href={`#`} className='dropdown-item mb-2'>Practice All Cards</Link>
+          <Link href={`#`} className='dropdown-item mb-2'>Practice Weak Cards</Link>
           <Dropdown.Item eventKey="4" className='danger-item' onClick={openDeleteDeck}>Delete Deck</Dropdown.Item>
         </Dropdown.Menu>
 
