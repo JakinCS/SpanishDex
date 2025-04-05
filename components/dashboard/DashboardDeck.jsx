@@ -39,11 +39,11 @@ const DashboardDeck = ({deckData, ...props}) => {
         <div className='d-flex gap-25'>
           <span className="d-flex align-items-center gap-2 fs-6 fw-medium">
             <Icon height={20} src='/icons/cards300.svg' alt="Flashcard icon"/>
-            <p><span>{deckData.cards}</span> Total Cards</p>
+            <p><span>{deckData.cards}</span> Total {deckData.cards === 1 ? 'Card' : 'Cards'}</p>
           </span>
           <span className="d-flex align-items-center gap-2 fs-6 fw-medium">
             <Icon height={20} src='/icons/cards300.svg' alt="Flashcard icon"/>
-            <p><span>{deckData.weak_cards}</span> Weak Cards</p>
+            <p><span>{deckData.weak_cards}</span> Weak {deckData.weak_cards === 1 ? 'Card' : 'Cards'}</p>
           </span>
         </div>
       </Link>

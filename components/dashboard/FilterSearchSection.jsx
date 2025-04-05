@@ -61,7 +61,7 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
 
   return (
     <UnderlineContainer className="filter-search-container mb-40">
-      <div className="d-flex align-items-center justify-content-between mb-3 mb-sm_md-0 gap-3">
+      <div className="d-flex align-items-center justify-content-between gap-3">
         <h3 className="fw-medium">{deckList.searchResults == null ? 'All Decks' : (deckList.searchResults.length === 1 ? `1 Result for '${search.value}'` : `${deckList.searchResults.length} Results for '${search.value}'`)}</h3>
         <div className="d-flex">
           <FilterButton className='me-15' setDeckList={setDeckList}>
@@ -76,7 +76,7 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
           </Form>
         </div>
       </div>
-      <Form onSubmit={(e) => e.preventDefault()} className={!showSearch ? 'd-none' : `d-block d-sm_md-none`}>
+      <Form onSubmit={(e) => e.preventDefault()} className={'mt-3 ' + (!showSearch ? 'd-none' : 'd-block d-sm_md-none')}>
         <InputGroup className='search-input-group w-100'>
           {searchBody}
         </InputGroup>

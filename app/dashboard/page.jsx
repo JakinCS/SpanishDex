@@ -117,11 +117,11 @@ async function Dashboard() {
 
     return (
       <>
-        <div className="d-flex justify-content-between align-items-center gap-25 mb-50 mb-sm-60">
+        <div className="d-flex justify-content-between align-items-center gap-25 mb-25 mb-sm-50 mb-sm-60">
           <TotalsSection decks={finalData.total_decks} cards={finalData.total_cards}/>
           <ButtonWithIcon isLinkButton={true} href='#' className="btn btn-primary d-none d-md-block" variant='primary' iconSrc='icons/add_3.svg' iconFillColor={'white'} iconHeight={16} altTag={'new deck icon'}>New Deck</ButtonWithIcon>
         </div>        
-        <DashboardCard xPadding={30} yPadding={35} className="mb-50 mw-600">
+        <DashboardCard xPadding={30} yPadding={35} className="mb-30 mb-sm-50 mw-600">
           <Stack gap={30}>
             <div className="d-flex align-items-center justify-content-between">
               <h3 className="fw-medium heading-underline-blue-100 lh-1"><span className="d-block d-xs_sm-none">Weak Cards</span><span className="d-none d-xs_sm-block">Review Weak Cards</span></h3>
@@ -131,7 +131,7 @@ async function Dashboard() {
               <>
                 <p><span className="fw-medium">{finalData.total_weakCards}</span> cards need review. Practice them now to keep them fresh.</p>
                 <div>
-                  <Link role='button' href='#' className='btn btn-primary'>Practice Now</Link>
+                  <Link role='button' href='#' className='btn btn-primary d-block d-xs_sm-inline-block'>Practice Now</Link>
                 </div>
               </>
               :
