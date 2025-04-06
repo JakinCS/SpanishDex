@@ -35,7 +35,7 @@ const getDateString = (date) => {
 const StatusIndicator = ({ isWeak, next_practice_date, ...otherProps }) => {
   const paragraphAttributes = {
     ...otherProps,
-    className: `fw-semibold ${isWeak ? 'text-warning' : 'text-green'}`
+    className: `fw-semibold ${isWeak ? 'text-warning' : 'text-green'} ${otherProps.className ? otherProps.className : ''}`
   }
 
   // The date string for when to practice again is determined by the `next_practice_date` prop passed in.
