@@ -113,7 +113,7 @@ async function Dashboard() {
       )
     }
     
-    throw('This is a server component, and should not be used in the client. Please use the server component directly.')
+    
 
     return (
       <>
