@@ -1,115 +1,41 @@
-import { auth } from "@/auth"
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import TotalsSection from "@/components/dashboard/TotalsSection";
 import Link from "next/link";
 import Stack from 'react-bootstrap/Stack'
-import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
 import BackToTopButton from "@/components/BackToTopButton";
 import Icon from "@/components/Icon";
+import { getDashboardDeckInfo } from "@/lib/actions";
+import { redirect } from "next/navigation";
 
 
 async function Dashboard() {
 
-    // This object holds totals information used by variants page components.
-    let finalData = {
-      decks: [],
-      total_decks: 0,
-      total_cards: 0,
-      total_weakCards: 0,
-    }
-
-    // Get session information  
-    const session = await auth();
-
-    // Define the client variable, holding a new MongoClient instance  
-    const client = new MongoClient(process.env.MONGODB_URI);
+    // This object holds totals information used by various page components.
+    let finalData;
 
     try {
-      
-      // Connect to the database
-      await client.connect();
-      const database = client.db('spanishdex');
+      // Use this server action to retrieve the necessary dashboard information.
+      const result = await getDashboardDeckInfo();
 
-      const deckCollection = database.collection('decks');
+      if (result.success === false) {
+        if (result.message.includes('not logged in')) redirect('/auth/signin'); // Redirect to sign-in if the user is not logged in
 
-      // Fancy aggregation pipeline for retrieving exactly the right information 
-      const pipeline = [
-        {
-          '$match': {
-            'user': new ObjectId(session.user.id)
-            // 'user': new ObjectId('67730141a2adee1afa997fe6')
-          }
-        }, {
-          '$lookup': {
-            'from': 'cards', 
-            'localField': '_id', 
-            'foreignField': 'parent_deck', 
-            'as': 'cards'
-          }
-        }, {
-          '$addFields': {
-            'last_practiced': {
-              '$ifNull': [
-                {
-                  '$max': '$cards.last_practiced'
-                }, '$date_created'
-              ]
-            }, 
-            'weak_cards': {
-              '$size': {
-                '$filter': {
-                  'input': '$cards', 
-                  'as': 'card', 
-                  'cond': {
-                    '$lte': [
-                      '$$card.next_practice_date', new Date()
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }, {
-          '$project': {
-            'title': 1, 
-            'date_created': 1, 
-            'last_practiced': 1, 
-            'cards': {
-              '$size': '$cards'
-            }, 
-            'weak_cards': 1
-          }
-        }, {
-          '$sort': {
-            'last_practiced': -1
-          }
-        }
-      ]
+        // If there was an error in retrieving the dashboard information, return the error message
+        return (
+          <PageErrorMessage buttonType={'reload'} error={result.error}>
+            {result.message || 'Unable to load dashboard. Please try again.'}
+          </PageErrorMessage>
+        )
+      }
 
-      // Run the aggregation pipeline and store the results in the finalData object.
-      const decksCursor = await deckCollection.aggregate(pipeline);
-      finalData.decks = await decksCursor.toArray();
-
-      finalData.total_decks = finalData.decks.length; // Calculate total deck number
-
-      // Calculate the number of cards and weak cards.
-      // Also, convert the _id to a string (instead of its default object type)
-      finalData.decks.forEach((deck) => {
-        finalData.total_cards += deck.cards;
-        finalData.total_weakCards += deck.weak_cards;
-
-        deck._id = deck._id.toString();
-      })    
-
-      await client.close();
+      finalData = result.data; // This will be the final data object returned from the getDashboardDeckInfo function
 
     } catch (error) {
-      await client.close();
       return (
-        <PageErrorMessage error={error}>Unable to load dashboard. Please try again.</PageErrorMessage>
+        <PageErrorMessage buttonType={'reload'} error={error}>Unable to load dashboard. Please try again.</PageErrorMessage>
       )
     }
     

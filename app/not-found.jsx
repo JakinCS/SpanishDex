@@ -19,7 +19,7 @@ const NotFound = async () => {
           </Link>
         </div>
       </nav>
-      <div className="px-20">
+      <div className="px-25 px-sm-50">
         <HomepageSection py='80' backgroundColor='white' style={{border: '2px solid #d9d9d9', maxWidth: '80rem'}} className='mt-20 rounded'>
           <h1 className="text-center">Page Not Found</h1>
           <p className="text-center">Could not find requested resource.</p>

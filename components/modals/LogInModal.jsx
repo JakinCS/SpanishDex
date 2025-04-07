@@ -122,12 +122,12 @@ function LogInModal(props) {
 
 
   return (
-    <Modal size='sm' id='logInModal' className={(form1State.status === "SUCCESS" || form2State.status === "SUCCESS") ? 'modal-disabled' : ''} show={props.show} onExited={() => {resetState()}} onHide={props.handleClose} backdrop="static" centered>
+    <Modal size='sm' id='logInModal' className={(form1State.status === "SUCCESS") ? 'modal-disabled' : ''} show={props.show} onExited={() => {resetState()}} onHide={props.handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title as='h2'>Log In</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className={'modal-success-message ' + ((form1State.status === "SUCCESS" || form2State.status === "SUCCESS") ? 'show' : 'hide')}>
+        <div className={'modal-success-message ' + ((form1State.status === "SUCCESS") ? 'show' : 'hide')}>
           <h2 className="text-success mb-3">Success</h2>
           <p className="fw-medium">You are now logged in</p>
         </div>

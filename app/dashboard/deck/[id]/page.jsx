@@ -7,12 +7,10 @@ import IconButton from '@/components/IconButton'
 import UnderlineContainer from '@/components/UnderlineContainer'
 import MoreButton from '@/components/viewdeck/MoreButton'
 import Link from 'next/link'
-import Button from 'react-bootstrap/Button'
-import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from '@/components/PageErrorMessage'
 import { notFound } from 'next/navigation'
 import BackToTopButton from '@/components/BackToTopButton'
-import ViewDeckSkeleton from '@/components/skeletons/ViewDeckSkeleton'
+import { getDeck } from '@/lib/actions'
 
 
 const DeckPage = async ({ params }) => {
@@ -24,90 +22,37 @@ const DeckPage = async ({ params }) => {
     notFound() // Trigger the 404 page in Next.js if the id is invalid
   }
 
-  // Define the client variable, holding a new MongoClient instance  
-  const client = new MongoClient(process.env.MONGODB_URI);
-
-  let queryResult;
+  let errorInfo = {isError: false, message: '', hiddenMsg: ''};
+  let deck = undefined;
 
   try {
-    
-    // Connect to the database
-    await client.connect();
-    const database = client.db('spanishdex');
+    const retrievalResult = await getDeck(id)
 
-    const deckCollection = database.collection('decks');
-
-    // Fancy aggregation pipeline for retrieving the deck information with a list of cards 
-    const pipeline = [
-      {
-        '$match': {
-          '_id': new ObjectId(id)
-        }
-      }, {
-        '$lookup': {
-          'from': 'cards', 
-          'localField': '_id', 
-          'foreignField': 'parent_deck', 
-          'as': 'cards'
-        }
-      }, {
-        '$addFields': {
-          'last_practiced': {
-            '$ifNull': [
-              {
-                '$max': '$cards.last_practiced'
-              }, '$date_created'
-            ]
-          }, 
-          'weak_cards': {
-            '$size': {
-              '$filter': {
-                'input': '$cards', 
-                'as': 'card', 
-                'cond': {
-                  '$lte': [
-                    '$$card.next_practice_date', new Date()
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }, {
-        '$project': {
-          'title': 1, 
-          'date_created': 1, 
-          'last_practiced': 1, 
-          'description': 1,
-          'cards': {
-            'english': 1, 
-            'spanish': 1, 
-            'next_practice_date': 1
-          }, 
-          'weak_cards': 1
-        }
-      }
-    ]
-
-    // Run the aggregation pipeline and store the results in the finalData object.
-    const decksCursor = await deckCollection.aggregate(pipeline);
-    queryResult = await decksCursor.toArray()
-
-    await client.close();
+    if (retrievalResult.success === false) {
+      // If there was an error in retrieving the deck, return the error message
+      errorInfo.isError = true;
+      errorInfo.message = retrievalResult.message || 'Unable to load deck. Please try again.';
+      errorInfo.hiddenMsg = retrievalResult.error;
+    }
+     
+    deck = retrievalResult?.deck; // This will be the deck object returned from the getDeck function
 
   } catch (error) {
-    await client.close();
-    return (
-      <PageErrorMessage error={error}>Unable to load page. Please try again.</PageErrorMessage>
-    )
+    errorInfo.isError = true;
+    errorInfo.message = errorInfo?.message || 'Unable to load deck. Unexpected error occurred.';
+    errorInfo.hiddenMsg = error;
   }
 
-  if (queryResult.length === 0) {
-    // If no decks found, trigger the 404 page in Next.js
+  if (deck === null) {
+    // If deck is null, trigger the 404 page in Next.js
     notFound()
   }
 
-  const deck = queryResult[0]
+  if (errorInfo.isError) {
+    return (
+      <PageErrorMessage buttonType={errorInfo.message.includes('Unauthorized') ? 'dashboard' : 'reload'} error={errorInfo.hiddenMsg}>{errorInfo.message}</PageErrorMessage>
+    )
+  }
 
   const dateCreated = new Date(deck.date_created);
   // Format the date to a readable format
