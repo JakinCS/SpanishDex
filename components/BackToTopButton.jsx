@@ -24,7 +24,7 @@ const BackToTopButton = () => {
   }, [])
 
   return (
-    <button onClick={() => window.scrollTo(0, 0)} className={'backToTopButton flex-column align-items-center ' + (showButton ? 'd-flex' : 'd-none')}>
+    <button onClick={() => window.scrollTo(0, 0)} className={'backToTopButton bg-white flex-column align-items-center ' + (showButton ? 'd-flex' : 'd-none')}>
       <Icon height={24} src='/icons/arrow_upward.svg' alt="up arrow"/>
       <span className="fs-5 lh-sm"><span id="spanFSReference">Back</span><br />to Top</span>
     </button>

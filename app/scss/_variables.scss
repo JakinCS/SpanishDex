@@ -151,6 +151,7 @@ $spacers: (
   40: $spacer * 4,
   50: $spacer * 5,
   60: $spacer * 6,
+  70: $spacer * 7,
   80: $spacer * 8,
   100: $spacer * 10,
 );
@@ -332,6 +333,26 @@ $btn-close-disabled-opacity: .5 !default;
 
 $placeholder-opacity-max:           .8;
 $placeholder-opacity-min:           .5;
+
+
+
+
+
+
+/* ---------------------- Tooltips ------------------------  */
+
+$tooltip-font-size:                 .75rem;
+$tooltip-color:                     $blue-900;
+$tooltip-bg:                        white;
+$tooltip-opacity:                   1;
+$tooltip-padding-y:                 $spacer * .7;
+$tooltip-padding-x:                 $spacer;
+
+$tooltip-arrow-width:               0;
+$tooltip-arrow-height:              0;
+
+
+
 
 
 

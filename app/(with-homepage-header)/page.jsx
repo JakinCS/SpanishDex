@@ -6,7 +6,7 @@ import GetStartedButton from '@/components/GetStartedButton';
 export default function Homepage() {
   return (
     <>
-      <HomepageSection py='100' backgroundColor='almost-white'>
+      <HomepageSection py='70' py_sm='100' backgroundColor='almost-white'>
         <h1 className="text-center" style={{maxWidth: '43.75rem'}}>Flashcards Built for Maximized Learning</h1>
         <p className="text-center" style={{maxWidth: '43.75rem'}}>
           SpanishDex is a flashcards app for Spanish learners. 
@@ -17,7 +17,7 @@ export default function Homepage() {
         
       </HomepageSection>
       <HomepageSectionColumns 
-        py='80' backgroundColor='white' 
+        py='60' py_sm={'80'} backgroundColor='white' 
         image={'screenshot'} imageBorder={true} 
         imageAlt='SpanishDex dashboard screenshot' 
         imagePosition='left' headingText='Simple Interface'
@@ -34,7 +34,7 @@ export default function Homepage() {
         </div>       
       </HomepageSectionColumns>
       <HomepageSectionColumns 
-        py='80' backgroundColor='almost-white'
+        py='60' py_sm={'80'} backgroundColor='almost-white'
         image={'flashcards'} imageBorder={false}
         imageAlt='SpanishDex flashcards example'
         imagePosition='right' headingText='Spaced Repetition'
@@ -54,7 +54,7 @@ export default function Homepage() {
           </p>
         </div>
       </HomepageSectionColumns>
-      <HomepageSection py='80' backgroundColor='white'>
+      <HomepageSection py='60' py_sm={'80'} backgroundColor='white'>
         <h2 className="text-center" style={{maxWidth: '43.75rem'}}>About SpanishDex</h2>
         <div style={{maxWidth: '43.75rem'}}>
           <p className="text-center" style={{marginBottom: '1.125rem'}}>
@@ -66,7 +66,7 @@ export default function Homepage() {
           </p>
         </div>
       </HomepageSection>
-      <HomepageSection py='80' backgroundColor='almost-white'>
+      <HomepageSection py='60' py_sm={'80'} backgroundColor='almost-white'>
         <h2 className='text-center'>Contact</h2>
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
         <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>

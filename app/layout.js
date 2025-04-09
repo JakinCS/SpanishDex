@@ -1,6 +1,7 @@
 import './scss/custom.scss';
 import { Montserrat } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Script from 'next/script';
 
 const montserrat = Montserrat({
   subsets: ['latin']
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <SpeedInsights />
+        <Script src='/scripts/darkMode.js'/>
       </body>
     </html>
   );

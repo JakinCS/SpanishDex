@@ -13,6 +13,7 @@ const HeaderContent = ({ children }) => {
       <Navbar.Brand className="d-none d-sm-block">
         <Link href="/" className='blue-link'>
           <Image
+            className="logo"
             alt="SpanishDex Logo"
             src={spanishdex}
             placeholder="blur"
@@ -24,6 +25,7 @@ const HeaderContent = ({ children }) => {
       <Navbar.Brand className="d-block d-sm-none">
         <Link href="/" className='blue-link'>
           <Image
+            className="logo"
             src={spanishdexIcon}
             alt="SpanishDex Logo"  
             placeholder="blur"
