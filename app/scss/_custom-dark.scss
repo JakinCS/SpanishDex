@@ -1,0 +1,286 @@
+
+// new colors
+$new-bg-color: #2E383F;
+$color1: #0D1921;  // New body background color
+$color2: #001521;   // For black text of buttons for example
+$color3: #2E383F;  // Replaces pure white in most cases.
+$color4: #5C666C; // Replaces the gray-150 color for borders and such
+$color5: #C2C7CA;  // Used for the color of normal text.
+$color6: $almost-white;  // Used for headings and the logo.
+$color7: #66A6CC; // primary color replacement (for buttons mostly)
+$color8: #A3D6F5; // primary color replacement (for headings mostly)
+$color9: linear-gradient(to right, #222D33, #162127);   // For the header and footer
+
+
+// Custom sass for dark mode
+
+$color-mode-type: data;
+
+$body-color-dark: $color5;
+$body-bg-dark: $color1;
+$link-color-dark: $color5;
+$link-hover-color-dark: $green;
+$headings-color-dark: $color6;
+
+
+@include color-mode(dark) {
+  // START ------------------- BACKGROUND & BORDER OVERRIDES --------------------
+  .bg-white {
+    background-color: $color3 !important;
+  }
+  .bg-almost-white {
+    background-color: $color1 !important;
+  }
+  .bg-gradient {
+    background: $color9 !important;
+  }
+  .bg-gray-150 {
+    background: $color4 !important;
+  }
+  .border-gray-150 {
+    border-color: $color4 !important;
+  }
+  // END ------------------- BACKGROUND & BORDER OVERRIDES --------------------
+
+
+  // START ------------------- DROPDOWN --------------------
+  .dropdown-menu {
+    background-color: $color3 !important;
+    border-color: $color4 !important;
+    & > a {
+      background-color: $color3 !important;
+    }
+    & > a:hover, & > a:focus, & > a:active {
+      color: $color5 !important;
+      background-color: shade-color($color3, 20%) !important;
+    }
+    & > a.danger-item:hover, & > a.danger-item:focus, & > a.danger-item:active {
+      color: $danger !important;
+    }
+  }
+  // END ------------------- DROPDOWN --------------------
+
+
+  // START ----------------- ICONS --------------------
+  img.logo {
+    filter: brightness(0) invert(100%) sepia(24%) saturate(1088%) hue-rotate(177deg) brightness(102%) contrast(95%);  // color6
+  }
+  .icon {
+    filter: brightness(0) invert(98%) sepia(2%) saturate(995%) hue-rotate(173deg) brightness(86%) contrast(82%);  // color5
+  }
+  .icon.social-icon {
+    filter: brightness(0) invert(100%);
+  }
+  .icon.fill-primary {
+    filter: brightness(0) invert(69%) sepia(94%) saturate(151%) hue-rotate(168deg) brightness(101%) contrast(92%)  // color8
+  }
+  // END ----------------- ICONS --------------------
+
+
+  // START ------------------- LINKS --------------------
+  a:has(img.logo) {
+    outline-color: $color6;
+  }
+  a:has(.icon.social-icon) {
+    outline-color: $color6;
+  }
+  .profile-picture:hover > img, .profile-picture:active > img, .profile-picture:focus > img, .profile-picture:focus-visible > img {
+    box-shadow: none;
+  }
+  a:focus-visible {
+    outline-style: solid;
+    outline-width: .125rem;
+  }
+  a.blue-link:hover, a.blue-link:focus, a.blue-link:focus-visible, a.blue-link:active {
+    color: $color7;
+  }
+  a.blue-link:focus-visible {
+      outline-color: $color7;
+  }
+  // END ------------------- LINKS --------------------
+
+
+  //  START ------------------- BUTTONS ----------------------
+  .btn-primary {
+    background-color: $color7 !important;
+    border-color: $color7 !important;
+    color: $color2 !important;
+    & img.icon {
+      filter: brightness(0) invert(7%) sepia(61%) saturate(1387%) hue-rotate(169deg) brightness(98%) contrast(104%) !important;  // color2
+    }
+    &:hover, &:focus-visible {
+      background-color: tint-color($color7, 20%) !important;
+      border-color: tint-color($color7, 20%) !important;
+      outline-color: tint-color($color7, 20%) !important;
+    }
+    &:active {
+      background-color: tint-color($color7, 25%) !important;
+      border-color: tint-color($color7, 25%) !important;
+    }
+  }
+  .btn-outline-primary {
+    border-color: $color7 !important;
+    color: $color7 !important;
+    & img.icon {
+      filter: brightness(0) invert(60%) sepia(85%) saturate(224%) hue-rotate(159deg) brightness(87%) contrast(92%);  // color7
+    }
+    &:hover, &:focus-visible {
+      background-color: $color7 !important;
+      color: $color2 !important;
+      outline-color: tint-color($color7, 20%) !important;
+    }
+    &:active {
+      background-color: tint-color($color7, 15%) !important;
+      border-color: tint-color($color7, 15%) !important;
+    }
+  }
+  .btn.icon-fill-primary {
+    &:active img.icon, &:hover img.icon, &:focus-visible img.icon {
+        filter: brightness(0) invert(7%) sepia(61%) saturate(1387%) hue-rotate(169deg) brightness(98%) contrast(104%) !important;
+    }
+  }
+  .btn-secondary {
+    & img.icon {
+      filter: brightness(0) invert(7%) sepia(61%) saturate(1387%) hue-rotate(169deg) brightness(98%) contrast(104%) !important;  // color2
+    }
+  }
+  .btn-light {
+    background-color: #00000000 !important;
+    border-color: #00000000 !important;
+    color: $color5 !important;
+    &:hover, &:focus-visible {
+      background-color: shade-color($color3, 20%) !important;
+      border-color: shade-color($color3, 20%) !important;
+      outline-color: tint-color($color4, 40%) !important;
+    }
+    &:active {
+      color: $color5 !important;
+      background-color: shade-color($color3, 30%) !important;
+      border-color: shade-color($color3, 30%) !important;
+    }
+  }
+  .btn-light.sort-search-button {
+    background-color: $color3 !important;
+    border-color: $color4 !important;
+    color: $color5 !important;
+    &:hover, &:focus-visible {
+      background-color: shade-color($color3, 20%) !important;
+      outline-color: tint-color($color4, 40%) !important;
+    }
+    &:active {
+      color: $color5 !important;
+      background-color: shade-color($color3, 30%) !important;
+      border-color: shade-color($color4, 10%) !important;
+    }
+  }
+  .btn-light.sort-search-button.selected {
+    background-color: shade-color($color3, 30%) !important;
+    &:hover, &:focus-visible {
+      background-color: shade-color($color3, 40%) !important;
+      border-color: $color4 !important;
+    }
+    &:active {
+      background-color: shade-color($color3, 50%) !important;
+      border-color: shade-color($color4, 20%) !important;
+    }
+  }
+  .dropdown:has(.dropdown-menu.show) .btn.moreButtonToggler {
+    background-color: shade-color($color3, 20%) !important;
+    border-color: shade-color($color3, 20%) !important;
+    &:hover, &:focus-visible {
+      background-color: shade-color($color3, 40%) !important;
+      border-color: shade-color($color3, 40%) !important;
+    }
+    &:active {
+      background-color: shade-color($color3, 50%) !important;
+      border-color: shade-color($color3, 50%) !important;
+    }
+  }
+  .btn-gray {
+    color: $color2 !important;
+    background-color: tint-color($color3, 50%) !important;
+    border-color: tint-color($color3, 50%) !important;
+    & img.icon {
+      filter: brightness(0) invert(7%) sepia(61%) saturate(1387%) hue-rotate(169deg) brightness(98%) contrast(104%) !important;  // color2
+    }
+    &:hover, &:focus-visible {
+      background-color: tint-color($color3, 70%) !important;
+      border-color: tint-color($color3, 70%) !important;
+      outline-color: tint-color($color3, 70%) !important;
+    }
+    &:active {
+      background-color: tint-color($color3, 75%) !important;
+      border-color: tint-color($color3, 75%) !important;
+    }
+  }
+  // END ------------------- BUTTONS ----------------------
+
+
+  // START ------------------- MODALS ----------------------
+  .modal-content {
+    background-color: $color3 !important;
+    border-color: $color4 !important;
+  }
+  // END ------------------- MODALS ----------------------
+
+
+  // START ------------------- FORMS ----------------------
+  .form-control {
+    background-color: shade-color($color3, 20%) !important;
+
+    &:focus-visible {
+      outline-color: $color7 !important;
+    }
+    &.is-invalid:focus-visible {
+      outline-color: #da7766 !important;
+    }
+  }
+  .input-group {
+    & > * {
+      background-color: $color3 !important;
+      border-color: $color4 !important;
+    }
+    & > input {
+      &:focus, &:focus-visible {
+          border-color: tint-color($color4, 20%) !important;
+      }
+    }
+    &:has(input:focus) span:first-child, &:has(input:focus-visible) span:first-child { 
+      border-color: tint-color($color4, 20%) !important;
+    }    
+    &:has(input:focus) span:last-child, &:has(input:focus-visible) span:last-child { 
+      border-color: tint-color($color4, 20%) !important;
+    }
+  }
+  // END ------------------- FORMS ----------------------
+
+
+  // START ------------------- MISCELLANEOUS ---------------------- //
+  .dashboard-deck-card {
+    box-shadow: none;
+    &:hover, &:focus, &:focus-visible, &:active {
+      color: $color5 !important;
+    }
+  }
+  .backToTopButton {
+    box-shadow: none;
+    color: $color5 !important;
+    border: solid 1.5px $color4;
+    &:hover, &:focus, &:focus-visible, &:active {
+      color: $color5 !important;
+    }
+  }
+  .text-primary, .text-primary * {
+    color: $color8 !important;
+  }
+  .alert {
+    background-color: $color3 !important;
+    color: $color5 !important;
+  }
+  .loader-dots {
+    --_g: no-repeat radial-gradient(circle closest-side, #C2C7CA 90%,#0000);
+  }
+  // END ------------------- MISCELLANEOUS ---------------------- //
+
+
+}

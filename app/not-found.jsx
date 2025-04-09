@@ -4,28 +4,31 @@ import Link from "next/link";
 import HomepageSection from "@/components/HomepageSection";
 
 const NotFound = async () => {
-
   return (
     <div>
-      <nav className="px-50 py-4 bg-gradient border-bottom border-gray-150 border-2">
-        <Link href="/" className='blue-link'>
-          <Image
-            alt="SpanishDex Logo"
-            src={spanishdex}
-            placeholder="blur"
-            blurDataURL={'/logo.svg'}
-            style={{ height: "3.125rem", width: "auto" }}
-          />
-        </Link>
-      </nav>
-      <HomepageSection py='80' backgroundColor='white'>
-        <h1 className="text-center">Page Not Found</h1>
-        <p className="text-center">Could not find requested resource. </p>
-        <div className="d-block d-sm-flex column-gap-25">
-          <Link href="/" role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Return Home</Link>
+      <nav className="px-25 px-sm-50 py-4 bg-gradient border-bottom border-gray-150 border-2">
+        <div className="mx-auto" style={{maxWidth: '80rem'}}>
+          <Link href={'/dashboard'} className='blue-link'>
+            <Image
+              className="logo"
+              alt="SpanishDex Logo"
+              src={spanishdex}
+              placeholder="blur"
+              blurDataURL={'/logo.svg'}
+              style={{ height: "3.125rem", width: "auto" }}
+            />
+          </Link>
         </div>
-
-      </HomepageSection>
+      </nav>
+      <div className="px-25 px-sm-50">
+        <HomepageSection py='80' backgroundColor='white' style={{maxWidth: '80rem'}} className='border border-2 border-gray-150 mt-20 rounded'>
+          <h1 className="text-center">Page Not Found</h1>
+          <p className="text-center">Could not find requested resource.</p>
+          <div className="d-block d-sm-flex column-gap-25">
+            <Link href={'/dashboard'} role="button" className="d-block mx-auto mb-25 mb-sm-0 btn btn-outline-primary">Go to Dashboard</Link>
+          </div>
+        </HomepageSection>
+      </div>
     </div>
   )
 }

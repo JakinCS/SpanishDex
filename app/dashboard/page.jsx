@@ -1,115 +1,41 @@
-import { auth } from "@/auth"
 import ButtonWithIcon from "@/components/ButtonWithIcon";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import TotalsSection from "@/components/dashboard/TotalsSection";
 import Link from "next/link";
 import Stack from 'react-bootstrap/Stack'
-import { MongoClient, ObjectId } from "mongodb";
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
 import BackToTopButton from "@/components/BackToTopButton";
 import Icon from "@/components/Icon";
+import { getDashboardDeckInfo } from "@/lib/actions";
+import { redirect } from "next/navigation";
 
 
 async function Dashboard() {
 
-    // This object holds totals information used by variants page components.
-    let finalData = {
-      decks: [],
-      total_decks: 0,
-      total_cards: 0,
-      total_weakCards: 0,
-    }
-
-    // Get session information  
-    const session = await auth();
-
-    // Define the client variable, holding a new MongoClient instance  
-    const client = new MongoClient(process.env.MONGODB_URI);
+    // This object holds totals information used by various page components.
+    let finalData;
 
     try {
-      
-      // Connect to the database
-      await client.connect();
-      const database = client.db('spanishdex');
+      // Use this server action to retrieve the necessary dashboard information.
+      const result = await getDashboardDeckInfo();
 
-      const deckCollection = database.collection('decks');
+      if (result.success === false) {
+        if (result.message.includes('not logged in')) redirect('/auth/signin'); // Redirect to sign-in if the user is not logged in
 
-      // Fancy aggregation pipeline for retrieving exactly the right information 
-      const pipeline = [
-        {
-          '$match': {
-            'user': new ObjectId(session.user.id)
-            // 'user': new ObjectId('67730141a2adee1afa997fe6')
-          }
-        }, {
-          '$lookup': {
-            'from': 'cards', 
-            'localField': '_id', 
-            'foreignField': 'parent_deck', 
-            'as': 'cards'
-          }
-        }, {
-          '$addFields': {
-            'last_practiced': {
-              '$ifNull': [
-                {
-                  '$max': '$cards.last_practiced'
-                }, '$date_created'
-              ]
-            }, 
-            'weak_cards': {
-              '$size': {
-                '$filter': {
-                  'input': '$cards', 
-                  'as': 'card', 
-                  'cond': {
-                    '$lte': [
-                      '$$card.next_practice_date', new Date()
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }, {
-          '$project': {
-            'title': 1, 
-            'date_created': 1, 
-            'last_practiced': 1, 
-            'cards': {
-              '$size': '$cards'
-            }, 
-            'weak_cards': 1
-          }
-        }, {
-          '$sort': {
-            'last_practiced': -1
-          }
-        }
-      ]
+        // If there was an error in retrieving the dashboard information, return the error message
+        return (
+          <PageErrorMessage buttonType={'reload'} error={result.error}>
+            {result.message || 'Unable to load dashboard. Please try again.'}
+          </PageErrorMessage>
+        )
+      }
 
-      // Run the aggregation pipeline and store the results in the finalData object.
-      const decksCursor = await deckCollection.aggregate(pipeline);
-      finalData.decks = await decksCursor.toArray();
-
-      finalData.total_decks = finalData.decks.length; // Calculate total deck number
-
-      // Calculate the number of cards and weak cards.
-      // Also, convert the _id to a string (instead of its default object type)
-      finalData.decks.forEach((deck) => {
-        finalData.total_cards += deck.cards;
-        finalData.total_weakCards += deck.weak_cards;
-
-        deck._id = deck._id.toString();
-      })    
-
-      await client.close();
+      finalData = result.data; // This will be the final data object returned from the getDashboardDeckInfo function
 
     } catch (error) {
-      await client.close();
       return (
-        <PageErrorMessage error={error}>Unable to load dashboard. Please try again.</PageErrorMessage>
+        <PageErrorMessage buttonType={'reload'} error={error}>Unable to load dashboard. Please try again.</PageErrorMessage>
       )
     }
     
@@ -117,11 +43,11 @@ async function Dashboard() {
 
     return (
       <>
-        <div className="d-flex justify-content-between align-items-center gap-25 mb-50 mb-sm-60">
+        <div className="d-flex justify-content-between align-items-center gap-25 mb-25 mb-sm-50 mb-sm-60">
           <TotalsSection decks={finalData.total_decks} cards={finalData.total_cards}/>
           <ButtonWithIcon isLinkButton={true} href='#' className="btn btn-primary d-none d-md-block" variant='primary' iconSrc='icons/add_3.svg' iconFillColor={'white'} iconHeight={16} altTag={'new deck icon'}>New Deck</ButtonWithIcon>
         </div>        
-        <DashboardCard xPadding={30} yPadding={35} className="mb-50 mw-600">
+        <DashboardCard xPadding={30} yPadding={35} className="mb-30 mb-sm-50 mw-600">
           <Stack gap={30}>
             <div className="d-flex align-items-center justify-content-between">
               <h3 className="fw-medium heading-underline-blue-100 lh-1"><span className="d-block d-xs_sm-none">Weak Cards</span><span className="d-none d-xs_sm-block">Review Weak Cards</span></h3>
@@ -131,7 +57,7 @@ async function Dashboard() {
               <>
                 <p><span className="fw-medium">{finalData.total_weakCards}</span> cards need review. Practice them now to keep them fresh.</p>
                 <div>
-                  <Link role='button' href='#' className='btn btn-primary'>Practice Now</Link>
+                  <Link role='button' href='#' className='btn btn-primary d-block d-xs_sm-inline-block'>Practice Now</Link>
                 </div>
               </>
               :

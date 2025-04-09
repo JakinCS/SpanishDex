@@ -7,6 +7,8 @@
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/mixins';
 
+@import './custom-dark';
+
 
 @import './map-amends';
 
@@ -482,6 +484,23 @@ div[role="dialog"].modal {
 }
 
 
+// Special styles for the more button dropdown toggler
+.dropdown:has(.dropdown-menu.show) .moreButtonToggler {
+    background-color: $gray-100 !important;
+    border-color: $gray-100 !important;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-150 !important;
+        border-color: $gray-150 !important;
+    }
+
+    &:active {
+        background-color: $gray-200 !important;
+        border-color: $gray-200 !important;
+    }
+}
+
+
 
 
 
@@ -583,6 +602,22 @@ a.blue-link:hover, a.blue-link:focus, a.blue-link:focus-visible, a.blue-link:act
 
 a.blue-link:focus-visible {
     outline-color: $primary;
+}
+
+
+
+
+
+/* ------------------- TOOLTIPS ------------------- */
+
+div[role="tooltip"].tooltip {
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: -0.25rem;
+
+    & > div.tooltip-inner {
+        border: solid 0.09375rem $gray-150;
+    }
 }
 
 
@@ -774,6 +809,55 @@ img.icon.fill-primary {
 
 
 
+
+/* ----- Width Styles ----- */
+.w-50 {
+    width: 50% !important;
+}
+
+@media (min-width: 475px) {
+    .w-xs_sm-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 576px) {
+    .w-sm-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 672px) {
+    .w-sm_md-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 768px) {
+    .w-md-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 992px) {
+    .w-lg-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 1100px) {
+    .w-lg_xl-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 1200px) {
+    .w-xl-50 {
+        width: 50% !important;
+    }
+}
+@media (min-width: 1400px) {
+    .w-xxl-50 {
+        width: 50% !important;
+    }
+}
+
+
+
 /* ------ Max width styles ------ */
 
 // 600px max width for md breakpoint and up
@@ -901,7 +985,6 @@ img.icon.fill-primary {
     left: 100vw;
     margin: -3.75rem -.625rem -1.25rem 0rem;
     z-index: 1000;
-    background-color: $white;
     border: none;
     border-radius: .4375rem;
     box-shadow: #00000026 0rem .125rem .25rem .0625rem;
@@ -920,3 +1003,4 @@ img.icon.fill-primary {
         outline-offset: .5rem;
     }
 }
+

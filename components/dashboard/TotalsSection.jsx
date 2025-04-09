@@ -22,11 +22,11 @@ const TotalsSection = ({decks, cards, indicateLoading, ...props}) => {
           <div className="d-flex flex-wrap gap-10 gap-sm-25 justify-content-center lh-1">
             <span className="d-flex align-items-center justify-content-center gap-3 mx-2 mx-sm-0 fw-medium">
               <Icon height={24} alt={'Deck icon'} src={'/icons/deck300.svg'}/>
-              <p><span>{decks}</span> Decks</p>
+              <p><span>{decks}</span> {decks === 1 ? 'Deck' : 'Decks'}</p>
             </span>
             <span className="d-flex align-items-center justify-content-center gap-3 mx-2 mx-sm-0 fw-medium">
               <Icon height={24} alt={'Card icon'} src={'/icons/cards300.svg'}/>
-              <p><span>{cards}</span> Cards</p>
+              <p><span>{cards}</span> {cards === 1 ? 'Card' : 'Cards'}</p>
             </span>
           </div>
         }
