@@ -34,7 +34,7 @@ const DeckPage = async ({ params }) => {
       errorInfo.message = retrievalResult.message || 'Unable to load deck. Please try again.';
       errorInfo.hiddenMsg = retrievalResult.error;
     }
-     
+    
     deck = retrievalResult?.deck; // This will be the deck object returned from the getDeck function
 
   } catch (error) {
@@ -69,8 +69,8 @@ const DeckPage = async ({ params }) => {
       <div className='d-flex justify-content-between align-items-center mb-40'>
         <BackButton />
         <div className='d-flex'>
-          <ButtonWithIcon isLinkButton={true} className="btn btn-gray d-none d-xs_sm-block me-10" href="#" iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
-          <IconButton className={'btn btn-gray d-block d-xs_sm-none me-10'} isLinkButton={true} href='#' iconSrc='/icons/edit.svg' altTag='Edit icon' size='sm' />
+          <ButtonWithIcon isLinkButton={true} className="btn btn-gray d-none d-xs_sm-block me-10" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
+          <IconButton className={'btn btn-gray d-block d-xs_sm-none me-10'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' altTag='Edit icon' size='sm' />
           <MoreButton deck={{id: deck._id.toString(), title: deck.title}}/> 
         </div>
       </div>
@@ -117,8 +117,8 @@ const DeckPage = async ({ params }) => {
       <UnderlineContainer className='mb-30'>
         <div className="d-flex align-items-center justify-content-between">
           <h3 className='fw-medium'>All Cards ({deck.cards.length})</h3>
-          <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block" href="#" iconSrc='/icons/add_3.svg' iconHeight={16} altTag='Add icon' iconFillColor="white">Add Cards</ButtonWithIcon>
-          <IconButton className={'btn btn-primary d-block d-xs_sm-none'} isLinkButton={true} href='#' iconFillColor="white" iconSrc='/icons/add.svg' altTag='Add icon' size='md' />
+          <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/add_3.svg' iconHeight={16} altTag='Add icon' iconFillColor="white">Add Cards</ButtonWithIcon>
+          <IconButton className={'btn btn-primary d-block d-xs_sm-none'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconFillColor="white" iconSrc='/icons/add.svg' altTag='Add icon' size='md' />
         </div>
       </UnderlineContainer>
 

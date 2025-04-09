@@ -56,7 +56,7 @@ const DashboardHeaderButtons = () => {
       }
       { (!!session || session === undefined) &&
         <>
-          <IconButton isLinkButton={true} href='#' className={'btn btn-primary'} iconFillColor={'white'} iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
+          <IconButton isLinkButton={true} href='/dashboard/deck/new' className={'btn btn-primary'} iconFillColor={'white'} iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
 
           <ButtonWithIcon isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-none d-sm_md-block' iconSrc='/icons/deck-blue400.svg' iconHeight={24} altTag='Deck icon'>Decks</ButtonWithIcon>
           <IconButton isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-block d-sm_md-none' iconSrc={'/icons/deck-blue400.svg'} altTag={'All decks icon'} size={'sm'}/>  

@@ -68,7 +68,7 @@ const DecksArea = ({ decks, indicateLoading }) => {
               <div className="col mt-4 mb-40 mb-sm-0">
                 <p className="text-center mb-4">You currently have no flashcard decks.</p>
                 <div className="d-flex justify-content-center">
-                  <Link href="#" role="button" className="btn btn-outline-primary">Create a Deck</Link>
+                  <Link href="/dashboard/deck/new" role="button" className="btn btn-outline-primary">Create a Deck</Link>
                 </div>
               </div>
             }
