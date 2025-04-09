@@ -7,6 +7,8 @@
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/mixins';
 
+@import './custom-dark';
+
 
 @import './map-amends';
 
@@ -983,7 +985,6 @@ img.icon.fill-primary {
     left: 100vw;
     margin: -3.75rem -.625rem -1.25rem 0rem;
     z-index: 1000;
-    background-color: $white;
     border: none;
     border-radius: .4375rem;
     box-shadow: #00000026 0rem .125rem .25rem .0625rem;
@@ -1002,3 +1003,4 @@ img.icon.fill-primary {
         outline-offset: .5rem;
     }
 }
+

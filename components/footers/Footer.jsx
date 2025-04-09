@@ -15,6 +15,7 @@ function Footer({ children }) {
         <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-start px-0 py-4 py-sm-0'>
           <Link href="/" className='blue-link'>
             <Image
+              className="logo"
               alt="SpanishDex Logo"
               src={spanishdex}
               placeholder="blur"

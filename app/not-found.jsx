@@ -10,6 +10,7 @@ const NotFound = async () => {
         <div className="mx-auto" style={{maxWidth: '80rem'}}>
           <Link href={'/dashboard'} className='blue-link'>
             <Image
+              className="logo"
               alt="SpanishDex Logo"
               src={spanishdex}
               placeholder="blur"
@@ -20,7 +21,7 @@ const NotFound = async () => {
         </div>
       </nav>
       <div className="px-25 px-sm-50">
-        <HomepageSection py='80' backgroundColor='white' style={{border: '2px solid #d9d9d9', maxWidth: '80rem'}} className='mt-20 rounded'>
+        <HomepageSection py='80' backgroundColor='white' style={{maxWidth: '80rem'}} className='border border-2 border-gray-150 mt-20 rounded'>
           <h1 className="text-center">Page Not Found</h1>
           <p className="text-center">Could not find requested resource.</p>
           <div className="d-block d-sm-flex column-gap-25">

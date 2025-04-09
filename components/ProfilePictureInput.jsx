@@ -95,7 +95,7 @@ const ProfilePictureInput = ({profilePicture, setProfilePicture, ...otherProps})
 
       {(originalPic.url && showCropDialog) &&
         <div className='position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center' style={{backgroundColor: '#00000044'}}>
-          <div style={{width: '650px', height: '80vh'}} className='mx-10 bg-white rounded d-flex flex-column justify-content-between'>
+          <div style={{width: '650px', height: '80vh'}} className='mx-10 bg-white-custom rounded d-flex flex-column justify-content-between'>
             <div className='d-flex ps-20 pe-10 py-10 align-items-center justify-content-between'>
               <h3>Crop Image</h3>
               <IconButton variant='light' size='sm' iconSrc={'/icons/close.svg'} altTag={'close icon'} onClick={handleCloseCropDialog} />

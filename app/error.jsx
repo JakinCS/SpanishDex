@@ -20,6 +20,7 @@ const Error = ({ error, reset }) => {
         <div className="mx-auto" style={{maxWidth: '80rem'}}>
           <Link href="/dashboard" className='blue-link'>
             <Image
+              className="logo"
               alt="SpanishDex Logo"
               src={spanishdex}
               placeholder="blur"
@@ -30,7 +31,7 @@ const Error = ({ error, reset }) => {
         </div>
       </nav>
       <div className="px-25 px-sm-50">
-        <HomepageSection py='80' backgroundColor='white' style={{border: '2px solid #d9d9d9', maxWidth: '80rem'}} className='mt-20 rounded'>
+        <HomepageSection py='80' backgroundColor='white' style={{maxWidth: '80rem'}} className='border border-2 border-gray-150 mt-20 rounded'>
           <h1 className="text-center">Unexpected Error Occurred</h1>
           <p className="text-center">We encountered a problem loading this page. <br /> Please try again or come back later.</p>
           <div className="d-block d-sm-flex column-gap-25">
