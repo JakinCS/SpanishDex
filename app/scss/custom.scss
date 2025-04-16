@@ -173,7 +173,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .btn.btn-light.danger.icon-button {
     transition: color .15s ease-in-out, background-color .15s ease-in-out, 
                 border-color .15s ease-in-out, box-shadow .15s ease-in-out,
-                filter .15s ease-in-out;
+    & img {
+        transition: filter .15s ease-in-out;
+    }
 }
 .btn.btn-light.danger.icon-button:hover, .btn.btn-light.danger.icon-button:focus-visible {
     background-color: $danger;
@@ -805,6 +807,165 @@ img.icon.fill-primary {
         outline-offset: .5rem;
     }
 
+}
+
+
+
+/* ----- Add & Edit Word Input Styles ----- */
+
+.flashcard-edit-list-item .number {
+    height: 3.125rem;
+    width: 2rem;
+}
+
+.flashcard-edit-list-item .flashcard-words-flex {
+    min-height: 3.125rem; 
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+}
+
+.flashcard-edit-list-item .edit-word-input {
+    border: solid .1rem #00000000;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 2.25rem;
+    transition: border 0s;
+
+    &:hover {
+        border-color: $gray-250 !important;
+    }
+    &:focus, &:focus-visible {
+        outline: none;
+        border-color: $gray-500 !important;
+    }
+}
+
+.flashcard-edit-list-item .flashcard-words-flex .separator {
+    width: .125rem;
+    height: 1.25rem;
+}
+
+.flashcard-edit-list-item .word-flex {
+    padding-top: .4375rem;
+    padding-bottom: .4375rem;
+    width: 50%;
+}
+
+.flashcard-edit-list-item .word-flex > p {
+    display: none;
+}
+
+.letter-button-flex {
+    display: none;
+}
+.letter-button {
+    background-color: white;
+    height: 1.875rem;
+    width: 1.875rem;
+    border: solid .0625rem $gray-250;
+    transition: background-color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-100;
+    }
+    &:focus-visible {
+        outline: solid .1rem $gray-500;
+        outline-offset: .125rem;
+    }
+
+    &:active {
+        background-color: $gray-150;
+    }
+}
+.case-changer {
+    background-color: $gray-150;
+    height: 1.875rem;
+    width: 3.125rem;
+    border: solid .0625rem $gray-150;
+    transition: background-color .15s ease-in-out;
+
+    &:hover, &:focus-visible {
+        background-color: $gray-100;
+        border-color: $gray-100;
+    }
+    &:focus-visible {
+        outline: solid .1rem $gray-500;
+        outline-offset: .125rem;
+    }
+
+    &:active {
+        background-color: #ebebeb;
+        border-color: #ebebeb;
+    }
+}
+
+.flashcard-edit-list-item .flashcard-words-flex:has(.form-control:focus), 
+.flashcard-edit-list-item .flashcard-words-flex:has(.form-control:focus-visible), 
+.flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex.focus) {
+    & > .word-flex {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
+
+    & > .word-flex > p {
+        display: block;
+    }
+
+    & input.form-control {
+        border-color: $gray-250;
+    }
+
+    & .separator {
+        height: 3.125rem;
+    }
+}
+
+.flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex .form-control:focus), 
+.flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex .form-control:focus-visible), 
+.flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex.focus) {
+
+    & .letter-button-flex {
+        display: flex;
+    }
+
+    & div.separator {
+        height: 5.625rem;
+    }
+
+}
+
+.flashcard-add-list-item .add-word-input {
+    border-color: $gray-250;
+
+    &:focus, &:focus-visible {
+        outline: none;
+        border-color: $gray-500 !important;
+        border-width: .1rem;
+    }
+}
+
+.flashcard-add-list-item .add-word-input.is-invalid {
+    border-color: $danger;
+    border-width: .1rem;
+
+    &:focus, &:focus-visible {
+        outline: none;
+        border-color: shade-color($danger, 20%) !important;
+        border-width: .125rem;
+    }
+}
+
+.flashcard-add-list-item:has(.spanish-flex .form-control:focus), 
+.flashcard-add-list-item:has(.spanish-flex .form-control:focus-visible), 
+.flashcard-add-list-item:has(.spanish-flex.focus) {
+
+    & .letter-button-flex {
+        display: flex;
+    }
+
+}
+
+.flashcard-add-list-item .spanish-flex .letter-button-flex {
+    margin-bottom: -2.5rem;
 }
 
 
