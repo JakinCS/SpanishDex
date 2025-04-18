@@ -17,15 +17,16 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // The state for the value of the english input field
   const [englishWord, setEnglishWord] = useState(english || '')
   // This function is run when the user makes a change on the english word input field
-  const updateEnglishWord = (e) => { 
+  const updateEnglishWord = (e, word) => { 
     // Updates the englishWord state with the new input value.
-    setEnglishWord(e.target.value) 
+    if (!e) setEnglishWord(word)
+    else setEnglishWord(e.target.value) 
 
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {
       const newCardsArray = prevState.cards.map((card) => {
         if (card.id === cardId) {
-          return {id: card.id, english: e.target.value, spanish: spanishWord}
+          return {id: card.id, english: (!e ? word : e.target.value), spanish: spanishWord}
         } else {
           return card
         }
@@ -38,15 +39,16 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // The state for the value of the spanish input field
   const [spanishWord, setSpanishWord] = useState(spanish || '')
   // This function is run when the user makes a change on the spanish word input field
-  const updateSpanishWord = (e) => { 
+  const updateSpanishWord = (e, word) => { 
     // Updates the spanishWord state with the new input value.
-    setSpanishWord(e.target.value) 
+    if (!e) setSpanishWord(word)
+    else setSpanishWord(e.target.value) 
 
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {      
       const newCardsArray = prevState.cards.map((card) => {
         if (card.id === cardId) {
-          return {id: card.id, english: englishWord, spanish: e.target.value}
+          return {id: card.id, english: englishWord, spanish: (!e ? word : e.target.value)}
         } else {
           return card
         }
@@ -69,15 +71,23 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // or, for the spanish input field, whenever the showSpanishFocus state changes.
   const ensureEnglishValidity = () => {
     // Change the englishWord state back to the previous value (englishBeforeChanges)
-    if (englishWord.trim().length === 0) setEnglishWord(englishBeforeChanges.current);
+    if (englishWord.trim().length === 0) updateEnglishWord(null, englishBeforeChanges.current);
     // Update the englishBeforeChanges value.
-    else englishBeforeChanges.current = englishWord;      
+    // Update the englishWord state to include no extra spaces before or after
+    else {
+      englishBeforeChanges.current = englishWord.trim();
+      updateEnglishWord(null, englishWord.trim())
+    }      
   }
   const ensureSpanishValidity = () => {
     // Change the spanishWord state back to the previous value (spanishBeforeChanges)
-    if (spanishWord.trim().length === 0) setSpanishWord(spanishBeforeChanges.current);
-    // Update the spanishBeforeChanges value.
-    else spanishBeforeChanges.current = spanishWord;      
+    if (spanishWord.trim().length === 0) updateSpanishWord(null, spanishBeforeChanges.current);
+    // Update the spanishBeforeChanges value. 
+    // Update the spanishWord state to include no extra spaces before or after
+    else {
+      spanishBeforeChanges.current = spanishWord.trim();
+      updateSpanishWord(null, spanishWord.trim())
+    };      
   }
 
   // Run the ensureSpanishValidity() function on change of the showSpanishFocus state

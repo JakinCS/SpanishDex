@@ -56,7 +56,7 @@ const EditPageBody = ({ deckId, initialData }) => {
       </div>
       
       <p>Title</p>
-      <TitleEdit setState={setData} titleValue={data.title} initialTitle={data.title}/>
+      <TitleEdit setState={setData} titleValue={data.title} />
 
       <p className='mt-30 mb-10'>Description</p>
       <Form.Control 
@@ -84,9 +84,15 @@ const EditPageBody = ({ deckId, initialData }) => {
         </div>
       </UnderlineContainer>
 
-      { data.cards.map((card, index) => {
-        return <EditCardListItem key={card.id} number={index + 1} cardId={card.id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
-      })}
+      <div className='mb-50'>
+        { data.cards.map((card, index) => {
+          return <EditCardListItem key={card.id} number={index + 1} cardId={card.id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
+        })}
+      </div>
+
+      { data.cards.length === 0 && (
+        <p className='text-center mb-50'>There are no cards in this deck yet. Start by adding a card above.</p>
+      )}
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckId={deckId} deckTitle={data.title} />
 
