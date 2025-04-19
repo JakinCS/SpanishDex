@@ -885,7 +885,7 @@ img.icon.fill-primary {
     height: 1.875rem;
     width: 3.125rem;
     border: solid .0625rem $gray-150;
-    transition: background-color .15s ease-in-out;
+    transition: border-color .15s ease-in-out, background-color .15s ease-in-out;
 
     &:hover, &:focus-visible {
         background-color: $gray-100;
