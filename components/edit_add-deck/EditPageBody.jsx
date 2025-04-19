@@ -9,6 +9,8 @@ import AddCardArea from '@/components/edit_add-deck/AddCardArea';
 import TitleEdit from '@/components/edit_add-deck/TitleEdit';
 import { useState } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
+import IconButton from '../IconButton';
+import MoreButton from './MoreButton';
 
 const EditPageBody = ({ deckId, initialData }) => {
 
@@ -50,8 +52,10 @@ const EditPageBody = ({ deckId, initialData }) => {
       <div className='d-flex justify-content-between align-items-center mb-40'>
         <BackButton />
         <div className='d-flex'>
-          <Button variant='outline-danger' className='me-15' onClick={openDiscardModal}>Discard Changes</Button>
-          <Button variant='primary' onClick={handleSaveChanges}>Save Deck</Button>
+          <Button variant='outline-danger' className='d-none d-sm_md-block me-15' onClick={openDiscardModal}>Discard Changes</Button>
+          <Button variant='primary' className='d-none d-xs_sm-block' onClick={handleSaveChanges}>Save Deck</Button>
+          <Button variant='primary' className='d-block d-xs_sm-none' onClick={handleSaveChanges}>Save</Button>
+          <MoreButton openModal={openDiscardModal} className='d-block d-sm_md-none ms-10' />
         </div>
       </div>
       

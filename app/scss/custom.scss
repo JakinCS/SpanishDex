@@ -844,10 +844,14 @@ img.icon.fill-primary {
     height: 1.25rem;
 }
 
+.flashcard-edit-list-item .flashcard-words-flex .separator2 {
+    width: calc(100% - 1.875rem);
+    height: .125rem;
+}
+
 .flashcard-edit-list-item .word-flex {
     padding-top: .4375rem;
     padding-bottom: .4375rem;
-    width: 50%;
 }
 
 .flashcard-edit-list-item .word-flex > p {
@@ -964,9 +968,9 @@ img.icon.fill-primary {
 
 }
 
-.flashcard-add-list-item .spanish-flex .letter-button-flex {
-    margin-bottom: -2.5rem;
-}
+// .flashcard-add-list-item .spanish-flex .letter-button-flex {
+//     margin-bottom: -2.5rem;
+// }
 
 
 

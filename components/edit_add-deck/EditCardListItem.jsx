@@ -133,13 +133,21 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   }, [])
 
   return (
-    <div {...props} className={"flashcard-edit-list-item d-flex align-items-start" + (props.className ? ` ${props.className}` : '')}>
-      <div className='number d-flex justify-content-start align-items-center'>
+    <div {...props} className={"flashcard-edit-list-item d-flex flex-column flex-xs_sm-row align-items-start" + (props.className ? ` ${props.className}` : '')}>
+      
+      <div className='number d-none d-xs_sm-flex justify-content-start align-items-center'>
         <p>{number}.</p>
       </div>
 
-      <div className={'flashcard-words-flex d-flex align-items-start bg-white rounded w-100 h-100'}>
-        <div className='word-flex english-flex d-flex flex-column justify-content-center px-15'>
+      <div className='d-flex d-xs_sm-none justify-content-between align-items-center w-100'>
+        <div className='number d-flex justify-content-start align-items-center ps-2'>
+          <p>{number}.</p>
+        </div>
+        <IconButton className="ms-10" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete icon' onClick={openDeleteCard} onFocus={() => setShowSpanishFocus(false)}/>
+      </div>
+
+      <div className={'flashcard-words-flex d-flex flex-column flex-md-row align-items-start bg-white rounded w-100 h-100'}>
+        <div className='word-flex english-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50'>
           <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>English</p>
           <Form.Control 
             className='edit-word-input' 
@@ -153,9 +161,10 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
           />
         </div>
 
-        <div className='separator bg-gray-150 my-15 flex-grow-0'></div>
+        <div className='separator bg-gray-150 my-15 flex-grow-0 d-none d-md-block'></div>
+        <div className='separator2 bg-gray-150 mx-auto flex-grow-0 d-block d-md-none'></div>
 
-        <div className={`number${number} ` + 'word-flex spanish-flex d-flex flex-column justify-content-center px-15' + (showSpanishFocus ? ' focus' : '')}>
+        <div className={`number${number} ` + 'word-flex spanish-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showSpanishFocus ? ' focus' : '')}>
           <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>Spanish</p>
           <Form.Control 
             ref={spanishInputRef} 
@@ -171,7 +180,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
         </div>
       </div>
 
-      <IconButton className="mt-2 ms-10" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete icon' onClick={openDeleteCard} onFocus={() => setShowSpanishFocus(false)}/>
+      <IconButton className="mt-2 ms-10 d-none d-xs_sm-block" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete icon' onClick={openDeleteCard} onFocus={() => setShowSpanishFocus(false)}/>
     
       <DeleteCardModal show={showDeleteModal} closeModal={closeDeleteCard} deleteCard={deleteCard} englishWord={englishWord} spanishWord={spanishWord}/>
     </div>

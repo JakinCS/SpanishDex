@@ -23,6 +23,15 @@ const AddCardArea = ({ setState }) => {
   // State whether to show/hide an error for the input fields.
   const [showInputErrors, setShowInputErrors] = useState({english: false, spanish: false})
 
+  // This function is called when the add button is 'focused'.
+  // Only sets the showSpanishFocus to false if the focus happened by 'tab'
+  const handleAddButtonFocus = (e) => {
+    // console.log(e)
+    if (e.relatedTarget !== null && !e.relatedTarget.matches('.spanish-flex input.add-word-input')) {
+      setShowSpanishFocus(false)
+    }
+  }
+
   // This useEffect adds an event listener for the 'mousedown' event.
   useEffect(() => {
     // Update the showSpanishFocus state (for adding 'focus' class) whenever you click on the
@@ -33,7 +42,9 @@ const AddCardArea = ({ setState }) => {
           clickedElement.matches(`.flashcard-add-list-item .spanish-flex`) ||
           document.querySelector(`.flashcard-add-list-item .spanish-flex`).contains(clickedElement) ) {
         setShowSpanishFocus(true);
-      } else {
+      } 
+      // Set the focus to false. (But ONLY if the element clicked is not the 'add' button. It's necessary for the add button to do this itself)
+      else if (!clickedElement.matches('.flashcard-add-list-item .btn') && !clickedElement.matches('.flashcard-add-list-item .btn *')) {
         setShowSpanishFocus(false)
       }
     }
@@ -56,6 +67,9 @@ const AddCardArea = ({ setState }) => {
   }
 
   const handleAddCard = () => {
+    // Turn off the focus of the spanish input
+    setShowSpanishFocus(false)
+
     // Do a check on the validity of the inputs
     const result = validateInputs();
     if (!result.valid) return;
@@ -73,9 +87,9 @@ const AddCardArea = ({ setState }) => {
   return (
     <div>
       <p className={'text-danger fw-semibold lh-1 mb-3 fs-5' + (showInputErrors.english || showInputErrors.spanish ? ' d-block' : ' d-none')} style={{marginTop: '-1rem'}}>Both fields must not be empty</p>
-      <div className='flashcard-add-list-item d-flex align-items-center'>
-        <div className='d-flex align-items-start gap-15 me-30 w-100'>
-          <div className="word-flex d-flex w-100">
+      <div className='flashcard-add-list-item d-flex flex-column flex-sm_md-row align-items-center'>
+        <div className='d-flex flex-column flex-lg-row align-items-start gap-15 me-sm_md-30 w-100'>
+          <div className="word-flex d-flex w-100 w-lg-50">
             <Form.Group className='w-100'>
               <Form.Control 
                 value={englishWord} 
@@ -89,7 +103,7 @@ const AddCardArea = ({ setState }) => {
             </Form.Group>
           </div>
 
-          <div className={"word-flex spanish-flex d-flex flex-column w-100" + (showSpanishFocus ? ' focus' : '')}>
+          <div className={"word-flex spanish-flex d-flex flex-column w-100 w-lg-50" + (showSpanishFocus ? ' focus' : '')}>
             <Form.Control 
               value={spanishWord} 
               onChange={updateSpanishWord} 
@@ -100,7 +114,12 @@ const AddCardArea = ({ setState }) => {
               type="text" 
               placeholder="Type Spanish word"
             />
-            <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef}/>
+            <div className="d-none d-sm_md-flex">
+              <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
+            </div>
+            <div className='d-flex d-sm_md-none'>
+              <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef}/>
+            </div>
           </div>
         </div>
         <ButtonWithIcon 
@@ -109,8 +128,20 @@ const AddCardArea = ({ setState }) => {
           altTag='add icon' 
           iconHeight={16} 
           iconFillColor={'white'} 
-          className='flex-shrink-0' 
-          onFocus={() => {setShowSpanishFocus(false)}}
+          className='flex-shrink-0 d-block d-sm_md-none mt-20 w-100' 
+          onFocus={handleAddButtonFocus}
+          onClick={handleAddCard}
+        >
+          Add Card
+        </ButtonWithIcon>
+        <ButtonWithIcon 
+          variant='primary' 
+          iconSrc='/icons/add_3.svg' 
+          altTag='add icon' 
+          iconHeight={16} 
+          iconFillColor={'white'} 
+          className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0' 
+          onFocus={handleAddButtonFocus}
           onClick={handleAddCard}
         >
           Add Card
