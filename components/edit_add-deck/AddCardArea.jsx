@@ -81,7 +81,7 @@ const AddCardArea = ({ setState }) => {
 
     // Add the card to the page's state's card array.
     setState((prevState) => {
-      return {...prevState, cards: [...prevState.cards, {id: `${Math.round(Math.random() * 100000000)}`, english: englishWord, spanish: spanishWord}]}
+      return {...prevState, cards: [...prevState.cards, {_id: `${Math.round(Math.random() * 100000000)}`, english: englishWord, spanish: spanishWord}]}
     })
 
     // Reset the field values
@@ -91,7 +91,7 @@ const AddCardArea = ({ setState }) => {
 
   return (
     <div>
-      <p className={'text-danger fw-semibold lh-1 mb-3 fs-5' + (showInputErrors.english || showInputErrors.spanish ? ' d-block' : ' d-none')} style={{marginTop: '-1rem'}}>Both fields must not be empty</p>
+      <p className={'text-danger fw-semibold lh-1 mb-3 fs-5' + (showInputErrors.english || showInputErrors.spanish ? ' d-block' : ' d-none')} style={{marginTop: '-1rem'}}>Both fields must be filled out</p>
       <div className='flashcard-add-list-item d-flex flex-column flex-sm_md-row align-items-center'>
         <div className='d-flex flex-column flex-lg-row align-items-start gap-15 me-sm_md-30 w-100'>
           <div className="word-flex d-flex w-100 w-lg-50">

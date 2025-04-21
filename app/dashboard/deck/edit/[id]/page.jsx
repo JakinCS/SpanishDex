@@ -1,31 +1,48 @@
 import React from 'react'
 import EditPageBody from '@/components/edit_add-deck/EditPageBody';
+import PageErrorMessage from '@/components/PageErrorMessage';
+import { notFound } from 'next/navigation'
+import { getDeck } from '@/lib/actions'
 
 const EditDeckPage = async ({ params }) => {
-  const { id } = await params
-  console.log(id)
 
-  const initialData = {
-    title: 'Spanish Verbs',
-    description: 'This is a deck to learn the common Spanish verbs',
-    cards: [
-      { id: '67d5a739d8732601f8496ef5', english: 'To Eat', spanish: 'Comer' },
-      { id: '67d4a24ad8732601f8496eb0', english: 'To Drink', spanish: 'Beber' },
-      { id: '67d4a56cd8732601f8496eb7', english: 'To Run', spanish: 'Correr' },
-      { id: '67d5987ad8732601f8496edf', english: 'To Walk', spanish: 'Caminar' },
-      { id: '67d5a715d8732601f8496ef4', english: 'To Swim', spanish: 'Nadar' },
-      { id: '67d5a715d8732601f8496ef6', english: 'To Swim', spanish: 'Nadar' },
-      { id: '67d5a715d8732601f8496ef7', english: 'To Swim', spanish: 'Nadar' },
-      { id: '67d5a715d8732601f8496ef8', english: 'To Swim', spanish: 'Nadar' },
-      { id: '67d5a715d8732601f8496ef9', english: 'To Swim', spanish: 'Nadar' },
-      { id: '67d5a715d8732601f8496ef0', english: 'To Swim', spanish: 'Nadar' },
-    ]
+  const { id } = await params
+  // Ensure the id is a valid ObjectId format before proceeding
+  if ( !(/^[0-9a-fA-F]+$/.test(id)) || id.length !== 24) {
+    notFound() // Trigger the 404 page in Next.js if the id is invalid
   }
-  // const initialData = {
-  //   title: 'Spanish Verbs',
-  //   description: 'This is a deck to learn the common Spanish verbs',
-  //   cards: [    ]
-  // }
+
+  let errorInfo = {isError: false, message: '', hiddenMsg: ''};
+  let initialData = undefined;
+
+  try {
+    const retrievalResult = await getDeck(id, true)
+
+    if (retrievalResult.success === false) {
+      // If there was an error in retrieving the deck, return the error message
+      errorInfo.isError = true;
+      errorInfo.message = retrievalResult.message || 'Unable to load deck information. Please try again.';
+      errorInfo.hiddenMsg = retrievalResult.error;
+    }
+    
+    initialData = JSON.parse(JSON.stringify(retrievalResult?.deck)); // This will be the deck object returned from the getDeck function
+
+  } catch (error) {
+    errorInfo.isError = true;
+    errorInfo.message = errorInfo?.message || 'Unable to load deck information. Unexpected error occurred.';
+    errorInfo.hiddenMsg = error;
+  }
+
+  if (initialData === null) {
+    // If deck is null, trigger the 404 page in Next.js
+    notFound()
+  }
+
+  if (errorInfo.isError) {
+    return (
+      <PageErrorMessage buttonType={errorInfo.message.includes('Unauthorized') ? 'dashboard' : 'reload'} error={errorInfo.hiddenMsg}>{errorInfo.message}</PageErrorMessage>
+    )
+  }
 
   return (
     <EditPageBody deckId={id} initialData={initialData}/>

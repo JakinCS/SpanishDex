@@ -25,8 +25,8 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {
       const newCardsArray = prevState.cards.map((card) => {
-        if (card.id === cardId) {
-          return {id: card.id, english: (!e ? word : e.target.value), spanish: spanishWord}
+        if (card._id === cardId) {
+          return {_id: card._id, english: (!e ? word : e.target.value), spanish: spanishWord}
         } else {
           return card
         }
@@ -47,8 +47,8 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {      
       const newCardsArray = prevState.cards.map((card) => {
-        if (card.id === cardId) {
-          return {id: card.id, english: englishWord, spanish: (!e ? word : e.target.value)}
+        if (card._id === cardId) {
+          return {_id: card._id, english: englishWord, spanish: (!e ? word : e.target.value)}
         } else {
           return card
         }
@@ -100,7 +100,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   const deleteCard = () => {
     setState((prev) => {
       const newCardsArray = prev.cards.filter((card) => {
-        return card.id !== cardId
+        return card._id !== cardId
       })
 
       return {...prev, cards: newCardsArray};

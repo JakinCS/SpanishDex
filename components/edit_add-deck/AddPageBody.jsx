@@ -13,7 +13,7 @@ import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
 import UnsavedChangesModal from '../modals/UnsavedChangesModal';
 
-const EditPageBody = ({ deckId, initialData }) => {
+const AddPageBody = ({ initialData }) => {
   const router = useRouter();
 
   // This state and respective functions handle the show/hide of the discard changes modal
@@ -51,10 +51,10 @@ const EditPageBody = ({ deckId, initialData }) => {
       otherCards: []
     }
 
-    changes.deletedCards = initialData.cards.filter((card) => !newData.cards.find((otherCard) => (card._id === otherCard._id)))
+    changes.deletedCards = initialData.cards.filter((card) => !newData.cards.find((otherCard) => (card.id === otherCard.id)))
 
     newData.cards.forEach((card) => {
-      const findResult = initialData.cards.find((otherCard) => (card._id === otherCard._id))
+      const findResult = initialData.cards.find((otherCard) => (card.id === otherCard.id))
       if (!findResult) {
         changes.addedCards.push(card)
       } else {
@@ -116,7 +116,7 @@ const EditPageBody = ({ deckId, initialData }) => {
 
       <div className='mb-50'>
         { data.cards.map((card, index) => {
-          return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
+          return <EditCardListItem key={card.id} number={index + 1} cardId={card.id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
         })}
       </div>
 
@@ -124,11 +124,11 @@ const EditPageBody = ({ deckId, initialData }) => {
         <p className='text-center mb-50'>There are no cards in this deck yet. Start by adding a card above.</p>
       )}
 
-      <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckId={deckId} deckTitle={data.title} />
+      <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
 
     </>
   )
 }
 
-export default EditPageBody
+export default AddPageBody
