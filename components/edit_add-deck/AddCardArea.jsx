@@ -23,15 +23,6 @@ const AddCardArea = ({ setState }) => {
   // State whether to show/hide an error for the input fields.
   const [showInputErrors, setShowInputErrors] = useState({english: false, spanish: false})
 
-  // This function is called when the add button is 'focused'.
-  // Only sets the showSpanishFocus to false if the focus happened by 'tab'
-  const handleAddButtonFocus = (e) => {
-    // console.log(e)
-    if (e.relatedTarget !== null && !e.relatedTarget.matches('.spanish-flex input.add-word-input')) {
-      setShowSpanishFocus(false)
-    }
-  }
-
   // This useEffect adds an event listener for the 'mousedown' event.
   useEffect(() => {
     // Update the showSpanishFocus state (for adding 'focus' class) whenever you click on the
@@ -51,8 +42,22 @@ const AddCardArea = ({ setState }) => {
 
     document.addEventListener('mousedown', toggleFocus);
 
+    // This function is used to turn off the focus of the spanish input when the user presses 'Tab' on the case changer button.
+    const caseChangerFunction = (e) => {
+      if (e.key == 'Tab') {
+        setShowSpanishFocus(false)
+      }
+    }
+
+    document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[0].addEventListener('keydown', caseChangerFunction)
+    document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[1].addEventListener('keydown', caseChangerFunction)
+
     return () => {
-      document.removeEventListener('mousedown', toggleFocus)
+      document.removeEventListener('mousedown', toggleFocus);
+      if (document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer").length > 0) {
+        document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[0].removeEventListener('keydown', caseChangerFunction)
+        document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[1].removeEventListener('keydown', caseChangerFunction)
+      }
     }
   }, [])
 
@@ -129,7 +134,6 @@ const AddCardArea = ({ setState }) => {
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-block d-sm_md-none mt-20 w-100' 
-          onFocus={handleAddButtonFocus}
           onClick={handleAddCard}
         >
           Add Card
@@ -141,7 +145,6 @@ const AddCardArea = ({ setState }) => {
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0' 
-          onFocus={handleAddButtonFocus}
           onClick={handleAddCard}
         >
           Add Card

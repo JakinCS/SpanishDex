@@ -9,7 +9,6 @@ import AddCardArea from '@/components/edit_add-deck/AddCardArea';
 import TitleEdit from '@/components/edit_add-deck/TitleEdit';
 import { useState } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
-import IconButton from '../IconButton';
 import MoreButton from './MoreButton';
 
 const EditPageBody = ({ deckId, initialData }) => {
