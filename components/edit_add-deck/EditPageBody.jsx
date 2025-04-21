@@ -10,29 +10,50 @@ import TitleEdit from '@/components/edit_add-deck/TitleEdit';
 import { useState } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
 import MoreButton from './MoreButton';
+import { useRouter } from 'next/navigation';
+import UnsavedChangesModal from '../modals/UnsavedChangesModal';
 
 const EditPageBody = ({ deckId, initialData }) => {
+  const router = useRouter();
 
   // This state and respective functions handle the show/hide of the discard changes modal
   const [showDiscardModal, setShowDiscardModal] = useState(false);
   const openDiscardModal = () => {setShowDiscardModal(true)}
   const closeDiscardCard = () => {setShowDiscardModal(false)}
+  
+  // This state and respective functions handle the show/hide of the unsaved changes modal
+  const [showUnsavedChangesModal, setShowUnsavedChangesModal] = useState(false);
+  const openUnsavedChangesModal = () => {setShowUnsavedChangesModal(true)}
+  const closeUnsavedChangesCard = () => {setShowUnsavedChangesModal(false)}
 
   // This is the state for all of the data associated with this deck.
   const [data, setData] = useState(initialData)
 
-  const handleSaveChanges = () => {
+  const handleBackButtonClick = (e) => {
+    e.preventDefault();
+
+    const changes = getChanges(initialData, data);
+    if (changes.title || changes.description || changes.deletedCards.length > 0 || changes.addedCards.length > 0 || changes.otherCards.length > 0) {
+      openUnsavedChangesModal();
+    } else {
+      // If there are no changes, just go back
+      router.back()
+    }
+  } 
+
+  // This function finds out what has been changed on the page
+  const getChanges = (initialData, newData) => {
     let changes = {
-      title: initialData.title === data.title ? undefined : data.title,
-      description: initialData.description === data.description ? undefined : data.description,
+      title: initialData.title === newData.title ? undefined : newData.title,
+      description: initialData.description === newData.description ? undefined : newData.description,
       deletedCards: [],
       addedCards: [],
       otherCards: []
     }
 
-    changes.deletedCards = initialData.cards.filter((card) => !data.cards.find((otherCard) => (card.id === otherCard.id)))
+    changes.deletedCards = initialData.cards.filter((card) => !newData.cards.find((otherCard) => (card.id === otherCard.id)))
 
-    data.cards.forEach((card) => {
+    newData.cards.forEach((card) => {
       const findResult = initialData.cards.find((otherCard) => (card.id === otherCard.id))
       if (!findResult) {
         changes.addedCards.push(card)
@@ -43,13 +64,19 @@ const EditPageBody = ({ deckId, initialData }) => {
       }
     })
 
+    return changes;
+  }
+
+  const handleSaveChanges = () => {
+    const changes = getChanges(initialData, data);
+
     console.log({data, changes})
   }
 
   return (
     <>
       <div className='d-flex justify-content-between align-items-center mb-40'>
-        <BackButton />
+        <BackButton onClick={handleBackButtonClick}/>
         <div className='d-flex'>
           <Button variant='outline-danger' className='d-none d-sm_md-block me-15' onClick={openDiscardModal}>Discard Changes</Button>
           <Button variant='primary' className='d-none d-xs_sm-block' onClick={handleSaveChanges}>Save Deck</Button>
@@ -98,6 +125,7 @@ const EditPageBody = ({ deckId, initialData }) => {
       )}
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckId={deckId} deckTitle={data.title} />
+      <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
 
     </>
   )
