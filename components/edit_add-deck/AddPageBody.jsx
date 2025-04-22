@@ -2,6 +2,7 @@
 
 import BackButton from '@/components/BackButton'
 import Button from "react-bootstrap/Button";
+import Alert from 'react-bootstrap/Alert';
 import UnderlineContainer from '@/components/UnderlineContainer';
 import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
@@ -12,6 +13,7 @@ import DiscardChangesModal from '../modals/DiscardChangesModal';
 import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
 import UnsavedChangesModal from '../modals/UnsavedChangesModal';
+import { createDeck } from '@/lib/actions';
 
 const AddPageBody = ({ initialData }) => {
   const router = useRouter();
@@ -32,8 +34,7 @@ const AddPageBody = ({ initialData }) => {
   const handleBackButtonClick = (e) => {
     e.preventDefault();
 
-    const changes = getChanges(initialData, data);
-    if (changes.title || changes.description || changes.deletedCards.length > 0 || changes.addedCards.length > 0 || changes.otherCards.length > 0) {
+    if (hasChanges(initialData, data)) {
       openUnsavedChangesModal();
     } else {
       // If there are no changes, just go back
@@ -41,50 +42,61 @@ const AddPageBody = ({ initialData }) => {
     }
   } 
 
-  // This function finds out what has been changed on the page
-  const getChanges = (initialData, newData) => {
-    let changes = {
-      title: initialData.title === newData.title ? undefined : newData.title,
-      description: initialData.description === newData.description ? undefined : newData.description,
-      deletedCards: [],
-      addedCards: [],
-      otherCards: []
-    }
-
-    changes.deletedCards = initialData.cards.filter((card) => !newData.cards.find((otherCard) => (card.id === otherCard.id)))
-
-    newData.cards.forEach((card) => {
-      const findResult = initialData.cards.find((otherCard) => (card.id === otherCard.id))
-      if (!findResult) {
-        changes.addedCards.push(card)
-      } else {
-        if (findResult.english !== card.english || findResult.spanish !== card.spanish) {
-          changes.otherCards.push(card)
-        }
-      }
-    })
-
-    return changes;
+  // This function determines whether there are any changes or not.
+  const hasChanges = (initialData, newData) => {
+    if (initialData.title !== newData.title) return true;
+    if (initialData.description !== newData.description) return true;
+    if (newData.cards.length > 0) return true;
+    return false;
   }
 
-  const handleSaveChanges = () => {
-    const changes = getChanges(initialData, data);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState({show: false, error: '', message: ''})
 
-    console.log({data, changes})
+  // This function is run when the save button is clicked. It handles the logic for saving the deck.
+  const handleSaveChanges = async () => {
+
+    try {
+      setIsPending(true);
+      setError((prev) => ({...prev, show: false}))
+
+      const result = await createDeck(data.title, data.description, data.cards);
+      if (result.success) {
+        // If the deck was created successfully, redirect to the deck page
+        router.replace(`/dashboard/deck/${result.deckId}`);
+      } else {
+        // Handle error in creating deck
+        setError({show: true, error: result.error, message: result.message})
+        setIsPending(false);
+      }
+    } catch (error) {
+      setError({show: true, error: error.toString(), message: "Unexpected error occurred. Please try again."});
+      setIsPending(false);
+    }
   }
 
   return (
     <>
+      <Alert variant="danger" className='mb-30' show={error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
+        <Alert.Heading>Error</Alert.Heading>
+        {error.message}
+      </Alert>
+      <p className="d-none text-break hiddenError">{error.error}</p>
+      
       <div className='d-flex justify-content-between align-items-center mb-40'>
         <BackButton onClick={handleBackButtonClick}/>
         <div className='d-flex'>
-          <Button variant='outline-danger' className='d-none d-sm_md-block me-15' onClick={openDiscardModal}>Discard Changes</Button>
-          <Button variant='primary' className='d-none d-xs_sm-block' onClick={handleSaveChanges}>Save Deck</Button>
-          <Button variant='primary' className='d-block d-xs_sm-none' onClick={handleSaveChanges}>Save</Button>
+          <Button variant='outline-danger' className='d-none d-sm_md-block me-15' onClick={openDiscardModal} disabled={isPending}>Discard Changes</Button>
+          <Button variant='primary' className='d-none d-xs_sm-block' onClick={handleSaveChanges} disabled={isPending}>
+            {!isPending ? 'Save Deck' : <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+          </Button>
+          <Button variant='primary' className='d-block d-xs_sm-none' onClick={handleSaveChanges} disabled={isPending}>
+            {!isPending ? 'Save' : <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+          </Button>
           <MoreButton openModal={openDiscardModal} className='d-block d-sm_md-none ms-10' />
         </div>
       </div>
-      
+
       <p>Title</p>
       <TitleEdit setState={setData} titleValue={data.title} />
 
@@ -116,7 +128,7 @@ const AddPageBody = ({ initialData }) => {
 
       <div className='mb-50'>
         { data.cards.map((card, index) => {
-          return <EditCardListItem key={card.id} number={index + 1} cardId={card.id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
+          return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
         })}
       </div>
 
