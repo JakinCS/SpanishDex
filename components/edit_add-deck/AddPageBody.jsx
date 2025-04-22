@@ -77,7 +77,7 @@ const AddPageBody = ({ initialData }) => {
 
   return (
     <>
-      <Alert variant="danger" className='mb-30' show={error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
+      <Alert variant="danger" className='mb-30 modified-margin' show={error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
         <Alert.Heading>Error</Alert.Heading>
         {error.message}
       </Alert>
