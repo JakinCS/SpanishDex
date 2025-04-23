@@ -902,8 +902,7 @@ img.icon.fill-primary {
     }
 }
 
-.flashcard-edit-list-item .flashcard-words-flex:has(.form-control:focus), 
-.flashcard-edit-list-item .flashcard-words-flex:has(.form-control:focus-visible), 
+.flashcard-edit-list-item .flashcard-words-flex:has(.english-flex.focus), 
 .flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex.focus) {
     & > .word-flex {
         padding-top: .75rem;
@@ -923,8 +922,6 @@ img.icon.fill-primary {
     }
 }
 
-.flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex .form-control:focus), 
-.flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex .form-control:focus-visible), 
 .flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex.focus) {
 
     & .letter-button-flex {
@@ -968,9 +965,6 @@ img.icon.fill-primary {
 
 }
 
-// .flashcard-add-list-item .spanish-flex .letter-button-flex {
-//     margin-bottom: -2.5rem;
-// }
 
 
 

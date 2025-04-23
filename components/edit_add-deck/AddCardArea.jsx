@@ -44,7 +44,7 @@ const AddCardArea = ({ setState }) => {
 
     // This function is used to turn off the focus of the spanish input when the user presses 'Tab' on the case changer button.
     const caseChangerFunction = (e) => {
-      if (e.key == 'Tab') {
+      if (e.key == 'Tab' && e.shiftKey == false) {
         setShowSpanishFocus(false)
       }
     }

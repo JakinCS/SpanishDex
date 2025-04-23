@@ -14,6 +14,7 @@ import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
 import UnsavedChangesModal from '../modals/UnsavedChangesModal';
 import { createDeck } from '@/lib/actions';
+import BackToTopButton from '../BackToTopButton';
 
 const AddPageBody = ({ initialData }) => {
   const router = useRouter();
@@ -138,6 +139,8 @@ const AddPageBody = ({ initialData }) => {
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
+
+      <BackToTopButton />
 
     </>
   )

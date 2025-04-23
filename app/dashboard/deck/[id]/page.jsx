@@ -75,7 +75,7 @@ const DeckPage = async ({ params }) => {
         </div>
       </div>
       <h1 className='mb-25'>{deck.title}</h1>
-      <p>{deck.description}</p>
+      <p>{deck.description != '' ? deck.description : <span className='fst-italic'>No description for this deck</span>}</p>
       <DashboardCard xPadding={30} yPadding={35} className="my-50" style={{maxWidth: '31.25rem'}}>
         <h3 className="fw-medium text-center text-xs_sm-start heading-underline-blue-100 lh-1 mb-40">Deck Information</h3>
         <div className='d-flex flex-column flex-xs_sm-row gap-15 gap-xs_sm-30'>

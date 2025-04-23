@@ -14,6 +14,7 @@ import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
 import UnsavedChangesModal from '../modals/UnsavedChangesModal';
 import { editDeck } from '@/lib/actions';
+import BackToTopButton from '../BackToTopButton';
 
 const EditPageBody = ({ deckId, initialData }) => {
   const savedData = useRef(initialData); // This is used to keep track of what data is saved.
@@ -234,6 +235,8 @@ const EditPageBody = ({ deckId, initialData }) => {
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckId={deckId} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
+
+      <BackToTopButton />
 
     </>
   )
