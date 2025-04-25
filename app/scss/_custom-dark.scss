@@ -1,6 +1,5 @@
 
 // new colors
-$new-bg-color: #2E383F;
 $color1: #0D1921;  // New body background color
 $color2: #001521;   // For black text of buttons for example
 $color3: #2E383F;  // Replaces pure white in most cases.
@@ -10,6 +9,7 @@ $color6: $almost-white;  // Used for headings and the logo.
 $color7: #66A6CC; // primary color replacement (for buttons mostly)
 $color8: #A3D6F5; // primary color replacement (for headings mostly)
 $color9: linear-gradient(to right, #222D33, #162127);   // For the header and footer
+$color10: #C11C00;  // Replace for the danger color
 
 
 // Custom sass for dark mode
@@ -24,7 +24,7 @@ $headings-color-dark: $color6;
 
 
 @include color-mode(dark) {
-  // START ------------------- BACKGROUND & BORDER OVERRIDES --------------------
+  // START ------------------- COLOR OVERRIDES --------------------
   .bg-white {
     background-color: $color3 !important;
   }
@@ -40,7 +40,13 @@ $headings-color-dark: $color6;
   .border-gray-150 {
     border-color: $color4 !important;
   }
-  // END ------------------- BACKGROUND & BORDER OVERRIDES --------------------
+  .text-danger {
+    color: $color10 !important;
+  }
+  .text-primary, .text-primary * {
+    color: $color8 !important;
+  }
+  // END ------------------- COLOR OVERRIDES --------------------
 
 
   // START ------------------- DROPDOWN --------------------
@@ -55,7 +61,13 @@ $headings-color-dark: $color6;
       background-color: shade-color($color3, 20%) !important;
     }
     & > a.danger-item:hover, & > a.danger-item:focus, & > a.danger-item:active {
-      color: $danger !important;
+      color: $color10 !important;
+    }
+  }
+  .dropdown-menu > .dropdown-item.danger-item {
+    color: $color10;
+    &:hover, &:focus, &:active, &.active {
+        border-color: $color10;
     }
   }
   // END ------------------- DROPDOWN --------------------
@@ -144,6 +156,37 @@ $headings-color-dark: $color6;
       filter: brightness(0) invert(7%) sepia(61%) saturate(1387%) hue-rotate(169deg) brightness(98%) contrast(104%) !important;  // color2
     }
   }
+  .btn-danger {
+    background-color: $color10 !important;
+    color: $color5 !important;
+    border-color: $color10 !important;
+    &:hover, &:focus-visible {
+      background-color: tint-color($color10, 10%) !important;
+      border-color: tint-color($color10, 10%) !important;
+      outline-color: tint-color($color10, 10%) !important;
+    }
+    &:active {
+      background-color: tint-color($color10, 15%) !important;
+      border-color: tint-color($color10, 15%) !important;
+    }
+  }
+  .btn-outline-danger {
+    border-color: $color10 !important;
+    color: $color10 !important;
+    & img.icon {
+      filter: brightness(0) invert(15%) sepia(64%) saturate(5246%) hue-rotate(6deg) brightness(94%) contrast(101%);  // color10
+    }
+    &:hover, &:focus-visible {
+      background-color: $color10 !important;
+      color: $color5 !important;
+      outline-color: tint-color($color10, 10%) !important;
+    }
+    &:active {
+      background-color: tint-color($color10, 5%) !important;
+      color: $color5 !important;
+      border-color: tint-color($color10, 5%) !important;
+    }
+  }
   .btn-light {
     background-color: #00000000 !important;
     border-color: #00000000 !important;
@@ -158,6 +201,15 @@ $headings-color-dark: $color6;
       background-color: shade-color($color3, 30%) !important;
       border-color: shade-color($color3, 30%) !important;
     }
+  }
+  .btn.btn-light.danger.icon-button:hover, .btn.btn-light.danger.icon-button:focus-visible {
+      background-color: $color10 !important;
+      border-color: $color10 !important;
+      outline-color: shade-color($color10, 20%) !important;
+  }
+  .btn.btn-light.danger.icon-button:active {
+      background-color: shade-color($color10, 20%) !important;
+      border-color: shade-color($color10, 20%) !important;
   }
   .btn-light.sort-search-button {
     background-color: $color3 !important;
@@ -255,6 +307,73 @@ $headings-color-dark: $color6;
   // END ------------------- FORMS ----------------------
 
 
+  // START -------------- EDIT / ADD DECK PAGE STYLES -------------------
+  .flashcard-edit-list-item .edit-word-input {
+    background-color: $color3 !important;
+    &:hover {
+        border-color: $color4 !important;
+    }
+    &:focus, &:focus-visible {
+        border-color: tint-color($color4, 40%) !important;
+    }
+  }
+  .flashcard-edit-list-item .flashcard-words-flex:has(.form-control:focus), 
+  .flashcard-edit-list-item .flashcard-words-flex:has(.form-control:focus-visible), 
+  .flashcard-edit-list-item .flashcard-words-flex:has(.spanish-flex.focus) {
+      & input.form-control {
+          border-color: $color4;
+      }
+  }
+  .flashcard-add-list-item .add-word-input {
+    background-color: $color3 !important;
+    border-color: $color4;
+
+    &:focus, &:focus-visible {
+        border-color: tint-color($color4, 40%) !important;
+    }
+  }
+  .flashcard-add-list-item .add-word-input.is-invalid {
+    border-color: $color10;
+
+    &:focus, &:focus-visible {
+        border-color: tint-color($color10, 10%) !important;
+    }
+  }
+  .letter-button {
+    background-color: $color3;
+    border: solid .0625rem $color4;
+
+    &:hover, &:focus-visible {
+        background-color: shade-color($color4, 20%);
+    }
+    &:focus-visible {
+        outline-color: tint-color($color4, 40%);
+    }
+
+    &:active {
+        background-color: $color4;
+    }
+  }  
+  .case-changer {
+    background-color: $color4;
+    border-color: $color4;
+
+    &:hover, &:focus-visible {
+        background-color: shade-color($color4, 20%);
+        border-color: shade-color($color4, 20%);
+    }
+    &:focus-visible {
+        outline-color: tint-color($color4, 40%);
+    }
+
+    &:active {
+      background-color: shade-color($color4, 30%);
+      border-color: shade-color($color4, 30%);
+    }
+}
+  // END -------------- EDIT / ADD DECK PAGE STYLES -------------------
+
+
   // START ------------------- MISCELLANEOUS ---------------------- //
   .dashboard-deck-card {
     box-shadow: none;
@@ -269,9 +388,6 @@ $headings-color-dark: $color6;
     &:hover, &:focus, &:focus-visible, &:active {
       color: $color5 !important;
     }
-  }
-  .text-primary, .text-primary * {
-    color: $color8 !important;
   }
   .alert {
     background-color: $color3 !important;
