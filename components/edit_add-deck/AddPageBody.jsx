@@ -110,10 +110,10 @@ const AddPageBody = ({ initialData }) => {
         <div className='d-flex'>
           <Button variant='outline-danger' className='d-none d-sm_md-block me-15' onClick={openDiscardModal} disabled={isPending}>Discard Changes</Button>
           <Button variant='primary' className='d-none d-xs_sm-block' onClick={handleSaveChanges} disabled={isPending}>
-            {!isPending ? 'Save Deck' : <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+            {!isPending ? 'Save Deck' : <div style={{padding: '0rem 1.75rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
           </Button>
           <Button variant='primary' className='d-block d-xs_sm-none' onClick={handleSaveChanges} disabled={isPending}>
-            {!isPending ? 'Save' : <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+            {!isPending ? 'Save' : <div style={{padding: '0rem 0.3125rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
           </Button>
           <MoreButton openModal={openDiscardModal} className='d-block d-sm_md-none ms-10' />
         </div>
