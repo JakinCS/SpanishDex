@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
 import AddCardArea from '@/components/edit_add-deck/AddCardArea';
 import TitleEdit from '@/components/edit_add-deck/TitleEdit';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
 import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
@@ -46,6 +46,28 @@ const EditPageBody = ({ deckId, initialData }) => {
       router.back()
     }
   } 
+
+  // This useEffect adds an event listener for the 'beforeunload' event, which is triggered when the user tries to leave the page.
+  // It tries to prevent the user from leaving the page if there are unsaved changes.
+  useEffect(() => {
+    const newfunction = (e) => {
+      if ((changes.title || changes.description || changes.deletedCards.length > 0 || changes.addedCards.length > 0 || changes.otherCards.length > 0)) {
+        e.preventDefault();
+        return (e.returnValue = '')
+      } 
+    }
+
+    const changes = getChanges(savedData.current, data);
+    if (!changes.title && !changes.description && changes.deletedCards.length === 0 && changes.addedCards.length === 0 && changes.otherCards.length === 0) {
+      return;
+    }
+
+    window.addEventListener('beforeunload', newfunction, {capture: true});
+
+    return () => {
+      window.removeEventListener('beforeunload', newfunction, {capture: true}); // Clean up the event listener
+    }
+  }, [data, savedData.current])
 
   const showSaved = () => {
     const paragraph = document.createElement("p");

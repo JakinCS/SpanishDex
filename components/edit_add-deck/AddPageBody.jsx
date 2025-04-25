@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
 import AddCardArea from '@/components/edit_add-deck/AddCardArea';
 import TitleEdit from '@/components/edit_add-deck/TitleEdit';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
 import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
@@ -50,6 +50,27 @@ const AddPageBody = ({ initialData }) => {
     if (newData.cards.length > 0) return true;
     return false;
   }
+
+  // This useEffect adds an event listener for the 'beforeunload' event, which is triggered when the user tries to leave the page.
+  // It tries to prevent the user from leaving the page if there are unsaved changes.
+  useEffect(() => {
+    const newfunction = (e) => {
+      if (hasChanges(initialData, data)) {
+        e.preventDefault();
+        return (e.returnValue = '')
+      } 
+    }
+
+    if (!hasChanges(initialData, data)) {
+      return;
+    }
+
+    window.addEventListener('beforeunload', newfunction, {capture: true});
+
+    return () => {
+      window.removeEventListener('beforeunload', newfunction, {capture: true}); // Clean up the event listener
+    }
+  }, [data])
 
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState({show: false, error: '', message: ''})
