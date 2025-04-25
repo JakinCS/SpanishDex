@@ -43,9 +43,9 @@ async function Dashboard() {
 
     return (
       <>
-        <div className="d-flex justify-content-between align-items-center gap-25 mb-25 mb-sm-50 mb-sm-60">
+        <div className="d-flex justify-content-between align-items-center gap-25 mb-25 mb-sm-60">
           <TotalsSection decks={finalData.total_decks} cards={finalData.total_cards}/>
-          <ButtonWithIcon isLinkButton={true} href='#' className="btn btn-primary d-none d-md-block" variant='primary' iconSrc='icons/add_3.svg' iconFillColor={'white'} iconHeight={16} altTag={'new deck icon'}>New Deck</ButtonWithIcon>
+          <ButtonWithIcon isLinkButton={true} href='/dashboard/deck/new' className="btn btn-primary d-none d-md-block" variant='primary' iconSrc='icons/add_3.svg' iconFillColor={'white'} iconHeight={16} altTag={'new deck icon'}>New Deck</ButtonWithIcon>
         </div>        
         <DashboardCard xPadding={30} yPadding={35} className="mb-30 mb-sm-50 mw-600">
           <Stack gap={30}>
