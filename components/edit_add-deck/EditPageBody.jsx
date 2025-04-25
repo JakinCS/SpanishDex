@@ -123,9 +123,6 @@ const EditPageBody = ({ deckId, initialData }) => {
   const handleSaveChanges = async () => {
     const changes = getChanges(savedData.current, data);
 
-    console.log({data, changes})
-    console.log('savedData', savedData.current)
-
     if (!changes.title && !changes.description && changes.deletedCards.length == 0 && changes.addedCards.length == 0 && changes.otherCards.length == 0) {
       setIsPending(true);
       setError((prev) => ({...prev, show: false}))
@@ -162,7 +159,6 @@ const EditPageBody = ({ deckId, initialData }) => {
         setError({show: true, error: result.error, message: result.message})
         setIsPending(false);
       }
-      console.log(result)
     } catch (error) {
       setError({show: true, error: error.toString(), message: "Unexpected error occurred. Please try again."});
       setIsPending(false);
@@ -188,7 +184,7 @@ const EditPageBody = ({ deckId, initialData }) => {
             {!isPending ? 'Save Deck' : <div style={{padding: '0rem 1.75rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
           </Button>
           <Button variant='primary' className='d-block d-xs_sm-none' onClick={handleSaveChanges} disabled={isPending}>
-            {!isPending ? 'Save' : <div style={{padding: '0rem 1.75rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+            {!isPending ? 'Save' : <div style={{padding: '0rem 0.3125rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
           </Button>
           <MoreButton openModal={openDiscardModal} className='d-block d-sm_md-none ms-10' />
         </div>

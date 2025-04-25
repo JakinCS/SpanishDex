@@ -20,7 +20,8 @@ const ViewDeckSkeleton = () => {
         <span className='placeholder bg-gray-150 rounded' style={{height: '2rem', width: '17rem' }}></span>
       </div>
       <div className='placeholder-glow'>
-        <span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '25rem' }}></span>
+        <span className='placeholder bg-gray-150 rounded d-none d-sm-block' style={{height: '1.75rem', width: '25rem' }}></span>
+        <span className='placeholder bg-gray-150 rounded d-block d-sm-none' style={{height: '1.75rem', width: '12rem' }}></span>
       </div>
       <DashboardCard xPadding={30} yPadding={35} className="my-50" style={{maxWidth: '31.25rem'}}>
         <h3 className="fw-medium text-center text-xs_sm-start heading-underline-blue-100 lh-1 mb-40">Deck Information</h3>
