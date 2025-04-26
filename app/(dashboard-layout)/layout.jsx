@@ -1,4 +1,3 @@
-import HomepageFooter from '@/components/footers/HomepageFooter';
 import AuthProvider from '../context/AuthProvider';
 import DashboardHeader from '@/components/headers/dashboard/DashboardHeader';
 import Container from 'react-bootstrap/Container';

@@ -3,7 +3,7 @@ import DashboardHeaderButtons from "./DashboardHeaderButtons";
 
 const DashboardHeader = () => {
   return (
-    <Header>
+    <Header link='/dashboard'>
       <DashboardHeaderButtons />
     </Header>
   );
