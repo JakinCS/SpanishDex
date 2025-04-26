@@ -89,7 +89,7 @@ const AccountPage = async ({ params }) => {
           </p>
           <DeleteAccountButton userId={userId} />
         </AccountPageCard>
-        <p className="mb-20 text-center text-sm-start">
+        <p className="text-center text-sm-start">
           <span className="fw-medium">Account Created:</span> <span className="text-nowrap">{date}</span>
         </p>
       </Container>

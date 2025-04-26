@@ -148,14 +148,14 @@ const AddPageBody = ({ initialData }) => {
         </div>
       </UnderlineContainer>
 
-      <div className='mb-50'>
+      <div>
         { data.cards.map((card, index) => {
           return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
         })}
       </div>
 
       { data.cards.length === 0 && (
-        <p className='text-center mb-50'>There are no cards in this deck yet. Start by adding a card above.</p>
+        <p className='text-center'>There are no cards in this deck yet. Start by adding a card above.</p>
       )}
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} />

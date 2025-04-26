@@ -699,12 +699,12 @@ div[role="tooltip"].tooltip {
 
 // Top level containers of pages
 .topLevelContainer {
-    padding: 1.875rem 1.5625rem;
+    padding: 1.875rem 1.5625rem 6.25rem;
 }
 
 @media (min-width: 576px) {
     .topLevelContainer {
-        padding: 3.75rem 3.125rem;
+        padding: 3.75rem 3.125rem 6.25rem;
     }
 }
 
@@ -1142,7 +1142,7 @@ img.icon.fill-primary {
     position: sticky;
     bottom: 2.5rem;
     left: 100vw;
-    margin: -3.75rem -.625rem -1.25rem 0rem;
+    margin: 0 -.625rem -4.9375rem;
     z-index: 1000;
     border: none;
     border-radius: .4375rem;
@@ -1160,6 +1160,12 @@ img.icon.fill-primary {
     }
     &:focus-visible {
         outline-offset: .5rem;
+    }
+}
+
+@media (min-width: 576px) {
+    .backToTopButton {
+        margin: 0 -.625rem -3.6875rem;
     }
 }
 

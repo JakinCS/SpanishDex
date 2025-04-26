@@ -122,7 +122,7 @@ const DeckPage = async ({ params }) => {
         </div>
       </UnderlineContainer>
 
-      <div className='mb-40'>
+      <div>
         {
           deck.cards.map((card, index) => {
             const key = index + 1;
