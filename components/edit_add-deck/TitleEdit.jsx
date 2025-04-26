@@ -24,6 +24,7 @@ const TitleEdit = ({ setState, titleValue, ...props }) => {
     // Wait a little bit because doesn't work otherwise.
     setTimeout(() => {
       titleInputRef.current.focus()
+      titleInputRef.current.setSelectionRange(titleValue.length, titleValue.length);
     }, 25);    
   }
   // This function hides the edit input field and 
@@ -58,7 +59,7 @@ const TitleEdit = ({ setState, titleValue, ...props }) => {
 
   return (
     <div {...props} className={'d-flex align-items-center' + (props.className ? ` ${props.className}` : '')}>
-      <h1 className={'fs-2' + (showEditTitle ? ' d-none' : '')}>{titleValue}</h1>
+      <h1 className={'fs-2' + (showEditTitle ? ' d-none' : '')} onClick={handleShowEditTitle}>{titleValue}</h1>
       <Form.Control 
         id='editTitleInput'
         ref={titleInputRef}

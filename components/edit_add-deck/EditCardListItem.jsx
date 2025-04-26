@@ -17,16 +17,17 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // The state for the value of the english input field
   const [englishWord, setEnglishWord] = useState(english || '')
   // This function is run when the user makes a change on the english word input field
-  const updateEnglishWord = (e, word) => { 
+  const updateEnglishWord = (e) => { 
     // Updates the englishWord state with the new input value.
-    if (!e) setEnglishWord(word)
+    // This function can be used without an event (so check for that)
+    if (!e.target) setEnglishWord(e)
     else setEnglishWord(e.target.value) 
 
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {
       const newCardsArray = prevState.cards.map((card) => {
         if (card._id === cardId) {
-          return {_id: card._id, english: (!e ? word : e.target.value), spanish: spanishWord}
+          return {_id: card._id, english: (!e.target ? e : e.target.value), spanish: spanishWord}
         } else {
           return card
         }
@@ -39,16 +40,17 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // The state for the value of the spanish input field
   const [spanishWord, setSpanishWord] = useState(spanish || '')
   // This function is run when the user makes a change on the spanish word input field
-  const updateSpanishWord = (e, word) => { 
+  const updateSpanishWord = (e) => { 
     // Updates the spanishWord state with the new input value.
-    if (!e) setSpanishWord(word)
+    // This function can be used without an event (so check for that)
+    if (!e.target) setSpanishWord(e)
     else setSpanishWord(e.target.value) 
 
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {      
       const newCardsArray = prevState.cards.map((card) => {
         if (card._id === cardId) {
-          return {_id: card._id, english: englishWord, spanish: (!e ? word : e.target.value)}
+          return {_id: card._id, english: englishWord, spanish: (!e.target ? e : e.target.value)}
         } else {
           return card
         }
@@ -75,22 +77,22 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // or, for the spanish input field, whenever the showSpanishFocus state changes.
   const ensureEnglishValidity = () => {
     // Change the englishWord state back to the previous value (englishBeforeChanges)
-    if (englishWord.trim().length === 0) updateEnglishWord(null, englishBeforeChanges.current);
+    if (englishWord.trim().length === 0) updateEnglishWord(englishBeforeChanges.current);
     // Update the englishBeforeChanges value.
     // Update the englishWord state to include no extra spaces before or after
     else {
       englishBeforeChanges.current = englishWord.trim();
-      updateEnglishWord(null, englishWord.trim())
+      updateEnglishWord(englishWord.trim())
     }      
   }
   const ensureSpanishValidity = () => {
     // Change the spanishWord state back to the previous value (spanishBeforeChanges)
-    if (spanishWord.trim().length === 0) updateSpanishWord(null, spanishBeforeChanges.current);
+    if (spanishWord.trim().length === 0) updateSpanishWord(spanishBeforeChanges.current);
     // Update the spanishBeforeChanges value. 
     // Update the spanishWord state to include no extra spaces before or after
     else {
       spanishBeforeChanges.current = spanishWord.trim();
-      updateSpanishWord(null, spanishWord.trim())
+      updateSpanishWord(spanishWord.trim())
     };      
   }
 
@@ -229,7 +231,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
             onChange={updateSpanishWord}
             onFocus={() => {setShowSpanishFocus(true); setShowEnglishFocus(false)}}
           />
-          <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef}/>
+          <ExtraLetters updateInputValue={updateSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef}/>
         </div>
       </div>
 

@@ -120,10 +120,10 @@ const AddCardArea = ({ setState }) => {
               placeholder="Type Spanish word"
             />
             <div className="d-none d-sm_md-flex">
-              <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
+              <ExtraLetters updateInputValue={setSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
             </div>
             <div className='d-flex d-sm_md-none'>
-              <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef}/>
+              <ExtraLetters updateInputValue={setSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef}/>
             </div>
           </div>
         </div>
