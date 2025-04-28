@@ -151,28 +151,28 @@ const SignUp = () => {
           <Form action={form1Action}>
             <Form.Group className="mb-20" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
-              <Form.Control name='username' value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username" />
+              <Form.Control name='username' value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="Enter username" />
               <Form.Control.Feedback type="invalid">
                 {formValues.username.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
-              <Form.Control name='email' value={formValues.email.value} onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="email" />
+              <Form.Control name='email' value={formValues.email.value} onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="Enter email" />
               <Form.Control.Feedback type="invalid">
                 {formValues.email.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
-              <PasswordInput name="password1" value={formValues.password.value} placeholder="password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'}/>
+              <PasswordInput name="password1" value={formValues.password.value} placeholder="Enter password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'}/>
               <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className='mb-5' controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
-              <PasswordInput name="password2" value={formValues.password2.value} placeholder="password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'}/>
+              <PasswordInput name="password2" value={formValues.password2.value} placeholder="Enter password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'}/>
               <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
                 {formValues.password2.message}
               </Form.Control.Feedback>

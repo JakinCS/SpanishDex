@@ -96,7 +96,7 @@ const EditEmailModal = (props) => {
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="email">
               <Form.Label className="fw-medium">Email</Form.Label>
-              <Form.Control name="email" type="text" placeholder="email" value={email.value} onBlur={validateEmail} onChange={updateEmailValue} className={email.valid === false && 'is-invalid'}/>
+              <Form.Control name="email" type="text" placeholder="Enter email" value={email.value} onBlur={validateEmail} onChange={updateEmailValue} className={email.valid === false && 'is-invalid'}/>
               <Form.Control.Feedback type="invalid">
                 {email.message}
               </Form.Control.Feedback>

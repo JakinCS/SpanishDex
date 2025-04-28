@@ -142,14 +142,14 @@ function LogInModal(props) {
               <div>
                 <Form.Group className="mb-20" controlId="logInUsername">
                   <Form.Label className="fw-medium">Username or Email</Form.Label>
-                  <Form.Control name="username" value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="username or email" required/>
+                  <Form.Control name="username" value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="Enter username or email" required/>
                   <Form.Control.Feedback type="invalid">
                     Username is required
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="logInPassword">
                   <Form.Label className="fw-medium">Password</Form.Label>
-                  <PasswordInput name="password" value={formValues.password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="password" required/>
+                  <PasswordInput name="password" value={formValues.password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="Enter password" required/>
                   <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
                     Password is required
                   </Form.Control.Feedback>

@@ -96,29 +96,34 @@ const EditPasswordModal = (props) => {
           </Alert>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
-            <Form.Group className="mb-30" controlId="currPassword">
+            <Form.Group className='' controlId="currPassword">
               <Form.Label className="fw-medium">Current Password</Form.Label>
-              <PasswordInput name="currPassword" placeholder="current password" value={formValues.currPassword.value} onBlur={validateCurrPassword} onChange={updateCurrPasswordValue} className={formValues.currPassword.valid === false && 'is-invalid'} required/>
+              <PasswordInput name="currPassword" placeholder="Current password" value={formValues.currPassword.value} onBlur={validateCurrPassword} onChange={updateCurrPasswordValue} className={formValues.currPassword.valid === false && 'is-invalid'} required/>
               <Form.Control.Feedback className={formValues.currPassword.valid === false && 'd-block'} type="invalid">
                 {formValues.currPassword.message}
               </Form.Control.Feedback>
-              <p className='fs-5 forgot-password' style={{marginTop: '0.3125rem', marginBottom: '-1.125rem', textAlign: 'right'}}>
+              <p className='fs-5 forgot-password mt-10' style={{textAlign: 'right'}}>
                 { isPending ? 
                   <span className="fw-medium">Forgot Password?</span> :
                   <a href="#" onClick={(e) => {e.preventDefault(); props.closeModal(); props.openResetPasswordModal()}}>Forgot Password?</a>
                 }
               </p>
             </Form.Group>
+            <div className="container" style={{marginBottom: '29px', marginTop: '29px'}}>
+              <div className="row align-items-center">
+                <div className="col" style={{height: '2px', backgroundColor: '#888888'}}></div>
+              </div>
+            </div>
             <Form.Group className="mb-30" controlId="password1">
               <Form.Label className="fw-medium">New Password</Form.Label>
-              <PasswordInput name="password1" placeholder="new password" value={formValues.password.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePassword1Value} className={formValues.password.valid === false && 'is-invalid'} required/>
+              <PasswordInput name="password1" placeholder="New password" value={formValues.password.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePassword1Value} className={formValues.password.valid === false && 'is-invalid'} required/>
               <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-30" controlId="password2">
               <Form.Label className="fw-medium">Confirm New Password</Form.Label>
-              <PasswordInput name="password2" placeholder="confirm password" value={formValues.password2.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} required/>
+              <PasswordInput name="password2" placeholder="Confirm password" value={formValues.password2.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} required/>
               <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
                 {formValues.password2.message}
               </Form.Control.Feedback>
