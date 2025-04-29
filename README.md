@@ -51,7 +51,7 @@ I created the prototype in Figma. It is high-quality, and I put a lot of effort 
  - Allow the user to practice flashcards:
    - They could practice all their weak words contained in all their decks. (Weak words are determined by a spaced repetition algorithm. More details below)
    - They could practice all the weak words of an individual deck.
-   - They could aslo practice all the words of an individual deck.
+   - They could also practice all the words of an individual deck.
  - Have an account page where the user can edit their username, email, password and profile picture.
 
 ### Project Status (completed features)
@@ -64,6 +64,14 @@ I created the prototype in Figma. It is high-quality, and I put a lot of effort 
    - First they enter their email into a form.
    - An email is sent to their inbox with a link that is used to reset their password.
    - I use Sendgrid to send emails for password resetting.
+ - There is an account page allowing users to update their information and delete their account
+ - The dashboard page is fully complete with deck and flashcard information
+ - Users can view decks and see a list of flashcards
+ - One can now add new decks and edit old decks.
+
+### What's next?
+ - Spaced Learning Algorithm. Implemting the algorithm for determining weak cards.
+ - The practice pages! This is the last thing before completing the application. With this complete users will be able practice their flashcards.
 
 ### Spaced Learning Algorithm
 This application will use a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
