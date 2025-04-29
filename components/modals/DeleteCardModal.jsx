@@ -18,13 +18,13 @@ const DeleteCardModal = ({englishWord, spanishWord, deleteCard, ...props}) => {
       </Modal.Header>
       <Modal.Body>
         <p className='mb-30'>Are you sure you want to delete this card?</p>
-        <p className='text-primary fw-semibold fs-5 lh-1 mb-10'>English</p>
-        <div className={'d-flex bg-white rounded border border-1point5 w-100 h-100 mb-20'} style={{minHeight: '2.5rem', overflow: 'hidden'}}>
-          <p className='mx-20 py-3 text-break lh-sm'>{englishWord}</p>
-        </div>
         <p className='text-primary fw-semibold fs-5 lh-1 mb-10'>Spanish</p>
-        <div className={'d-flex bg-white rounded border border-1point5 w-100 h-100 mb-40'} style={{minHeight: '2.5rem', overflow: 'hidden'}}>
+        <div className={'d-flex bg-white rounded border border-1point5 w-100 h-100 mb-20'} style={{minHeight: '2.5rem', overflow: 'hidden'}}>
           <p className='mx-20 py-3 text-break lh-sm'>{spanishWord}</p>
+        </div>
+        <p className='text-primary fw-semibold fs-5 lh-1 mb-10'>English</p>
+        <div className={'d-flex bg-white rounded border border-1point5 w-100 h-100 mb-40'} style={{minHeight: '2.5rem', overflow: 'hidden'}}>
+          <p className='mx-20 py-3 text-break lh-sm'>{englishWord}</p>
         </div>
         <Form action={handleDeleteCard}>
           <Container fluid className="d-none d-xs_sm-flex gap-4 justify-content-end p-0">            

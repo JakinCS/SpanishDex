@@ -970,6 +970,22 @@ img.icon.fill-primary {
 
 }
 
+.flashcard-add-list-item > div.has-error {
+    outline: solid .125rem $danger;
+    outline-offset: .3125rem;
+    border-radius: .125rem;
+}
+
+.flashcard-add-list-item > button.d-sm_md-block {
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 992px) {
+    .flashcard-add-list-item > button.d-sm_md-block {
+        margin-top: 1.79166875rem;  // 28.6667px margin top. This aligns the button align with the input field (even when the extra letters are visible and span two lines)
+    }
+}
+
 
 
 

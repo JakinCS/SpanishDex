@@ -158,31 +158,9 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
 
     document.addEventListener('click', checkDeleteButtonClicked)
 
-    // If the tab key is pressed, then remove the focus from the spanish input field
-    const caseChangerFunction = (e) => {
-      if (e.key == 'Tab' && e.shiftKey == false) {
-        setShowSpanishFocus(false)
-      }
-    }
-
-    document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .spanish-flex .case-changer`)[0].addEventListener('keydown', caseChangerFunction)
-
-    // If the tab key and shift key are pressed when on the english word input field, then remove the focus from the english input field
-    const englishInputFieldFunction = (e) => {
-      if (e.key == 'Tab' && e.shiftKey == true) {
-        setShowEnglishFocus(false)
-      }
-    }
-    document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .english-flex .edit-word-input`)[0].addEventListener('keydown', englishInputFieldFunction)
-
     return () => {
       document.removeEventListener('mousedown', toggleFocus)
-      if (document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .spanish-flex .case-changer`)[0]) {
-        document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .spanish-flex .case-changer`)[0].removeEventListener('keydown', caseChangerFunction)
-      }
-      if (document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .english-flex .edit-word-input`)[0]) {
-        document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .english-flex .edit-word-input`)[0].removeEventListener('keydown', englishInputFieldFunction)
-      }
+
       document.removeEventListener('click', checkDeleteButtonClicked)
     }
   }, [])
@@ -202,23 +180,6 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
       </div>
 
       <div className={'flashcard-words-flex d-flex flex-column flex-md-row align-items-start bg-white rounded w-100 h-100'}>
-        <div className={'word-flex english-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showEnglishFocus ? ' focus' : '')}>
-          <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>English</p>
-          <Form.Control 
-            className='edit-word-input' 
-            name='english_1' 
-            type="text" 
-            placeholder="English word" 
-            value={englishWord} 
-            onChange={updateEnglishWord}
-            onFocus={() => {setShowSpanishFocus(false); setShowEnglishFocus(true)}}
-            onBlur={ensureEnglishValidity}
-          />
-        </div>
-
-        <div className='separator bg-gray-150 my-15 flex-grow-0 d-none d-md-block'></div>
-        <div className='separator2 bg-gray-150 mx-auto flex-grow-0 d-block d-md-none'></div>
-
         <div className={'word-flex spanish-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showSpanishFocus ? ' focus' : '')}>
           <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>Spanish</p>
           <Form.Control 
@@ -230,8 +191,27 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
             value={spanishWord} 
             onChange={updateSpanishWord}
             onFocus={() => {setShowSpanishFocus(true); setShowEnglishFocus(false)}}
+            onKeyDown={ (e) => {if (e.key == 'Tab' && e.shiftKey == true) setShowSpanishFocus(false)} }
           />
           <ExtraLetters updateInputValue={updateSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef}/>
+        </div>
+
+        <div className='separator bg-gray-150 my-15 flex-grow-0 d-none d-md-block'></div>
+        <div className='separator2 bg-gray-150 mx-auto flex-grow-0 d-block d-md-none'></div>
+
+        <div className={'word-flex english-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showEnglishFocus ? ' focus' : '')}>
+          <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>English</p>
+          <Form.Control 
+            className='edit-word-input' 
+            name='english_1' 
+            type="text" 
+            placeholder="English word" 
+            value={englishWord} 
+            onChange={updateEnglishWord}
+            onFocus={() => {setShowSpanishFocus(false); setShowEnglishFocus(true)}}
+            onBlur={ensureEnglishValidity}
+            onKeyDown={ (e) => {if (e.key == 'Tab' && e.shiftKey == false) setShowEnglishFocus(false)} }
+          />
         </div>
       </div>
 

@@ -109,7 +109,7 @@ const EditPasswordModal = (props) => {
                 }
               </p>
             </Form.Group>
-            <div className="container" style={{marginBottom: '29px', marginTop: '29px'}}>
+            <div className="container my-30">
               <div className="row align-items-center">
                 <div className="col" style={{height: '2px', backgroundColor: '#888888'}}></div>
               </div>
