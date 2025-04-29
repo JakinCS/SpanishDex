@@ -1,5 +1,5 @@
 
-import HomepageSection from "@/components/HomepageSection";
+import HomepageSection from "@/components/homepage/HomepageSection";
 import ResetPasswordForm from "@/components/ResetPasswordForm";
 import crypto from "crypto";
 import { MongoClient } from "mongodb";

@@ -1,6 +1,6 @@
 import BackButton from '@/components/BackButton'
 import ButtonWithIcon from '@/components/ButtonWithIcon'
-import CardListItem from '@/components/CardListItem'
+import CardListItem from '@/components/viewdeck/CardListItem'
 import DashboardCard from '@/components/dashboard/DashboardCard'
 import Icon from '@/components/Icon'
 import IconButton from '@/components/IconButton'

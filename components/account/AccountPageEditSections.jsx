@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { EditEmailButton, EditProfilePictureButton, EditUsernameButton } from "./AccountPageButtons"
-import ProfileCircle from "./ProfileCircle"
+import ProfileCircle from "../ProfileCircle"
 
 
 export const ProfilePictureEditSection = (props) => {

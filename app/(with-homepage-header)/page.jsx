@@ -1,7 +1,7 @@
-import HomepageSection from '@/components/HomepageSection'
-import HomepageSectionColumns from '@/components/HomepageSectionColumns'
+import HomepageSection from '@/components/homepage/HomepageSection'
+import HomepageSectionColumns from '@/components/homepage/HomepageSectionColumns'
 import HomepageContactForm from '@/components/ContactForm'
-import GetStartedButton from '@/components/GetStartedButton';
+import GetStartedButton from '@/components/homepage/GetStartedButton';
 
 export default function Homepage() {
   return (

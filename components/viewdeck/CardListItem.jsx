@@ -1,5 +1,5 @@
 import React from 'react'
-import StatusIndicator from './viewdeck/StatusIndicator'
+import StatusIndicator from './StatusIndicator'
 
 const CardListItem = ({number, cardInfo, ...otherProps}) => {
   const borderStyle = cardInfo.weak ? ' border-warning' : ' border-gray-150'
@@ -12,10 +12,10 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
         </div>
         <div className={'d-flex bg-white rounded border border-1point5 w-100 h-100' + borderStyle} style={{minHeight: '2.5rem', overflow: 'hidden'}}>
           <div className='d-flex align-items-center border-end border-1point5 border-gray-150' style={{width: '50%'}}>
-            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
+            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.spanish}</p>
           </div>
           <div className='d-flex align-items-center' style={{width: '50%'}}>
-            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.spanish}</p>
+            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
           </div>
         </div>
         {/* <IconButton className="ms-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen icon'/> Possible future feature */}
@@ -31,13 +31,13 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
         </div>
         <div className={'d-flex flex-column flex-sm-row bg-white rounded border border-1point5 w-100' + borderStyle}>
           <div className='d-none d-sm-flex align-items-center border-end border-1point5 border-gray-150 w-100 w-sm-50'>
-            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
+            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.spanish}</p>
           </div>
           <div className='d-flex d-sm-none align-items-center border-bottom border-1point5 border-gray-150 w-100 w-sm-50'>
-            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
+            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.spanish}</p>
           </div>
           <div className='d-flex align-items-center w-100 w-sm-50'>
-            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.spanish}</p>
+            <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
           </div>
         </div>
       </div>

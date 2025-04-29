@@ -1,15 +1,15 @@
 'use client'
 
-import ButtonWithIcon from "./ButtonWithIcon"
-import IconButton from "./IconButton"
+import ButtonWithIcon from "../ButtonWithIcon"
+import IconButton from "../IconButton"
 import Button from 'react-bootstrap/Button'
-import EditUsernameModal from "./modals/EditUsernameModal"
+import EditUsernameModal from "../modals/EditUsernameModal"
 import { useState } from "react"
-import EditProfilePictureModal from "./modals/EditProfilePictureModal"
-import EditEmailModal from "./modals/EditEmailModal"
-import EditPasswordModal from "./modals/EditPasswordModal"
-import DeleteAccountModal from "./modals/DeleteAccountModal"
-import ResetPasswordModal from "./modals/ResetPasswordModal"
+import EditProfilePictureModal from "../modals/EditProfilePictureModal"
+import EditEmailModal from "../modals/EditEmailModal"
+import EditPasswordModal from "../modals/EditPasswordModal"
+import DeleteAccountModal from "../modals/DeleteAccountModal"
+import ResetPasswordModal from "../modals/ResetPasswordModal"
 
 export const EditProfilePictureButton = (props) => {
   const [show, setShow] = useState(false);

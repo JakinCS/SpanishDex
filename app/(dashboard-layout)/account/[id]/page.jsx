@@ -1,11 +1,11 @@
-import AccountPageCard from "@/components/AccountPageCard"
+import AccountPageCard from "@/components/account/AccountPageCard"
 import Container from "react-bootstrap/Container"
 import Stack from "react-bootstrap/Stack";
 import BackButton from "@/components/BackButton";
 import { auth } from "@/auth"
 import Link from "next/link";
-import { DeleteAccountButton, EditPasswordButton, EditProfilePictureButton } from "@/components/AccountPageButtons";
-import { EmailEditSection, ProfilePictureEditSection, UsernameEditSection } from "@/components/AccountPageEditSections";
+import { DeleteAccountButton, EditPasswordButton, EditProfilePictureButton } from "@/components/account/AccountPageButtons";
+import { EmailEditSection, ProfilePictureEditSection, UsernameEditSection } from "@/components/account/AccountPageEditSections";
 
 const AccountPage = async ({ params }) => {
 
