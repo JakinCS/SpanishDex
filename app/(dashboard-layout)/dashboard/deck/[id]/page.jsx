@@ -106,12 +106,12 @@ const DeckPage = async ({ params }) => {
         </div>
       </UnderlineContainer>
       <div className='mb-60 d-flex justify-content-center justify-content-xs_sm-start d-sm-none flex-wrap gap-20'>
-        <Link href="#" role="button" className='btn btn-primary w-100'>All Cards</Link>
-        <Link href="#" role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
+        <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary w-100'>All Cards</Link>
+        <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
       </div>
       <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
-        <Link href="#" role="button" className='btn btn-primary'>Review All Cards</Link>
-        <Link href="#" role="button" className='btn btn-secondary'>Review Weak Cards</Link>
+        <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary'>Review All Cards</Link>
+        <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary'>Review Weak Cards</Link>
       </div>
 
       <UnderlineContainer className='mb-30'>
