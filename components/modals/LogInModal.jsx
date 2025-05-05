@@ -161,7 +161,7 @@ function LogInModal(props) {
                   </p>
                 </Form.Group>
               </div>        
-              <Button variant="primary" type="submit" disabled={!(formValues.username.valid && formValues.password.valid) || form1Pending || form2Pending}>
+              <Button variant="primary" type="submit" disabled={!(formValues.username.valid && formValues.password.value.trim() !== '') || form1Pending || form2Pending}>
                 {form1Pending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
               </Button>  
             </Stack>              
