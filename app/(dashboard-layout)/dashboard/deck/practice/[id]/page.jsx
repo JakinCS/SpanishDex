@@ -1,5 +1,9 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
+import BackButton from '@/components/BackButton';
+import { getDeckPracticeInfo } from '@/lib/actions';
+import PracticePageBody from '@/components/practice/PracticePageBody';
+import PageErrorMessage from '@/components/PageErrorMessage';
 
 const page = async ({ params, searchParams }) => {
 
@@ -11,12 +15,44 @@ const page = async ({ params, searchParams }) => {
     notFound() // Trigger the 404 page in Next.js if the id is invalid
   }
 
+  let errorInfo = {isError: false, message: '', hiddenMsg: ''};
+  let deck = undefined;
+
+  try {
+    // Get card data for practicing
+    const retrievalResult = await getDeckPracticeInfo(id, queryParams.weak === 'true')
+
+    if (retrievalResult.success === false) {
+      // If there was an error in retrieving the deck, return the error message
+      errorInfo.isError = true;
+      errorInfo.message = retrievalResult.message || 'Unable to load page. Please try again.';
+      errorInfo.hiddenMsg = retrievalResult.error;
+    }
+    
+    deck = retrievalResult?.deck; // This will be the deck and cards object returned from the function
+
+  } catch (error) {
+    errorInfo.isError = true;
+    errorInfo.message = errorInfo?.message || 'Unable to load page. Unexpected error occurred.';
+    errorInfo.hiddenMsg = error;
+  }
+
+  if (deck === null) {
+    // If deck is null, trigger the 404 page in Next.js
+    notFound()
+  }
+
+  if (errorInfo.isError) {
+    return (
+      <PageErrorMessage buttonType={errorInfo.message.includes('Unauthorized') ? 'dashboard' : 'reload'} error={errorInfo.hiddenMsg}>{errorInfo.message}</PageErrorMessage>
+    )
+  }
+
   return (
-    <div>
-      <h2>Practice Page</h2>
-      <p>Deck ID: {id}</p>
-      <p>{queryParams.weak === 'true' ? 'Praticing Weak' : 'Practicing All'}</p>
-    </div>
+    <>
+      <BackButton className='mb-30 mb-sm-40'/>
+      <PracticePageBody cards={deck.cards} />
+    </>
   )
 }
 

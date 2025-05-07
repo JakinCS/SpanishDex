@@ -990,6 +990,126 @@ img.icon.fill-primary {
 
 
 
+/* ----- Practice page "Flashcard" styles ----- */
+
+.practice-flashcard {
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+    height: 25rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.practice-flashcard .button-parent {
+    cursor: default;
+}
+
+.practice-flashcard .score-description {
+    display: none;
+}
+
+.score-button.selected + .score-description {
+    display: block;
+}
+
+.score-button {
+    height: 1.875rem;
+    width: 1.875rem;
+    padding: 0;
+    color: $blue-900;
+    font-weight: 400;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+
+    &:hover, &:focus-visible, &:active {
+        color: $blue-900 !important;
+    }
+    &.selected {
+       box-shadow: 0 .125rem .25rem .0625rem #00000040;
+       transform: scale(1.1);
+    }
+
+    &.score-1 {
+        background-color: $red-200;
+        border-color: $red-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $red-300;
+            border-color: $red-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($red-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($red-300, 10%);
+            border-color: shade-color($red-300, 10%);
+        }
+    }
+    &.score-2 {
+        background-color: $yellow-200;
+        border-color: $yellow-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $yellow-300;
+            border-color: $yellow-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($yellow-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($yellow-300, 10%);
+            border-color: shade-color($yellow-300, 10%);
+        }
+    }
+    &.score-3 {
+        background-color: $green-yellow-200;
+        border-color: $green-yellow-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $green-yellow-300;
+            border-color: $green-yellow-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($green-yellow-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($green-yellow-300, 10%);
+            border-color: shade-color($green-yellow-300, 10%);
+        }
+    }
+    &.score-4 {
+        background-color: $yellow-green-200;
+        border-color: $yellow-green-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $yellow-green-300;
+            border-color: $yellow-green-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($yellow-green-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($yellow-green-300, 10%);
+            border-color: shade-color($yellow-green-300, 10%);
+        }
+    }
+    &.score-5 {
+        background-color: $green-200;
+        border-color: $green-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $green-300;
+            border-color: $green-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($green-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($green-300, 10%);
+            border-color: shade-color($green-300, 10%);
+        }
+    }
+}
+
+
+
+
+
 /* ----- Width Styles ----- */
 .w-50 {
     width: 50% !important;
