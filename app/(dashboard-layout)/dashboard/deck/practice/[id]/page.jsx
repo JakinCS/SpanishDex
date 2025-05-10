@@ -1,6 +1,6 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
-import BackButton from '@/components/BackButton';
+import TopButtons from '@/components/practice/TopButtons';
 import { getDeckPracticeInfo } from '@/lib/actions';
 import PracticePageBody from '@/components/practice/PracticePageBody';
 import PageErrorMessage from '@/components/PageErrorMessage';
@@ -48,10 +48,15 @@ const page = async ({ params, searchParams }) => {
     )
   }
 
+  const deckCards = deck.cards.map((card) => {
+    // Convert to plain object
+    return JSON.parse(JSON.stringify(card))
+  })
+
   return (
     <>
-      <BackButton className='mb-30 mb-sm-40'/>
-      <PracticePageBody cards={deck.cards} />
+      <TopButtons />
+      <PracticePageBody cards={deckCards} />
     </>
   )
 }

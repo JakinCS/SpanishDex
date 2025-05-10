@@ -17,11 +17,13 @@ export default function dashboardLayout({ children }) {
       <AuthProvider>
         <DashboardHeader />   
         <div style={containerStyles}>
-          <Container className="topLevelContainer" fluid>
-            <div style={{maxWidth: '80rem', marginLeft: 'auto', marginRight: 'auto',}}>
-              {children} 
-            </div>     
-          </Container>  
+          <div>
+            <Container className="topLevelContainer" fluid>
+              <div style={{maxWidth: '80rem', marginLeft: 'auto', marginRight: 'auto',}}>
+                {children} 
+              </div>     
+            </Container> 
+          </div> 
           <DashboardFooter />
         </div>
       </AuthProvider>  

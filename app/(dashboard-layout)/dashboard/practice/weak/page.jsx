@@ -1,13 +1,14 @@
 import { getWeakCardsInfo } from '@/lib/actions';
 import React from 'react';
-import BackButton from '@/components/BackButton';
 import PracticePageBody from '@/components/practice/PracticePageBody';
+import TopButtons from '@/components/practice/TopButtons';
+import PageErrorMessage from '@/components/PageErrorMessage';
 
 
 const page = async () => {
 
   let errorInfo = {isError: false, message: '', hiddenMsg: ''};
-  let cards = undefined;
+  let cards = [];
 
   try {
     // Get card data for practicing
@@ -20,8 +21,13 @@ const page = async () => {
       errorInfo.message = retrievalResult.message || 'Unable to load practice. Please try again.';
       errorInfo.hiddenMsg = retrievalResult.error;
     }
-    
-    cards = retrievalResult?.cards; // This will be the cards array returned from the function
+
+    if (retrievalResult.cards) {
+      retrievalResult.cards.forEach((card) => {
+        // Convert to plain object
+        cards.push(JSON.parse(JSON.stringify(card)));
+      })
+    }
 
   } catch (error) {
     errorInfo.isError = true;
@@ -37,7 +43,7 @@ const page = async () => {
 
   return (
     <>
-      <BackButton className='mb-30 mb-sm-40'/>
+      <TopButtons />
       <PracticePageBody cards={cards} />
     </>
   )

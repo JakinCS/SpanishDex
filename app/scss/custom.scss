@@ -705,6 +705,7 @@ div[role="tooltip"].tooltip {
 // Top level containers of pages
 .topLevelContainer {
     padding: 1.875rem 1.5625rem 6.25rem;
+    overflow-x: hidden;
 }
 
 @media (min-width: 576px) {
@@ -999,6 +1000,57 @@ img.icon.fill-primary {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    &.slide-right {
+        animation-name: slideRight;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+    &.slide-right-from-center {
+        animation-name: slideRightFromCenter;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+    &.slide-left {
+        animation-name: slideLeft;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+    &.slide-left-from-center {
+        animation-name: slideLeftFromCenter;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes slideRight {
+    0% {transform: translateX(-100vw)}
+    100% {transform: translateX(0)}
+}
+@keyframes slideRightFromCenter {
+    0% {transform: translateX(0)}
+    100% {transform: translateX(100vw)}
+}
+@keyframes slideLeft {
+    0% {transform: translateX(100vw)}
+    100% {transform: translateX(0)}
+}
+@keyframes slideLeftFromCenter {
+    0% {transform: translateX(0)}
+    100% {transform: translateX(-100vw)}
+}
+
+.practice-flashcard.animate-flip {
+    animation-name: flip;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+
+}
+
+@keyframes flip {
+    0% {transform: rotateY(0deg) rotateZ(0deg) scale(1)}
+    50% {transform: rotateY(90deg) rotateZ(-0.5deg) scale(0.95)}
+    100% {transform: rotateY(0deg) rotateZ(0deg) scale(1)}
 }
 
 .practice-flashcard .button-parent {

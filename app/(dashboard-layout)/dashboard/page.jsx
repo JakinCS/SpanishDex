@@ -57,7 +57,7 @@ async function Dashboard() {
               <>
                 <p><span className="fw-medium">{finalData.total_weakCards}</span> cards need review. Practice them now to keep them fresh.</p>
                 <div>
-                  <Link role='button' href='#' className='btn btn-primary d-block d-xs_sm-inline-block'>Practice Now</Link>
+                  <Link role='button' href='/dashboard/practice/weak' className='btn btn-primary d-block d-xs_sm-inline-block'>Practice Now</Link>
                 </div>
               </>
               :
