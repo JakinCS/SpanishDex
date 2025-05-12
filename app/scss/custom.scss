@@ -1001,43 +1001,47 @@ img.icon.fill-primary {
     -ms-user-select: none;
     user-select: none;
 
+    &.make-hidden {
+        transform: translateX(-100vw);
+    }
+
     &.slide-right {
         animation-name: slideRight;
-        animation-duration: 0.5s;
+        animation-duration: .25s;
         animation-timing-function: ease-in-out;
     }
     &.slide-right-from-center {
         animation-name: slideRightFromCenter;
-        animation-duration: 0.5s;
+        animation-duration: .25s;
         animation-timing-function: ease-in-out;
     }
     &.slide-left {
         animation-name: slideLeft;
-        animation-duration: 0.5s;
+        animation-duration: .25s;
         animation-timing-function: ease-in-out;
     }
     &.slide-left-from-center {
         animation-name: slideLeftFromCenter;
-        animation-duration: 0.5s;
+        animation-duration: .25s;
         animation-timing-function: ease-in-out;
     }
 }
 
 @keyframes slideRight {
-    0% {transform: translateX(-100vw)}
+    0% {transform: translateX(max( calc(-100vw + 1.5625rem), calc( -40.625rem + (-100vw + 40.625rem) / 2 ) ))}
     100% {transform: translateX(0)}
 }
 @keyframes slideRightFromCenter {
     0% {transform: translateX(0)}
-    100% {transform: translateX(100vw)}
+    100% {transform: translateX(min( calc(100vw - 1.5625rem), calc( 40.625rem + (100vw - 40.625rem) / 2 ) ))}
 }
 @keyframes slideLeft {
-    0% {transform: translateX(100vw)}
+    0% {transform: translateX(min( calc(100vw - 1.5625rem), calc( 40.625rem + (100vw - 40.625rem) / 2 ) ))}
     100% {transform: translateX(0)}
 }
 @keyframes slideLeftFromCenter {
     0% {transform: translateX(0)}
-    100% {transform: translateX(-100vw)}
+    100% {transform: translateX(max( calc(-100vw + 1.5625rem), calc( -40.625rem + (-100vw + 40.625rem) / 2 ) ))}
 }
 
 .practice-flashcard.animate-flip {
@@ -1156,6 +1160,12 @@ img.icon.fill-primary {
             border-color: shade-color($green-300, 10%);
         }
     }
+}
+
+.flashcard-end-screen {
+    height: 25rem;
+    position: absolute;
+    max-width: 40.625rem;
 }
 
 
