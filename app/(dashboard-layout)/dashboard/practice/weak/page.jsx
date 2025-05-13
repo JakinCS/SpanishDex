@@ -46,8 +46,8 @@ const page = async () => {
 
   return (
     <>
-      <TopButtons />
-      <PracticePageBody cards={cards} />
+      <TopButtons quitButton={cards.length > 0}/>
+      <PracticePageBody cards={cards} deckPractice={false}/>
     </>
   )
 }

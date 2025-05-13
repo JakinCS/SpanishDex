@@ -134,8 +134,6 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      console.log(event.key)
-
       // Flip the card when the spacebar is pressed
       if (event.key === ' ') flipCard();
 

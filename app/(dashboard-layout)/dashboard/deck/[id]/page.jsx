@@ -100,19 +100,23 @@ const DeckPage = async ({ params }) => {
         </span>
       </DashboardCard>
 
-      <UnderlineContainer className='d-block d-sm-none mb-30'>
-        <div className="d-flex align-items-center justify-content-between">
-          <h3 className='fw-medium'>Review Cards</h3>
-        </div>
-      </UnderlineContainer>
-      <div className='mb-60 d-flex justify-content-center justify-content-xs_sm-start d-sm-none flex-wrap gap-20'>
-        <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary w-100'>All Cards</Link>
-        <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
-      </div>
-      <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
-        <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary'>Review All Cards</Link>
-        <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary'>Review Weak Cards</Link>
-      </div>
+      {deck.cards.length > 0 && (
+        <>
+          <UnderlineContainer className='d-block d-sm-none mb-30'>
+          <div className="d-flex align-items-center justify-content-between">
+            <h3 className='fw-medium'>Review Cards</h3>
+          </div>
+          </UnderlineContainer>
+          <div className='mb-60 d-flex justify-content-center justify-content-xs_sm-start d-sm-none flex-wrap gap-20'>
+            <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary w-100'>All Cards</Link>
+            <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
+          </div>
+          <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
+            <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary'>Review All Cards</Link>
+            <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary'>Review Weak Cards</Link>
+          </div>
+        </>
+      )}      
 
       <UnderlineContainer className='mb-30'>
         <div className="d-flex align-items-center justify-content-between">

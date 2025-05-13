@@ -59,7 +59,7 @@ const page = async ({ params, searchParams }) => {
   return (
     <>
       <TopButtons />
-      <PracticePageBody cards={deckCards} />
+      <PracticePageBody cards={deckCards} deckPractice={true} deckId={id}/>
     </>
   )
 }
