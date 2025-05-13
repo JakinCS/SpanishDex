@@ -4,6 +4,7 @@ import TopButtons from '@/components/practice/TopButtons';
 import { getDeckPracticeInfo } from '@/lib/actions';
 import PracticePageBody from '@/components/practice/PracticePageBody';
 import PageErrorMessage from '@/components/PageErrorMessage';
+import { shuffleArray } from '@/lib/utils';
 
 const page = async ({ params, searchParams }) => {
 
@@ -52,6 +53,8 @@ const page = async ({ params, searchParams }) => {
     // Convert to plain object
     return JSON.parse(JSON.stringify(card))
   })
+
+  shuffleArray(deckCards)
 
   return (
     <>

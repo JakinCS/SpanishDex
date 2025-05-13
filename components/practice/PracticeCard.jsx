@@ -16,15 +16,19 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
 
   // Which score is selected by the user. (by default nothing)
   const [selectedScore, setSelectedScore] = useState(0)
+  const updateScoreViaKeyPress = (newScore) => {
+    setSelectedScore(newScore);
+    document.querySelector(`.score-button.score-${newScore}`).focus();
+  }
 
   // State to hold data about whether the card transition is underway or not
-  const [transitioning, setTransitioning] = useState(false);
+  const transitioning = useRef(false);
 
   const [showSide, setShowSide] = useState('front')
   const isFlipping = useRef(false);
 
   const flipCard = (e) => {
-    if (showFinal.inProgress || showFinal.completed || transitioning) return; // Don't flip
+    if (showFinal.inProgress || showFinal.completed || transitioning.current) return; // Don't flip
 
     // Prevent the buttons from triggering the card flip
     if (e) {
@@ -48,14 +52,15 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
   // This function helps with animating the card to move.
   // It also updates transition state 
   const moveCard = (direction) => {
+
+    // Update the state to indicate that the transition is currently underway
+    transitioning.current = true;
+
     const animationDuration = 500
 
     // Update the displayed card data state to indicate the new current card number 
     // (This helps determine whether to show/hide the next & previous buttons)
     setDisplayedCardData((prev) => ({ ...prev, number: prev.number + (direction === 'left' ? 1 : -1) }))
-
-    // Update the state to indicate that the transition is currently underway
-    setTransitioning(true)
 
     // Animate the flashcard to move from the center
     flashcardRef.current.classList.add(`slide-${direction}-from-center`)
@@ -93,27 +98,27 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
 
   // Function run when the user clicks the back button
   const handleBack = () => {
-    if (transitioning) return;
+    if (displayedCardData.number === 1 || transitioning.current) return;
     
     if (!showFinal.inProgress && !showFinal.completed) moveCard('right');
     else {
       setShowFinal((prev) => ({...prev, inProgress: true}));
       
-      setTransitioning(true);
+      transitioning.current = true;
 
       flashcardRef.current.classList.add(`slide-right`)
 
       setTimeout(() => {
         setShowFinal((prev) => ({...prev, inProgress: false, completed: false}));
-        setTransitioning(false)
-      }, 235);
+        transitioning.current = false;
+      }, 225);
     }
   }
 
   // Function run when the user wants to go on to the next card
   const handleNext = () => {
-    if (transitioning) return;
-    
+    if ((showFinal.inProgress || showFinal.completed) || selectedScore === 0 || transitioning.current) return;
+
     if (displayedCardData.number < totalCardCount) moveCard('left');
     else {
       setShowFinal((prev) => ({...prev, inProgress: true}));
@@ -128,9 +133,28 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
 
 
   useEffect(() => {
-    // Flip the card when the spacebar is pressed
     const handleKeyDown = (event) => {
-      if (event.key === ' ') flipCard()
+      console.log(event.key)
+
+      // Flip the card when the spacebar is pressed
+      if (event.key === ' ') flipCard();
+
+      // Run the handleNext() function if the right arrow key is pressed
+      if (event.key === 'ArrowRight' || event.key === 'Enter') {
+        document.getElementById('flashcard-next-button').click();
+      }
+
+      // Run the handleBack() function if the left arrow key is pressed
+      if (event.key === 'ArrowLeft') {
+        document.getElementById('flashcard-prev-button').click();
+      }
+
+      if (event.key === '1' || event.key === '2' || event.key === '3' || event.key === '4' || event.key === '5') {
+        if (!transitioning.current && !isFlipping.current && showSide === 'back') {
+          // setSelectedScore(parseInt(event.key));
+          updateScoreViaKeyPress(parseInt(event.key));
+        }
+      }
     }
 
     window.addEventListener('keydown', handleKeyDown)
@@ -138,7 +162,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [])
+  }, [selectedScore, showSide, showFinal])
 
 
   return (
@@ -146,22 +170,22 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       <div 
         {...props} 
         ref={flashcardRef} 
-        className={'w-100 rounded bg-white practice-flashcard' + (showFinal.completed ? ' make-hidden' : '') + (props.className ? ` ${props.className}` : '')} 
+        className={'w-100 rounded bg-white practice-flashcard px-30' + (showFinal.completed ? ' make-hidden' : '') + (props.className ? ` ${props.className}` : '')} 
         onClick={flipCard}
       >
         {showSide === 'front' ? 
           (
             <div className='h-100 d-flex flex-column align-items-center justify-content-between'>
-              <p className='w-100 text-end lh-1 fs-5 pt-30 pe-30'>{displayedCardData.card.parent_deck_title}</p>
-              <p className='fs-2'>{displayedCardData.card.english}</p>   
+              <p className='w-100 text-end lh-1 fs-5 pt-30'>{displayedCardData.card.parent_deck_title}</p>
+              <p className='fs-2 text-center'>{displayedCardData.card.english}</p>   
               <div style={{height: '2.75rem'}}></div>
             </div>         
           ) 
           :
           (
             <div className='h-100 d-flex flex-column align-items-center justify-content-between'>
-              <p className='w-100 text-end lh-1 fs-5 pt-30 pe-30' style={{minHeight: '6.5rem'}}>{displayedCardData.card.parent_deck_title}</p>
-              <p className='fs-2'>{displayedCardData.card.spanish}</p>
+              <p className='w-100 text-end lh-1 fs-5 pt-30' style={{minHeight: '6.5rem'}}>{displayedCardData.card.parent_deck_title}</p>
+              <p className='fs-2 text-center'>{displayedCardData.card.spanish}</p>
               <div>
                 <p className='fw-medium text-center lh-1 fs-6 mb-2'>Did you get it right?</p>
                 <div className='mb-30 p-2 button-parent'>
@@ -208,6 +232,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       }
       <div className='d-flex justify-content-between w-100'>
         <IconButton 
+          id='flashcard-prev-button'
           className={displayedCardData.number === 1 ? 'opacity-0' : ''} 
           disabled={displayedCardData.number === 1} 
           variant='gray' 
@@ -216,11 +241,12 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
           size='sm' 
           onClick={handleBack}
         />
-        <Button variant='secondary' onClick={flipCard} className={(showFinal.inProgress || showFinal.completed ? 'opacity-75' : '')} disabled={showFinal.inProgress || showFinal.completed}>
+        <Button variant='secondary' onClick={flipCard} className={(showFinal.inProgress || showFinal.completed ? 'opacity-50' : '')} disabled={showFinal.inProgress || showFinal.completed}>
           <span className='d-block d-xs_sm-none'>Flip</span>
           <span className='d-none d-xs_sm-block'>Flip Card</span>
         </Button>
         <IconButton 
+          id='flashcard-next-button'
           className={(showFinal.inProgress || showFinal.completed ? 'opacity-0' : '')} 
           disabled={(showFinal.inProgress || showFinal.completed) || selectedScore === 0} 
           variant='gray' 

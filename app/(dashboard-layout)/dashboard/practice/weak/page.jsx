@@ -3,6 +3,7 @@ import React from 'react';
 import PracticePageBody from '@/components/practice/PracticePageBody';
 import TopButtons from '@/components/practice/TopButtons';
 import PageErrorMessage from '@/components/PageErrorMessage';
+import { shuffleArray } from '@/lib/utils';
 
 
 const page = async () => {
@@ -40,6 +41,8 @@ const page = async () => {
       <PageErrorMessage buttonType={'reload'} error={errorInfo.hiddenMsg}>{errorInfo.message}</PageErrorMessage>
     )
   }
+
+  shuffleArray(cards)
 
   return (
     <>

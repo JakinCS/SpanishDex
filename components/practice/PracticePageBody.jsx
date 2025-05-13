@@ -1,11 +1,9 @@
 'use client'
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PracticeCard from './PracticeCard';
 
 const PracticePageBody = ({ cards, ...props }) => {
-  const prevCardRef = useRef(null)
-  const nextCardRef = useRef(null)
 
   const [visibleCard, setVisibleCard] = useState(0);
   const incrementVisibleCard = () => {
