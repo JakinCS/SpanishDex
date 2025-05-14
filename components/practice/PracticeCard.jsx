@@ -15,7 +15,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
   const [showFinal, setShowFinal] = useState({inProgress: false, completed: false})
 
   // Which score is selected by the user. (by default nothing)
-  const [selectedScore, setSelectedScore] = useState(0)
+  const [selectedScore, setSelectedScore] = useState(card.score || 0)
   const updateScoreViaKeyPress = (newScore) => {
     setSelectedScore(newScore);
     document.querySelector(`.score-button.score-${newScore}`).focus();
@@ -28,14 +28,15 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
   const isFlipping = useRef(false);
 
   const flipCard = (e) => {
+
+    if (isFlipping.current) return // Prevent flipping if already animating
+
     if (showFinal.inProgress || showFinal.completed || transitioning.current) return; // Don't flip
 
     // Prevent the buttons from triggering the card flip
     if (e) {
       if (e.target.matches('.practice-flashcard .button-parent') || e.target.matches('.practice-flashcard .button-parent *')) return
     }
-
-    if (isFlipping.current) return // Prevent flipping if already animating
 
     isFlipping.current = true; // The flipping state is true
     flashcardRef.current.classList.add('animate-flip');
@@ -44,8 +45,10 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
     }, 250);
     setTimeout(() => {
       flashcardRef.current.classList.remove('animate-flip');
-      isFlipping.current = false; // The flipping state is false
     }, 500); // Matches match the CSS animation duration
+    setTimeout(() => {
+      isFlipping.current = false; // Previous operation might take time to execute
+    }, 525);
 
   }
 
@@ -102,6 +105,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
     
     if (!showFinal.inProgress && !showFinal.completed) moveCard('right');
     else {
+      setShowSide('front')
       setShowFinal((prev) => ({...prev, inProgress: true}));
       
       transitioning.current = true;
@@ -113,6 +117,17 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
         transitioning.current = false;
       }, 225);
     }
+
+    functions.updateState((prev) => {
+      const newCardsArray = prev.map((c) => {
+        if (c._id === card._id) {
+          return {...c, score: selectedScore}
+        } else {
+          return c
+        }
+      })
+      return newCardsArray;
+    })
   }
 
   // Function run when the user wants to go on to the next card
@@ -123,19 +138,33 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
     else {
       setShowFinal((prev) => ({...prev, inProgress: true}));
 
-      flashcardRef.current.classList.add(`slide-left-from-center`)
+      flashcardRef.current.classList.add(`slide-left-from-center`);
 
       setTimeout(() => {
         setShowFinal((prev) => ({...prev, inProgress: false, completed: true}))
       }, 200);
     }
+
+    functions.updateState((prev) => {
+      const newCardsArray = prev.map((c) => {
+        if (c._id === card._id) {
+          return {...c, score: selectedScore}
+        } else {
+          return c
+        }
+      })
+      return newCardsArray;
+    })
   }
 
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       // Flip the card when the spacebar is pressed
-      if (event.key === ' ') flipCard();
+      if (event.key === ' ') {
+        event.preventDefault(); // Prevent scrolling from happening
+        flipCard()
+      };
 
       // Run the handleNext() function if the right arrow key is pressed
       if (event.key === 'ArrowRight' || event.key === 'Enter') {

@@ -12,6 +12,8 @@ import SummaryResultCircle from './SummaryResultCircle';
 
 const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
 
+  const [cardsState, setCardsState] = useState(cards);
+
   const [showSummaryScreen, setShowSummaryScreen] = useState(false);
   const displaySummaryScreen = () => {
     setShowSummaryScreen(true);
@@ -48,10 +50,10 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
 
   const otherCardInfo = {
     prev: (visibleCard > 0 ? {
-      card: cards[visibleCard - 1]
+      card: cardsState[visibleCard - 1]
     } : null),
-    next: (visibleCard + 1 < cards.length ? {
-      card: cards[visibleCard + 1]
+    next: (visibleCard + 1 < cardsState.length ? {
+      card: cardsState[visibleCard + 1]
     } : null)
   }
 
@@ -67,7 +69,15 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
                 <h1 className='text-center mb-30 mb-sm-40'>Practice</h1>
                 <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
                 <div className='d-flex flex-column align-items-center'>
-                  <PracticeCard className='mb-30' number={visibleCard + 1} totalCardCount={cards.length} key={cards[visibleCard]._id} otherCards={otherCardInfo} card={cards[visibleCard]} functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: displaySummaryScreen}}/>
+                  <PracticeCard 
+                    className='mb-30' 
+                    number={visibleCard + 1} 
+                    totalCardCount={cardsState.length} 
+                    key={cardsState[visibleCard]._id} 
+                    otherCards={otherCardInfo} 
+                    card={cardsState[visibleCard]} 
+                    functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: displaySummaryScreen, updateState: setCardsState}}
+                  />
                 </div>
               </>
             ) : (
@@ -130,21 +140,9 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
               </div>
             </UnderlineContainer>
 
-            <SummaryCardListItem className='mb-10' number='1' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='2' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='3' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='4' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='5' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='6' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='7' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='8' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='9' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='10' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='11' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='12' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='13' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='14' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
-            <SummaryCardListItem className='mb-10' number='15' score={3} cardInfo={{spanish: 'hola', english: 'hello'}}/>
+            {cards.map((card, index) => (
+              <SummaryCardListItem key={card._id} className='mb-10' number={index + 1} score={3} cardInfo={{spanish: card.spanish, english: card.english}}/>
+            ))}
 
             <div className="d-flex justify-content-center mt-50">
               <Button variant='primary ms-30' onClick={displaySummaryScreen}>Back to Summary</Button>
