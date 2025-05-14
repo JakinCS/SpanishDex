@@ -1,6 +1,5 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
-import TopButtons from '@/components/practice/TopButtons';
 import { getDeckPracticeInfo } from '@/lib/actions';
 import PracticePageBody from '@/components/practice/PracticePageBody';
 import PageErrorMessage from '@/components/PageErrorMessage';
@@ -58,7 +57,6 @@ const page = async ({ params, searchParams }) => {
 
   return (
     <>
-      <TopButtons />
       <PracticePageBody cards={deckCards} deckPractice={true} deckId={id}/>
     </>
   )

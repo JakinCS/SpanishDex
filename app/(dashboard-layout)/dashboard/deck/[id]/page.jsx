@@ -1,7 +1,7 @@
 import BackButton from '@/components/BackButton'
 import ButtonWithIcon from '@/components/ButtonWithIcon'
 import CardListItem from '@/components/viewdeck/CardListItem'
-import DashboardCard from '@/components/dashboard/DashboardCard'
+import DashboardCard from '@/components/Card'
 import Icon from '@/components/Icon'
 import IconButton from '@/components/IconButton'
 import UnderlineContainer from '@/components/UnderlineContainer'
@@ -9,7 +9,6 @@ import MoreButton from '@/components/viewdeck/MoreButton'
 import Link from 'next/link'
 import PageErrorMessage from '@/components/PageErrorMessage'
 import { notFound } from 'next/navigation'
-import BackToTopButton from '@/components/BackToTopButton'
 import { getDeck } from '@/lib/actions'
 
 
@@ -149,8 +148,6 @@ const DeckPage = async ({ params }) => {
         )}
 
       </div>
-
-      <BackToTopButton />
 
     </>
   )

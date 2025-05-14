@@ -98,7 +98,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
 
   // Function run when the user clicks the back button
   const handleBack = () => {
-    if (displayedCardData.number === 1 || transitioning.current) return;
+    if (displayedCardData.number === 1 || transitioning.current || showFinal.inProgress) return;
     
     if (!showFinal.inProgress && !showFinal.completed) moveCard('right');
     else {
@@ -221,12 +221,14 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       </div>
       
       {(showFinal.inProgress || showFinal.completed) &&
-        <div style={{zIndex: (!showFinal.inProgress && showFinal.completed ? '0' : '-1')}} className={'w-100 rounded bg-white border border-gray-150 border-1point5 flashcard-end-screen' + (props.className ? ` ${props.className}` : '')}>
-          <div className='h-100 d-flex flex-column justify-content-center'>
-            <h2 className='text-center mb-40'>Practice Complete</h2>
-            <Button className='d-block mx-auto' variant='primary'>View Results</Button>
-          </div> 
-        </div>
+        <div style={{zIndex: (!showFinal.inProgress && showFinal.completed ? '0' : '-1')}} className='w-100 flashcard-end-screen px-25'>
+          <div className={'w-100 h-100 rounded bg-white border border-gray-150 border-1point5' + (props.className ? ` ${props.className}` : '')}>
+            <div className='h-100 d-flex flex-column justify-content-center'>
+              <h2 className='text-center mb-40'>Practice Complete</h2>
+              <Button className='d-block mx-auto' variant='primary' onClick={functions.finish}>View Results</Button>
+            </div> 
+          </div>
+        </div>        
       }
       <div className='d-flex justify-content-between w-100'>
         <IconButton 

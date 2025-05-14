@@ -2,6 +2,7 @@ import AuthProvider from '../context/AuthProvider';
 import DashboardHeader from '@/components/headers/dashboard/DashboardHeader';
 import Container from 'react-bootstrap/Container';
 import DashboardFooter from '@/components/footers/DashboardFooter';
+import BackToTopButton from '@/components/BackToTopButton';
 
 export default function dashboardLayout({ children }) {
 
@@ -23,6 +24,7 @@ export default function dashboardLayout({ children }) {
                 {children} 
               </div>     
             </Container> 
+            <BackToTopButton />
           </div> 
           <DashboardFooter />
         </div>
