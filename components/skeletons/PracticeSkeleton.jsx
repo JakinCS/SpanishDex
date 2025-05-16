@@ -1,0 +1,58 @@
+import React from 'react'
+import Button from 'react-bootstrap/Button';
+import IconButton from '../IconButton';
+import BackButton from '../BackButton';
+
+const PracticeSkeleton = () => {
+  return (
+    <>
+      <div className='mb-30 mb-sm-40'>
+        <BackButton />        
+      </div>
+      <div className='mx-auto' style={{maxWidth: '40.625rem'}}>
+        <h1 className='text-center mb-30 mb-sm-40'>Practice</h1>
+        {/* <p className='mb-10'>1 / 4</p> */}
+        <div className='placeholder-glow mb-10'>
+          <span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '2.5rem' }}></span>
+        </div>
+        <div className='placeholder-glow mb-30'>
+          <span className='placeholder bg-gray-150 rounded' style={{height: '25rem', width: '100%' }}></span>
+        </div>
+        <div className='d-flex justify-content-between w-100'>
+          <IconButton 
+            className='opacity-0'
+            disabled={true} 
+            variant='gray' 
+            iconSrc='/icons/arrow_back.svg' 
+            altTag='Back icon' 
+            size='sm'
+          />
+          <Button variant='secondary' disabled={true}>
+            <span className='d-block d-xs_sm-none'>Flip</span>
+            <span className='d-none d-xs_sm-block'>Flip Card</span>
+          </Button>
+          <IconButton 
+            disabled={true} 
+            variant='gray' 
+            iconSrc='/icons/arrow_forward.svg' 
+            altTag='Next icon' 
+            size='sm'
+          />
+        </div> 
+        {/* <div className='d-flex flex-column align-items-center'>
+          <PracticeCard 
+            className='mb-30' 
+            number={visibleCard + 1} 
+            totalCardCount={cards.length} 
+            key={cards[visibleCard]._id} 
+            otherCards={otherCardInfo} 
+            card={{...cards[visibleCard], ...cardsPracticeInfo.current[visibleCard]}} 
+            functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: finishPractice, updateState: updateCardsPracticeInfo, sendScore: sendCardScore}}
+          />
+        </div> */}
+      </div>      
+    </>
+  )
+}
+
+export default PracticeSkeleton

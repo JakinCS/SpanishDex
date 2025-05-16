@@ -193,7 +193,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       <div 
         {...props} 
         ref={flashcardRef} 
-        className={'w-100 rounded bg-white practice-flashcard px-30' + (showFinal.completed ? ' make-hidden' : '') + (props.className ? ` ${props.className}` : '')} 
+        className={'w-100 rounded bg-white practice-flashcard px-30 mb-30' + (showFinal.completed ? ' make-hidden' : '') + (props.className ? ` ${props.className}` : '')} 
         onClick={flipCard}
       >
         {showSide === 'front' ? 

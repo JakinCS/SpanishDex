@@ -179,8 +179,7 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
                 <h1 className='text-center mb-30 mb-sm-40'>Practice</h1>
                 <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
                 <div className='d-flex flex-column align-items-center'>
-                  <PracticeCard 
-                    className='mb-30' 
+                  <PracticeCard
                     number={visibleCard + 1} 
                     totalCardCount={cards.length} 
                     key={cards[visibleCard]._id} 
