@@ -89,15 +89,12 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
     try {
       const practiceResult = await practiceCard(id, oldSRAData, score, lateness);
 
-      console.log(practiceResult)
-
       if (practiceResult.success) {
         updateCardsPracticeInfo(id, {status: 'success', message: 'Update successful'});
       } else {
         updateCardsPracticeInfo(id, {status: 'failure', message: practiceResult.message});
       }
     } catch (error) {
-      console.log(error)
       updateCardsPracticeInfo(id, {status: 'failure', message: error.toString()});
     }
 
@@ -126,16 +123,13 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
 
       }
       if (getPending().length === 0) {
-        console.log('no waiting')
         await wait500();
         resolve({failures: consistentFailures})  
       }
       else {
-        console.log('waiting')
         await wait500();
         
         while ((getPending()).length > 0)  {
-          console.log('waiting again')
           await wait500();
           continue;
         }
@@ -154,7 +148,6 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
 
     if (result.failures) setShowError(true);
 
-    console.log('display')
     displaySummaryScreen();
   }
 
