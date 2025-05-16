@@ -12,7 +12,9 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
   const [displayedCardData, setDisplayedCardData] = useState({number, card})
 
   // Whether to show the ending screen or not
-  const [showFinal, setShowFinal] = useState({inProgress: false, completed: false})
+  const [showFinal, setShowFinal] = useState({inProgress: false, completed: false});
+
+  const [finishing, setFinishing] = useState(false)
 
   // Which score is selected by the user. (by default nothing)
   const [selectedScore, setSelectedScore] = useState(card.score || 0)
@@ -118,16 +120,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       }, 225);
     }
 
-    functions.updateState((prev) => {
-      const newCardsArray = prev.map((c) => {
-        if (c._id === card._id) {
-          return {...c, score: selectedScore}
-        } else {
-          return c
-        }
-      })
-      return newCardsArray;
-    })
+    functions.updateState(card._id, {score: selectedScore})
   }
 
   // Function run when the user wants to go on to the next card
@@ -145,16 +138,19 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       }, 200);
     }
 
-    functions.updateState((prev) => {
-      const newCardsArray = prev.map((c) => {
-        if (c._id === card._id) {
-          return {...c, score: selectedScore}
-        } else {
-          return c
-        }
-      })
-      return newCardsArray;
-    })
+    if (selectedScore !== displayedCardData.card.score || displayedCardData.card.status === null) {
+      functions.sendScore(card._id, card.next_practice_date, card.sra, selectedScore);
+      setDisplayedCardData((prev) => ({...prev, card: {...prev.card, score: selectedScore, status: 'not_null'}}))
+    }
+
+    functions.updateState(card._id, {score: selectedScore});
+  }
+
+  // This function is run when the user is done practicing and is about to go to the summary page.
+  const finishPractice = () => {
+    setFinishing(true);
+
+    functions.finish();
   }
 
 
@@ -250,11 +246,13 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       </div>
       
       {(showFinal.inProgress || showFinal.completed) &&
-        <div style={{zIndex: (!showFinal.inProgress && showFinal.completed ? '0' : '-1')}} className='w-100 flashcard-end-screen px-25'>
+        <div style={{zIndex: (!showFinal.inProgress && showFinal.completed ? '0' : '-1')}} className='w-100 flashcard-end-screen px-25 px-sm-50'>
           <div className={'w-100 h-100 rounded bg-white border border-gray-150 border-1point5' + (props.className ? ` ${props.className}` : '')}>
             <div className='h-100 d-flex flex-column justify-content-center'>
               <h2 className='text-center mb-40'>Practice Complete</h2>
-              <Button className='d-block mx-auto' variant='primary' onClick={functions.finish}>View Results</Button>
+              <Button className='d-block mx-auto' variant='primary' onClick={finishPractice} disabled={finishing}>
+                {finishing ? <div style={{padding: '0rem 2.125rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'View Results'}
+              </Button>
             </div> 
           </div>
         </div>        
@@ -263,7 +261,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
         <IconButton 
           id='flashcard-prev-button'
           className={displayedCardData.number === 1 ? 'opacity-0' : ''} 
-          disabled={displayedCardData.number === 1} 
+          disabled={displayedCardData.number === 1 || finishing} 
           variant='gray' 
           iconSrc='/icons/arrow_back.svg' 
           altTag='Back icon' 

@@ -5,7 +5,6 @@ import Link from "next/link";
 import Stack from 'react-bootstrap/Stack'
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
-import BackToTopButton from "@/components/BackToTopButton";
 import Icon from "@/components/Icon";
 import { getDashboardDeckInfo } from "@/lib/actions";
 import { redirect } from "next/navigation";
@@ -67,8 +66,6 @@ async function Dashboard() {
         </DashboardCard>
 
         <DecksArea decks={finalData.decks} />
-
-        <BackToTopButton />
 
       </>
     )
