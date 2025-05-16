@@ -21,7 +21,7 @@ const AddPageBody = ({ initialData }) => {
   // This state and respective functions handle the show/hide of the discard changes modal
   const [showDiscardModal, setShowDiscardModal] = useState(false);
   const openDiscardModal = () => {setShowDiscardModal(true)}
-  const closeDiscardCard = () => {setShowDiscardModal(false)}
+  const closeDiscardModal = () => {setShowDiscardModal(false)}
   
   // This state and respective functions handle the show/hide of the unsaved changes modal
   const [showUnsavedChangesModal, setShowUnsavedChangesModal] = useState(false);
@@ -157,7 +157,7 @@ const AddPageBody = ({ initialData }) => {
         <p className='text-center'>There are no cards in this deck yet. Start by adding a card above.</p>
       )}
 
-      <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} />
+      <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardModal} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
 
     </>

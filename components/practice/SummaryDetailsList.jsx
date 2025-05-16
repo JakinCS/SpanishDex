@@ -13,8 +13,11 @@ const SummaryDetailsList = ({ cards, getScoreById }) => {
     <>
       {listOf1s.length > 0 && (
         <>
-          <div className={'d-flex align-items-center justify-content-center rounded mb-10' + ` bg-red-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
-            <span className='fw-semibold lh-1'>1</span>
+          <div className='d-flex align-items-center mb-10 gap-10'>
+            <div className={'d-flex align-items-center justify-content-center rounded' + ` bg-red-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
+              <span className='fw-semibold lh-1'>1</span>
+            </div>
+            <h4 className='text-danger'>Hard</h4>
           </div>
           {listOf1s.map((card, index) => {
             return <SummaryCardListItem key={card._id} className={index + 1 === listOf1s.length ? 'mb-40' : 'mb-10'} score={1} cardInfo={{spanish: card.spanish, english: card.english}}/>
@@ -23,8 +26,11 @@ const SummaryDetailsList = ({ cards, getScoreById }) => {
       )}
       {listOf2s.length > 0 && (
         <>
-          <div className={'d-flex align-items-center justify-content-center rounded mb-10' + ` bg-yellow-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
-            <span className='fw-semibold lh-1'>2</span>
+          <div className='d-flex align-items-center mb-10 gap-10'>
+            <div className={'d-flex align-items-center justify-content-center rounded' + ` bg-yellow-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
+              <span className='fw-semibold lh-1'>2</span>
+            </div>
+            <h4 className='text-warning'>Difficult</h4>
           </div>
           {listOf2s.map((card, index) => {
             return <SummaryCardListItem key={card._id} className={index + 1 === listOf2s.length ? 'mb-40' : 'mb-10'} score={2} cardInfo={{spanish: card.spanish, english: card.english}}/>
@@ -33,8 +39,11 @@ const SummaryDetailsList = ({ cards, getScoreById }) => {
       )}
       {listOf3s.length > 0 && (
         <>
-          <div className={'d-flex align-items-center justify-content-center rounded mb-10' + ` bg-green-yellow-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
-            <span className='fw-semibold lh-1'>3</span>
+          <div className='d-flex align-items-center mb-10 gap-10'>
+            <div className={'d-flex align-items-center justify-content-center rounded' + ` bg-green-yellow-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
+              <span className='fw-semibold lh-1'>3</span>
+            </div>
+            <h4 className='text-green-yellow'>Normal</h4>
           </div>
           {listOf3s.map((card, index) => {
             return <SummaryCardListItem key={card._id} className={index + 1 === listOf3s.length ? 'mb-40' : 'mb-10'} score={3} cardInfo={{spanish: card.spanish, english: card.english}}/>
@@ -43,8 +52,11 @@ const SummaryDetailsList = ({ cards, getScoreById }) => {
       )}
       {listOf4s.length > 0 && (
         <>
-          <div className={'d-flex align-items-center justify-content-center rounded mb-10' + ` bg-yellow-green-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
-            <span className='fw-semibold lh-1'>4</span>
+          <div className='d-flex align-items-center mb-10 gap-10'>
+            <div className={'d-flex align-items-center justify-content-center rounded' + ` bg-yellow-green-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
+              <span className='fw-semibold lh-1'>4</span>
+            </div>
+            <h4 className='text-yellow-green'>Good</h4>
           </div>
           {listOf4s.map((card, index) => {
             return <SummaryCardListItem key={card._id} className={index + 1 === listOf4s.length ? 'mb-40' : 'mb-10'} score={4} cardInfo={{spanish: card.spanish, english: card.english}}/>
@@ -53,8 +65,11 @@ const SummaryDetailsList = ({ cards, getScoreById }) => {
       )}
       {listOf5s.length > 0 && (
         <>
-          <div className={'d-flex align-items-center justify-content-center rounded mb-10' + ` bg-green-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
-            <span className='fw-semibold lh-1'>5</span>
+          <div className='d-flex align-items-center mb-10 gap-10'>
+            <div className={'d-flex align-items-center justify-content-center rounded' + ` bg-green-300`} style={{height: '2.1875rem', width: '2.1875rem'}}>
+              <span className='fw-semibold lh-1'>5</span>
+            </div>
+            <h4 className='text-success'>Easy</h4>
           </div>
           {listOf5s.map((card, index) => {
             return <SummaryCardListItem key={card._id} className={'mb-10'} score={5} cardInfo={{spanish: card.spanish, english: card.english}}/>

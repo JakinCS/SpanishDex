@@ -11,8 +11,17 @@ import SummaryResultCircle from './SummaryResultCircle';
 import { practiceCard } from '@/lib/actions';
 import SummaryDetailsList from './SummaryDetailsList';
 import Alert from 'react-bootstrap/Alert';
+import { useRouter } from 'next/navigation';
+import ExitPracticeModal from '../modals/ExitPracticeModal';
 
 const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
+
+  const router = useRouter();
+
+  // This state and respective functions handle the show/hide of the exit practice modal
+  const [showExitModal, setShowExitModal] = useState(false);
+  const openExitModal = () => {setShowExitModal(true)}
+  const closeExitModal = () => {setShowExitModal(false)}
 
   const cardsPracticeInfo = useRef((cards.map((card) => ({_id: card._id, status: null, score: 0}))));
   const updateCardsPracticeInfo = (id, newData) => {
@@ -24,6 +33,10 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
       }
     })
   }
+
+  // Holds an array of cards that have actually been practiced. 
+  // (useful when the user exits the practice prematurely and an accurate list of practiced cards needs to be displayed)
+  const practicedCards = useRef(null)
 
   // Returns a card's practice score based on the passed in "id"
   const getScoreById = (id) => {
@@ -45,10 +58,10 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
   // This function gets the % accuracy of the practice session
   const getAccuracy = () => {
     let accuracy = 0;
-    cardsPracticeInfo.current.forEach((card) => {
+    practicedCards.current.forEach((card) => {
       accuracy += (card.score - 1) / 4;
     })
-    accuracy = accuracy / cardsPracticeInfo.current.length * 100;
+    accuracy = accuracy / practicedCards.current.length * 100;
 
     return Math.round(accuracy);
   }
@@ -148,7 +161,26 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
 
     if (result.failures) setShowError(true);
 
+    practicedCards.current = cardsPracticeInfo.current.filter((card) => (card.status !== null));
+
     displaySummaryScreen();
+  }
+
+  // This function is run when the back button is clicked. 
+  // Then, a modal will be displayed asking the user if he/she wants to truly exit the practice.
+  const handleBackButtonClick = (e) => {
+    e.preventDefault();
+
+    const cardsPracticed = cardsPracticeInfo.current.filter((card) => (card.status !== null));
+
+    // Open the modal if the user has interacted at all.
+    // Otherwise, just go back.
+    if (!cardsPracticed.length > 0) {
+      router.back()
+    } else {
+      openExitModal();
+    }
+
   }
 
   const otherCardInfo = {
@@ -163,7 +195,7 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
   return (
     <>
       {showSummaryDetails && <TopButtons exit={true} onClick={displaySummaryScreen}/>}
-      {(!showSummaryScreen && !showSummaryDetails) && <TopButtons />}
+      {(!showSummaryScreen && !showSummaryDetails) && <TopButtons onClick={handleBackButtonClick} />}
       {!showSummaryScreen && !showSummaryDetails && (
         <>
           <div className='mx-auto' style={{maxWidth: '40.625rem'}}>
@@ -204,7 +236,7 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
           </Alert>
           <div className='mx-auto' style={{maxWidth: '62.5rem'}}>
             <h1 className='text-center mb-30 mt-70'>Practice Summary</h1>
-            <p className='text-center'>Practice complete! You reviewed {cards.length} card{cards.length > 1 ? 's' : ''} with {getAccuracy()}% accuracy.</p>
+            <p className='text-center'>Practice complete! You reviewed {practicedCards.current.length} card{practicedCards.current.length > 1 ? 's' : ''} with {getAccuracy()}% accuracy.</p>
 
             <div className="d-flex justify-content-center">
               <Card xPadding={50} yPadding={30} className='my-50 d-flex flex-wrap gap-30 gap-sm-50 justify-content-center'>
@@ -241,7 +273,7 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
             <h1 className='text-center mb-30'>Practice Details</h1>
             <UnderlineContainer className='mb-30'>
               <div className='d-flex align-items-center justify-content-between' style={{minHeight: '2.5rem'}}>
-                <h3 className='fw-medium'>Cards Practiced ({cards.length})</h3>
+                <h3 className='fw-medium'>Cards Practiced ({practicedCards.current.length})</h3>
               </div>
             </UnderlineContainer>
 
@@ -253,6 +285,9 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
           </div>
         </>
       )}
+
+      {/* <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} /> */}
+      <ExitPracticeModal show={showExitModal} closeModal={closeExitModal} finishPractice={finishPractice} />
       
     </>
   )
