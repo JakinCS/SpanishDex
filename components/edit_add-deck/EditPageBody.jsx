@@ -42,7 +42,7 @@ const EditPageBody = ({ deckId, initialData }) => {
       openUnsavedChangesModal();
     } else {
       // If there are no changes, just go back
-      router.back()
+      router.push(`/dashboard/deck/${deckId}`)
     }
   } 
 
@@ -175,6 +175,9 @@ const EditPageBody = ({ deckId, initialData }) => {
         if (result.newCardIds != null) {
           updateCardIds(changes.addedCards, result.newCardIds);
         }
+
+        // Refreshing helps to update the app with the newly added data. When the user clicks the back button, there's no issue
+        router.refresh(); 
       } else {
         // Handle error in editing deck
         setError({show: true, error: result.error, message: result.message})

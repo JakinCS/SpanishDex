@@ -218,23 +218,23 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
                   </div>
                   <div className="d-flex score-button-flex gap-10 gap-sm-15">
                     <div className='d-flex flex-column align-items-center'>
-                      <Button className={'score-button score-1' + (selectedScore === 1 ? ' selected' : '')} onClick={ () => { setSelectedScore(1) } }>1</Button>
+                      <Button variant='info' className={'score-button score-1' + (selectedScore === 1 ? ' selected' : '')} onClick={ () => { setSelectedScore(1) } }>1</Button>
                       <p className='score-description position-absolute fs-6 mt-35'>I had no idea</p>
                     </div>
                     <div className='d-flex flex-column align-items-center'>
-                      <Button className={'score-button score-2' + (selectedScore === 2 ? ' selected' : '')} onClick={ () => { setSelectedScore(2) } }>2</Button>
+                      <Button variant='info' className={'score-button score-2' + (selectedScore === 2 ? ' selected' : '')} onClick={ () => { setSelectedScore(2) } }>2</Button>
                       <p className='score-description position-absolute fs-6 mt-35'>I got it wrong</p>
                     </div>
                     <div className='d-flex flex-column align-items-center'>
-                      <Button className={'score-button score-3' + (selectedScore === 3 ? ' selected' : '')} onClick={ () => { setSelectedScore(3) } }>3</Button>
+                      <Button variant='info' className={'score-button score-3' + (selectedScore === 3 ? ' selected' : '')} onClick={ () => { setSelectedScore(3) } }>3</Button>
                       <p className='score-description position-absolute fs-6 mt-35'>Phew, I got it right</p>
                     </div>
                     <div className='d-flex flex-column align-items-center'>
-                      <Button className={'score-button score-4' + (selectedScore === 4 ? ' selected' : '')} onClick={ () => { setSelectedScore(4) } }>4</Button>
+                      <Button variant='info' className={'score-button score-4' + (selectedScore === 4 ? ' selected' : '')} onClick={ () => { setSelectedScore(4) } }>4</Button>
                       <p className='score-description position-absolute fs-6 mt-35'>Not too bad</p>
                     </div>
                     <div className='d-flex flex-column align-items-center'>
-                      <Button className={'score-button score-5' + (selectedScore === 5 ? ' selected' : '')} onClick={ () => { setSelectedScore(5) } }>5</Button>
+                      <Button variant='info' className={'score-button score-5' + (selectedScore === 5 ? ' selected' : '')} onClick={ () => { setSelectedScore(5) } }>5</Button>
                       <p className='score-description position-absolute fs-6 mt-35'>That was easy</p>
                     </div>
                   </div>

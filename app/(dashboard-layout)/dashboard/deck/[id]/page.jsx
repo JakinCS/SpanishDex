@@ -66,7 +66,7 @@ const DeckPage = async ({ params }) => {
   return (
     <>
       <div className='d-flex justify-content-between align-items-center mb-40'>
-        <BackButton />
+        <BackButton url='/dashboard'/>
         <div className='d-flex'>
           <ButtonWithIcon isLinkButton={true} className="btn btn-gray d-none d-xs_sm-block me-10" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
           <IconButton className={'btn btn-gray d-block d-xs_sm-none me-10'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' altTag='Edit icon' size='sm' />

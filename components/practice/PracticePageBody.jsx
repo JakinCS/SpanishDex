@@ -176,7 +176,8 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
     // Open the modal if the user has interacted at all.
     // Otherwise, just go back.
     if (!cardsPracticed.length > 0) {
-      router.back()
+      if (deckPractice) router.push(`/dashboard/deck/${deckId}`);
+      else router.push(`/dashboard`);
     } else {
       openExitModal();
     }
@@ -232,7 +233,7 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
       {showSummaryScreen && (
         <>
           <Alert variant='danger' show={showError} onClose={() => setShowError(false)} style={{marginTop: '-1rem', marginBottom: '-2.5rem'}} dismissible>
-            Some practice results were not able to be saved.
+            <p className='pe-30'>Some practice results were not able to be saved.</p>
           </Alert>
           <div className='mx-auto' style={{maxWidth: '62.5rem'}}>
             <h1 className='text-center mb-30 mt-70'>Practice Summary</h1>
