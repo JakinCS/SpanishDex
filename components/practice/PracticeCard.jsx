@@ -199,19 +199,19 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
         {showSide === 'front' ? 
           (
             <div className='h-100 d-flex flex-column align-items-center justify-content-between'>
-              <p className='w-100 text-end lh-1 fs-5 pt-30'>{displayedCardData.card.parent_deck_title}</p>
-              <p className='fs-2 text-center'>{displayedCardData.card.english}</p>   
-              <div style={{height: '2.75rem'}}></div>
+              <p className='w-100 text-end lh-1 fs-5 pt-25'>{displayedCardData.card.parent_deck_title}</p>
+              <p className='flashcard-word fs-2 text-center'>{displayedCardData.card.english}</p>   
+              <div style={{height: '2.4375rem'}}></div>
             </div>         
           ) 
           :
           (
             <div className='h-100 d-flex flex-column align-items-center justify-content-between'>
-              <p className='w-100 text-end lh-1 fs-5 pt-30' style={{minHeight: '6.5rem'}}>{displayedCardData.card.parent_deck_title}</p>
-              <p className='fs-2 text-center'>{displayedCardData.card.spanish}</p>
+              <p className='w-100 text-end lh-1 fs-5 pt-25' style={{minHeight: '6.1875rem'}}>{displayedCardData.card.parent_deck_title}</p>
+              <p className='flashcard-word fs-2 text-center'>{displayedCardData.card.spanish}</p>
               <div>
                 <p className='fw-medium text-center lh-1 fs-6 mb-2'>Did you get it right?</p>
-                <div className='mb-30 p-2 button-parent'>
+                <div className='mb-25 p-2 button-parent'>
                   <div className='d-flex justify-content-between px-2 pb-2'>
                     <p className='lh-1 fs-6'>No</p>
                     <p className='lh-1 fs-6'>Yes</p>

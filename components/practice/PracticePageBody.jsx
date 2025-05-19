@@ -202,7 +202,8 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
           <div className='mx-auto' style={{maxWidth: '40.625rem'}}>
             {cards.length > 0 ? (
               <>
-                <h1 className='text-center mb-30 mb-sm-40'>Practice</h1>
+                <h2 className='text-center mb-20 d-block d-sm-none'>Practice</h2>
+                <h1 className='text-center mb-40 d-none d-sm-block'>Practice</h1>
                 <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
                 <div className='d-flex flex-column align-items-center'>
                   <PracticeCard
