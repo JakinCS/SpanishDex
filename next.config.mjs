@@ -9,6 +9,7 @@ const nextConfig = {
       },
     ],
   },
+  serverExternalPackages: ['newrelic'],
 };
 
 export default nextConfig;
