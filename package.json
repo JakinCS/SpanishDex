@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e .env.local -- cross-env NODE_OPTIONS=\"--loader newrelic/esm-loader.mjs --require newrelic\" next dev",
+    "dev": "next dev",
     "build": "next build",
-    "start": "dotenv -e .env.local -- cross-env NODE_OPTIONS=\"-r newrelic\" next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "packageManager": "npm@10.7.0",
@@ -24,7 +24,6 @@
     "generate-password": "^1.7.1",
     "mongo-sanitize": "^1.1.0",
     "mongodb": "^6.13.0",
-    "newrelic": "^12.19.0",
     "next": "^15.1.8",
     "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0",
@@ -33,8 +32,6 @@
     "react-easy-crop": "^5.4.1"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "dotenv-cli": "^8.0.0",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "sass": "1.77.6"

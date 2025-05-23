@@ -39,7 +39,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# new relic
-newrelic_agent.log
 # Sentry Config File
 .env.sentry-build-plugin
