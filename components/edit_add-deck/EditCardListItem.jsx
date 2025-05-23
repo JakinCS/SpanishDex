@@ -99,7 +99,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // Run the ensureSpanishValidity() function on change of the showSpanishFocus state
   useEffect(() => {
     ensureSpanishValidity();
-  }, [showSpanishFocus])
+  }, [showSpanishFocus, ensureSpanishValidity])
 
   // Run via the delete card modal. 
   // Finds the respective card in the pages state and removes it.
@@ -163,7 +163,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
 
       document.removeEventListener('click', checkDeleteButtonClicked)
     }
-  }, [])
+  }, [cardId])
 
   return (
     <div {...props} className={`number${cardId} ` + "flashcard-edit-list-item d-flex flex-column flex-xs_sm-row align-items-start" + (props.className ? ` ${props.className}` : '')}>

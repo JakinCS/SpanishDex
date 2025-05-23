@@ -69,7 +69,7 @@ const AddPageBody = ({ initialData }) => {
     return () => {
       window.removeEventListener('beforeunload', newfunction, {capture: true}); // Clean up the event listener
     }
-  }, [data])
+  }, [data, initialData])
 
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState({show: false, error: '', message: ''})

@@ -185,7 +185,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [selectedScore, showSide, showFinal])
+  }, [selectedScore, showSide, showFinal, flipCard])
 
 
   return (
