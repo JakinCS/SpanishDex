@@ -4,7 +4,7 @@ import Stack from "react-bootstrap/Stack";
 import BackButton from "@/components/BackButton";
 import { auth } from "@/auth"
 import Link from "next/link";
-import { DeleteAccountButton, EditPasswordButton, EditProfilePictureButton } from "@/components/account/AccountPageButtons";
+import { DeleteAccountButton, EditPasswordButton } from "@/components/account/AccountPageButtons";
 import { EmailEditSection, ProfilePictureEditSection, UsernameEditSection } from "@/components/account/AccountPageEditSections";
 
 const AccountPage = async ({ params }) => {

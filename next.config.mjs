@@ -10,7 +10,6 @@ const nextConfig = {
       },
     ],
   },
-  serverExternalPackages: ['newrelic'],
 };
 
 export default withSentryConfig(nextConfig, {
