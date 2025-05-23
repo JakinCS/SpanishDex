@@ -21,7 +21,7 @@ const DiscardChangesModal = ({deckTitle, deckId, ...props}) => {
       router.push(`/dashboard/deck/${deckId}`)
     } else {
       // Redirect to the dashboard
-      router.push('/dashboard/dashboard')
+      router.push('/dashboard')
     }
   }
 
