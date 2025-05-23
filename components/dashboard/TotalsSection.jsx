@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardCard from './DashboardCard'
+import DashboardCard from '../Card'
 import Icon from '../Icon'
 
 const TotalsSection = ({decks, cards, indicateLoading, ...props}) => {  

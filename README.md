@@ -24,11 +24,14 @@
 
 SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a spaced learning algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
 
-### Built With
+### Technologies
 
 - **Next.js**
 - **Bootstrap**
 - **MongoDB**
+- **Auth.js** for authentication
+- **Sendgrid** for email sending functions
+- **Sentry** for tracking errors
 
 ### Interactive Prototype!
 
@@ -37,50 +40,40 @@ I created the prototype in Figma. It is high-quality, and I put a lot of effort 
 
 [Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?node-id=526-5542&node-type=canvas&viewport=255%2C203%2C0.3&t=Zm7Bkl52VzJ6oVi6-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=526%3A6854)
 
-### Project Vision (features)
- - Have a homepage describing the purpose of the application and pointing the user to sign up or log in.
- - Give the users and option to contact the website owner with a form right on the homepage.
- - Provide two sign up or log in options:
-   - Authenticate with a username and password.
-   - Authenticate with Google OAuth.
- - Allow the users to reset their password if they forgot. 
- - Have a dashboard with a list of the user's flashcard decks along with some statistics
- - Ability to create flashcards and make decks to store the flashcards
- - Have a page for each flashcard deck. This pages lists the flashcards in the deck and gives the user the option to listen to the Spanish word's pronunciation
- - Be able to edit and delete flashcards and decks
- - Allow the user to practice flashcards:
-   - They could practice all their weak words contained in all their decks. (Weak words are determined by a spaced repetition algorithm. More details below)
-   - They could practice all the weak words of an individual deck.
-   - They could also practice all the words of an individual deck.
- - Have an account page where the user can edit their username, email, password and profile picture.
-
-### Project Status (completed features)
- - The homepage is fully completed including the functionality of the contact form.
- - Authentication is implemented
-   - I used Auth.js for authentication, utilizing the Credentials and OAuth providers
-   - User accounts are stored in MongoDB
-   - Users can log out and log in seamlessly.
- - Users can now reset their password.
-   - First they enter their email into a form.
-   - An email is sent to their inbox with a link that is used to reset their password.
-   - I use Sendgrid to send emails for password resetting.
- - There is an account page allowing users to update their information and delete their account
- - The dashboard page is fully complete with deck and flashcard information
- - Users can view decks and see a list of flashcards
- - One can now add new decks and edit old decks.
+### Project Features
+ - Vocabulary Organization
+   - Users create decks to store their vocabulary.
+   - Then users add vocabulary to their decks.
+   - Each deck has a title and a description and displays the cards it contains.
+   - Users are able to edit their decks and vocabulary they contain.
+ - Vocabulary Practicing
+   - Users practice their vocabulary like flashcards.
+   - You can start a practice session by clicking on buttons found on the dashboard and on each individual deck page.
+   - After completing a practice, users are shown a summary of their results.
+ - Authentication
+   - Users create accounts so they can practice their vocubulary from any device.
+   - The authentication method is flexible. You can either choose the username/password option or Google OAuth.
+   - Users are able to reset their password, too, if they ever forget it.
+   - This application includes an account page where users can change their username, email, password and profile picture, and delete their account.
+ - Spaced Repetition Learning Algorithm
+   - When users practice a vocabulary word, they provide feedback on how well they did at remembering that word.
+   - These results are used to determine when a user should practice that word again.
+   - When a vocabulary word is due for practice, it is marked as "weak".
+   - Users are given the option to practice just the "weak" words from their decks.
+   - (**See More Details in Section Below**)
 
 ### What's next?
- - Spaced Learning Algorithm. Implemting the algorithm for determining weak cards.
- - The practice pages! This is the last thing before completing the application. With this complete users will be able practice their flashcards.
+ - Implement accessibility best practices
+ - Add MongoDB indexes.
 
 ### Spaced Learning Algorithm
-This application will use a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
+This application uses a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
 When a user is practicing flashcards, SpanishDex asks the user, on a scale from 1 to 5, how well they did in guessing the definition of the word. SpanishDex uses this information to determine when the word should be practiced again.
 </br></br>
 Other factors used to determine this include:
-- The score history for the card
+- The score history for the card (how hard/easy the card has been to guess)
 - The last time the card was practiced
-- Whether the word was practiced on time or not
+- How late or early the card was practiced.
 
 
 <br>
@@ -114,6 +107,11 @@ In order to sign in or sign up with Google OAuth, you will need to set up OAuth 
 #### Vercel Blob Store (optional)
 This application uses Vercel's Blob Store to store users' profile pictures. If you do not choose to set this up, it will simply prevent users from uploading their own profile pictures. <br />
 To set up Vercel Blob Store, first sign up for a Vercel account. Then create a project and set up Blob Store for the project's storage option.<br /> Documentation: [https://vercel.com/docs/storage/vercel-blob](https://vercel.com/docs/storage/vercel-blob)
+
+#### Sentry
+This application uses Sentry for error monitoring. The Sentry npm package will be installed, and there are several Sentry files included in this repository. If you don't want to use Sentry, you'll have to remove Sentry-specific code from next.config.mjs, and you can remove the other Sentry files. If you want to use Sentry, you will need an account. It is very simple to set up, though, as it only requires you to run a command and follow the prompts. Visit their website for more information: [https://sentry.io/](https://sentry.io/)
+
+
 
 ### Installation
 
@@ -203,7 +201,9 @@ Project Link: [github.com/JakinCS/SpanishDex](https://github.com/JakinCS/Spanish
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Article - Spaced Repetition Algorithm](https://freshcardsapp.com/srs/write-your-own-algorithm.html)
+* [Article - Learning about writing spaced repetition algorithms](https://freshcardsapp.com/srs/write-your-own-algorithm.html)
+* [Spaced Repetition Algorithm - Based on FC-3](https://freshcardsapp.com/srs/simulator/#result-2)
+* [Next.js Tutorial](https://www.youtube.com/watch?v=Zq5fmkH0T78)
 * [README Template by Othneil Drew](https://github.com/othneildrew/Best-README-Template)
 
 

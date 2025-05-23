@@ -12,7 +12,7 @@ export const metadata = {
   description: "Spanish flashcards application for spaced learning",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html className={montserrat.className} lang="en">
       <body>

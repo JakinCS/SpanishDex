@@ -1,9 +1,15 @@
 // Additional map of colors to add to Bootstrap
 $custom-colors: (
     "yellow-green": $yellow-green,
+    "yellow-green-300": $yellow-green-300,
+    "green-yellow": $green-yellow,
+    "green-yellow-300": $green-yellow-300,
     "gray": $gray-200,
     "gray-150": $gray-150,
     "green": $green,
+    "green-300": $green-300,
+    "yellow-300": $yellow-300,
+    "red-300": $red-300,    
 );
 
 // Merge with Bootstrap's colors

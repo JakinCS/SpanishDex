@@ -1,7 +1,7 @@
 import BackButton from '@/components/BackButton'
 import ButtonWithIcon from '@/components/ButtonWithIcon'
 import CardListItem from '@/components/viewdeck/CardListItem'
-import DashboardCard from '@/components/dashboard/DashboardCard'
+import DashboardCard from '@/components/Card'
 import Icon from '@/components/Icon'
 import IconButton from '@/components/IconButton'
 import UnderlineContainer from '@/components/UnderlineContainer'
@@ -9,7 +9,6 @@ import MoreButton from '@/components/viewdeck/MoreButton'
 import Link from 'next/link'
 import PageErrorMessage from '@/components/PageErrorMessage'
 import { notFound } from 'next/navigation'
-import BackToTopButton from '@/components/BackToTopButton'
 import { getDeck } from '@/lib/actions'
 
 
@@ -67,7 +66,7 @@ const DeckPage = async ({ params }) => {
   return (
     <>
       <div className='d-flex justify-content-between align-items-center mb-40'>
-        <BackButton />
+        <BackButton url='/dashboard'/>
         <div className='d-flex'>
           <ButtonWithIcon isLinkButton={true} className="btn btn-gray d-none d-xs_sm-block me-10" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
           <IconButton className={'btn btn-gray d-block d-xs_sm-none me-10'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' altTag='Edit icon' size='sm' />
@@ -100,19 +99,23 @@ const DeckPage = async ({ params }) => {
         </span>
       </DashboardCard>
 
-      <UnderlineContainer className='d-block d-sm-none mb-30'>
-        <div className="d-flex align-items-center justify-content-between">
-          <h3 className='fw-medium'>Review Cards</h3>
-        </div>
-      </UnderlineContainer>
-      <div className='mb-60 d-flex justify-content-center justify-content-xs_sm-start d-sm-none flex-wrap gap-20'>
-        <Link href="#" role="button" className='btn btn-primary w-100'>All Cards</Link>
-        <Link href="#" role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
-      </div>
-      <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
-        <Link href="#" role="button" className='btn btn-primary'>Review All Cards</Link>
-        <Link href="#" role="button" className='btn btn-secondary'>Review Weak Cards</Link>
-      </div>
+      {deck.cards.length > 0 && (
+        <>
+          <UnderlineContainer className='d-block d-sm-none mb-30'>
+          <div className="d-flex align-items-center justify-content-between">
+            <h3 className='fw-medium'>Review Cards</h3>
+          </div>
+          </UnderlineContainer>
+          <div className='mb-60 d-flex justify-content-center justify-content-xs_sm-start d-sm-none flex-wrap gap-20'>
+            <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary w-100'>All Cards</Link>
+            <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
+          </div>
+          <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
+            <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary'>Review All Cards</Link>
+            <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary'>Review Weak Cards</Link>
+          </div>
+        </>
+      )}      
 
       <UnderlineContainer className='mb-30'>
         <div className="d-flex align-items-center justify-content-between">
@@ -145,8 +148,6 @@ const DeckPage = async ({ params }) => {
         )}
 
       </div>
-
-      <BackToTopButton />
 
     </>
   )

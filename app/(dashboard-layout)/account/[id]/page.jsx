@@ -4,7 +4,7 @@ import Stack from "react-bootstrap/Stack";
 import BackButton from "@/components/BackButton";
 import { auth } from "@/auth"
 import Link from "next/link";
-import { DeleteAccountButton, EditPasswordButton, EditProfilePictureButton } from "@/components/account/AccountPageButtons";
+import { DeleteAccountButton, EditPasswordButton } from "@/components/account/AccountPageButtons";
 import { EmailEditSection, ProfilePictureEditSection, UsernameEditSection } from "@/components/account/AccountPageEditSections";
 
 const AccountPage = async ({ params }) => {
@@ -17,13 +17,13 @@ const AccountPage = async ({ params }) => {
 
   if (session?.user?.id !== userId) {
     return (
-      <Container className="topLevelContainer" fluid>
+      <>
         <h1 className="text-center mb-15">Unauthorized</h1>
         <p className="text-center mb-25">You are not allowed to view this page.</p>
         <div className="d-flex justify-content-center">
           <Link href="/dashboard" role="button" className="btn btn-primary">Go to Dashboard</Link>          
         </div>
-      </Container>
+      </>  
     )
   }
 

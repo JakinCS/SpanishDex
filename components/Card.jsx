@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DashboardCard = ({ xPadding, yPadding, children, ...otherProps}) => {
+const Card = ({ xPadding, yPadding, children, ...otherProps}) => {
   const styles = {
     ...otherProps.style,
     padding: `${(yPadding / 16)}rem ${(xPadding / 16)}rem`,
@@ -13,4 +13,4 @@ const DashboardCard = ({ xPadding, yPadding, children, ...otherProps}) => {
   )
 }
 
-export default DashboardCard
+export default Card

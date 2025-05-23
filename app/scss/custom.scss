@@ -705,6 +705,7 @@ div[role="tooltip"].tooltip {
 // Top level containers of pages
 .topLevelContainer {
     padding: 1.875rem 1.5625rem 6.25rem;
+    overflow-x: hidden;
 }
 
 @media (min-width: 576px) {
@@ -990,6 +991,204 @@ img.icon.fill-primary {
 
 
 
+/* ----- Practice page "Flashcard" styles ----- */
+
+.practice-flashcard {
+    box-shadow: #00000026 0rem .125rem .25rem .0625rem;
+    height: 22.5rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &.make-hidden {
+        transform: translateX(-100vw);
+    }
+
+    &.slide-right {
+        animation-name: slideRight;
+        animation-duration: .25s;
+        animation-timing-function: ease-in-out;
+    }
+    &.slide-right-from-center {
+        animation-name: slideRightFromCenter;
+        animation-duration: .25s;
+        animation-timing-function: ease-in-out;
+    }
+    &.slide-left {
+        animation-name: slideLeft;
+        animation-duration: .25s;
+        animation-timing-function: ease-in-out;
+    }
+    &.slide-left-from-center {
+        animation-name: slideLeftFromCenter;
+        animation-duration: .25s;
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes slideRight {
+    0% {transform: translateX(max( calc(-100vw + 1.5625rem), calc( -40.625rem + (-100vw + 40.625rem) / 2 ) ))}
+    100% {transform: translateX(0)}
+}
+@keyframes slideRightFromCenter {
+    0% {transform: translateX(0)}
+    100% {transform: translateX(min( calc(100vw - 1.5625rem), calc( 40.625rem + (100vw - 40.625rem) / 2 ) ))}
+}
+@keyframes slideLeft {
+    0% {transform: translateX(min( calc(100vw - 1.5625rem), calc( 40.625rem + (100vw - 40.625rem) / 2 ) ))}
+    100% {transform: translateX(0)}
+}
+@keyframes slideLeftFromCenter {
+    0% {transform: translateX(0)}
+    100% {transform: translateX(max( calc(-100vw + 1.5625rem), calc( -40.625rem + (-100vw + 40.625rem) / 2 ) ))}
+}
+
+.practice-flashcard.animate-flip {
+    animation-name: flip;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+
+}
+
+@keyframes flip {
+    0% {transform: rotateY(0deg) rotateZ(0deg) scale(1)}
+    50% {transform: rotateY(90deg) rotateZ(-0.5deg) scale(0.95)}
+    100% {transform: rotateY(0deg) rotateZ(0deg) scale(1)}
+}
+
+.practice-flashcard .flashcard-word {
+    max-height: 9.375rem;
+    transform: translateY(-0.625rem);
+}
+
+.practice-flashcard .button-parent {
+    cursor: default;
+}
+
+.practice-flashcard .score-description {
+    display: none;
+}
+
+.score-button.selected + .score-description {
+    display: block;
+}
+
+.score-button {
+    height: 1.875rem;
+    width: 1.875rem;
+    padding: 0;
+    color: $blue-900;
+    font-weight: 400;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+
+    &:hover, &:focus-visible, &:active {
+        color: $blue-900 !important;
+    }
+    &.selected {
+       box-shadow: 0 .125rem .25rem .0625rem #00000040;
+       transform: scale(1.1);
+    }
+
+    &.score-1 {
+        background-color: $red-200;
+        border-color: $red-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $red-300;
+            border-color: $red-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($red-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($red-300, 10%);
+            border-color: shade-color($red-300, 10%);
+        }
+    }
+    &.score-2 {
+        background-color: $yellow-200;
+        border-color: $yellow-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $yellow-300;
+            border-color: $yellow-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($yellow-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($yellow-300, 10%);
+            border-color: shade-color($yellow-300, 10%);
+        }
+    }
+    &.score-3 {
+        background-color: $green-yellow-200;
+        border-color: $green-yellow-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $green-yellow-300;
+            border-color: $green-yellow-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($green-yellow-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($green-yellow-300, 10%);
+            border-color: shade-color($green-yellow-300, 10%);
+        }
+    }
+    &.score-4 {
+        background-color: $yellow-green-200;
+        border-color: $yellow-green-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $yellow-green-300;
+            border-color: $yellow-green-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($yellow-green-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($yellow-green-300, 10%);
+            border-color: shade-color($yellow-green-300, 10%);
+        }
+    }
+    &.score-5 {
+        background-color: $green-200;
+        border-color: $green-200;
+        &:hover, &:focus-visible, &.selected {
+            background-color: $green-300;
+            border-color: $green-300;
+        }
+        &:focus-visible {
+            outline-color: shade-color($green-300, 10%);
+        }
+        &:active {
+            background-color: shade-color($green-300, 10%);
+            border-color: shade-color($green-300, 10%);
+        }
+    }
+}
+
+.flashcard-end-screen {
+    height: 22.5rem;
+    position: absolute;
+    max-width: 43.75rem;
+}
+
+@media (min-width: 576px) {
+    .practice-flashcard {
+        height: 25rem;
+    }
+    .practice-flashcard .flashcard-word {
+        transform: translateY(0rem) !important;
+    }
+    .flashcard-end-screen {
+        height: 25rem;
+    }
+}
+
+
+
+
+
 /* ----- Width Styles ----- */
 .w-50 {
     width: 50% !important;
@@ -1163,7 +1362,7 @@ img.icon.fill-primary {
     position: sticky;
     bottom: 2.5rem;
     left: 100vw;
-    margin: 0 -.625rem -4.9375rem;
+    margin: -4.9375rem 1.25rem 1.5625rem 0rem;
     z-index: 1000;
     border: none;
     border-radius: .4375rem;
