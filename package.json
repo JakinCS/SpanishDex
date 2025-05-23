@@ -11,7 +11,8 @@
   "packageManager": "npm@10.7.0",
   "overrides": {
     "react": "$react",
-    "react-dom": "$react-dom"
+    "react-dom": "$react-dom",
+    "next": "$next"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
