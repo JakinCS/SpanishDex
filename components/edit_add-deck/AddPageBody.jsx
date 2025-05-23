@@ -14,7 +14,6 @@ import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
 import UnsavedChangesModal from '../modals/UnsavedChangesModal';
 import { createDeck } from '@/lib/actions';
-import BackToTopButton from '../BackToTopButton';
 
 const AddPageBody = ({ initialData }) => {
   const router = useRouter();
@@ -22,7 +21,7 @@ const AddPageBody = ({ initialData }) => {
   // This state and respective functions handle the show/hide of the discard changes modal
   const [showDiscardModal, setShowDiscardModal] = useState(false);
   const openDiscardModal = () => {setShowDiscardModal(true)}
-  const closeDiscardCard = () => {setShowDiscardModal(false)}
+  const closeDiscardModal = () => {setShowDiscardModal(false)}
   
   // This state and respective functions handle the show/hide of the unsaved changes modal
   const [showUnsavedChangesModal, setShowUnsavedChangesModal] = useState(false);
@@ -70,7 +69,7 @@ const AddPageBody = ({ initialData }) => {
     return () => {
       window.removeEventListener('beforeunload', newfunction, {capture: true}); // Clean up the event listener
     }
-  }, [data])
+  }, [data, initialData])
 
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState({show: false, error: '', message: ''})
@@ -110,10 +109,10 @@ const AddPageBody = ({ initialData }) => {
         <div className='d-flex'>
           <Button variant='outline-danger' className='d-none d-sm_md-block me-15' onClick={openDiscardModal} disabled={isPending}>Discard Changes</Button>
           <Button variant='primary' className='d-none d-xs_sm-block' onClick={handleSaveChanges} disabled={isPending}>
-            {!isPending ? 'Save Deck' : <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+            {!isPending ? 'Save Deck' : <div style={{padding: '0rem 1.75rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
           </Button>
           <Button variant='primary' className='d-block d-xs_sm-none' onClick={handleSaveChanges} disabled={isPending}>
-            {!isPending ? 'Save' : <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
+            {!isPending ? 'Save' : <div style={{padding: '0rem 0.3125rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div>}
           </Button>
           <MoreButton openModal={openDiscardModal} className='d-block d-sm_md-none ms-10' />
         </div>
@@ -148,20 +147,18 @@ const AddPageBody = ({ initialData }) => {
         </div>
       </UnderlineContainer>
 
-      <div className='mb-50'>
+      <div>
         { data.cards.map((card, index) => {
           return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
         })}
       </div>
 
       { data.cards.length === 0 && (
-        <p className='text-center mb-50'>There are no cards in this deck yet. Start by adding a card above.</p>
+        <p className='text-center'>There are no cards in this deck yet. Start by adding a card above.</p>
       )}
 
-      <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} />
+      <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardModal} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
-
-      <BackToTopButton />
 
     </>
   )

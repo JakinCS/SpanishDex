@@ -20,9 +20,6 @@ const AddCardArea = ({ setState }) => {
   // This state is updated when the input is 'focused' but also when the user clicks on an approved element (see useEffect)
   const [showSpanishFocus, setShowSpanishFocus] = useState(false);
 
-  // State whether to show/hide an error for the input fields.
-  const [showInputErrors, setShowInputErrors] = useState({english: false, spanish: false})
-
   // This useEffect adds an event listener for the 'mousedown' event.
   useEffect(() => {
     // Update the showSpanishFocus state (for adding 'focus' class) whenever you click on the
@@ -42,21 +39,20 @@ const AddCardArea = ({ setState }) => {
 
     document.addEventListener('mousedown', toggleFocus);
 
-    // This function is used to turn off the focus of the spanish input when the user presses 'Tab' on the case changer button.
-    const caseChangerFunction = (e) => {
-      if (e.key == 'Tab' && e.shiftKey == false) {
-        setShowSpanishFocus(false)
+    // This function will check to see if the shift and tab key are pressed on the spanish input field.
+    const handleOnKeyDown = (e) => {
+      if (e.key === 'Tab' && e.shiftKey) {
+        // Remove the focus class from the spanish input field
+        setShowSpanishFocus(false);
       }
     }
 
-    document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[0].addEventListener('keydown', caseChangerFunction)
-    document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[1].addEventListener('keydown', caseChangerFunction)
+    document.querySelector(".flashcard-add-list-item .spanish-flex .add-word-input").addEventListener('keydown', handleOnKeyDown);
 
     return () => {
       document.removeEventListener('mousedown', toggleFocus);
-      if (document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer").length > 0) {
-        document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[0].removeEventListener('keydown', caseChangerFunction)
-        document.querySelectorAll(".flashcard-add-list-item .word-flex .case-changer")[1].removeEventListener('keydown', caseChangerFunction)
+      if (document.querySelector(".flashcard-add-list-item .spanish-flex .add-word-input")) {
+        document.querySelector(".flashcard-add-list-item .spanish-flex .add-word-input").removeEventListener('keydown', handleOnKeyDown);
       }
     }
   }, [])
@@ -65,10 +61,15 @@ const AddCardArea = ({ setState }) => {
   const validateInputs = () => {
     const englishCheck = englishWord.trim().length === 0;
     const spanishCheck = spanishWord.trim().length === 0;
-
-    setShowInputErrors({english: englishCheck, spanish: spanishCheck})
-
     return {valid: (!englishCheck && !spanishCheck)}
+  }
+  
+  // These functions are run on the 'blur' of the spanish and english word inputs. They get rid of extra spaces.
+  const formatEnglishWord = () => {
+    setEnglishWord((prev) => prev.trim())
+  }
+  const formatSpanishWord = () => {
+    setSpanishWord((prev) => prev.trim())
   }
 
   const handleAddCard = () => {
@@ -81,7 +82,7 @@ const AddCardArea = ({ setState }) => {
 
     // Add the card to the page's state's card array.
     setState((prevState) => {
-      return {...prevState, cards: [...prevState.cards, {_id: `${Math.round(Math.random() * 100000000)}`, english: englishWord, spanish: spanishWord}]}
+      return {...prevState, cards: [...prevState.cards, {_id: `${Math.round(Math.random() * 100000000)}`, english: englishWord.trim(), spanish: spanishWord.trim()}]}
     })
 
     // Reset the field values
@@ -91,40 +92,46 @@ const AddCardArea = ({ setState }) => {
 
   return (
     <div>
-      <p className={'text-danger fw-semibold lh-1 mb-3 fs-5' + (showInputErrors.english || showInputErrors.spanish ? ' d-block' : ' d-none')} style={{marginTop: '-1rem'}}>Both fields must be filled out</p>
-      <div className='flashcard-add-list-item d-flex flex-column flex-sm_md-row align-items-center'>
-        <div className='d-flex flex-column flex-lg-row align-items-start gap-15 me-sm_md-30 w-100'>
-          <div className="word-flex d-flex w-100 w-lg-50">
-            <Form.Group className='w-100'>
-              <Form.Control 
-                value={englishWord} 
-                onChange={updateEnglishWord} 
-                className={'add-word-input' + (showInputErrors.english ? ' is-invalid' : '')}
-                name='english' 
-                type="text" 
-                placeholder="Type English word" 
-                onFocus={() => {setShowSpanishFocus(false)}}
-              />
-            </Form.Group>
-          </div>
-
+      <div className='flashcard-add-list-item d-flex flex-column flex-sm_md-row align-items-center align-items-lg-start'>
+        <div className={'d-flex flex-column flex-lg-row align-items-start gap-15 me-sm_md-40 w-100'}>
           <div className={"word-flex spanish-flex d-flex flex-column w-100 w-lg-50" + (showSpanishFocus ? ' focus' : '')}>
+            <p className='fs-5 text-primary fw-semibold lh-1 mb-10'>Spanish</p>
             <Form.Control 
               value={spanishWord} 
               onChange={updateSpanishWord} 
               onFocus={() => {setShowSpanishFocus(true)}}
               ref={spanishInputRef} 
-              className={'add-word-input' + (showInputErrors.spanish ? ' is-invalid' : '')} 
+              className={'add-word-input'} 
               name='spanish' 
               type="text" 
               placeholder="Type Spanish word"
+              onKeyDown={(e) => {
+                if (e.key === 'Tab' && e.shiftKey) setShowSpanishFocus(false);
+              }}
+              onBlur={formatSpanishWord}
             />
             <div className="d-none d-sm_md-flex">
-              <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
+              <ExtraLetters updateInputValue={setSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
             </div>
-            <div className='d-flex d-sm_md-none'>
-              <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef}/>
+            <div className='d-flex d-lg-none'>
+              <ExtraLetters updateInputValue={setSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef}/>
             </div>
+          </div>
+
+          <div className="word-flex d-flex flex-column w-100 w-lg-50">
+            <p className='fs-5 text-primary fw-semibold lh-1 mb-10'>English</p>
+            <Form.Group className='w-100'>
+              <Form.Control 
+                value={englishWord} 
+                onChange={updateEnglishWord} 
+                className={'add-word-input'}
+                name='english' 
+                type="text" 
+                placeholder="Type English word" 
+                onFocus={() => {setShowSpanishFocus(false)}}
+                onBlur={formatEnglishWord}
+              />
+            </Form.Group>
           </div>
         </div>
         <ButtonWithIcon 
@@ -133,8 +140,9 @@ const AddCardArea = ({ setState }) => {
           altTag='add icon' 
           iconHeight={16} 
           iconFillColor={'white'} 
-          className='flex-shrink-0 d-block d-sm_md-none mt-20 w-100' 
+          className='flex-shrink-0 d-block d-sm_md-none mt-40 w-100' 
           onClick={handleAddCard}
+          disabled={!(englishWord.trim() && spanishWord.trim())}
         >
           Add Card
         </ButtonWithIcon>
@@ -145,7 +153,8 @@ const AddCardArea = ({ setState }) => {
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0' 
-          onClick={handleAddCard}
+          onClick={handleAddCard}     
+          disabled={!(englishWord.trim() && spanishWord.trim())} 
         >
           Add Card
         </ButtonWithIcon>

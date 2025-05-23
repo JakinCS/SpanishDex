@@ -3,7 +3,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const ExtraLetters = ({ updateState, inputRef, ...otherProps }) => {
+const ExtraLetters = ({ updateInputValue, inputValue, inputRef, ...otherProps }) => {
   // State for toggling having capital or lowercase letters shown.
   const [showCapitalLetters, setShowCapitalLetters] = useState(false);
   const toggleShowCapitalLetters = () => { 
@@ -13,8 +13,14 @@ const ExtraLetters = ({ updateState, inputRef, ...otherProps }) => {
 
   // Add a letter to the state's value.
   const addLetter = (letter) => {
-    updateState((prevState) => prevState + letter);
+    const cursorPositionStart = inputRef.current.selectionStart; // Get the current cursor position start
+    const cursorPositionEnd = inputRef.current.selectionEnd; // Get the current cursor position end
+    const newString = inputValue.slice(0, cursorPositionStart) + letter + inputValue.slice(cursorPositionEnd); // Insert the letter at the cursor position
+    updateInputValue(newString);
     inputRef.current.focus();
+    setTimeout(() => {
+      inputRef.current.setSelectionRange(cursorPositionStart + 1, cursorPositionStart + 1)
+    }, 25); 
   }
 
   return (

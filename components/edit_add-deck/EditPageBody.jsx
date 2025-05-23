@@ -14,7 +14,6 @@ import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
 import UnsavedChangesModal from '../modals/UnsavedChangesModal';
 import { editDeck } from '@/lib/actions';
-import BackToTopButton from '../BackToTopButton';
 
 const EditPageBody = ({ deckId, initialData }) => {
   const savedData = useRef(initialData); // This is used to keep track of what data is saved.
@@ -43,7 +42,7 @@ const EditPageBody = ({ deckId, initialData }) => {
       openUnsavedChangesModal();
     } else {
       // If there are no changes, just go back
-      router.back()
+      router.push(`/dashboard/deck/${deckId}`)
     }
   } 
 
@@ -67,7 +66,7 @@ const EditPageBody = ({ deckId, initialData }) => {
     return () => {
       window.removeEventListener('beforeunload', newfunction, {capture: true}); // Clean up the event listener
     }
-  }, [data, savedData.current])
+  }, [data, savedData])
 
   const showSaved = () => {
     const paragraph = document.createElement("p");
@@ -176,6 +175,9 @@ const EditPageBody = ({ deckId, initialData }) => {
         if (result.newCardIds != null) {
           updateCardIds(changes.addedCards, result.newCardIds);
         }
+
+        // Refreshing helps to update the app with the newly added data. When the user clicks the back button, there's no issue
+        router.refresh(); 
       } else {
         // Handle error in editing deck
         setError({show: true, error: result.error, message: result.message})
@@ -241,20 +243,18 @@ const EditPageBody = ({ deckId, initialData }) => {
         </div>
       </UnderlineContainer>
 
-      <div className='mb-50'>
+      <div>
         { data.cards.map((card, index) => {
           return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
         })}
       </div>
 
       { data.cards.length === 0 && (
-        <p className='text-center mb-50'>There are no cards in this deck yet. Start by adding a card above.</p>
+        <p className='text-center'>There are no cards in this deck yet. Start by adding a card above.</p>
       )}
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckId={deckId} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />
-
-      <BackToTopButton />
 
     </>
   )

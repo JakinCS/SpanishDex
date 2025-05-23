@@ -17,16 +17,17 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // The state for the value of the english input field
   const [englishWord, setEnglishWord] = useState(english || '')
   // This function is run when the user makes a change on the english word input field
-  const updateEnglishWord = (e, word) => { 
+  const updateEnglishWord = (e) => { 
     // Updates the englishWord state with the new input value.
-    if (!e) setEnglishWord(word)
+    // This function can be used without an event (so check for that)
+    if (!e.target) setEnglishWord(e)
     else setEnglishWord(e.target.value) 
 
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {
       const newCardsArray = prevState.cards.map((card) => {
         if (card._id === cardId) {
-          return {_id: card._id, english: (!e ? word : e.target.value), spanish: spanishWord}
+          return {_id: card._id, english: (!e.target ? e : e.target.value), spanish: spanishWord}
         } else {
           return card
         }
@@ -39,16 +40,17 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // The state for the value of the spanish input field
   const [spanishWord, setSpanishWord] = useState(spanish || '')
   // This function is run when the user makes a change on the spanish word input field
-  const updateSpanishWord = (e, word) => { 
+  const updateSpanishWord = (e) => { 
     // Updates the spanishWord state with the new input value.
-    if (!e) setSpanishWord(word)
+    // This function can be used without an event (so check for that)
+    if (!e.target) setSpanishWord(e)
     else setSpanishWord(e.target.value) 
 
     // Finds this card's information in the main page's state's list of cards and updates it.
     setState((prevState) => {      
       const newCardsArray = prevState.cards.map((card) => {
         if (card._id === cardId) {
-          return {_id: card._id, english: englishWord, spanish: (!e ? word : e.target.value)}
+          return {_id: card._id, english: englishWord, spanish: (!e.target ? e : e.target.value)}
         } else {
           return card
         }
@@ -75,29 +77,29 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   // or, for the spanish input field, whenever the showSpanishFocus state changes.
   const ensureEnglishValidity = () => {
     // Change the englishWord state back to the previous value (englishBeforeChanges)
-    if (englishWord.trim().length === 0) updateEnglishWord(null, englishBeforeChanges.current);
+    if (englishWord.trim().length === 0) updateEnglishWord(englishBeforeChanges.current);
     // Update the englishBeforeChanges value.
     // Update the englishWord state to include no extra spaces before or after
     else {
       englishBeforeChanges.current = englishWord.trim();
-      updateEnglishWord(null, englishWord.trim())
+      updateEnglishWord(englishWord.trim())
     }      
   }
   const ensureSpanishValidity = () => {
     // Change the spanishWord state back to the previous value (spanishBeforeChanges)
-    if (spanishWord.trim().length === 0) updateSpanishWord(null, spanishBeforeChanges.current);
+    if (spanishWord.trim().length === 0) updateSpanishWord(spanishBeforeChanges.current);
     // Update the spanishBeforeChanges value. 
     // Update the spanishWord state to include no extra spaces before or after
     else {
       spanishBeforeChanges.current = spanishWord.trim();
-      updateSpanishWord(null, spanishWord.trim())
+      updateSpanishWord(spanishWord.trim())
     };      
   }
 
   // Run the ensureSpanishValidity() function on change of the showSpanishFocus state
   useEffect(() => {
     ensureSpanishValidity();
-  }, [showSpanishFocus])
+  }, [showSpanishFocus, ensureSpanishValidity])
 
   // Run via the delete card modal. 
   // Finds the respective card in the pages state and removes it.
@@ -156,34 +158,12 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
 
     document.addEventListener('click', checkDeleteButtonClicked)
 
-    // If the tab key is pressed, then remove the focus from the spanish input field
-    const caseChangerFunction = (e) => {
-      if (e.key == 'Tab' && e.shiftKey == false) {
-        setShowSpanishFocus(false)
-      }
-    }
-
-    document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .spanish-flex .case-changer`)[0].addEventListener('keydown', caseChangerFunction)
-
-    // If the tab key and shift key are pressed when on the english word input field, then remove the focus from the english input field
-    const englishInputFieldFunction = (e) => {
-      if (e.key == 'Tab' && e.shiftKey == true) {
-        setShowEnglishFocus(false)
-      }
-    }
-    document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .english-flex .edit-word-input`)[0].addEventListener('keydown', englishInputFieldFunction)
-
     return () => {
       document.removeEventListener('mousedown', toggleFocus)
-      if (document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .spanish-flex .case-changer`)[0]) {
-        document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .spanish-flex .case-changer`)[0].removeEventListener('keydown', caseChangerFunction)
-      }
-      if (document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .english-flex .edit-word-input`)[0]) {
-        document.querySelectorAll(`.flashcard-edit-list-item.number${cardId} .english-flex .edit-word-input`)[0].removeEventListener('keydown', englishInputFieldFunction)
-      }
+
       document.removeEventListener('click', checkDeleteButtonClicked)
     }
-  }, [])
+  }, [cardId])
 
   return (
     <div {...props} className={`number${cardId} ` + "flashcard-edit-list-item d-flex flex-column flex-xs_sm-row align-items-start" + (props.className ? ` ${props.className}` : '')}>
@@ -200,23 +180,6 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
       </div>
 
       <div className={'flashcard-words-flex d-flex flex-column flex-md-row align-items-start bg-white rounded w-100 h-100'}>
-        <div className={'word-flex english-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showEnglishFocus ? ' focus' : '')}>
-          <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>English</p>
-          <Form.Control 
-            className='edit-word-input' 
-            name='english_1' 
-            type="text" 
-            placeholder="English word" 
-            value={englishWord} 
-            onChange={updateEnglishWord}
-            onFocus={() => {setShowSpanishFocus(false); setShowEnglishFocus(true)}}
-            onBlur={ensureEnglishValidity}
-          />
-        </div>
-
-        <div className='separator bg-gray-150 my-15 flex-grow-0 d-none d-md-block'></div>
-        <div className='separator2 bg-gray-150 mx-auto flex-grow-0 d-block d-md-none'></div>
-
         <div className={'word-flex spanish-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showSpanishFocus ? ' focus' : '')}>
           <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>Spanish</p>
           <Form.Control 
@@ -228,8 +191,27 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
             value={spanishWord} 
             onChange={updateSpanishWord}
             onFocus={() => {setShowSpanishFocus(true); setShowEnglishFocus(false)}}
+            onKeyDown={ (e) => {if (e.key == 'Tab' && e.shiftKey == true) setShowSpanishFocus(false)} }
           />
-          <ExtraLetters updateState={setSpanishWord} inputRef={spanishInputRef}/>
+          <ExtraLetters updateInputValue={updateSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef}/>
+        </div>
+
+        <div className='separator bg-gray-150 my-15 flex-grow-0 d-none d-md-block'></div>
+        <div className='separator2 bg-gray-150 mx-auto flex-grow-0 d-block d-md-none'></div>
+
+        <div className={'word-flex english-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showEnglishFocus ? ' focus' : '')}>
+          <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>English</p>
+          <Form.Control 
+            className='edit-word-input' 
+            name='english_1' 
+            type="text" 
+            placeholder="English word" 
+            value={englishWord} 
+            onChange={updateEnglishWord}
+            onFocus={() => {setShowSpanishFocus(false); setShowEnglishFocus(true)}}
+            onBlur={ensureEnglishValidity}
+            onKeyDown={ (e) => {if (e.key == 'Tab' && e.shiftKey == false) setShowEnglishFocus(false)} }
+          />
         </div>
       </div>
 

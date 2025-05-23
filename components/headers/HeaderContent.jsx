@@ -7,11 +7,11 @@ import spanishdexIcon from "@/public/logo-icon.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-const HeaderContent = ({ children }) => {
+const HeaderContent = ({ children, link }) => {
   return (
     <>
       <Navbar.Brand className="d-none d-sm-block">
-        <Link href="/" className='blue-link'>
+        <Link href={link || "/"} className='blue-link'>
           <Image
             className="logo"
             alt="SpanishDex Logo"
@@ -23,7 +23,7 @@ const HeaderContent = ({ children }) => {
         </Link>
       </Navbar.Brand>
       <Navbar.Brand className="d-block d-sm-none">
-        <Link href="/" className='blue-link'>
+        <Link href={link || "/"} className='blue-link'>
           <Image
             className="logo"
             src={spanishdexIcon}

@@ -1,6 +1,6 @@
 
 import ButtonWithIcon from "@/components/ButtonWithIcon";
-import DashboardCard from "@/components/dashboard/DashboardCard";
+import DashboardCard from "@/components/Card";
 import TotalsSection from "@/components/dashboard/TotalsSection";
 import Stack from 'react-bootstrap/Stack'
 import DecksArea from "@/components/dashboard/DecksArea";

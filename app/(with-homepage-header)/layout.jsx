@@ -5,7 +5,7 @@ import AuthProvider from '../context/AuthProvider';
 export default function homepageLayout({ children }) {
 
   const containerStyles = {
-    height: 'calc(100vh - 82px)',
+    height: 'calc(100vh - 5rem - 2px)',
     display: 'flex',
     flexFlow: 'column nowrap',
     justifyContent: 'space-between'

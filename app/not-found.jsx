@@ -1,7 +1,7 @@
 import spanishdex from "@/public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import HomepageSection from "@/components/HomepageSection";
+import HomepageSection from "@/components/homepage/HomepageSection";
 
 const NotFound = async () => {
   return (

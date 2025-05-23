@@ -1,6 +1,6 @@
 import BackButton from '@/components/BackButton'
 import ButtonWithIcon from '@/components/ButtonWithIcon'
-import DashboardCard from '@/components/dashboard/DashboardCard'
+import DashboardCard from '@/components/Card'
 import IconButton from '@/components/IconButton'
 import UnderlineContainer from '@/components/UnderlineContainer'
 import Link from 'next/link'

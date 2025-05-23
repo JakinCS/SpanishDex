@@ -1,11 +1,10 @@
 import ButtonWithIcon from "@/components/ButtonWithIcon";
-import DashboardCard from "@/components/dashboard/DashboardCard";
+import DashboardCard from "@/components/Card";
 import TotalsSection from "@/components/dashboard/TotalsSection";
 import Link from "next/link";
 import Stack from 'react-bootstrap/Stack'
 import PageErrorMessage from "@/components/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
-import BackToTopButton from "@/components/BackToTopButton";
 import Icon from "@/components/Icon";
 import { getDashboardDeckInfo } from "@/lib/actions";
 import { redirect } from "next/navigation";
@@ -57,7 +56,7 @@ async function Dashboard() {
               <>
                 <p><span className="fw-medium">{finalData.total_weakCards}</span> cards need review. Practice them now to keep them fresh.</p>
                 <div>
-                  <Link role='button' href='#' className='btn btn-primary d-block d-xs_sm-inline-block'>Practice Now</Link>
+                  <Link role='button' href='/dashboard/practice/weak' className='btn btn-primary d-block d-xs_sm-inline-block'>Practice Now</Link>
                 </div>
               </>
               :
@@ -67,8 +66,6 @@ async function Dashboard() {
         </DashboardCard>
 
         <DecksArea decks={finalData.decks} />
-
-        <BackToTopButton />
 
       </>
     )

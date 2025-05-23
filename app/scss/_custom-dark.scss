@@ -370,8 +370,15 @@ $headings-color-dark: $color6;
       background-color: shade-color($color4, 30%);
       border-color: shade-color($color4, 30%);
     }
-}
+  }
   // END -------------- EDIT / ADD DECK PAGE STYLES -------------------
+
+
+  // START ------------------ PRACTICE PAGE STYLES -------------------------
+  .score-indicator {
+    color: $color2;
+  }
+  // END ------------------ PRACTICE PAGE STYLES -------------------------
 
 
   // START ------------------- MISCELLANEOUS ---------------------- //

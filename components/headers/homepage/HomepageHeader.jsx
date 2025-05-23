@@ -3,7 +3,7 @@ import HomepageHeaderButtons from "./HomepageHeaderButtons";
 
 const HomepageHeader = async () => {
   return (
-    <Header>
+    <Header link='/'>
       <HomepageHeaderButtons />
     </Header>
   );

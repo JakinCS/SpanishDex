@@ -25,7 +25,7 @@ const ForgotPassword = () => {
           <Form action={formAction}>
             <Form.Group className='mb-5' controlId="resetPasswordEmail">
               <Form.Label className="fw-medium">Email Address</Form.Label>
-              <Form.Control name="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email address" />
+              <Form.Control name="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email address" />
             </Form.Group>     
 
             {(formState.status === "SUCCESS" && !isPending) && <p className="mb-5"><span className="fw-semibold text-success">Email Sent</span><br /> Didn&apos;t receive the email? {!email || isPending ? <span className="fw-medium">Resend Email</span> : <a href="" onClick={(e) => {e.preventDefault(); document.getElementById("invisibleSubmit").click()}}>Resend Email</a>}</p>} 

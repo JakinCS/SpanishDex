@@ -87,7 +87,7 @@ const DeleteAccountModal = (props) => {
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="password">
               <Form.Label className="fw-medium">Enter Password To Delete</Form.Label>
-              <PasswordInput name="password" placeholder="password" value={password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={password.valid === false && 'is-invalid'} required/>
+              <PasswordInput name="password" placeholder="Enter password" value={password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={password.valid === false && 'is-invalid'} required/>
               <Form.Control.Feedback className={password.valid === false && 'd-block'} type="invalid">
                 {password.message}
               </Form.Control.Feedback>
