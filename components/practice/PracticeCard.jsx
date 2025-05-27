@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Button from 'react-bootstrap/Button'
 import IconButton from '../IconButton'
 
@@ -29,7 +29,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
   const [showSide, setShowSide] = useState('front')
   const isFlipping = useRef(false);
 
-  const flipCard = (e) => {
+  const flipCard = useCallback((e) => {
 
     if (isFlipping.current) return // Prevent flipping if already animating
 
@@ -52,7 +52,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
       isFlipping.current = false; // Previous operation might take time to execute
     }, 525);
 
-  }
+  }, [showFinal])
 
   // This function helps with animating the card to move.
   // It also updates transition state 

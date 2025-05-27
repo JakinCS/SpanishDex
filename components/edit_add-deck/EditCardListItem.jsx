@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import IconButton from '@/components/IconButton';
 import Form from 'react-bootstrap/Form'
 import ExtraLetters from './ExtraLetters';
@@ -16,49 +16,9 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
 
   // The state for the value of the english input field
   const [englishWord, setEnglishWord] = useState(english || '')
-  // This function is run when the user makes a change on the english word input field
-  const updateEnglishWord = (e) => { 
-    // Updates the englishWord state with the new input value.
-    // This function can be used without an event (so check for that)
-    if (!e.target) setEnglishWord(e)
-    else setEnglishWord(e.target.value) 
-
-    // Finds this card's information in the main page's state's list of cards and updates it.
-    setState((prevState) => {
-      const newCardsArray = prevState.cards.map((card) => {
-        if (card._id === cardId) {
-          return {_id: card._id, english: (!e.target ? e : e.target.value), spanish: spanishWord}
-        } else {
-          return card
-        }
-      })
-
-      return {...prevState, cards: newCardsArray};
-    })
-  }
 
   // The state for the value of the spanish input field
   const [spanishWord, setSpanishWord] = useState(spanish || '')
-  // This function is run when the user makes a change on the spanish word input field
-  const updateSpanishWord = (e) => { 
-    // Updates the spanishWord state with the new input value.
-    // This function can be used without an event (so check for that)
-    if (!e.target) setSpanishWord(e)
-    else setSpanishWord(e.target.value) 
-
-    // Finds this card's information in the main page's state's list of cards and updates it.
-    setState((prevState) => {      
-      const newCardsArray = prevState.cards.map((card) => {
-        if (card._id === cardId) {
-          return {_id: card._id, english: englishWord, spanish: (!e.target ? e : e.target.value)}
-        } else {
-          return card
-        }
-      })
-
-      return {...prevState, cards: newCardsArray};
-    })
-  }
 
   // This state fulfills the special need to have a class named 'focus' on the spanish word input
   // This state is updated when the input is 'focused' but also when the user clicks on an OK element (see useEffect)
@@ -73,37 +33,101 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   const englishBeforeChanges = useRef(english || '')
   const spanishBeforeChanges = useRef(spanish || '')
 
+  // This function is run when the user makes a change on the english word input field
+  const updateEnglishWord = useCallback((e_or_value) => { 
+    // Updates the englishWord state with the new input value.
+    // This function can be used without an event (so check for that)
+    const newValue = !e_or_value.target ? e_or_value : e_or_value.target.value;
+    setEnglishWord(newValue);
+
+    // Finds this card's information in the main page's state's list of cards and updates it.
+    setState((prevState) => {
+      const newCardsArray = prevState.cards.map((card) => {
+        if (card._id === cardId) {
+          return {...card, english: newValue, spanish: spanishWord}
+        } else {
+          return card
+        }
+      })
+
+      return {...prevState, cards: newCardsArray};
+    })
+  }, [cardId, setState, spanishWord, setEnglishWord])
+
+  // This function is run when the user makes a change on the spanish word input field
+  const updateSpanishWord = useCallback((e_or_value) => { 
+    // Updates the spanishWord state with the new input value.
+    // This function can be used without an event (so check for that)
+    const newValue = !e_or_value.target ? e_or_value : e_or_value.target.value;
+    setSpanishWord(newValue);
+
+    // Finds this card's information in the main page's state's list of cards and updates it.
+    setState((prevState) => {
+      const newCardsArray = prevState.cards.map((card) => {
+        if (card._id === cardId) {
+          return {...card, english: englishWord, spanish: newValue}
+        } else {
+          return card
+        }
+      })
+
+      return {...prevState, cards: newCardsArray};
+    })
+  }, [cardId, setState, englishWord, setSpanishWord])
+
   // These functions are run after the respective input field is 'blurred' 
   // or, for the spanish input field, whenever the showSpanishFocus state changes.
-  const ensureEnglishValidity = () => {
+  const ensureEnglishValidity = useCallback(() => {
+    const trimmedEnglishWord = englishWord.trim();
     // Change the englishWord state back to the previous value (englishBeforeChanges)
-    if (englishWord.trim().length === 0) updateEnglishWord(englishBeforeChanges.current);
+    if (trimmedEnglishWord.length === 0) {
+      updateEnglishWord(englishBeforeChanges.current);
+    }
+    else {
     // Update the englishBeforeChanges value.
-    // Update the englishWord state to include no extra spaces before or after
-    else {
-      englishBeforeChanges.current = englishWord.trim();
-      updateEnglishWord(englishWord.trim())
+      englishBeforeChanges.current = trimmedEnglishWord;
+      // Update the englishWord state to include no extra spaces before or after, only if changed
+      if (englishWord !== trimmedEnglishWord) {
+        updateEnglishWord(trimmedEnglishWord);
+      }
     }      
-  }
-  const ensureSpanishValidity = () => {
-    // Change the spanishWord state back to the previous value (spanishBeforeChanges)
-    if (spanishWord.trim().length === 0) updateSpanishWord(spanishBeforeChanges.current);
-    // Update the spanishBeforeChanges value. 
-    // Update the spanishWord state to include no extra spaces before or after
-    else {
-      spanishBeforeChanges.current = spanishWord.trim();
-      updateSpanishWord(spanishWord.trim())
-    };      
-  }
+  }, [englishWord, updateEnglishWord, englishBeforeChanges])
 
-  // Run the ensureSpanishValidity() function on change of the showSpanishFocus state
+  const ensureSpanishValidity = useCallback(() => {
+    const trimmedSpanishWord = spanishWord.trim();
+    // Change the spanishWord state back to the previous value (spanishBeforeChanges)
+    if (trimmedSpanishWord.length === 0) {
+      updateSpanishWord(spanishBeforeChanges.current)
+    }
+    else {
+      // Update the spanishBeforeChanges value. 
+      spanishBeforeChanges.current = trimmedSpanishWord;
+      // Update the spanishWord state to include no extra spaces before or after, only if changed
+      if (spanishWord !== trimmedSpanishWord) {
+        updateSpanishWord(trimmedSpanishWord);
+      }
+    };
+  }, [spanishWord, updateSpanishWord, spanishBeforeChanges])
+
+
+  // Create a ref to store the latest version of the ensureSpanishValidity function.
+  const latestEnsureSpanishValidityFnRef = useRef(ensureSpanishValidity);
+
+  // This useEffect updates the ref with the latest ensureSpanishValidity function
+  // whenever ensureSpanishValidity is re-created (e.g., due to spanishWord or updateSpanishWord changing).
   useEffect(() => {
-    ensureSpanishValidity();
-  }, [showSpanishFocus, ensureSpanishValidity])
+    latestEnsureSpanishValidityFnRef.current = ensureSpanishValidity;
+  }, [ensureSpanishValidity]);
+
+  useEffect(() => {
+    // This effect's callback will now ONLY run when showSpanishFocus changes.
+    // It calls the most up-to-date version of ensureSpanishValidity logic via the ref.
+    latestEnsureSpanishValidityFnRef.current();
+  }, [showSpanishFocus])
 
   // Run via the delete card modal. 
   // Finds the respective card in the pages state and removes it.
-  const deleteCard = () => {
+  const deleteCard = useCallback(() => {
     setState((prev) => {
       const newCardsArray = prev.cards.filter((card) => {
         return card._id !== cardId
@@ -111,7 +135,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
 
       return {...prev, cards: newCardsArray};
     })
-  }
+  }, [cardId, setState])
 
   // This useEffect adds an event listener for the 'mousedown' event.
   useEffect(() => {
