@@ -66,7 +66,7 @@ const EditPageBody = ({ deckId, initialData }) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload, {capture: true}); // Clean up the event listener
     }
-  }, [data, savedData])
+  }, [data])
 
   const showSaved = () => {
     const paragraph = document.createElement("p");
