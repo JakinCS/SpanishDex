@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 const GetStartedButton = () => {
   const activateOtherButton = () => {
     const otherButton = document.getElementById('createAccountButton') || document.getElementById('dashboardButton');
-    otherButton.click();
+    if (otherButton != null) otherButton.click();
   }
 
   return (
