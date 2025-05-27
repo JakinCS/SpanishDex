@@ -49,7 +49,7 @@ const EditPageBody = ({ deckId, initialData }) => {
   // This useEffect adds an event listener for the 'beforeunload' event, which is triggered when the user tries to leave the page.
   // It tries to prevent the user from leaving the page if there are unsaved changes.
   useEffect(() => {
-    const newfunction = (e) => {
+    const handleBeforeUnload = (e) => {
       if ((changes.title || changes.description || changes.deletedCards.length > 0 || changes.addedCards.length > 0 || changes.otherCards.length > 0)) {
         e.preventDefault();
         return (e.returnValue = '')
@@ -61,10 +61,10 @@ const EditPageBody = ({ deckId, initialData }) => {
       return;
     }
 
-    window.addEventListener('beforeunload', newfunction, {capture: true});
+    window.addEventListener('beforeunload', handleBeforeUnload, {capture: true});
 
     return () => {
-      window.removeEventListener('beforeunload', newfunction, {capture: true}); // Clean up the event listener
+      window.removeEventListener('beforeunload', handleBeforeUnload, {capture: true}); // Clean up the event listener
     }
   }, [data, savedData])
 

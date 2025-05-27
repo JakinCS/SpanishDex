@@ -282,7 +282,7 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
             <SummaryDetailsList cards={cards} getScoreById={getScoreById}/>
 
             <div className="d-flex justify-content-center mt-50">
-              <Button variant='primary ms-30' onClick={displaySummaryScreen}>Back to Summary</Button>
+              <Button variant='primary' onClick={displaySummaryScreen}>Back to Summary</Button>
             </div>
           </div>
         </>
