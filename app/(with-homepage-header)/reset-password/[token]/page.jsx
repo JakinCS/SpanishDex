@@ -30,7 +30,7 @@ const ResetPassword = async ({ params }) => {
 
       const hashedToken = crypto.createHash("sha256").update(token).digest('hex');
 
-      const user = await collection.findOne({reset_token: hashedToken, reset_token_expiry: {$gt: Date.now()}})
+      const user = await collection.findOne({reset_token: hashedToken, reset_token_expiry: {$gt: Date.now()}}, {projection: {username: 1}})
 
       if (!user) {
         await client.close();
