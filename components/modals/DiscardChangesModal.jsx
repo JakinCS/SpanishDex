@@ -15,6 +15,9 @@ const DiscardChangesModal = ({deckTitle, deckId, ...props}) => {
   const handleDiscardChanges = async () => {
     setIsPending(true)
 
+    // Make a little delay to show the loading spinner
+    await new Promise((res) => setTimeout(res, 1000))
+
     // Redirect either to the deck page or the dashboard.
     if (deckId != null) {
       // Redirect to the deck view page
