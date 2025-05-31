@@ -7,6 +7,7 @@ import sanitize from 'mongo-sanitize';
 import { compare, hash } from 'bcrypt';
 import { generate } from "generate-password";
 import { generateRandomNumbers, randomColorPair } from './lib/utils';
+import * as Sentry from '@sentry/nextjs';
 
 export const { auth, handlers, signIn, signOut, update } = NextAuth({
   ...authConfig,
@@ -78,6 +79,8 @@ export const { auth, handlers, signIn, signOut, update } = NextAuth({
             findResult.username = user.email; // Put the email in as a replacement username
             findResult.profile_colors = [ "#CF7000", "#000000" ]; // Give some generic profile picture color information
 
+            Sentry.captureException(error); // Capture the error event with Sentry
+
           } finally {
             await client.close();
           }
@@ -138,6 +141,7 @@ export const { auth, handlers, signIn, signOut, update } = NextAuth({
           // If something fails, return false, which will reject their log in attempt.
           // This forces them to try again. (As it is important to have a user record in the database)
           await client.close();
+          Sentry.captureException(error); // Capture the error event with Sentry
           return false
         }        
       }
