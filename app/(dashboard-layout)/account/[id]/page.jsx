@@ -15,8 +15,6 @@ const AccountPage = async ({ params }) => {
   // Get session information
   const session = await auth();
 
-  console.log(session)
-
   if (session?.user?.id !== userId) {
     return (
       <>
