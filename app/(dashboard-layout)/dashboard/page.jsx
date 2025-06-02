@@ -8,7 +8,9 @@ import DecksArea from "@/components/dashboard/DecksArea";
 import Icon from "@/components/Icon";
 import { getDashboardDeckInfo } from "@/lib/actions";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
+export const revalidate = 60;
 
 async function Dashboard() {
 
@@ -16,11 +18,17 @@ async function Dashboard() {
     let finalData;
 
     try {
+      const session = await auth();
+      
+      if (!session?.user) {
+        redirect('/auth/signin') // Redirect to sign-in if the user is not logged in
+      };
+
       // Use this server action to retrieve the necessary dashboard information.
-      const result = await getDashboardDeckInfo();
+      const result = await getDashboardDeckInfo(session?.user?.id);
 
       if (result.success === false) {
-        if (result.message.includes('not logged in')) redirect('/auth/signin'); // Redirect to sign-in if the user is not logged in
+        // if (result.message.includes('not logged in')) redirect('/auth/signin'); // Redirect to sign-in if the user is not logged in
 
         // If there was an error in retrieving the dashboard information, return the error message
         return (

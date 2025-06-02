@@ -22,8 +22,9 @@ const DashboardSkeleton = () => {
           </div>          
           
           <div className='placeholder-glow'>
-            <span className='placeholder bg-gray-150 rounded w-100' style={{height: '1.5rem' }}></span>
-            <span className='placeholder bg-gray-150 rounded' style={{height: '1.5rem', width: '30%' }}></span>
+            <span className='placeholder bg-gray-150 rounded w-100' style={{height: '1.5rem', marginBottom: '0.25rem'}}></span>
+            <span className='placeholder bg-gray-150 rounded w-100 d-block d-xs_sm-none' style={{height: '1.5rem', marginBottom: '0.25rem'}}></span>
+            <span className='placeholder bg-gray-150 rounded d-block d-sm-none' style={{height: '1.5rem', width: '30%', marginBottom: '0.25rem' }}></span>
           </div>
           <div className='placeholder-glow'>
             <span className='placeholder bg-gray-150 rounded d-block d-xs_sm-none' style={{height: '2.5rem', width: '100%' }}></span>
