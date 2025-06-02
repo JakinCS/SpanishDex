@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
 import AddCardArea from '@/components/edit_add-deck/AddCardArea';
 import TitleEdit from '@/components/edit_add-deck/TitleEdit';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
 import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
@@ -57,6 +57,46 @@ const EditPageBody = ({ deckId, initialData }) => {
     }
   } 
 
+  // This function finds out what has been changed on the page
+  const getChanges = useCallback((savedData, newData) => {
+    let changes = {
+      title: savedData.title === newData.title ? undefined : newData.title,
+      description: savedData.description === newData.description ? undefined : newData.description,
+      deletedCards: [],
+      addedCards: [],
+      otherCards: []
+    }
+
+    // Look for cards in the old (saved) data that aren't found in the new data. These cards have been deleted.
+    changes.deletedCards = savedData.cards.filter((card) => !newData.cards.find((otherCard) => (card._id === otherCard._id)))
+
+    // looping through all the cards of the new data
+    newData.cards.forEach((card) => {
+      // See if you can find this particular card of the new data in the old (saved) data
+      const findResult = savedData.cards.find((otherCard) => (card._id === otherCard._id))
+      // If not found in the old (saved) data, it must be an added card.
+      if (!findResult) {
+        changes.addedCards.push(card)
+      } else {
+        // At this point, the card is neither delete nor added. Check to see if it was modified.
+        if (findResult.english !== card.english || findResult.spanish !== card.spanish) {
+          changes.otherCards.push(card)
+        }
+      }
+    }, [])
+
+    return changes;
+  })
+
+  // This function returns a boolean of whether there are active changes to the deck 
+  const areChanges = useCallback(() => {
+    const deckChanges = getChanges(savedData.current, data);
+    if (deckChanges.title !== undefined || deckChanges.description !== undefined || deckChanges.deletedCards.length > 0 || deckChanges.addedCards.length > 0 || deckChanges.otherCards.length > 0) {
+      return true;
+    }
+    return false
+  }, [data, getChanges])
+
   // This useEffect adds an event listener for the 'beforeunload' event, which is triggered when the user tries to leave the page.
   // It tries to prevent the user from leaving the page if there are unsaved changes.
   useEffect(() => {
@@ -77,7 +117,7 @@ const EditPageBody = ({ deckId, initialData }) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload, {capture: true}); // Clean up the event listener
     }
-  }, [data, isPending]) // Added isPending for a dependency so that when changes are saved, it knows not to block a refresh
+  }, [isPending, areChanges]) // Added isPending for a dependency so that when changes are saved, it knows not to block a refresh
 
   const showSaved = () => {
     const paragraph = document.createElement("p");
@@ -120,46 +160,6 @@ const EditPageBody = ({ deckId, initialData }) => {
       })}
 
     })
-  }
-
-  // This function finds out what has been changed on the page
-  const getChanges = (savedData, newData) => {
-    let changes = {
-      title: savedData.title === newData.title ? undefined : newData.title,
-      description: savedData.description === newData.description ? undefined : newData.description,
-      deletedCards: [],
-      addedCards: [],
-      otherCards: []
-    }
-
-    // Look for cards in the old (saved) data that aren't found in the new data. These cards have been deleted.
-    changes.deletedCards = savedData.cards.filter((card) => !newData.cards.find((otherCard) => (card._id === otherCard._id)))
-
-    // looping through all the cards of the new data
-    newData.cards.forEach((card) => {
-      // See if you can find this particular card of the new data in the old (saved) data
-      const findResult = savedData.cards.find((otherCard) => (card._id === otherCard._id))
-      // If not found in the old (saved) data, it must be an added card.
-      if (!findResult) {
-        changes.addedCards.push(card)
-      } else {
-        // At this point, the card is neither delete nor added. Check to see if it was modified.
-        if (findResult.english !== card.english || findResult.spanish !== card.spanish) {
-          changes.otherCards.push(card)
-        }
-      }
-    })
-
-    return changes;
-  }
-
-  // This function returns a boolean of whether there are active changes to the deck 
-  const areChanges = () => {
-    const deckChanges = getChanges(savedData.current, data);
-    if (deckChanges.title !== undefined || deckChanges.description !== undefined || deckChanges.deletedCards.length > 0 || deckChanges.addedCards.length > 0 || deckChanges.otherCards.length > 0) {
-      return true;
-    }
-    return false
   }
 
 
