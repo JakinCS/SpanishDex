@@ -104,6 +104,9 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
 
       if (practiceResult.success) {
         updateCardsPracticeInfo(id, {status: 'success', message: 'Update successful'});
+
+        // Revalidate the cached functions that use the "practice-info" tag.
+        revalidatePracticeCache();
       } else {
         updateCardsPracticeInfo(id, {status: 'failure', message: practiceResult.message});
       }
@@ -182,6 +185,17 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
       openExitModal();
     }
 
+  }
+
+  // Query the special API route to revalidate the cached functions that use the "practice-info" tag.
+  const revalidatePracticeCache = async () => {
+    const result = await fetch(`/api/revalidate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tags: ['practice-info'],
+      }),
+    });
   }
 
   const otherCardInfo = {

@@ -2,7 +2,8 @@ import React from 'react'
 import EditPageBody from '@/components/edit_add-deck/EditPageBody';
 import PageErrorMessage from '@/components/PageErrorMessage';
 import { notFound } from 'next/navigation'
-import { getDeck } from '@/lib/actions'
+import { getEditDeckInfo } from '@/lib/actions'
+import { auth } from '@/auth';
 
 const EditDeckPage = async ({ params }) => {
 
@@ -12,11 +13,19 @@ const EditDeckPage = async ({ params }) => {
     notFound() // Trigger the 404 page in Next.js if the id is invalid
   }
 
+  const session = await auth();
+
+  if (!session?.user) {
+    return (
+      <PageErrorMessage buttonType={'reload'} error=''>You are not logged in. Please log in to edit this deck.</PageErrorMessage>
+    )
+  }
+
   let errorInfo = {isError: false, message: '', hiddenMsg: ''};
   let initialData = undefined;
 
   try {
-    const retrievalResult = await getDeck(id, true)
+    const retrievalResult = await getEditDeckInfo(session?.user?.id, id)
 
     if (retrievalResult.success === false) {
       // If there was an error in retrieving the deck, return the error message

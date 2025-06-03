@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
 import AddCardArea from '@/components/edit_add-deck/AddCardArea';
 import TitleEdit from '@/components/edit_add-deck/TitleEdit';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import DiscardChangesModal from '../modals/DiscardChangesModal';
 import MoreButton from './MoreButton';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ import { editDeck } from '@/lib/actions';
 
 const EditPageBody = ({ deckId, initialData }) => {
   const savedData = useRef(initialData); // This is used to keep track of what data is saved.
-  const pendingData = useRef(null);
+  const pendingData = useRef(null); // This is used to keep track of what data is current "being sent or saved"
 
   const router = useRouter();
 
@@ -34,30 +34,81 @@ const EditPageBody = ({ deckId, initialData }) => {
   // This is the state for all of the data associated with this deck.
   const [data, setData] = useState(initialData)
 
-  const handleBackButtonClick = (e) => {
+  // State for keeping track of whether the page is actively loading while saving
+  const [isPending, setIsPending] = useState(false);
+
+  // Holds error information from the save action
+  const [error, setError] = useState({show: false, error: '', message: ''})
+
+  const handleBackButtonClick = async (e) => {
     e.preventDefault();
 
-    const changes = getChanges(savedData.current, data);
-    if (changes.title || changes.description || changes.deletedCards.length > 0 || changes.addedCards.length > 0 || changes.otherCards.length > 0) {
+    const deckHasChanges = areChanges();
+
+    if (deckHasChanges) {
       openUnsavedChangesModal();
     } else {
       // If there are no changes, just go back
+
+      // Have a purposeful little delay first
+      await new Promise(res => setTimeout(res, 1000))
+
       router.push(`/dashboard/deck/${deckId}`)
     }
   } 
+
+  // This function finds out what has been changed on the page
+  const getChanges = useCallback((savedData, newData) => {
+    let changes = {
+      title: savedData.title === newData.title ? undefined : newData.title,
+      description: savedData.description === newData.description ? undefined : newData.description,
+      deletedCards: [],
+      addedCards: [],
+      otherCards: []
+    }
+
+    // Look for cards in the old (saved) data that aren't found in the new data. These cards have been deleted.
+    changes.deletedCards = savedData.cards.filter((card) => !newData.cards.find((otherCard) => (card._id === otherCard._id)))
+
+    // looping through all the cards of the new data
+    newData.cards.forEach((card) => {
+      // See if you can find this particular card of the new data in the old (saved) data
+      const findResult = savedData.cards.find((otherCard) => (card._id === otherCard._id))
+      // If not found in the old (saved) data, it must be an added card.
+      if (!findResult) {
+        changes.addedCards.push(card)
+      } else {
+        // At this point, the card is neither delete nor added. Check to see if it was modified.
+        if (findResult.english !== card.english || findResult.spanish !== card.spanish) {
+          changes.otherCards.push(card)
+        }
+      }
+    }, [])
+
+    return changes;
+  })
+
+  // This function returns a boolean of whether there are active changes to the deck 
+  const areChanges = useCallback(() => {
+    const deckChanges = getChanges(savedData.current, data);
+    if (deckChanges.title !== undefined || deckChanges.description !== undefined || deckChanges.deletedCards.length > 0 || deckChanges.addedCards.length > 0 || deckChanges.otherCards.length > 0) {
+      return true;
+    }
+    return false
+  }, [data, getChanges])
 
   // This useEffect adds an event listener for the 'beforeunload' event, which is triggered when the user tries to leave the page.
   // It tries to prevent the user from leaving the page if there are unsaved changes.
   useEffect(() => {
     const handleBeforeUnload = (e) => {
-      if ((changes.title || changes.description || changes.deletedCards.length > 0 || changes.addedCards.length > 0 || changes.otherCards.length > 0)) {
+      if (deckHasChanges) {
         e.preventDefault();
         return (e.returnValue = '')
       } 
     }
 
-    const changes = getChanges(savedData.current, data);
-    if (!changes.title && !changes.description && changes.deletedCards.length === 0 && changes.addedCards.length === 0 && changes.otherCards.length === 0) {
+    const deckHasChanges = areChanges();
+    if (!deckHasChanges) {
       return;
     }
 
@@ -66,7 +117,7 @@ const EditPageBody = ({ deckId, initialData }) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload, {capture: true}); // Clean up the event listener
     }
-  }, [data])
+  }, [isPending, areChanges]) // Added isPending for a dependency so that when changes are saved, it knows not to block a refresh
 
   const showSaved = () => {
     const paragraph = document.createElement("p");
@@ -112,39 +163,10 @@ const EditPageBody = ({ deckId, initialData }) => {
   }
 
 
-  // This function finds out what has been changed on the page
-  const getChanges = (savedData, newData) => {
-    let changes = {
-      title: savedData.title === newData.title ? undefined : newData.title,
-      description: savedData.description === newData.description ? undefined : newData.description,
-      deletedCards: [],
-      addedCards: [],
-      otherCards: []
-    }
-
-    changes.deletedCards = savedData.cards.filter((card) => !newData.cards.find((otherCard) => (card._id === otherCard._id)))
-
-    newData.cards.forEach((card) => {
-      const findResult = savedData.cards.find((otherCard) => (card._id === otherCard._id))
-      if (!findResult) {
-        changes.addedCards.push(card)
-      } else {
-        if (findResult.english !== card.english || findResult.spanish !== card.spanish) {
-          changes.otherCards.push(card)
-        }
-      }
-    })
-
-    return changes;
-  }
-
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState({show: false, error: '', message: ''})
-
   const handleSaveChanges = async () => {
     const changes = getChanges(savedData.current, data);
 
-    if (!changes.title && !changes.description && changes.deletedCards.length == 0 && changes.addedCards.length == 0 && changes.otherCards.length == 0) {
+    if (changes.title !== undefined && changes.description !== undefined && changes.deletedCards.length === 0 && changes.addedCards.length === 0 && changes.otherCards.length === 0) {
       setIsPending(true);
       setError((prev) => ({...prev, show: false}))
       await new Promise((resolve) => {
@@ -165,9 +187,6 @@ const EditPageBody = ({ deckId, initialData }) => {
 
       const result = await editDeck( deckId, changes );
       if (result.success) {
-        // Turn off the pending state and show success
-        showSaved();
-        setIsPending(false)
 
         // Update the savedData to the current data
         savedData.current = pendingData.current;
@@ -175,6 +194,10 @@ const EditPageBody = ({ deckId, initialData }) => {
         if (result.newCardIds != null) {
           updateCardIds(changes.addedCards, result.newCardIds);
         }
+
+        // Turn off the pending state and show success
+        showSaved();
+        setIsPending(false)
 
         // Refreshing helps to update the app with the newly added data. When the user clicks the back button, there's no issue
         router.refresh(); 
