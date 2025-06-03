@@ -41,17 +41,6 @@ const PracticeSkeleton = () => {
             size='sm'
           />
         </div> 
-        {/* <div className='d-flex flex-column align-items-center'>
-          <PracticeCard 
-            className='mb-30' 
-            number={visibleCard + 1} 
-            totalCardCount={cards.length} 
-            key={cards[visibleCard]._id} 
-            otherCards={otherCardInfo} 
-            card={{...cards[visibleCard], ...cardsPracticeInfo.current[visibleCard]}} 
-            functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: finishPractice, updateState: updateCardsPracticeInfo, sendScore: sendCardScore}}
-          />
-        </div> */}
       </div>      
     </>
   )

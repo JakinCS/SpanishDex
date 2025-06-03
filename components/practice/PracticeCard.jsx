@@ -223,7 +223,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
                     </div>
                     <div className='d-flex flex-column align-items-center'>
                       <Button variant='info' className={'score-button score-2' + (selectedScore === 2 ? ' selected' : '')} onClick={ () => { setSelectedScore(2) } }>2</Button>
-                      <p className='score-description position-absolute fs-6 mt-35'>I got it wrong</p>
+                      <p className='score-description position-absolute fs-6 mt-35'>Familiar, but wrong</p>
                     </div>
                     <div className='d-flex flex-column align-items-center'>
                       <Button variant='info' className={'score-button score-3' + (selectedScore === 3 ? ' selected' : '')} onClick={ () => { setSelectedScore(3) } }>3</Button>

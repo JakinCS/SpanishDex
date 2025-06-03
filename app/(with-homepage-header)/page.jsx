@@ -47,7 +47,7 @@ export default function Homepage() {
             SpanishDex keeps track of the last time you practiced a word, and it remembers whether or not 
             you got the word wrong. It uses this information to determine the best time for you 
             to review the word again, which is usually just as the word is disappearing from your memory. 
-            This a scientifically proven way to better retain information.
+            This is a scientifically proven way to retain information better.
           </p>
           <p>
             Just create your decks and add the cards, and let SpanishDex do the rest of the work for you!

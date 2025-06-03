@@ -9,7 +9,9 @@ import MoreButton from '@/components/viewdeck/MoreButton'
 import Link from 'next/link'
 import PageErrorMessage from '@/components/PageErrorMessage'
 import { notFound } from 'next/navigation'
-import { getDeck } from '@/lib/actions'
+import { getDeckInfo } from '@/lib/actions'
+import { auth } from '@/auth'
+import React from 'react'
 
 
 const DeckPage = async ({ params }) => {
@@ -21,11 +23,19 @@ const DeckPage = async ({ params }) => {
     notFound() // Trigger the 404 page in Next.js if the id is invalid
   }
 
+  const session = await auth();
+
+  if (!session?.user) {
+    return (
+      <PageErrorMessage buttonType={'reload'} error=''>You are not logged in. Please log in to view this deck.</PageErrorMessage>
+    )
+  }
+
   let errorInfo = {isError: false, message: '', hiddenMsg: ''};
   let deck = undefined;
 
   try {
-    const retrievalResult = await getDeck(id)
+    const retrievalResult = await getDeckInfo(session?.user?.id, id)
 
     if (retrievalResult.success === false) {
       // If there was an error in retrieving the deck, return the error message

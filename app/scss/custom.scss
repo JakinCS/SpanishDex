@@ -1362,7 +1362,7 @@ img.icon.fill-primary {
     position: sticky;
     bottom: 2.5rem;
     left: 100vw;
-    margin: -4.9375rem 1.25rem 1.5625rem 0rem;
+    margin: -6.5rem 1.25rem 1.5625rem 0;
     z-index: 1000;
     border: none;
     border-radius: .4375rem;
@@ -1385,7 +1385,7 @@ img.icon.fill-primary {
 
 @media (min-width: 576px) {
     .backToTopButton {
-        margin: 0 -.625rem -3.6875rem;
+        margin: -6.1875rem 2.5rem 1.25rem 0;
     }
 }
 

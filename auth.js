@@ -7,6 +7,7 @@ import sanitize from 'mongo-sanitize';
 import { compare, hash } from 'bcrypt';
 import { generate } from "generate-password";
 import { generateRandomNumbers, randomColorPair } from './lib/utils';
+import * as Sentry from '@sentry/nextjs';
 
 export const { auth, handlers, signIn, signOut, update } = NextAuth({
   ...authConfig,
@@ -30,7 +31,7 @@ export const { auth, handlers, signIn, signOut, update } = NextAuth({
         const database = client.db('spanishdex');
         const collection = database.collection('users');
 
-        const userSearchResult = await collection.findOne({ $or: [{username: { $regex: `^${cleanUsername}$`, $options: 'i' }}, {email: { $regex: `^${cleanUsername}$`, $options: 'i' }}] } )
+        const userSearchResult = await collection.findOne({ $or: [{username: cleanUsername}, {email: cleanUsername}] }, {collation: {locale: 'en_US', strength: 2}} )
         
         if (!userSearchResult) {
           await client.close();
@@ -71,12 +72,14 @@ export const { auth, handlers, signIn, signOut, update } = NextAuth({
           try {
             const database = client.db('spanishdex');
             const collection = database.collection('users');
-            findResult = await collection.findOne({email: user.email}, {projection: {email: 1, username: 1, profile_picture: 1, profile_colors: 1, date_created: 1}});
+            findResult = await collection.findOne({email: user.email}, {projection: {email: 1, username: 1, profile_picture: 1, profile_colors: 1, date_created: 1}, collation: {locale: 'en_US', strength: 2}});
             
           } catch (error) {
             findResult.profile_picture = null;
             findResult.username = user.email; // Put the email in as a replacement username
             findResult.profile_colors = [ "#CF7000", "#000000" ]; // Give some generic profile picture color information
+
+            Sentry.captureException(error); // Capture the error event with Sentry
 
           } finally {
             await client.close();
@@ -112,7 +115,7 @@ export const { auth, handlers, signIn, signOut, update } = NextAuth({
           const database = client.db('spanishdex');
           const collection = database.collection('users');
 
-          const findResult = await collection.findOne({ email: user.email });
+          const findResult = await collection.findOne({ email: user.email }, {projection: {email: 1}, collation: {locale: 'en_US', strength: 2}});
 
           // If the user can't be found in the database, create a new user in the database
           if (!findResult) {
@@ -138,6 +141,7 @@ export const { auth, handlers, signIn, signOut, update } = NextAuth({
           // If something fails, return false, which will reject their log in attempt.
           // This forces them to try again. (As it is important to have a user record in the database)
           await client.close();
+          Sentry.captureException(error); // Capture the error event with Sentry
           return false
         }        
       }

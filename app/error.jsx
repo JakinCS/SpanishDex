@@ -7,12 +7,18 @@ import HomepageSection from "@/components/homepage/HomepageSection";
 import Button from "react-bootstrap/Button";
 import rightChevron from "@/public/icons/chevron_right.svg";
 import downChevron from "@/public/icons/chevron_down.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icon from "@/components/Icon";
+import * as Sentry from "@sentry/nextjs";
 
 const Error = ({ error, reset }) => {
 
   const [showError, setShowError] = useState(false);
+
+  useEffect(() => {
+    // Log the error to Sentry
+    Sentry.captureException(error);
+  }, [error]);
 
   return (
     <div>
