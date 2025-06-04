@@ -12,7 +12,7 @@ const AboutModal = ({show, handleClose}) => {
       <Modal.Body>
         <Stack gap={15}>          
           <p>
-            SpanishDex is an application created by <span className="fw-semibold">Jakin Stahl</span> to 
+            SpanishDex is an application created by <a href="https://www.linkedin.com/in/jakinstahl" target='_blank' className="fw-semibold">Jakin Stahl</a> to 
             demonstrate his web development and web design skills.
           </p>
           <p>
