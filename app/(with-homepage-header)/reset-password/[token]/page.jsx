@@ -6,6 +6,10 @@ import { MongoClient } from "mongodb";
 import { auth } from "@/auth"
 import { redirect } from 'next/navigation'
 
+export const metadata = {
+  title: "Reset Password - SpanishDex",
+};
+
 const ResetPassword = async ({ params }) => {
 
   // Get session information

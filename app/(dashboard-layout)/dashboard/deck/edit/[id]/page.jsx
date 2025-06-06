@@ -5,6 +5,10 @@ import { notFound } from 'next/navigation'
 import { getEditDeckInfo } from '@/lib/actions'
 import { auth } from '@/auth';
 
+export const metadata = {
+  title: "Edit Deck - SpanishDex",
+};
+
 const EditDeckPage = async ({ params }) => {
 
   const { id } = await params

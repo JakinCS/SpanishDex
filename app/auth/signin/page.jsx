@@ -12,6 +12,9 @@ import OrSeparator from '@/components/OrSeparator';
 import { logInWithCredentials, logInWithGoogle } from '@/lib/actions';
 import PasswordInput from '@/components/PasswordInput';
 
+export const metadata = {
+  title: "Log In - SpanishDex",
+};
 
 const SignIn = () => {
   const searchParams = useSearchParams();

@@ -8,6 +8,10 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { sendResetPasswordMessage } from "@/lib/actions";
 
+export const metadata = {
+  title: "Forgot Password - SpanishDex",
+};
+
 const ForgotPassword = () => {
 
   // Holds the email information

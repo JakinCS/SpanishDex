@@ -13,6 +13,9 @@ import { getDeckInfo } from '@/lib/actions'
 import { auth } from '@/auth'
 import React from 'react'
 
+export const metadata = {
+  title: "View Deck - SpanishDex",
+};
 
 const DeckPage = async ({ params }) => {
 

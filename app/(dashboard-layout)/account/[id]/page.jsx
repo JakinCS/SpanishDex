@@ -7,6 +7,10 @@ import Link from "next/link";
 import { DeleteAccountButton, EditPasswordButton } from "@/components/account/AccountPageButtons";
 import { EmailEditSection, ProfilePictureEditSection, UsernameEditSection } from "@/components/account/AccountPageEditSections";
 
+export const metadata = {
+  title: "My Account - SpanishDex",
+};
+
 const AccountPage = async ({ params }) => {
 
   // Get the user id from the page parameters

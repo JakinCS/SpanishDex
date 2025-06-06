@@ -10,6 +10,10 @@ import { getDashboardDeckInfo } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
+export const metadata = {
+  title: "Dashboard - SpanishDex",
+};
+
 async function Dashboard() {
 
     // This object holds totals information used by various page components.

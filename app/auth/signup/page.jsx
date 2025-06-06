@@ -13,6 +13,9 @@ import { createAccount, logInWithCredentials, logInWithGoogle } from '@/lib/acti
 import { handlePasswordValidCheck, isEmailValid, isUsernameValid } from '@/lib/utils';
 import PasswordInput from '@/components/PasswordInput';
 
+export const metadata = {
+  title: "Create Account - SpanishDex",
+};
 
 const SignUp = () => {
   

@@ -9,6 +9,10 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { logOut } from "@/lib/actions";
 
+export const metadata = {
+  title: "Log Out - SpanishDex",
+};
+
 const SignOut = () => {
   
   const [serverError, setServerError] = useState(''); // holds the raw server error for putting in a hidden paragraph for debugging purposes.

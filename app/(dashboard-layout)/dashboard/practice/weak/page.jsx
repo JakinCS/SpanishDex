@@ -4,6 +4,9 @@ import PracticePageBody from '@/components/practice/PracticePageBody';
 import PageErrorMessage from '@/components/PageErrorMessage';
 import { shuffleArray } from '@/lib/utils';
 
+export const metadata = {
+  title: "Practice - SpanishDex",
+};
 
 const page = async () => {
 
