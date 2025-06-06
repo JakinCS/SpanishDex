@@ -103,6 +103,7 @@ const AddCardArea = ({ setState }) => {
               ref={spanishInputRef} 
               className={'add-word-input'} 
               name='spanish' 
+              aria-label='Spanish word'
               type="text" 
               placeholder="Type Spanish word"
               onKeyDown={(e) => {
@@ -126,6 +127,7 @@ const AddCardArea = ({ setState }) => {
                 onChange={updateEnglishWord} 
                 className={'add-word-input'}
                 name='english' 
+                aria-label='English word'
                 type="text" 
                 placeholder="Type English word" 
                 onFocus={() => {setShowSpanishFocus(false)}}

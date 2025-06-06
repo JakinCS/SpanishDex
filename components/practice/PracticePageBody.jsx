@@ -247,7 +247,14 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
       )} 
       {showSummaryScreen && (
         <>
-          <Alert variant='danger' show={showError} onClose={() => setShowError(false)} style={{marginTop: '-1rem', marginBottom: '-2.5rem'}} dismissible>
+          <Alert 
+            variant='danger' 
+            show={showError} 
+            aria-live="polite"
+            onClose={() => setShowError(false)} 
+            style={{marginTop: '-1rem', marginBottom: '-2.5rem'}} 
+            dismissible
+          >
             <p className='pe-30'>Some practice results were not able to be saved.</p>
           </Alert>
           <div className='mx-auto' style={{maxWidth: '62.5rem'}}>
@@ -302,7 +309,6 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
         </>
       )}
 
-      {/* <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} /> */}
       <ExitPracticeModal show={showExitModal} closeModal={closeExitModal} finishPractice={finishPractice} />
       
     </>

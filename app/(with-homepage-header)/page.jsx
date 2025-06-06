@@ -1,6 +1,6 @@
 import HomepageSection from '@/components/homepage/HomepageSection'
 import HomepageSectionColumns from '@/components/homepage/HomepageSectionColumns'
-import HomepageContactForm from '@/components/ContactForm'
+import ContactForm from '@/components/ContactForm'
 import GetStartedButton from '@/components/homepage/GetStartedButton';
 
 export default function Homepage() {
@@ -69,7 +69,7 @@ export default function Homepage() {
       <HomepageSection py='60' py_sm={'80'} backgroundColor='almost-white'>
         <h2 className='text-center'>Contact</h2>
         <p className='text-center'>Use the form below to contact Jakin Stahl.</p>
-        <HomepageContactForm className='w-100' style={{maxWidth: '34.375rem'}}></HomepageContactForm>
+        <ContactForm className='w-100' style={{maxWidth: '34.375rem'}}></ContactForm>
       </HomepageSection>
     </>
   );

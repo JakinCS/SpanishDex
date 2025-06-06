@@ -51,7 +51,13 @@ function LogOutModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <Alert variant="danger" show={(formState.status === "ERROR" && showError === true)} onClose={() => setShowError(false)} dismissible>
+          <Alert 
+            variant="danger" 
+            aria-live="polite"
+            show={(formState.status === "ERROR" && showError === true)} 
+            onClose={() => setShowError(false)} 
+            dismissible
+          >
             <Alert.Heading>Error</Alert.Heading>
             {formState.error}
           </Alert>

@@ -84,13 +84,18 @@ const EditProfilePictureModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <Alert variant="danger" show={formState.status === "ERROR" && !isPending && showError} onClose={() => setShowError(false)} dismissible>
+          <Alert 
+            variant="danger" 
+            aria-live="polite"
+            show={formState.status === "ERROR" && !isPending && showError} 
+            onClose={() => setShowError(false)} 
+            dismissible
+          >
             <Alert.Heading>Error</Alert.Heading>
             {formState.error}
           </Alert>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
-
             <Container className='pt-10 pb-20 px-0 mb-30' fluid>
               <Row className='d-flex align-items-center justify-content-between'>
                 <Col xs={{ order: 1 }} sm={{ order: 0 }}>

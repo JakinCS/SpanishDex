@@ -62,7 +62,7 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
   return (
     <UnderlineContainer className="filter-search-container mb-40">
       <div className="d-flex align-items-center justify-content-between gap-3">
-        <h3 className="fw-medium">{deckList.searchResults == null ? 'All Decks' : (deckList.searchResults.length === 1 ? `1 Result for '${search.value}'` : `${deckList.searchResults.length} Results for '${search.value}'`)}</h3>
+        <h3 className="fw-medium" aria-live="polite">{deckList.searchResults == null ? 'All Decks' : (deckList.searchResults.length === 1 ? `1 Result for '${search.value}'` : `${deckList.searchResults.length} Results for '${search.value}'`)}</h3>
         <div className="d-flex">
           <FilterButton className='me-15' setDeckList={setDeckList}>
             {deckList.filter === 'recent' ? 'Recent' : (deckList.filter === 'creation_date' ? 'Date Created' : (deckList.reversed ? 'Z - A' : 'A - Z')) }

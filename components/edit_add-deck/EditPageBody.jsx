@@ -214,13 +214,20 @@ const EditPageBody = ({ deckId, initialData }) => {
 
   return (
     <>
-      <Alert variant="danger" className='mb-30 modified-margin' show={error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
+      <Alert 
+        variant="danger" 
+        className='mb-30 modified-margin' 
+        aria-live="polite"
+        show={error.show} 
+        onClose={() => setError((prev) => ({...prev, show: false}))} 
+        dismissible
+      >
         <Alert.Heading>Error</Alert.Heading>
         {error.message}
       </Alert>
       <p className="d-none text-break hiddenError">{error.error}</p>
 
-      <div id="saved-changes-div">
+      <div id="saved-changes-div" aria-live="polite">
       </div>
 
       <div className='d-flex justify-content-between align-items-center mb-40'>
@@ -240,11 +247,12 @@ const EditPageBody = ({ deckId, initialData }) => {
       <p>Title</p>
       <TitleEdit setState={setData} titleValue={data.title} />
 
-      <p className='mt-30 mb-10'>Description</p>
+      <p className='mt-30 mb-10' id="deck-description-label">Description</p>
       <Form.Control 
         className={data.description.length != 0 ? 'fw-normal' : ''}
         name='description' 
         as='textarea' 
+        aria-labelledby='deck-description-label'
         rows='5' 
         placeholder="Enter a description of your deck." 
         style={{maxWidth: '31.25rem'}}

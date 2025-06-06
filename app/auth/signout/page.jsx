@@ -38,7 +38,14 @@ const SignOut = () => {
 
   return (
     <>
-      <Alert className="mb-4" variant="danger" show={(formState.status === "ERROR" && showError)} onClose={() => setShowError(false)} dismissible>
+      <Alert 
+        className="mb-4" 
+        variant="danger" 
+        aria-live="polite"
+        show={(formState.status === "ERROR" && showError)} 
+        onClose={() => setShowError(false)} 
+        dismissible
+      >
         <Alert.Heading>Error</Alert.Heading>
         {formState.error}
       </Alert>

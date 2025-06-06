@@ -136,12 +136,19 @@ const SignUp = () => {
 
   return (
     <>
-      <Alert className='mb-4' variant="danger" show={(form1State.status === "ERROR" || form2State.status === "ERROR") && !(form1Pending || form2Pending) && error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
+      <Alert 
+        className='mb-4' 
+        variant="danger" 
+        aria-live="polite"
+        show={(form1State.status === "ERROR" || form2State.status === "ERROR") && !(form1Pending || form2Pending) && error.show} 
+        onClose={() => setError((prev) => ({...prev, show: false}))} 
+        dismissible
+      >
         <Alert.Heading>Error</Alert.Heading>
         {error.message}
       </Alert>
       <div className='bg-white p-50 rounded'>
-        <div className={'modal-success-message ' + (showAccountCreated ? 'show' : 'hide')} style={{left: 0}}>
+        <div className={'modal-success-message ' + (showAccountCreated ? 'show' : 'hide')} style={{left: 0}} aria-live="polite">
           <h2 className="text-success mb-3">Success</h2>
           <p className="fw-medium">Your account is created</p>
         </div>
@@ -152,28 +159,28 @@ const SignUp = () => {
             <Form.Group className="mb-20" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
               <Form.Control name='username' value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="Enter username" />
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid" aria-live="polite">
                 {formValues.username.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
               <Form.Control name='email' value={formValues.email.value} onBlur={validateEmail} onChange={updateEmailValue} className={formValues.email.valid === false && 'is-invalid'} type="text" placeholder="Enter email" />
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid" aria-live="polite">
                 {formValues.email.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountPassword">
               <Form.Label className="fw-medium">Password</Form.Label>
               <PasswordInput name="password1" value={formValues.password.value} placeholder="Enter password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'}/>
-              <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
+              <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className='mb-5' controlId="createAccountPassword2">
               <Form.Label className="fw-medium">Confirm Password</Form.Label>
               <PasswordInput name="password2" value={formValues.password2.value} placeholder="Enter password" onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'}/>
-              <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
+              <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {formValues.password2.message}
               </Form.Control.Feedback>
             </Form.Group>
