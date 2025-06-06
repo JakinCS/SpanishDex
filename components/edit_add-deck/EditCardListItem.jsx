@@ -200,12 +200,12 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
         <div className='number d-flex justify-content-start align-items-center ps-2'>
           <p>{number}.</p>
         </div>
-        <IconButton className="ms-10" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete icon' onClick={openDeleteCard}/>
+        <IconButton className="ms-10" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete card icon' onClick={openDeleteCard}/>
       </div>
 
       <div className={'flashcard-words-flex d-flex flex-column flex-md-row align-items-start bg-white rounded w-100 h-100'}>
         <div className={'word-flex spanish-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showSpanishFocus ? ' focus' : '')}>
-          <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>Spanish</p>
+          <p className='fs-6 text-green fw-semibold lh-1 mb-10'>Spanish</p>
           <Form.Control 
             ref={spanishInputRef} 
             className={'edit-word-input' + ` number${cardId}`} 
@@ -224,7 +224,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
         <div className='separator2 bg-gray-150 mx-auto flex-grow-0 d-block d-md-none'></div>
 
         <div className={'word-flex english-flex d-flex flex-column justify-content-center px-15 w-100 w-md-50' + (showEnglishFocus ? ' focus' : '')}>
-          <p className='fs-6 text-secondary fw-semibold lh-1 mb-10'>English</p>
+          <p className='fs-6 text-green fw-semibold lh-1 mb-10'>English</p>
           <Form.Control 
             className='edit-word-input' 
             name='english_1' 
@@ -239,7 +239,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
         </div>
       </div>
 
-      <IconButton className="mt-2 ms-10 d-none d-xs_sm-block" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete icon' onClick={openDeleteCard} />
+      <IconButton className="mt-2 ms-10 d-none d-xs_sm-block" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete card icon' onClick={openDeleteCard} />
     
       <DeleteCardModal show={showDeleteModal} closeModal={closeDeleteCard} deleteCard={deleteCard} englishWord={englishWord} spanishWord={spanishWord}/>
     </div>

@@ -17,7 +17,7 @@ const EditAddDeckSkeleton = () => {
           <Button variant='outline-danger' className='d-none d-sm_md-block me-15 disabled'>Discard Changes</Button>
           <Button variant='primary' className='d-none d-xs_sm-block disabled'>Save Deck</Button>
           <Button variant='primary' className='d-block d-xs_sm-none disabled'>Save</Button>
-          <IconButton variant='light' className='d-block d-sm_md-none ms-10 disabled' iconSrc='/icons/more.svg' altTag='More icon' size='sm' />
+          <IconButton variant='light' className='d-block d-sm_md-none ms-10 disabled' iconSrc='/icons/more.svg' altTag='More options icon' size='sm' />
         </div>
       </div>
       
@@ -26,7 +26,7 @@ const EditAddDeckSkeleton = () => {
         <div className='placeholder-glow'>
           <span className='placeholder bg-gray-150 rounded' style={{height: '2rem', width: '12rem' }}></span>
         </div>
-        <IconButton className='ms-2 disabled' variant='light' iconSrc={'/icons/edit.svg'} altTag='Edit icon' size='sm'/>
+        <IconButton className='ms-2 disabled' variant='light' iconSrc={'/icons/edit.svg'} altTag='Edit title icon' size='sm'/>
       </div>
 
       <p className='mt-30 mb-10'>Description</p>
@@ -65,7 +65,7 @@ const EditAddDeckSkeleton = () => {
         <ButtonWithIcon 
           variant='primary' 
           iconSrc='/icons/add_3.svg' 
-          altTag='add icon' 
+          altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-block d-sm_md-none mt-20 w-100 disabled' 
@@ -75,7 +75,7 @@ const EditAddDeckSkeleton = () => {
         <ButtonWithIcon 
           variant='primary' 
           iconSrc='/icons/add_3.svg' 
-          altTag='add icon' 
+          altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0 disabled' 

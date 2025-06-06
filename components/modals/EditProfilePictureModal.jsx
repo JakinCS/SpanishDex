@@ -101,8 +101,8 @@ const EditProfilePictureModal = (props) => {
                 <Col xs={{ order: 1 }} sm={{ order: 0 }}>
                   <p className='mb-20 text-center text-sm-start'>Upload or delete your profile picture. <br /> The image size cannot be larger than 4.5MB.</p>
                   <div className='d-flex justify-content-center justify-content-sm-start'>
-                    <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='Upload icon' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
-                    <ButtonWithIcon size='sm' variant='danger' iconSrc='/icons/close.svg' iconHeight={16} iconFillColor={'white'} altTag='Close icon' onClick={() => {setProfilePicture({valid: null, name: '', value: null, message: ''})}}>Delete</ButtonWithIcon>
+                    <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
+                    <ButtonWithIcon size='sm' variant='danger' iconSrc='/icons/close.svg' iconHeight={16} iconFillColor={'white'} altTag='' onClick={() => {setProfilePicture({valid: null, name: '', value: null, message: ''})}}>Delete</ButtonWithIcon>
                   </div>
                   <p className={(profilePicture.valid === false ? 'd-block' : 'd-none') + ' mt-15 fw-medium text-danger text-center text-sm-start'}>{profilePicture.message}</p>
                 </Col>

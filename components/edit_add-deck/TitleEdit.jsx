@@ -72,7 +72,7 @@ const TitleEdit = ({ setState, titleValue, ...props }) => {
         style={{maxWidth: '20rem'}}
         className={'fs-3 lh-1' + (showEditTitle ? '' : ' d-none')}
       />
-      <IconButton className={'ms-2' + (showEditTitle ? ' d-none' : '')} variant='light' iconSrc={EditIcon} altTag='Edit icon' size={'sm'} onClick={handleShowEditTitle}/>
+      <IconButton className={'ms-2' + (showEditTitle ? ' d-none' : '')} variant='light' iconSrc={EditIcon} altTag='Edit title icon' size={'sm'} onClick={handleShowEditTitle}/>
     </div>
   )
 }

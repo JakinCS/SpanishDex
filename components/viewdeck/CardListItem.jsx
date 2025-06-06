@@ -18,7 +18,7 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
             <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
           </div>
         </div>
-        {/* <IconButton className="ms-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen icon'/> Possible future feature */}
+        {/* <IconButton className="ms-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen to pronunciation icon'/> Possible future feature */}
         <StatusIndicator className='ms-20' next_practice_date={cardInfo.next_practice_date} isWeak={cardInfo.weak} style={{minWidth: '5rem'}}/>
       </div>
       <div {...otherProps} className={'d-flex d-md-none flex-column align-items-center' + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
@@ -26,7 +26,7 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
           <p className='ps-2'>{number}.</p>      
           <div className='d-flex align-items-center'>
             <StatusIndicator className='py-2' next_practice_date={cardInfo.next_practice_date} isWeak={cardInfo.weak} />
-            {/* <IconButton className="ms-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen icon'/> */} {/* Possible future feature */}
+            {/* <IconButton className="ms-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen to pronuncation icon'/> */} {/* Possible future feature */}
           </div>
         </div>
         <div className={'d-flex flex-column flex-sm-row bg-white rounded border border-1point5 w-100' + borderStyle}>

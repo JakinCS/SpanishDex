@@ -11,9 +11,9 @@ const ViewDeckSkeleton = () => {
       <div className='d-flex justify-content-between align-items-center mb-40'>
         <BackButton />
         <div className='d-flex'>
-          <ButtonWithIcon className="d-none d-xs_sm-block me-10 disabled" variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
-          <IconButton className={'d-block d-xs_sm-none me-10 disabled'} variant='gray' iconSrc='/icons/edit.svg' altTag='Edit icon' size='sm' />
-          <IconButton variant='light' className={'disabled'} iconSrc='/icons/more.svg' altTag='More icon' size='sm' />
+          <ButtonWithIcon className="d-none d-xs_sm-block me-10 disabled" variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag=''>Edit Deck</ButtonWithIcon>
+          <IconButton className={'d-block d-xs_sm-none me-10 disabled'} variant='gray' iconSrc='/icons/edit.svg' altTag='Edit deck icon' size='sm' />
+          <IconButton variant='light' className={'disabled'} iconSrc='/icons/more.svg' altTag='More options icon' size='sm' />
         </div>
       </div>
       <div className='placeholder-glow py-2 mb-25'>
@@ -78,8 +78,8 @@ const ViewDeckSkeleton = () => {
           <h3 className='fw-medium'>All Cards 
             <div className='d-inline ms-3 placeholder-glow'><span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '2rem' }}></span></div>
           </h3>
-          <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block disabled" href="#" iconSrc='/icons/add_3.svg' iconHeight={16} altTag='Add icon' iconFillColor="white">Add Cards</ButtonWithIcon>
-          <IconButton className={'btn btn-primary d-block d-xs_sm-none disabled'} isLinkButton={true} href='#' iconFillColor="white" iconSrc='/icons/add.svg' altTag='Add icon' size='md' />
+          <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block disabled" href="#" iconSrc='/icons/add_3.svg' iconHeight={16} altTag='' iconFillColor="white">Add Cards</ButtonWithIcon>
+          <IconButton className={'btn btn-primary d-block d-xs_sm-none disabled'} isLinkButton={true} href='#' iconFillColor="white" iconSrc='/icons/add.svg' altTag='Add cards icon' size='md' />
         </div>
       </UnderlineContainer>
 

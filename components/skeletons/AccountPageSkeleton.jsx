@@ -41,7 +41,7 @@ const AccountPageSkeleton = () => {
                 </p>
               </div>
               <div>
-                <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} disabled={true}/>
+                <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'Edit password icon'} disabled={true}/>
               </div>
             </div>
           </Stack>

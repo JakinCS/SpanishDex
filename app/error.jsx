@@ -50,7 +50,7 @@ const Error = ({ error, reset }) => {
         <div>
           <div className="d-flex align-items-center justify-content-center">
             <a href="#" className="d-flex align-items-center justify-content-center mb-3 blue-link" onClick={ (e) => {e.preventDefault(); setShowError( (prev) => !prev )} }>
-              <Icon height={30} alt={showError ? 'Down arrow' : 'Right arrow'} src={showError ? downChevron : rightChevron} />
+              <Icon height={30} alt="" src={showError ? downChevron : rightChevron} />
               <p className="pe-2">Show error message</p>
             </a>            
           </div>          

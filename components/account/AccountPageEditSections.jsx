@@ -23,7 +23,7 @@ export const ProfilePictureEditSection = ({isLoading, ...props}) => {
               {!isLoading ? 
                 <EditProfilePictureButton pictureInfo={props.pictureInfo} pictureState={profilePicture} setPictureState={setProfilePicture} userId={props.userId} />
               :
-                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon' disabled={true}>Edit</ButtonWithIcon>
+                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='' disabled={true}>Edit</ButtonWithIcon>
               }
             </div>
           </Col>
@@ -75,7 +75,7 @@ export const ProfilePictureEditSection = ({isLoading, ...props}) => {
               {!isLoading ? 
                 <EditProfilePictureButton pictureInfo={props.pictureInfo} pictureState={profilePicture} setPictureState={setProfilePicture} userId={props.userId} />
               :
-                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon' disabled={true}>Edit</ButtonWithIcon>
+                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='' disabled={true}>Edit</ButtonWithIcon>
               }
             </div>
           </Col>
@@ -104,7 +104,7 @@ export const UsernameEditSection = ({isLoading, ...props}) => {
         {!isLoading ? 
           <EditUsernameButton initialValue={usernameValue} setUsername={setUsernameValue} userId={props.userId}/>
         :
-          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} disabled={true}/>
+          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="" disabled={true}/>
         }
       </div>
     </>
@@ -130,7 +130,7 @@ export const EmailEditSection = ({isLoading, ...props}) => {
         {!isLoading ?
           <EditEmailButton initialValue={emailValue} setEmail={setEmailValue} userId={props.userId}/>
         :
-          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} disabled={true}/>
+          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="" disabled={true}/>
         }
       </div>
     </>

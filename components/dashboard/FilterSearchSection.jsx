@@ -47,12 +47,12 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
   const searchBody = (
     <>
       <InputGroup.Text className='px-10 px-sm_md-15'>
-        <Icon className="d-none d-sm_md-block" height={24} src='/icons/search.svg' alt="Search icon" />
+        <Icon className="d-none d-sm_md-block" height={24} src='/icons/search.svg' alt="" />
       </InputGroup.Text>
       <Form.Control name="search" value={search.value} onChange={updateValueAndSubmit} type="text" placeholder="Search for a deck"/>
       <InputGroup.Text>
         <button className={'clear-search ' + (search.value === '' ? 'd-none' : 'd-flex')} onClick={clearSearch}>
-          <Icon height={24} alt="Search icon" src="/icons/cancel.svg"/>
+          <Icon height={24} alt="Cancel search" src="/icons/cancel.svg"/>
         </button>
       </InputGroup.Text>
     </>
@@ -68,7 +68,7 @@ const FilterSearchSection = ({ deckList, setDeckList }) => {
             {deckList.filter === 'recent' ? 'Recent' : (deckList.filter === 'creation_date' ? 'Date Created' : (deckList.reversed ? 'Z - A' : 'A - Z')) }
           </FilterButton>
         
-          <IconButton variant='light' iconSrc='/icons/search.svg' altTag={'Search icon'} size='sm' className={'d-block d-sm_md-none sort-search-button ' + (showSearch && 'selected')} onClick={toggleShowSearch}/>
+          <IconButton variant='light' iconSrc='/icons/search.svg' altTag={'Search for a deck icon'} size='sm' className={'d-block d-sm_md-none sort-search-button ' + (showSearch && 'selected')} onClick={toggleShowSearch}/>
           <Form onSubmit={(e) => e.preventDefault()} className='d-none d-sm_md-block'>
             <InputGroup className='search-input-group'>
               {searchBody}

@@ -58,8 +58,8 @@ const DashboardHeaderButtons = () => {
         <>
           <IconButton isLinkButton={true} href='/dashboard/deck/new' className={'btn btn-primary'} iconFillColor={'white'} iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
 
-          <ButtonWithIcon isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-none d-sm_md-block' iconSrc='/icons/home-300-edited-blue.svg' iconHeight={20} altTag='Home icon'>Home</ButtonWithIcon>
-          <IconButton isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-block d-sm_md-none' iconSrc={'/icons/home-300-edited-blue.svg'} altTag={'Home icon'} size={'sm'}/>  
+          <ButtonWithIcon isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-none d-sm_md-block' iconSrc='/icons/home-300-edited-blue.svg' iconHeight={20} altTag=''>Home</ButtonWithIcon>
+          <IconButton isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-block d-sm_md-none' iconSrc={'/icons/home-300-edited-blue.svg'} altTag={'Go home icon'} size={'sm'}/>  
         </>
       }
 

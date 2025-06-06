@@ -78,8 +78,8 @@ const DeckPage = async ({ params }) => {
       <div className='d-flex justify-content-between align-items-center mb-40'>
         <BackButton url='/dashboard'/>
         <div className='d-flex'>
-          <ButtonWithIcon isLinkButton={true} className="btn btn-gray d-none d-xs_sm-block me-10" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon'>Edit Deck</ButtonWithIcon>
-          <IconButton className={'btn btn-gray d-block d-xs_sm-none me-10'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' altTag='Edit icon' size='sm' />
+          <ButtonWithIcon isLinkButton={true} className="btn btn-gray d-none d-xs_sm-block me-10" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' iconHeight={24} altTag=''>Edit Deck</ButtonWithIcon>
+          <IconButton className={'btn btn-gray d-block d-xs_sm-none me-10'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/edit.svg' altTag='Edit deck icon' size='sm' />
           <MoreButton deck={{id: deck._id.toString(), title: deck.title}}/> 
         </div>
       </div>
@@ -89,22 +89,22 @@ const DeckPage = async ({ params }) => {
         <h3 className="fw-medium text-center text-xs_sm-start heading-underline-blue-100 lh-1 mb-40">Deck Information</h3>
         <div className='d-flex flex-column flex-xs_sm-row gap-15 gap-xs_sm-30'>
           <span className="d-flex align-items-center justify-content-center gap-3 mx-2 mx-sm-0 fw-medium">
-            <Icon height={24} alt={'Card icon'} src={'/icons/cards300.svg'}/>
+            <Icon height={24} alt="" src={'/icons/cards300.svg'}/>
             <p><span>{deck.cards.length}</span> Total Cards</p>
           </span>
           <span className="d-flex align-items-center justify-content-center gap-3 mx-2 mx-sm-0 fw-medium">
-            <Icon height={24} alt={'Card icon'} src={'/icons/cards300.svg'}/>
+            <Icon height={24} alt="" src={'/icons/cards300.svg'}/>
             <p><span>{deck.weak_cards}</span> Weak Cards</p>
           </span>
         </div>
         <hr className='my-20'/>
         <span className="d-flex flex-wrap justify-content-center justify-content-xs_sm-start gap-2 mx-2 mx-sm-0">
-          <p className='d-flex align-items-center'><Icon height={24} alt={'Date icon'} src={'/icons/calendar.svg'}/><span className='ms-2 me-3 fw-medium'>Created:</span></p>
+          <p className='d-flex align-items-center'><Icon height={24} alt="" src={'/icons/calendar.svg'}/><span className='ms-2 me-3 fw-medium'>Created:</span></p>
           <p>{formattedDateCreated}</p>
         </span>
         <hr className='my-20'/>
         <span className="d-flex flex-wrap justify-content-center justify-content-xs_sm-start gap-2 mx-2 mx-sm-0">
-          <p className='d-flex align-items-center'><Icon height={24} alt={'Clock icon'} src={'/icons/clock.svg'}/><span className='ms-2 me-3 fw-medium'>Last Practiced:</span></p>
+          <p className='d-flex align-items-center'><Icon height={24} alt="" src={'/icons/clock.svg'}/><span className='ms-2 me-3 fw-medium'>Last Practiced:</span></p>
           <p>{formattedLastPracticed}</p>
         </span>
       </DashboardCard>
@@ -130,8 +130,8 @@ const DeckPage = async ({ params }) => {
       <UnderlineContainer className='mb-30'>
         <div className="d-flex align-items-center justify-content-between">
           <h3 className='fw-medium'>All Cards ({deck.cards.length})</h3>
-          <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/add_3.svg' iconHeight={16} altTag='Add icon' iconFillColor="white">Add Cards</ButtonWithIcon>
-          <IconButton className={'btn btn-primary d-block d-xs_sm-none'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconFillColor="white" iconSrc='/icons/add.svg' altTag='Add icon' size='md' />
+          <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/add_3.svg' iconHeight={16} altTag='' iconFillColor="white">Add Cards</ButtonWithIcon>
+          <IconButton className={'btn btn-primary d-block d-xs_sm-none'} isLinkButton={true} href={`/dashboard/deck/edit/${id}`} iconFillColor="white" iconSrc='/icons/add.svg' altTag='Add cards icon' size='md' />
         </div>
       </UnderlineContainer>
 

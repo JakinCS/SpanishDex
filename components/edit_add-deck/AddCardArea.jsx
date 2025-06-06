@@ -139,7 +139,7 @@ const AddCardArea = ({ setState }) => {
         <ButtonWithIcon 
           variant='primary' 
           iconSrc='/icons/add_3.svg' 
-          altTag='add icon' 
+          altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-block d-sm_md-none mt-40 w-100' 
@@ -151,7 +151,7 @@ const AddCardArea = ({ setState }) => {
         <ButtonWithIcon 
           variant='primary' 
           iconSrc='/icons/add_3.svg' 
-          altTag='add icon' 
+          altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0' 

@@ -19,7 +19,7 @@ export default function Homepage() {
       <HomepageSectionColumns 
         py='60' py_sm={'80'} backgroundColor='white' 
         image={'screenshot'} imageBorder={true} 
-        imageAlt='SpanishDex dashboard screenshot' 
+        imageAlt='Screenshot of the SpanishDex dashboard showing a total number of decks and weak flashcards and listing several flashcard decks.' 
         imagePosition='left' headingText='Simple Interface'
       >
         <div>
@@ -36,7 +36,7 @@ export default function Homepage() {
       <HomepageSectionColumns 
         py='60' py_sm={'80'} backgroundColor='almost-white'
         image={'flashcards'} imageBorder={false}
-        imageAlt='SpanishDex flashcards example'
+        imageAlt='An example of a pair of SpanishDex flashcards. The front showing the Spanish word and the other side showing the English translation.'
         imagePosition='right' headingText='Spaced Repetition'
       >
         <div>

@@ -264,7 +264,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
           disabled={displayedCardData.number === 1 || finishing} 
           variant='gray' 
           iconSrc='/icons/arrow_back.svg' 
-          altTag='Back icon' 
+          altTag='Previous card icon' 
           size='sm' 
           onClick={handleBack}
         />
@@ -278,7 +278,7 @@ const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...
           disabled={(showFinal.inProgress || showFinal.completed) || selectedScore === 0} 
           variant='gray' 
           iconSrc='/icons/arrow_forward.svg' 
-          altTag='Next icon' 
+          altTag='Next card icon' 
           size='sm' 
           onClick={handleNext}
         />
