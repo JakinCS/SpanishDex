@@ -13,10 +13,10 @@ function Footer({ children }) {
     <Container fluid className="py-4 px-50 bg-gradient border-top border-gray-150 border-2" as="footer">
       <Row className='gy-4 mb-4 mb-lg-0 align-items-center mx-auto' style={{maxWidth: '80rem'}} as="nav">
         <Col xs='12' sm='auto' lg='4' xl='3' className='d-flex align-items-center justify-content-center justify-content-lg-start px-0 py-4 py-sm-0'>
-          <Link href="/" className='blue-link'>
+          <Link href="/" className='blue-link' aria-label="SpanishDex Home">
             <Image
               className="logo"
-              alt="SpanishDex Logo"
+              alt=''
               src={spanishdex}
               placeholder="blur"
               blurDataURL={'/logo.svg'}
