@@ -7,9 +7,9 @@ import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useRef, useState } from 'react';
-import ProfileCircle from '../ProfileCircle';
-import ButtonWithIcon from '../ButtonWithIcon';
-import ProfilePictureInput from '../ProfilePictureInput';
+import ProfileCircle from '../miscellaneous/ProfileCircle';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import ProfilePictureInput from '../account/ProfilePictureInput';
 import { uploadImage } from '@/lib/actions';
 import { useSession } from 'next-auth/react';
 

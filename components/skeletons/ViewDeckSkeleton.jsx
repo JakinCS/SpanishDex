@@ -1,8 +1,8 @@
-import BackButton from '@/components/BackButton'
-import ButtonWithIcon from '@/components/ButtonWithIcon'
-import DashboardCard from '@/components/Card'
-import IconButton from '@/components/IconButton'
-import UnderlineContainer from '@/components/UnderlineContainer'
+import BackButton from '@/components/miscellaneous/BackButton'
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import DashboardCard from '@/components/utils/Card'
+import IconButton from '@/components/utils/IconButton';
+import UnderlineContainer from '@/components/utils/UnderlineContainer'
 import Link from 'next/link'
 
 const ViewDeckSkeleton = () => {

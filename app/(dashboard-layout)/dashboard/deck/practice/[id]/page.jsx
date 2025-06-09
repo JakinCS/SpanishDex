@@ -2,7 +2,7 @@ import React from 'react'
 import { notFound } from 'next/navigation'
 import { getDeckPracticeInfo } from '@/lib/actions';
 import PracticePageBody from '@/components/practice/PracticePageBody';
-import PageErrorMessage from '@/components/PageErrorMessage';
+import PageErrorMessage from '@/components/miscellaneous/PageErrorMessage';
 import { shuffleArray } from '@/lib/utils';
 
 export const metadata = {

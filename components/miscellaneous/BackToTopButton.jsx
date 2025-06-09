@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import Icon from "./Icon"
+import Icon from "../utils/Icon"
 
 const BackToTopButton = () => {
   const [showButton, setShowButton] = useState(false)

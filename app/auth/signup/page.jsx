@@ -7,11 +7,11 @@ import Button from 'react-bootstrap/Button';
 import { useActionState, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import OrSeparator from '@/components/OrSeparator';
-import GoogleAuthButton from '@/components/GoogleAuthButton';
+import OrSeparator from '@/components/miscellaneous/OrSeparator';
+import GoogleAuthButton from '@/components/miscellaneous/GoogleAuthButton';
 import { createAccount, logInWithCredentials, logInWithGoogle } from '@/lib/actions';
 import { handlePasswordValidCheck, isEmailValid, isUsernameValid } from '@/lib/utils';
-import PasswordInput from '@/components/PasswordInput';
+import PasswordInput from '@/components/utils/PasswordInput';
 
 const SignUp = () => {
   

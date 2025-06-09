@@ -1,6 +1,6 @@
 import React from 'react'
-import DashboardCard from '../Card'
-import Icon from '../Icon'
+import DashboardCard from '../utils/Card'
+import Icon from '../utils/Icon'
 
 const TotalsSection = ({decks, cards, indicateLoading, ...props}) => {  
   const totalsSectionBody = (

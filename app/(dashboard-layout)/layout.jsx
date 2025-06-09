@@ -2,7 +2,7 @@ import AuthProvider from '../context/AuthProvider';
 import DashboardHeader from '@/components/headers/dashboard/DashboardHeader';
 import Container from 'react-bootstrap/Container';
 import DashboardFooter from '@/components/footers/DashboardFooter';
-import BackToTopButton from '@/components/BackToTopButton';
+import BackToTopButton from '@/components/miscellaneous/BackToTopButton';
 
 export default function dashboardLayout({ children }) {
 

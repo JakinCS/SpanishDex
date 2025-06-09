@@ -1,7 +1,7 @@
 'use client'
 
 import Button from 'react-bootstrap/Button'
-import IconButton from '@/components/IconButton'
+import IconButton from '@/components/utils/IconButton';
 import { useSession } from "next-auth/react";
 import ProfileDropdown from '../ProfileDropdown';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import CreateAccountModal from "@/components/modals/CreateAccountModal"
 import LogInModal from "@/components/modals/LogInModal"
 import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
 import LogOutModal from '@/components/modals/LogOutModal';
-import ButtonWithIcon from '@/components/ButtonWithIcon';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
 
 const DashboardHeaderButtons = () => {
   const { data: session } =  useSession();

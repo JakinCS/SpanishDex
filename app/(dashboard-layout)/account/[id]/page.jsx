@@ -1,7 +1,7 @@
 import AccountPageCard from "@/components/account/AccountPageCard"
 import Container from "react-bootstrap/Container"
 import Stack from "react-bootstrap/Stack";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/miscellaneous/BackButton";
 import { auth } from "@/auth"
 import Link from "next/link";
 import { DeleteAccountButton, EditPasswordButton } from "@/components/account/AccountPageButtons";

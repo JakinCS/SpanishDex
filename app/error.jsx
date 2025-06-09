@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import rightChevron from "@/public/icons/chevron_right.svg";
 import downChevron from "@/public/icons/chevron_down.svg";
 import { useState, useEffect } from "react";
-import Icon from "@/components/Icon";
+import Icon from "@/components/utils/Icon";
 import * as Sentry from "@sentry/nextjs";
 
 const Error = ({ error, reset }) => {

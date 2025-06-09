@@ -1,7 +1,7 @@
 import linkedin from "@/public/icons/linkedin.svg";
 import mail from "@/public/icons/mail.svg";
 import Footer from './Footer';
-import Icon from "../Icon";
+import Icon from "../utils/Icon";
 
 function HomepageFooter() {
   return (

@@ -6,7 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
 import { handlePasswordValidCheck, isPasswordValid } from '@/lib/utils';
-import PasswordInput from '../PasswordInput';
+import PasswordInput from '../utils/PasswordInput';
 import { editPassword } from '@/lib/actions';
 
 const EditPasswordModal = (props) => {

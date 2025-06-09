@@ -1,7 +1,7 @@
 'use client'
 
 import Form from 'react-bootstrap/Form'
-import ButtonWithIcon from '@/components/ButtonWithIcon';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
 import ExtraLetters from './ExtraLetters';
 import { useEffect, useRef, useState } from 'react';
 

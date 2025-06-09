@@ -5,11 +5,11 @@ import Stack from "react-bootstrap/Stack"
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import { useActionState, useEffect, useState } from 'react'
-import GoogleAuthButton from "@/components/GoogleAuthButton";
-import OrSeparator from "@/components/OrSeparator";
+import GoogleAuthButton from "@/components/miscellaneous/GoogleAuthButton";
+import OrSeparator from "@/components/miscellaneous/OrSeparator";
 import { createAccount, logInWithCredentials, logInWithGoogle } from "@/lib/actions";
 import { handlePasswordValidCheck, isEmailValid, isUsernameValid } from "@/lib/utils";
-import PasswordInput from "../PasswordInput";
+import PasswordInput from "../utils/PasswordInput";
 
 function CreateAccountModal(props) {
 

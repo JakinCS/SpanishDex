@@ -6,10 +6,10 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import GoogleAuthButton from "@/components/GoogleAuthButton";
-import OrSeparator from "@/components/OrSeparator";
+import GoogleAuthButton from "@/components/miscellaneous/GoogleAuthButton";
+import OrSeparator from "@/components/miscellaneous/OrSeparator";
 import { logInWithCredentials, logInWithGoogle } from "@/lib/actions";
-import PasswordInput from "../PasswordInput";
+import PasswordInput from "../utils/PasswordInput";
 
 function LogInModal(props) {
   const router = useRouter();

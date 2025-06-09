@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import IconButton from '../IconButton'
+import IconButton from '../utils/IconButton'
 import Form from 'react-bootstrap/Form'
 import EditIcon from '@/public/icons/edit.svg'
 

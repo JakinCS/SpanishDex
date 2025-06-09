@@ -1,11 +1,11 @@
-import ButtonWithIcon from "@/components/ButtonWithIcon";
-import DashboardCard from "@/components/Card";
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import DashboardCard from "@/components/utils/Card";
 import TotalsSection from "@/components/dashboard/TotalsSection";
 import Link from "next/link";
 import Stack from 'react-bootstrap/Stack'
-import PageErrorMessage from "@/components/PageErrorMessage";
+import PageErrorMessage from "@/components/miscellaneous/PageErrorMessage";
 import DecksArea from "@/components/dashboard/DecksArea";
-import Icon from "@/components/Icon";
+import Icon from "@/components/utils/Icon";
 import { getDashboardDeckInfo } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";

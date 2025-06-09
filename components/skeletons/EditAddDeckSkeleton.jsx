@@ -1,11 +1,11 @@
 'use client'
 
-import BackButton from '@/components/BackButton'
+import BackButton from '@/components/miscellaneous/BackButton'
 import Button from "react-bootstrap/Button";
-import UnderlineContainer from '@/components/UnderlineContainer';
+import UnderlineContainer from '@/components/utils/UnderlineContainer';
 import Form from 'react-bootstrap/Form'
-import IconButton from '../IconButton';
-import ButtonWithIcon from '../ButtonWithIcon';
+import IconButton from '@/components/utils/IconButton';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
 
 const EditAddDeckSkeleton = () => {
 

@@ -2,9 +2,9 @@ import FilterButton from "./FilterButton";
 import { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import IconButton from '../IconButton';
-import Icon from "../Icon";
-import UnderlineContainer from "../UnderlineContainer";
+import IconButton from '@/components/utils/IconButton';
+import Icon from "../utils/Icon";
+import UnderlineContainer from "../utils/UnderlineContainer";
 
 const FilterSearchSection = ({ deckList, setDeckList }) => {
   // The show/hide state of the search input field for mobile layouts

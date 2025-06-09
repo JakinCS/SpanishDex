@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import Icon from "./Icon";
+import Icon from "../utils/Icon";
 import Link from "next/link";
 
 const BackButton = ({onClick, url, ...props}) => {

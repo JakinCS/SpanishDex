@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Button from 'react-bootstrap/Button'
-import IconButton from '../IconButton'
+import IconButton from '../utils/IconButton'
 
 const PracticeCard = ({ card, otherCards, number, totalCardCount, functions, ...props }) => {
 

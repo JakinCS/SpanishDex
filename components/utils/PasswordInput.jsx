@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from "react-bootstrap/Form"
-import IconButton from './IconButton'
+import IconButton from '@/components/utils/IconButton';
 
 const PasswordInput = (props) => {
   // State for the visibility of the password value

@@ -1,7 +1,7 @@
 'use client'
 
-import ButtonWithIcon from "../ButtonWithIcon"
-import IconButton from "../IconButton"
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import IconButton from '@/components/utils/IconButton';
 import Button from 'react-bootstrap/Button'
 import EditUsernameModal from "../modals/EditUsernameModal"
 import { useState } from "react"

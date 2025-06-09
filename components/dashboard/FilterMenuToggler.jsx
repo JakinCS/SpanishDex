@@ -1,5 +1,5 @@
-import ButtonWithIcon from "../ButtonWithIcon";
-import IconButton from "../IconButton";
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import IconButton from '@/components/utils/IconButton';
 
 const FilterMenuToggler = ({ onClick, children }, ref) => {
   return (

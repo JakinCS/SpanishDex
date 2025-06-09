@@ -2,10 +2,10 @@
 
 import Modal from "react-bootstrap/Modal";
 import Stack from "react-bootstrap/Stack"
-import ContactForm from "../ContactForm";
+import ContactForm from "../forms/ContactForm";
 import linkedin from "@/public/icons/linkedin.svg";
 import mail from "@/public/icons/mail.svg";
-import Icon from "../Icon";
+import Icon from "../utils/Icon";
 
 const ContactModal = ({ show, handleClose }) => {
   return (

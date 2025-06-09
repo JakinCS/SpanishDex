@@ -1,9 +1,9 @@
 'use client'
 
-import BackButton from '@/components/BackButton'
+import BackButton from '@/components/miscellaneous/BackButton'
 import Button from "react-bootstrap/Button";
 import Alert from 'react-bootstrap/Alert';
-import UnderlineContainer from '@/components/UnderlineContainer';
+import UnderlineContainer from '@/components/utils/UnderlineContainer';
 import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
 import AddCardArea from '@/components/edit_add-deck/AddCardArea';

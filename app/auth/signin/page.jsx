@@ -7,10 +7,10 @@ import Button from 'react-bootstrap/Button';
 import { useActionState, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import GoogleAuthButton from '@/components/GoogleAuthButton';
-import OrSeparator from '@/components/OrSeparator';
+import GoogleAuthButton from '@/components/miscellaneous/GoogleAuthButton';
+import OrSeparator from '@/components/miscellaneous/OrSeparator';
 import { logInWithCredentials, logInWithGoogle } from '@/lib/actions';
-import PasswordInput from '@/components/PasswordInput';
+import PasswordInput from '@/components/utils/PasswordInput';
 
 const SignIn = () => {
   const searchParams = useSearchParams();

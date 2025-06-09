@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import IconButton from '@/components/IconButton';
+import IconButton from '@/components/utils/IconButton';
 import Form from 'react-bootstrap/Form'
 import ExtraLetters from './ExtraLetters';
 import DeleteCardModal from '../modals/DeleteCardModal';

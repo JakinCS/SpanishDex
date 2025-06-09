@@ -1,6 +1,6 @@
 import HomepageSection from '@/components/homepage/HomepageSection'
 import HomepageSectionColumns from '@/components/homepage/HomepageSectionColumns'
-import ContactForm from '@/components/ContactForm'
+import ContactForm from '@/components/forms/ContactForm'
 import GetStartedButton from '@/components/homepage/GetStartedButton';
 
 export default function Homepage() {

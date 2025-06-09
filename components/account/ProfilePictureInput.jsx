@@ -3,7 +3,7 @@ import { getCroppedImg } from '@/lib/utils';
 import { useState, useRef } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import IconButton from './IconButton';
+import IconButton from '@/components/utils/IconButton';;
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

@@ -1,6 +1,6 @@
 "use client"
 
-import Icon from "./Icon";
+import Icon from "../utils/Icon";
 
 const CloseButton = ({onClick, ...props}) => {
   return (

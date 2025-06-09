@@ -5,7 +5,7 @@ import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
-import PasswordInput from '../PasswordInput';
+import PasswordInput from '../utils/PasswordInput';
 import { deleteAccount } from '@/lib/actions';
 
 const DeleteAccountModal = (props) => {
