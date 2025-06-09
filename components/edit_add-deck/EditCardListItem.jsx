@@ -190,7 +190,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
   }, [cardId])
 
   return (
-    <div {...props} className={`number${cardId} ` + "flashcard-edit-list-item d-flex flex-column flex-xs_sm-row align-items-start" + (props.className ? ` ${props.className}` : '')}>
+    <li {...props} className={`number${cardId} ` + "flashcard-edit-list-item d-flex flex-column flex-xs_sm-row align-items-start" + (props.className ? ` ${props.className}` : '')}>
       
       <div className='number d-none d-xs_sm-flex justify-content-start align-items-center'>
         <p>{number}.</p>
@@ -242,7 +242,7 @@ const EditCardListItem = ({ number, cardId, english, spanish, setState, ...props
       <IconButton className="mt-2 ms-10 d-none d-xs_sm-block" variant='light' danger={true} size='md' iconSrc='/icons/delete.svg' altTag='Delete card icon' onClick={openDeleteCard} />
     
       <DeleteCardModal show={showDeleteModal} closeModal={closeDeleteCard} deleteCard={deleteCard} englishWord={englishWord} spanishWord={spanishWord}/>
-    </div>
+    </li>
   )
 }
 

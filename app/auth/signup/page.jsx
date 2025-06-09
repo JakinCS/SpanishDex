@@ -13,10 +13,6 @@ import { createAccount, logInWithCredentials, logInWithGoogle } from '@/lib/acti
 import { handlePasswordValidCheck, isEmailValid, isUsernameValid } from '@/lib/utils';
 import PasswordInput from '@/components/PasswordInput';
 
-export const metadata = {
-  title: "Create Account - SpanishDex",
-};
-
 const SignUp = () => {
   
   const router = useRouter();
@@ -150,7 +146,7 @@ const SignUp = () => {
         <Alert.Heading>Error</Alert.Heading>
         {error.message}
       </Alert>
-      <div className='bg-white p-50 rounded'>
+      <section className='bg-white p-50 rounded'>
         <div className={'modal-success-message ' + (showAccountCreated ? 'show' : 'hide')} style={{left: 0}} aria-live="polite">
           <h2 className="text-success mb-3">Success</h2>
           <p className="fw-medium">Your account is created</p>
@@ -199,7 +195,7 @@ const SignUp = () => {
           </Form>
           <p>Already have an account? {form1Pending || form2Pending ? <span className="fw-medium">Log In</span> : <Link href='/auth/signin'>Log In</Link>}</p>
         </Stack>
-      </div>
+      </section>
     </>
   )
 }

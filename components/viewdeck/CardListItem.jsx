@@ -6,7 +6,7 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
 
   return (
     <>
-      <div {...otherProps} className={'d-none d-md-flex align-items-center' + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
+      <li {...otherProps} className={'d-none d-md-flex align-items-center' + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
         <div className='d-flex justify-content-start align-items-center' style={{height: '2.5rem', width: '2.5rem'}}>
           <p>{number}.</p>
         </div>
@@ -20,8 +20,8 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
         </div>
         {/* <IconButton className="ms-10" variant='light' size='sm' iconSrc='/icons/listen.svg' altTag='Listen to pronunciation icon'/> Possible future feature */}
         <StatusIndicator className='ms-20' next_practice_date={cardInfo.next_practice_date} isWeak={cardInfo.weak} style={{minWidth: '5rem'}}/>
-      </div>
-      <div {...otherProps} className={'d-flex d-md-none flex-column align-items-center' + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
+      </li>
+      <li {...otherProps} className={'d-flex d-md-none flex-column align-items-center' + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
         <div className='d-flex align-items-center justify-content-between w-100'>
           <p className='ps-2'>{number}.</p>      
           <div className='d-flex align-items-center'>
@@ -40,7 +40,7 @@ const CardListItem = ({number, cardInfo, ...otherProps}) => {
             <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
           </div>
         </div>
-      </div>
+      </li>
     </>
   )
 }

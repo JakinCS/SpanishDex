@@ -8,10 +8,6 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { sendResetPasswordMessage } from "@/lib/actions";
 
-export const metadata = {
-  title: "Forgot Password - SpanishDex",
-};
-
 const ForgotPassword = () => {
 
   // Holds the email information
@@ -21,7 +17,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className='bg-white p-50 rounded'>
+      <section className='bg-white p-50 rounded'>
         <Stack gap={5}>
           <h1 className='fs-2'>Reset Password</h1>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
@@ -87,7 +83,7 @@ const ForgotPassword = () => {
             </Container>
           </Form>
         </Stack>
-      </div>
+      </section>
     </>
   )
 }

@@ -7,10 +7,10 @@ const TotalsSection = ({decks, cards, indicateLoading, ...props}) => {
       <div className='d-block d-sm-flex justify-content-sm-between'>
         <span className="d-flex align-items-center justify-content-center text-primary gap-2 mb-20 mb-sm-0">
           <Icon className="fill-primary" height={24} alt="" src={'/icons/bar_chart.svg'}/>
-          <h3 className='lh-1'>
+          <h2 className='fs-3 lh-1'>
             <span className='d-block d-sm-none'>Flashcard Totals</span>
             <span className='d-none d-sm-block'>Totals</span>
-          </h3>
+          </h2>
         </span>
         {indicateLoading ? 
           

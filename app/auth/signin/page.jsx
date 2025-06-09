@@ -12,10 +12,6 @@ import OrSeparator from '@/components/OrSeparator';
 import { logInWithCredentials, logInWithGoogle } from '@/lib/actions';
 import PasswordInput from '@/components/PasswordInput';
 
-export const metadata = {
-  title: "Log In - SpanishDex",
-};
-
 const SignIn = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
@@ -129,7 +125,7 @@ const SignIn = () => {
         <Alert.Heading>Error</Alert.Heading>
         {error.message}
       </Alert>
-      <div className='bg-white p-50 rounded'>
+      <section className='bg-white p-50 rounded'>
         <Stack gap={5}>
           <h1 className='fs-2'>Log In</h1>
           <p className="d-none text-break hiddenError">{error.hiddenMsg}</p>
@@ -168,7 +164,7 @@ const SignIn = () => {
           </Form>
           <p>Don’t have an account? {form1Pending || form2Pending ? <span className="fw-medium">Sign Up</span> : <Link href='/auth/signup'>Sign Up</Link>}</p>
         </Stack>
-      </div>
+      </section>
     </>
   )
 }

@@ -59,7 +59,7 @@ async function Dashboard() {
         <DashboardCard xPadding={30} yPadding={35} className="mb-30 mb-sm-50 mw-600">
           <Stack gap={30}>
             <div className="d-flex align-items-center justify-content-between">
-              <h3 className="fw-medium heading-underline-blue-100 lh-1"><span className="d-block d-xs_sm-none">Weak Cards</span><span className="d-none d-xs_sm-block">Review Weak Cards</span></h3>
+              <h2 className="fw-medium heading-underline-blue-100 fs-3 lh-1"><span className="d-block d-xs_sm-none">Weak Cards</span><span className="d-none d-xs_sm-block">Review Weak Cards</span></h2>
               <p className="fw-medium"><Icon height={24} alt='Icon of a flashcard' src='/icons/cards300.svg' /> {finalData.total_weakCards}</p>
             </div>          
             {finalData.total_weakCards !== 0 ?

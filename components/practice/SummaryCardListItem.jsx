@@ -32,7 +32,7 @@ const SummaryCardListItem = ({ cardInfo, number, score, ...otherProps }) => {
 
   return (
     <>
-      <div {...otherProps} className={'d-flex flex-column flex-sm-row bg-white rounded border border-1point5 w-100' + borderStyle + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
+      <li {...otherProps} className={'d-flex flex-column flex-sm-row bg-white rounded border border-1point5 w-100' + borderStyle + (otherProps.className ? ` ${otherProps.className}` : '')} style={{...otherProps.style, minHeight: '2.8125rem', cursor: 'default'}}>
         <div className='d-none d-sm-flex align-items-center border-end border-1point5 border-gray-150 w-100 w-sm-50'>
           <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.spanish}</p>
         </div>
@@ -42,7 +42,7 @@ const SummaryCardListItem = ({ cardInfo, number, score, ...otherProps }) => {
         <div className='d-flex align-items-center w-100 w-sm-50'>
           <p className='mx-20 py-3 text-break lh-sm'>{cardInfo.english}</p>
         </div>
-      </div>
+      </li>
     </>
   )
 }

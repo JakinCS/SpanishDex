@@ -9,10 +9,6 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { logOut } from "@/lib/actions";
 
-export const metadata = {
-  title: "Log Out - SpanishDex",
-};
-
 const SignOut = () => {
   
   const [serverError, setServerError] = useState(''); // holds the raw server error for putting in a hidden paragraph for debugging purposes.
@@ -53,7 +49,7 @@ const SignOut = () => {
         <Alert.Heading>Error</Alert.Heading>
         {formState.error}
       </Alert>
-      <div className='bg-white p-50 rounded'>
+      <section className='bg-white p-50 rounded'>
         <Stack gap={5} className="text-center">
           <h1 className='fs-2'>Log Out</h1>
           <p className="d-none text-break hiddenError">{serverError}</p>
@@ -73,7 +69,7 @@ const SignOut = () => {
             </Container>
           </Form>
         </Stack>
-      </div>
+      </section>
     </>
   )
 }

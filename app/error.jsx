@@ -55,7 +55,7 @@ const Error = ({ error, reset }) => {
             </a>            
           </div>          
           <p className={"text-center " + (showError ? 'd-block' : 'd-none')}>{error.message || "An error occurred"}</p>
-        </div>        
+        </div>          
       </HomepageSection>
     </div>
   )

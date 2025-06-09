@@ -19,7 +19,7 @@ export default function dashboardLayout({ children }) {
         <DashboardHeader />   
         <div style={containerStyles}>
           <div>
-            <Container className="topLevelContainer" fluid>
+            <Container className="topLevelContainer" fluid as="main">
               <div style={{maxWidth: '80rem', marginLeft: 'auto', marginRight: 'auto',}}>
                 {children} 
               </div>     

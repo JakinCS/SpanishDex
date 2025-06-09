@@ -216,19 +216,21 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
           <div className='mx-auto' style={{maxWidth: '40.625rem'}}>
             {cards.length > 0 ? (
               <>
-                <h2 className='text-center mb-20 d-block d-sm-none'>Practice</h2>
+                <h1 className='text-center fs-2 mb-20 d-block d-sm-none'>Practice</h1>
                 <h1 className='text-center mb-40 d-none d-sm-block'>Practice</h1>
-                <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
-                <div className='d-flex flex-column align-items-center'>
-                  <PracticeCard
-                    number={visibleCard + 1} 
-                    totalCardCount={cards.length} 
-                    key={cards[visibleCard]._id} 
-                    otherCards={otherCardInfo} 
-                    card={{...cards[visibleCard], ...cardsPracticeInfo.current[visibleCard]}} 
-                    functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: finishPractice, updateState: updateCardsPracticeInfo, sendScore: sendCardScore}}
-                  />
-                </div>
+                <section>
+                  <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
+                  <div className='d-flex flex-column align-items-center'>
+                    <PracticeCard
+                      number={visibleCard + 1} 
+                      totalCardCount={cards.length} 
+                      key={cards[visibleCard]._id} 
+                      otherCards={otherCardInfo} 
+                      card={{...cards[visibleCard], ...cardsPracticeInfo.current[visibleCard]}} 
+                      functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: finishPractice, updateState: updateCardsPracticeInfo, sendScore: sendCardScore}}
+                    />
+                  </div>
+                </section>
               </>
             ) : (
               <>
@@ -294,13 +296,16 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
         <>
           <div className='mx-auto' style={{maxWidth: '62.5rem'}}>
             <h1 className='text-center mb-30'>Practice Details</h1>
-            <UnderlineContainer className='mb-30'>
-              <div className='d-flex align-items-center justify-content-between' style={{minHeight: '2.5rem'}}>
-                <h3 className='fw-medium'>Cards Practiced ({practicedCards.current.length})</h3>
-              </div>
-            </UnderlineContainer>
 
-            <SummaryDetailsList cards={cards} getScoreById={getScoreById}/>
+            <section>
+              <UnderlineContainer className='mb-30'>
+                <div className='d-flex align-items-center justify-content-between' style={{minHeight: '2.5rem'}}>
+                  <h2 className='fw-medium fs-3'>Cards Practiced ({practicedCards.current.length})</h2>
+                </div>
+              </UnderlineContainer>
+
+              <SummaryDetailsList cards={cards} getScoreById={getScoreById}/>
+            </section>
 
             <div className="d-flex justify-content-center mt-50">
               <Button variant='primary' onClick={displaySummaryScreen}>Back to Summary</Button>

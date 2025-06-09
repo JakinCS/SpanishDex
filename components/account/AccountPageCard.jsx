@@ -5,9 +5,9 @@ const AccountPageCard = ({ paddingY, ...props }) => {
   if (props.className) classes += " " + props.className;
 
   return (
-    <div className={classes} >
+    <section className={classes} >
       {props.children}
-    </div>
+    </section>
   )
 }
 

@@ -54,7 +54,7 @@ const AccountPage = async ({ params }) => {
           />
         </AccountPageCard>
         <AccountPageCard className="mb-5">
-          <h3 className="mb-5 text-center text-sm-start">Account Details</h3>
+          <h2 className="mb-5 fs-3 text-center text-sm-start">Account Details</h2>
           <Stack gap={20} className="lh-1">
             <div className="d-flex justify-content-between align-items-center">
               <UsernameEditSection
@@ -72,7 +72,7 @@ const AccountPage = async ({ params }) => {
             <hr />
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <p className="fw-medium mb-3">Password</p>
+                <h3 className="fw-medium fs-4 mb-3">Password</h3>
                 <p
                   style={{ fontFamily: "sans-serif", letterSpacing: ".125rem" }}
                 >
@@ -86,7 +86,7 @@ const AccountPage = async ({ params }) => {
           </Stack>
         </AccountPageCard>
         <AccountPageCard className="mb-5">
-          <h3 className="mb-20 text-center text-sm-start">Delete Your Account</h3>
+          <h2 className="mb-20 fs-3 text-center text-sm-start">Delete Your Account</h2>
           <p className="mb-20 text-center text-sm-start">
             Caution. This action permanently removes your account and all data
             associated with your account. This action cannot be undone.

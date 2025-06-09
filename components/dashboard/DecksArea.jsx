@@ -11,7 +11,7 @@ const DecksArea = ({ decks, indicateLoading }) => {
 
   
   return (
-    <>
+    <section>
       <FilterSearchSection deckList={deckList} setDeckList={setDeckList}/>
 
       { indicateLoading ?
@@ -37,9 +37,9 @@ const DecksArea = ({ decks, indicateLoading }) => {
                 /* NOTE: The display_creation_date property indicates whether the card should display the 'date_created' value or the 'last_practiced' value. */
 
                 return (
-                  <div key={deck._id} className="col-12 col-md-6 col-lg_xl-4 px-0" style={{minWidth: '18.7519525rem'}}>
+                  <section key={deck._id} className="col-12 col-md-6 col-lg_xl-4 px-0" style={{minWidth: '18.7519525rem'}}>
                     <DashboardDeck className='p-20' deckData={deckData}/> 
-                  </div>
+                  </section>
                 )
               })
               :
@@ -56,9 +56,9 @@ const DecksArea = ({ decks, indicateLoading }) => {
                 /* NOTE: The display_creation_date property indicates whether the card should display the 'date_created' value or the 'last_practiced' value. */
 
                 return (
-                  <div key={deck._id} className="col-12 col-md-6 col-lg_xl-4 px-0" style={{minWidth: '18.7519525rem'}}>
+                  <section key={deck._id} className="col-12 col-md-6 col-lg_xl-4 px-0" style={{minWidth: '18.7519525rem'}}>
                     <DashboardDeck className='p-20' deckData={deckData}/> 
-                  </div>
+                  </section>
                 )
               })
             }
@@ -77,7 +77,7 @@ const DecksArea = ({ decks, indicateLoading }) => {
         </div>
       }
       
-    </>
+    </section>
   )
 }
 
