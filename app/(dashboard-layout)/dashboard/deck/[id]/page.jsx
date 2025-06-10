@@ -1,7 +1,6 @@
 import BackButton from '@/components/miscellaneous/BackButton'
 import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
 import CardListItem from '@/components/viewdeck/CardListItem'
-import DashboardCard from '@/components/utils/Card'
 import Icon from '@/components/utils/Icon'
 import IconButton from '@/components/utils/IconButton';
 import UnderlineContainer from '@/components/utils/UnderlineContainer'
@@ -12,6 +11,7 @@ import { notFound } from 'next/navigation'
 import { getDeckInfo } from '@/lib/actions'
 import { auth } from '@/auth'
 import React from 'react'
+import Card from '@/components/utils/Card';
 
 export const metadata = {
   title: "View Deck - SpanishDex",
@@ -90,7 +90,7 @@ const DeckPage = async ({ params }) => {
       <section>
         <h1 className='mb-25'>{deck.title}</h1>
         <p>{deck.description != '' ? deck.description : <span className='fst-italic'>No description for this deck</span>}</p>
-        <DashboardCard xPadding={30} yPadding={35} className="my-50" style={{maxWidth: '31.25rem'}}>
+        <Card xPadding={30} yPadding={35} className="mt-50" style={{maxWidth: '31.25rem'}}>
           <h2 className="fw-medium fs-3 text-center text-xs_sm-start heading-underline-blue-100 lh-1 mb-40">Deck Information</h2>
           <div className='d-flex flex-column flex-xs_sm-row gap-15 gap-xs_sm-30'>
             <span className="d-flex align-items-center justify-content-center gap-3 mx-2 mx-sm-0 fw-medium">
@@ -112,30 +112,38 @@ const DeckPage = async ({ params }) => {
             <p className='d-flex align-items-center'><Icon height={24} alt="" src={'/icons/clock.svg'}/><span className='ms-2 me-3 fw-medium'>Last Practiced:</span></p>
             <p>{formattedLastPracticed}</p>
           </span>
-        </DashboardCard>
+          {deck.cards.length > 0 && (
+            <>
+              <hr className='my-20'/>
+              <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary d-block d-sm-inline-block mt-30 mt-sm-10'>Review All Cards</Link>            
+            </>
+          )}
+        </Card>
 
-        {deck.cards.length > 0 && (
+        
+        {deck.weak_cards > 0 && (
+          <section style={{maxWidth: '31.25rem'}} className='mt-30 px-30 py-35 bg-white rounded border border-2 border-secondary'>
+            <h2 className="fw-medium fs-3 text-center text-xs_sm-start lh-1 mb-20">Review Weak Cards</h2>
+            <p>You have {deck.weak_cards} weak cards to review. Practice them now to keep them fresh.</p>
+            <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary mt-20 d-block d-sm-inline-block'>Review Now</Link>
+          </section>
+        )}
+
+        {/* {deck.cards.length > 0 && (
           <>
-            <UnderlineContainer className='d-block d-sm-none mb-30'>
-              <div className="d-flex align-items-center justify-content-between">
-                <h2 className='fw-medium fs-3'>Review Cards</h2>
-              </div>
-            </UnderlineContainer>
-            <div className='mb-60 d-flex justify-content-center justify-content-xs_sm-start d-sm-none flex-wrap gap-20'>
-              <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary w-100'>All Cards</Link>
-              <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Weak Cards</Link>
+            <div className='mb-60 d-flex justify-content-center d-sm-none flex-wrap gap-20'>
+              <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Review Weak Cards</Link>
             </div>
             <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
-              <Link href={`/dashboard/deck/practice/${id}`} role="button" className='btn btn-primary'>Review All Cards</Link>
               <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary'>Review Weak Cards</Link>
             </div>
           </>
-        )}      
+        )}       */}
       </section>
       
 
       <section>
-        <UnderlineContainer className='mb-30'>
+        <UnderlineContainer className='mt-50 mb-30'>
           <div className="d-flex align-items-center justify-content-between">
             <h2 className='fw-medium fs-3'>All Cards ({deck.cards.length})</h2>
             <ButtonWithIcon isLinkButton={true} className="btn btn-primary d-none d-xs_sm-block" href={`/dashboard/deck/edit/${id}`} iconSrc='/icons/add_3.svg' iconHeight={16} altTag='' iconFillColor="white">Add Cards</ButtonWithIcon>
