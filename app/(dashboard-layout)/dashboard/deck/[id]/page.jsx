@@ -128,17 +128,6 @@ const DeckPage = async ({ params }) => {
             <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary mt-20 d-block d-sm-inline-block'>Review Now</Link>
           </section>
         )}
-
-        {/* {deck.cards.length > 0 && (
-          <>
-            <div className='mb-60 d-flex justify-content-center d-sm-none flex-wrap gap-20'>
-              <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary w-100'>Review Weak Cards</Link>
-            </div>
-            <div className='mb-60 d-none d-sm-flex flex-wrap gap-20'>
-              <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary'>Review Weak Cards</Link>
-            </div>
-          </>
-        )}       */}
       </section>
       
 

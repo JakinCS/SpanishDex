@@ -31,7 +31,7 @@ const EditAddDeckSkeleton = () => {
 
       <p className='mt-30 mb-10'>Description</p>
       <div className='placeholder-glow'>
-        <span className='placeholder bg-gray-150 rounded' style={{height: '10rem', width: '100%', maxWidth: '31.25rem' }}></span>
+        <span className='placeholder bg-gray-150 rounded' style={{height: '10.0625rem', width: '100%', maxWidth: '31.25rem' }}></span>
       </div>
 
       <UnderlineContainer className='mt-40 mb-30'>
@@ -40,26 +40,31 @@ const EditAddDeckSkeleton = () => {
         </div>
       </UnderlineContainer>
 
-      <div className='flashcard-add-list-item d-flex flex-column flex-sm_md-row align-items-center'>
-        <div className='d-flex flex-column flex-lg-row align-items-start gap-15 me-sm_md-30 w-100'>
-          <div className="word-flex d-flex w-100 w-lg-50">
+
+      <div className='flashcard-add-list-item d-flex flex-column flex-sm_md-row align-items-center align-items-lg-start'>
+        <div className={'d-flex flex-column flex-lg-row align-items-start gap-15 me-sm_md-40 w-100'}>
+          <div className={"word-flex spanish-flex d-flex flex-column w-100 w-lg-50"}>
+            <p className='fs-5 text-primary fw-semibold lh-1 mb-10'>Spanish</p>
+            <Form.Control 
+              className={'add-word-input'} 
+              name='spanish' 
+              aria-label='Spanish word'
+              type="text" 
+              placeholder="Type Spanish word"
+            />
+          </div>
+
+          <div className="word-flex d-flex flex-column w-100 w-lg-50">
+            <p className='fs-5 text-primary fw-semibold lh-1 mb-10'>English</p>
             <Form.Group className='w-100'>
               <Form.Control 
                 className={'add-word-input'}
                 name='english' 
+                aria-label='English word'
                 type="text" 
                 placeholder="Type English word" 
               />
             </Form.Group>
-          </div>
-
-          <div className={"word-flex spanish-flex d-flex flex-column w-100 w-lg-50"}>
-            <Form.Control 
-              className={'add-word-input'} 
-              name='spanish' 
-              type="text" 
-              placeholder="Type Spanish word"
-            />
           </div>
         </div>
         <ButtonWithIcon 
@@ -68,7 +73,8 @@ const EditAddDeckSkeleton = () => {
           altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
-          className='flex-shrink-0 d-block d-sm_md-none mt-20 w-100 disabled' 
+          className='flex-shrink-0 d-block d-sm_md-none mt-40 w-100'
+          disabled
         >
           Add Card
         </ButtonWithIcon>
@@ -78,7 +84,8 @@ const EditAddDeckSkeleton = () => {
           altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
-          className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0 disabled' 
+          className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0'
+          disabled
         >
           Add Card
         </ButtonWithIcon>
