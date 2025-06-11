@@ -273,21 +273,13 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
               </Card>
             </div>
 
-            <div className="d-none d-sm-flex justify-content-center">
+            <div className="d-flex flex-column flex-sm-row justify-content-center gap-20 gap-sm-30">
               {deckPractice ? 
-                <Link href={`/dashboard/deck/${deckId}`} role="button" className='btn btn-primary'>Return to Deck</Link>
+                <Link href={`/dashboard/deck/${deckId}`} role="button" className='btn btn-primary' onClick={(e) => {e.preventDefault(); router.push(`/dashboard/deck/${deckId}`)}}>Return to Deck</Link>
                 :
-                <Link href={`/dashboard`} role="button" className='btn btn-primary'>Return to Dashboard</Link>
+                <Link href={`/dashboard`} role="button" className='btn btn-primary' onClick={(e) => {e.preventDefault(); router.push('/dashboard')}}>Return to Dashboard</Link>
               }
-              <Button variant='outline-primary ms-30' onClick={displaySummaryDetails}>View Practice Details</Button>
-            </div>
-            <div className='d-flex d-sm-none flex-column gap-20'>
-                {deckPractice ? 
-                  <Link href={`/dashboard/deck/${deckId}`} role="button" className='btn btn-primary'>Return to Deck</Link>
-                  :
-                  <Link href={`/dashboard`} role="button" className='btn btn-primary'>Return to Dashboard</Link>
-                }
-                <Button variant='outline-primary' onClick={displaySummaryDetails}>View Practice Details</Button>
+              <Button variant='outline-primary' onClick={displaySummaryDetails}>View Practice Details</Button>
             </div>
           </div>
         </>

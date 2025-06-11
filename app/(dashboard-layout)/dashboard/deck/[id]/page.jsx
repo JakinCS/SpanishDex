@@ -124,7 +124,7 @@ const DeckPage = async ({ params }) => {
         {deck.weak_cards > 0 && (
           <section style={{maxWidth: '31.25rem'}} className='mt-30 px-30 py-35 bg-white rounded border border-2 border-secondary'>
             <h2 className="fw-medium fs-3 text-center text-xs_sm-start lh-1 mb-20">Review Weak Cards</h2>
-            <p>You have {deck.weak_cards} weak cards to review. Practice them now to keep them fresh.</p>
+            <p className='text-center text-xs_sm-start'>You have {deck.weak_cards} weak cards to review. Practice them now to keep them fresh.</p>
             <Link href={`/dashboard/deck/practice/${id}?weak=true`} role="button" className='btn btn-secondary mt-20 d-block d-sm-inline-block'>Review Now</Link>
           </section>
         )}
