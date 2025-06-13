@@ -17,19 +17,11 @@ const EditDeckPage = async ({ params }) => {
     notFound() // Trigger the 404 page in Next.js if the id is invalid
   }
 
-  const session = await auth();
-
-  if (!session?.user) {
-    return (
-      <PageErrorMessage buttonType={'reload'} error=''>You are not logged in. Please log in to edit this deck.</PageErrorMessage>
-    )
-  }
-
   let errorInfo = {isError: false, message: '', hiddenMsg: ''};
   let initialData = undefined;
 
   try {
-    const retrievalResult = await getEditDeckInfo(session?.user?.id, id)
+    const retrievalResult = await getEditDeckInfo(id)
 
     if (retrievalResult.success === false) {
       // If there was an error in retrieving the deck, return the error message
