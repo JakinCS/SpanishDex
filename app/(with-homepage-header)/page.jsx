@@ -45,13 +45,13 @@ export default function Homepage() {
       >
         <div>
           <p style={{marginBottom: '1.125rem'}}>
-            SpanishDex is for those who don't want to waste their time practicing Spanish words they already know.
+            SpanishDex is for those who don’t want to waste their time practicing Spanish words they already know.
           </p>
           <p style={{marginBottom: '1.125rem'}}>
-            It's for those wishing to focus on learning, without a distracting interface and complicated features.
+            It’s for those wishing to focus on learning, without a distracting interface and complicated features.
           </p>
           <p style={{marginBottom: '1.125rem'}}>
-            It's for learners who don't want to forget words they've worked hard to learn.
+            It’s for learners who don’t want to forget words they’ve worked hard to learn.
           </p>
           <p>
             SpanishDex accomplishes this with its simple interface and its use of spaced learning.
@@ -64,14 +64,14 @@ export default function Homepage() {
       >
         <div>
           <p style={{marginBottom: '1.125rem'}}>
-            With spaced learning, words are only practiced when it's necessary, right before they fade from your memory.
+            With spaced learning, words are only practiced when it’s necessary, right before they fade from your memory.
             New words require more frequent practice. 
             But as words become solid in your memory, they will need less and less practice.
           </p>
           <p style={{marginBottom: '1.125rem'}}>
             Determining the best next practice time can get complicated. 
             But SpanishDex simplifies spaced learning and does the work for you. 
-            When words are ready for practice, they are labeled as "weak".
+            When words are ready for practice, they are labeled as “weak”.
           </p>
           <p>
             Just create decks and add the words you want to learn, and let SpanishDex do the rest!

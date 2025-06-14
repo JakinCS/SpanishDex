@@ -7,7 +7,7 @@ import Alert from 'react-bootstrap/Alert';
 import { useActionState, useState } from 'react';
 import { handlePasswordValidCheck } from '@/lib/utils';
 import { resetPassword } from '@/lib/actions';
-import PasswordInput from './PasswordInput';
+import PasswordInput from '../utils/PasswordInput';
 
 const ResetPasswordForm = (props) => {
 

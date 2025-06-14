@@ -83,10 +83,10 @@ const EditPageBody = ({ deckId, initialData }) => {
           changes.otherCards.push(card)
         }
       }
-    }, [])
+    })
 
     return changes;
-  })
+  }, [])
 
   // This function returns a boolean of whether there are active changes to the deck 
   const areChanges = useCallback(() => {
