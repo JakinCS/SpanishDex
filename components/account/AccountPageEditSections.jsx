@@ -5,9 +5,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { EditEmailButton, EditProfilePictureButton, EditUsernameButton } from "./AccountPageButtons"
-import ProfileCircle from "../ProfileCircle"
-import ButtonWithIcon from "../ButtonWithIcon";
-import IconButton from "../IconButton";
+import ProfileCircle from "../miscellaneous/ProfileCircle"
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import IconButton from '@/components/utils/IconButton';
 
 
 export const ProfilePictureEditSection = ({isLoading, ...props}) => {
@@ -19,11 +19,11 @@ export const ProfilePictureEditSection = ({isLoading, ...props}) => {
         <Row className="gap-30 d-none d-xs_sm-flex">
           <Col className="d-flex align-items-center">
             <div>
-              <h3 className="mb-30">Profile Picture</h3>
+              <h2 className="fs-3 mb-30">Profile Picture</h2>
               {!isLoading ? 
                 <EditProfilePictureButton pictureInfo={props.pictureInfo} pictureState={profilePicture} setPictureState={setProfilePicture} userId={props.userId} />
               :
-                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon' disabled={true}>Edit</ButtonWithIcon>
+                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='' disabled={true}>Edit</ButtonWithIcon>
               }
             </div>
           </Col>
@@ -55,7 +55,7 @@ export const ProfilePictureEditSection = ({isLoading, ...props}) => {
         </Row>
 
         <Row className="gap-30 d-flex d-xs_sm-none">
-          <Col className="d-flex justify-content-center" xs='12'><h3>Profile Picture</h3></Col>
+          <Col className="d-flex justify-content-center" xs='12'><h2 className="fs-3">Profile Picture</h2></Col>
           <Col xs='12' className="d-flex justify-content-center">
             {!isLoading ?
               <ProfileCircle
@@ -75,7 +75,7 @@ export const ProfilePictureEditSection = ({isLoading, ...props}) => {
               {!isLoading ? 
                 <EditProfilePictureButton pictureInfo={props.pictureInfo} pictureState={profilePicture} setPictureState={setProfilePicture} userId={props.userId} />
               :
-                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon' disabled={true}>Edit</ButtonWithIcon>
+                <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='' disabled={true}>Edit</ButtonWithIcon>
               }
             </div>
           </Col>
@@ -91,7 +91,7 @@ export const UsernameEditSection = ({isLoading, ...props}) => {
   return (
     <>
       <div className="me-2">
-        <p className="fw-medium mb-3">Username</p>
+        <h3 className="fw-medium fs-4 mb-3">Username</h3>
         {!isLoading ? 
           <p className="text-break">{usernameValue}</p>
           :
@@ -104,7 +104,7 @@ export const UsernameEditSection = ({isLoading, ...props}) => {
         {!isLoading ? 
           <EditUsernameButton initialValue={usernameValue} setUsername={setUsernameValue} userId={props.userId}/>
         :
-          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} disabled={true}/>
+          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="" disabled={true}/>
         }
       </div>
     </>
@@ -117,7 +117,7 @@ export const EmailEditSection = ({isLoading, ...props}) => {
   return (
     <>
       <div className="me-2">
-        <p className="fw-medium mb-3">Email</p>
+        <h3 className="fw-medium fs-4 mb-3">Email</h3>
         {!isLoading ? 
           <p className="text-break">{emailValue === '' ? <span className="fst-italic">No email provided yet</span> : emailValue}</p>
           :
@@ -130,7 +130,7 @@ export const EmailEditSection = ({isLoading, ...props}) => {
         {!isLoading ?
           <EditEmailButton initialValue={emailValue} setEmail={setEmailValue} userId={props.userId}/>
         :
-          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} disabled={true}/>
+          <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="" disabled={true}/>
         }
       </div>
     </>

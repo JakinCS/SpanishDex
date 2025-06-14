@@ -1,9 +1,12 @@
 import { getWeakCardsInfo } from '@/lib/actions';
 import React from 'react';
 import PracticePageBody from '@/components/practice/PracticePageBody';
-import PageErrorMessage from '@/components/PageErrorMessage';
+import PageErrorMessage from '@/components/miscellaneous/PageErrorMessage';
 import { shuffleArray } from '@/lib/utils';
 
+export const metadata = {
+  title: "Practice - SpanishDex",
+};
 
 const page = async () => {
 

@@ -4,7 +4,7 @@ import Stack from "react-bootstrap/Stack";
 const NotFound = async () => {
 
   return (
-    <Stack gap={25} className="mt-15">
+    <Stack gap={25} className="mt-15" as="section">
       <h1 className="text-center">Deck Not Found</h1>
       <p className="text-center">Could not find requested deck.</p>
       <div className="d-flex column-gap-25">

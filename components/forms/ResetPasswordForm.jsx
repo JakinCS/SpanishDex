@@ -7,7 +7,7 @@ import Alert from 'react-bootstrap/Alert';
 import { useActionState, useState } from 'react';
 import { handlePasswordValidCheck } from '@/lib/utils';
 import { resetPassword } from '@/lib/actions';
-import PasswordInput from './PasswordInput';
+import PasswordInput from '../utils/PasswordInput';
 
 const ResetPasswordForm = (props) => {
 
@@ -59,11 +59,26 @@ const ResetPasswordForm = (props) => {
   return (
     <>
       <Form action={formAction} className='w-100' style={{maxWidth: '34.375rem'}}>
-        <Alert variant="danger" className='mb-5' show={(formState.status === "ERROR" && !isPending && showBanners.error)} onClose={() => setShowBanners( (prevState) => ({...prevState, error: false}) )} dismissible>
+        <Alert 
+          variant="danger" 
+          className='mb-5' 
+          aria-live="polite"
+          show={(formState.status === "ERROR" && !isPending && showBanners.error)} 
+          onClose={() => setShowBanners( (prevState) => ({...prevState, error: false}) )} 
+          dismissible
+        >
           <Alert.Heading>Error</Alert.Heading>
           {formState.error}
         </Alert>
-        <Alert variant="success" className='mb-5' show={formState.status === "SUCCESS" && !isPending && showBanners.success} onClose={() => setShowBanners( (prevState) => ({...prevState, success: false}) )} dismissible>
+        <Alert 
+          variant="success" 
+          className='mb-5' 
+          role="status"
+          aria-live="polite"
+          show={formState.status === "SUCCESS" && !isPending && showBanners.success} 
+          onClose={() => setShowBanners( (prevState) => ({...prevState, success: false}) )} 
+          dismissible
+        >
           <Alert.Heading>Success</Alert.Heading>
           Password has been reset successfully.
         </Alert>
@@ -71,7 +86,7 @@ const ResetPasswordForm = (props) => {
         <Form.Group className="mb-5" controlId="newPassword">
           <Form.Label className="fw-medium">Password</Form.Label>
           <PasswordInput name='password1' placeholder="Enter new password" value={formValues.password.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'}/>
-          <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid">
+          <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid" aria-live="polite">
             {formValues.password.message}
           </Form.Control.Feedback>
         </Form.Group>
@@ -79,7 +94,7 @@ const ResetPasswordForm = (props) => {
         <Form.Group className="mb-40" controlId="newPassword2">
           <Form.Label className="fw-medium">Confirm Password</Form.Label>
           <PasswordInput name='password2' placeholder="Confirm password" value={formValues.password2.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
-          <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid">
+          <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid" aria-live="polite">
             {formValues.password2.message}
           </Form.Control.Feedback>
         </Form.Group>

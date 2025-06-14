@@ -14,7 +14,7 @@ const HeaderContent = ({ children, link }) => {
         <Link href={link || "/"} className='blue-link'>
           <Image
             className="logo"
-            alt="SpanishDex Logo"
+            alt="SpanishDex Logo - Home"
             src={spanishdex}
             placeholder="blur"
             blurDataURL={'/logo.svg'}
@@ -27,7 +27,7 @@ const HeaderContent = ({ children, link }) => {
           <Image
             className="logo"
             src={spanishdexIcon}
-            alt="SpanishDex Logo"  
+            alt="SpanishDex Logo - Home"  
             placeholder="blur"
             blurDataURL={'/logo-icon.svg'}            
             style={{ height: "3.125rem", width: 'auto' }}

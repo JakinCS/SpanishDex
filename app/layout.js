@@ -8,8 +8,15 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  title: "SpanishDex",
-  description: "Spanish flashcards application for spaced learning",
+  title: "SpanishDex | Free Flashcards App for Efficient Spaced Learning",
+  description: "Don't want to forget the Spanish words you've worked hard to learn? SpanishDex simplifies spaced learning to help you retain vocabulary easily and efficiently.",
+  openGraph: {
+    title: 'SpanishDex: Simple & Easy Spanish Vocabulary Learning',
+    description: 'SpanishDex makes memorizing and retaining Spanish vocabulary easy and time-efficient. Stop wasting time practicing words you already know and start learning what you need to, for free!',
+    url: 'https://spanishdex.vercel.app/',
+    siteName: 'SpanishDex',
+    type: 'website',
+  }
 };
 
 export default async function RootLayout({ children }) {

@@ -4,9 +4,9 @@ import React, { useRef, useState } from 'react';
 import PracticeCard from './PracticeCard';
 import Link from 'next/link';
 import TopButtons from './TopButtons';
-import UnderlineContainer from '../UnderlineContainer';
+import UnderlineContainer from '../utils/UnderlineContainer';
 import Button from 'react-bootstrap/Button';
-import Card from '../Card';
+import Card from '../utils/Card';
 import SummaryResultCircle from './SummaryResultCircle';
 import { practiceCard } from '@/lib/actions';
 import SummaryDetailsList from './SummaryDetailsList';
@@ -216,19 +216,21 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
           <div className='mx-auto' style={{maxWidth: '40.625rem'}}>
             {cards.length > 0 ? (
               <>
-                <h2 className='text-center mb-20 d-block d-sm-none'>Practice</h2>
+                <h1 className='text-center fs-2 mb-20 d-block d-sm-none'>Practice</h1>
                 <h1 className='text-center mb-40 d-none d-sm-block'>Practice</h1>
-                <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
-                <div className='d-flex flex-column align-items-center'>
-                  <PracticeCard
-                    number={visibleCard + 1} 
-                    totalCardCount={cards.length} 
-                    key={cards[visibleCard]._id} 
-                    otherCards={otherCardInfo} 
-                    card={{...cards[visibleCard], ...cardsPracticeInfo.current[visibleCard]}} 
-                    functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: finishPractice, updateState: updateCardsPracticeInfo, sendScore: sendCardScore}}
-                  />
-                </div>
+                <section>
+                  <p className='mb-10'>{visibleCard + 1} / {cards.length}</p>
+                  <div className='d-flex flex-column align-items-center'>
+                    <PracticeCard
+                      number={visibleCard + 1} 
+                      totalCardCount={cards.length} 
+                      key={cards[visibleCard]._id} 
+                      otherCards={otherCardInfo} 
+                      card={{...cards[visibleCard], ...cardsPracticeInfo.current[visibleCard]}} 
+                      functions={{next: incrementVisibleCard, back: decrementVisibleCard, finish: finishPractice, updateState: updateCardsPracticeInfo, sendScore: sendCardScore}}
+                    />
+                  </div>
+                </section>
               </>
             ) : (
               <>
@@ -247,7 +249,14 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
       )} 
       {showSummaryScreen && (
         <>
-          <Alert variant='danger' show={showError} onClose={() => setShowError(false)} style={{marginTop: '-1rem', marginBottom: '-2.5rem'}} dismissible>
+          <Alert 
+            variant='danger' 
+            show={showError} 
+            aria-live="polite"
+            onClose={() => setShowError(false)} 
+            style={{marginTop: '-1rem', marginBottom: '-2.5rem'}} 
+            dismissible
+          >
             <p className='pe-30'>Some practice results were not able to be saved.</p>
           </Alert>
           <div className='mx-auto' style={{maxWidth: '62.5rem'}}>
@@ -264,21 +273,13 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
               </Card>
             </div>
 
-            <div className="d-none d-sm-flex justify-content-center">
+            <div className="d-flex flex-column flex-sm-row justify-content-center gap-20 gap-sm-30">
               {deckPractice ? 
-                <Link href={`/dashboard/deck/${deckId}`} role="button" className='btn btn-primary'>Return to Deck</Link>
+                <Link href={`/dashboard/deck/${deckId}`} role="button" className='btn btn-primary' onClick={(e) => {e.preventDefault(); router.push(`/dashboard/deck/${deckId}`)}}>Return to Deck</Link>
                 :
-                <Link href={`/dashboard`} role="button" className='btn btn-primary'>Return to Dashboard</Link>
+                <Link href={`/dashboard`} role="button" className='btn btn-primary' onClick={(e) => {e.preventDefault(); router.push('/dashboard')}}>Return to Dashboard</Link>
               }
-              <Button variant='outline-primary ms-30' onClick={displaySummaryDetails}>View Practice Details</Button>
-            </div>
-            <div className='d-flex d-sm-none flex-column gap-20'>
-                {deckPractice ? 
-                  <Link href={`/dashboard/deck/${deckId}`} role="button" className='btn btn-primary'>Return to Deck</Link>
-                  :
-                  <Link href={`/dashboard`} role="button" className='btn btn-primary'>Return to Dashboard</Link>
-                }
-                <Button variant='outline-primary' onClick={displaySummaryDetails}>View Practice Details</Button>
+              <Button variant='outline-primary' onClick={displaySummaryDetails}>View Practice Details</Button>
             </div>
           </div>
         </>
@@ -287,13 +288,16 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
         <>
           <div className='mx-auto' style={{maxWidth: '62.5rem'}}>
             <h1 className='text-center mb-30'>Practice Details</h1>
-            <UnderlineContainer className='mb-30'>
-              <div className='d-flex align-items-center justify-content-between' style={{minHeight: '2.5rem'}}>
-                <h3 className='fw-medium'>Cards Practiced ({practicedCards.current.length})</h3>
-              </div>
-            </UnderlineContainer>
 
-            <SummaryDetailsList cards={cards} getScoreById={getScoreById}/>
+            <section>
+              <UnderlineContainer className='mb-30'>
+                <div className='d-flex align-items-center justify-content-between' style={{minHeight: '2.5rem'}}>
+                  <h2 className='fw-medium fs-3'>Cards Practiced ({practicedCards.current.length})</h2>
+                </div>
+              </UnderlineContainer>
+
+              <SummaryDetailsList cards={cards} getScoreById={getScoreById}/>
+            </section>
 
             <div className="d-flex justify-content-center mt-50">
               <Button variant='primary' onClick={displaySummaryScreen}>Back to Summary</Button>
@@ -302,7 +306,6 @@ const PracticePageBody = ({ cards, deckPractice, deckId, ...props }) => {
         </>
       )}
 
-      {/* <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardCard} deckTitle={data.title} /> */}
       <ExitPracticeModal show={showExitModal} closeModal={closeExitModal} finishPractice={finishPractice} />
       
     </>

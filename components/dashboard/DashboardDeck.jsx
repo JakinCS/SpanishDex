@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Icon from '../Icon';
+import Icon from '../utils/Icon';
 
 const DashboardDeck = ({deckData, ...props}) => {
 
@@ -35,14 +35,14 @@ const DashboardDeck = ({deckData, ...props}) => {
   return (
     <div {...props}>
       <Link href={`/dashboard/deck/${deckData.id}`} className='d-block bg-white px-20 py-25 px-xs_sm-30 py-xs_sm-30 dashboard-deck-card rounded mb-15'>
-        <h4 className='fw-medium lh-1 mb-40'>{deckData.title}</h4>
+        <h3 className='fw-medium fs-4 lh-1 mb-40'>{deckData.title}</h3>
         <div className='d-flex gap-25'>
           <span className="d-flex align-items-center gap-2 fs-6 fw-medium">
-            <Icon height={20} src='/icons/cards300.svg' alt="Flashcard icon"/>
+            <Icon height={20} src='/icons/cards300.svg' alt=""/>
             <p><span>{deckData.cards}</span> Total {deckData.cards === 1 ? 'Card' : 'Cards'}</p>
           </span>
           <span className="d-flex align-items-center gap-2 fs-6 fw-medium">
-            <Icon height={20} src='/icons/cards300.svg' alt="Flashcard icon"/>
+            <Icon height={20} src='/icons/cards300.svg' alt=""/>
             <p><span>{deckData.weak_cards}</span> Weak {deckData.weak_cards === 1 ? 'Card' : 'Cards'}</p>
           </span>
         </div>

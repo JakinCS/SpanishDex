@@ -100,11 +100,26 @@ function ContactForm({submitButtonWide, ...props}) {
 
   return (
     <Form action={formAction} {...props}>
-      <Alert className='mb-20' variant="danger" show={formState.status === "ERROR" && showBanners.error} onClose={() => setShowBanners((prevState) => ({...prevState, error: false}))} dismissible>
+      <Alert 
+        className='mb-20' 
+        variant="danger" 
+        aria-live="polite"
+        show={formState.status === "ERROR" && showBanners.error} 
+        onClose={() => setShowBanners((prevState) => ({...prevState, error: false}))} 
+        dismissible
+      >
         <Alert.Heading>Error</Alert.Heading>
         {formState.error}
       </Alert>
-      <Alert className='mb-20' variant="success" show={formState.status === "SUCCESS" && showBanners.success} onClose={() => setShowBanners((prevState) => ({...prevState, success: false}))} dismissible>
+      <Alert 
+        className='mb-20' 
+        variant="success" 
+        role='status'
+        aria-live="polite"
+        show={formState.status === "SUCCESS" && showBanners.success} 
+        onClose={() => setShowBanners((prevState) => ({...prevState, success: false}))} 
+        dismissible 
+      >
         <Alert.Heading>Success</Alert.Heading>
         Your message has been sent successfully.
       </Alert>

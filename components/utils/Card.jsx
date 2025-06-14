@@ -7,9 +7,9 @@ const Card = ({ xPadding, yPadding, children, ...otherProps}) => {
   }
 
   return (
-    <div {...otherProps} style={styles} className={`bg-white rounded border border-1point5 border-gray-150 ${otherProps.className || ''}`}>
+    <section {...otherProps} style={styles} className={`bg-white rounded border border-1point5 border-gray-150 ${otherProps.className || ''}`}>
       {children}
-    </div>
+    </section>
   )
 }
 

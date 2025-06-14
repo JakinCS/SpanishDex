@@ -5,7 +5,7 @@ import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
-import PasswordInput from '../PasswordInput';
+import PasswordInput from '../utils/PasswordInput';
 import { deleteAccount } from '@/lib/actions';
 
 const DeleteAccountModal = (props) => {
@@ -74,7 +74,13 @@ const DeleteAccountModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <Alert variant="danger" show={formState.status === "ERROR" && !isPending && showError} onClose={() => setShowError(false)} dismissible>
+          <Alert 
+            variant="danger" 
+            aria-live="polite"
+            show={formState.status === "ERROR" && !isPending && showError} 
+            onClose={() => setShowError(false)} 
+            dismissible
+          >
             <Alert.Heading>Error</Alert.Heading>
             {formState.error}
           </Alert>
@@ -88,7 +94,7 @@ const DeleteAccountModal = (props) => {
             <Form.Group className="mb-30" controlId="password">
               <Form.Label className="fw-medium">Enter Password To Delete</Form.Label>
               <PasswordInput name="password" placeholder="Enter password" value={password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={password.valid === false && 'is-invalid'} required/>
-              <Form.Control.Feedback className={password.valid === false && 'd-block'} type="invalid">
+              <Form.Control.Feedback className={password.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {password.message}
               </Form.Control.Feedback>
             </Form.Group>

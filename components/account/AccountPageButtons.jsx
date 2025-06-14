@@ -1,7 +1,7 @@
 'use client'
 
-import ButtonWithIcon from "../ButtonWithIcon"
-import IconButton from "../IconButton"
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import IconButton from '@/components/utils/IconButton';
 import Button from 'react-bootstrap/Button'
 import EditUsernameModal from "../modals/EditUsernameModal"
 import { useState } from "react"
@@ -18,7 +18,7 @@ export const EditProfilePictureButton = (props) => {
 
   return (
     <>
-      <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='Edit icon' onClick={showModal}>Edit</ButtonWithIcon>
+      <ButtonWithIcon variant='gray' iconSrc='/icons/edit.svg' iconHeight={24} altTag='' onClick={showModal}>Edit</ButtonWithIcon>
       <EditProfilePictureModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
@@ -31,7 +31,7 @@ export const EditUsernameButton = (props) => {
 
   return (
     <>
-      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
+      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="Edit username icon" onClick={showModal}/>
       <EditUsernameModal show={show} closeModal={closeModal} {...props} />
     </>
   )
@@ -44,7 +44,7 @@ export const EditEmailButton = (props) => {
 
   return (
     <>
-      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
+      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="Edit email icon" onClick={showModal}/>
       <EditEmailModal show={show} closeModal={closeModal} {...props}/>
     </>
   )
@@ -62,7 +62,7 @@ export const EditPasswordButton = (props) => {
 
   return (
     <>
-      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} onClick={showModal}/>
+      <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag="Edit password icon" onClick={showModal}/>
       <EditPasswordModal show={show} closeModal={closeModal} openResetPasswordModal={openResetPasswordModal} {...props}/>
 
       <ResetPasswordModal forAccountPage={true} size='md' handleClose={closeResetPasswordModal} show={resetPasswordModalOpenState} openPreviousModal={showModal}/>

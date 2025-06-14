@@ -24,7 +24,7 @@ const MoreButton = ({deck, children, ...otherProps}) => {
           {children}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu className='mt-10' style={{right: '0'}}>
+        <Dropdown.Menu className='mt-10' style={{right: '0'}} as="aside">
           <Link href={`/dashboard/deck/edit/${deck.id}`} className='dropdown-item mb-2'>Edit Deck</Link>
           <Link href={`/dashboard/deck/practice/${deck.id}`} className='dropdown-item mb-2'>Practice All Cards</Link>
           <Link href={`/dashboard/deck/practice/${deck.id}?weak=true`} className='dropdown-item mb-2'>Practice Weak Cards</Link>

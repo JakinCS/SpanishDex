@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from "react-bootstrap/Form"
-import IconButton from './IconButton'
+import IconButton from '@/components/utils/IconButton';
 
 const PasswordInput = (props) => {
   // State for the visibility of the password value
@@ -18,7 +18,7 @@ const PasswordInput = (props) => {
         <Form.Control {...props} type={showPassword ? 'text' : 'password'}/>
       </div>
       <div className="d-flex align-items-center">
-        <IconButton variant='light' size="md" iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide icon' : 'show icon'} onClick={togglePasswordVisibility}/>           
+        <IconButton variant='light' size="md" iconSrc={showPassword ? '/icons/hide.svg' : '/icons/show.svg'} altTag={showPassword ? 'hide password icon' : 'show password icon'} onClick={togglePasswordVisibility}/>           
       </div>
     </Container>
   )

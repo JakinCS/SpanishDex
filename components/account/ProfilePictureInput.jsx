@@ -3,7 +3,7 @@ import { getCroppedImg } from '@/lib/utils';
 import { useState, useRef } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import IconButton from './IconButton';
+import IconButton from '@/components/utils/IconButton';;
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -98,7 +98,7 @@ const ProfilePictureInput = ({profilePicture, setProfilePicture, ...otherProps})
           <div style={{width: '650px', height: '80vh'}} className='mx-10 bg-white-custom rounded d-flex flex-column justify-content-between'>
             <div className='d-flex ps-20 pe-10 py-10 align-items-center justify-content-between'>
               <h3>Crop Image</h3>
-              <IconButton variant='light' size='sm' iconSrc={'/icons/close.svg'} altTag={'close icon'} onClick={handleCloseCropDialog} />
+              <IconButton variant='light' size='sm' iconSrc={'/icons/close.svg'} altTag={'close dialog icon'} onClick={handleCloseCropDialog} />
             </div>
             <div className='position-relative h-100'>
               <Cropper
@@ -116,7 +116,7 @@ const ProfilePictureInput = ({profilePicture, setProfilePicture, ...otherProps})
               <Row className='justify-content-between'>
                 <Col xs='12' sm='auto' className='pb-10 pb-sm-0 d-flex justify-content-center'>
                   <div className="d-flex align-items-center gap-10 w-100" style={{maxWidth: '350px'}}>                
-                    <IconButton variant='light' size='md' iconSrc='/icons/subtract.svg' altTag={'subtract icon'} onClick={ () => setZoom( (prev) => (prev > 1 ? prev - .1 : prev) ) } />
+                    <IconButton variant='light' size='md' iconSrc='/icons/subtract.svg' altTag={'zoom out icon'} onClick={ () => setZoom( (prev) => (prev > 1 ? prev - .1 : prev) ) } />
                     <input
                       ref={sliderInput}
                       type="range"
@@ -130,7 +130,7 @@ const ProfilePictureInput = ({profilePicture, setProfilePicture, ...otherProps})
                       }}
                       className='w-100 slider rounded'
                     />
-                    <IconButton variant='light' size='md' iconSrc='/icons/add.svg' altTag={'plus icon'} onClick={ () => setZoom( (prev) => (prev < 3 ? Number.parseFloat(prev) + .1 : prev) ) } />
+                    <IconButton variant='light' size='md' iconSrc='/icons/add.svg' altTag={'zoom in icon'} onClick={ () => setZoom( (prev) => (prev < 3 ? Number.parseFloat(prev) + .1 : prev) ) } />
                   </div>
                 </Col>
                 <Col xs='12' sm='auto' className='d-flex justify-content-center pb-10 pb-sm-0'>

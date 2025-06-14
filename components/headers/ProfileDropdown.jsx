@@ -13,7 +13,7 @@ const ProfileDropdown = (props) => {
         Custom toggle
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu as='aside'>
         <p>Welcome,<br />{props.user.username}</p>
         <Dropdown.Divider />
         <Link href={`/account/${props.user.id}`} className='dropdown-item mb-2'>Account</Link>

@@ -77,7 +77,7 @@ const FilterButton = ({setDeckList, children, ...otherProps}) => {
         {children}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu className='mt-10' align={{ sm_md: 'start' }}>
+      <Dropdown.Menu className='mt-10' align={{ sm_md: 'start' }} as='aside'>
         <h4 className='text-center fw-medium py-2'>Sort By</h4>
         <Dropdown.Divider />
         <Dropdown.Item eventKey="1" onClick={filterRecent}>Recent</Dropdown.Item>

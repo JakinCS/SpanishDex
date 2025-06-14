@@ -204,6 +204,7 @@ Project Link: [github.com/JakinCS/SpanishDex](https://github.com/JakinCS/Spanish
 * [Article - Learning about writing spaced repetition algorithms](https://freshcardsapp.com/srs/write-your-own-algorithm.html)
 * [Spaced Repetition Algorithm - Based on FC-3](https://freshcardsapp.com/srs/simulator/#result-2)
 * [Next.js Tutorial](https://www.youtube.com/watch?v=Zq5fmkH0T78)
+* [MongoDB Indexing Best Practices](https://www.mongodb.com/blog/post/performance-best-practices-indexing)
 * [README Template by Othneil Drew](https://github.com/othneildrew/Best-README-Template)
 
 

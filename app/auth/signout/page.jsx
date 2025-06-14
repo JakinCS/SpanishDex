@@ -38,11 +38,18 @@ const SignOut = () => {
 
   return (
     <>
-      <Alert className="mb-4" variant="danger" show={(formState.status === "ERROR" && showError)} onClose={() => setShowError(false)} dismissible>
+      <Alert 
+        className="mb-4" 
+        variant="danger" 
+        aria-live="polite"
+        show={(formState.status === "ERROR" && showError)} 
+        onClose={() => setShowError(false)} 
+        dismissible
+      >
         <Alert.Heading>Error</Alert.Heading>
         {formState.error}
       </Alert>
-      <div className='bg-white p-50 rounded'>
+      <section className='bg-white p-50 rounded'>
         <Stack gap={5} className="text-center">
           <h1 className='fs-2'>Log Out</h1>
           <p className="d-none text-break hiddenError">{serverError}</p>
@@ -62,7 +69,7 @@ const SignOut = () => {
             </Container>
           </Form>
         </Stack>
-      </div>
+      </section>
     </>
   )
 }
