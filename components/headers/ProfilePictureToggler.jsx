@@ -1,4 +1,4 @@
-import ProfileCircle from "../ProfileCircle";
+import ProfileCircle from "../miscellaneous/ProfileCircle";
 
 
 const ProfilePictureToggler = ({ onClick, user }, ref) => {

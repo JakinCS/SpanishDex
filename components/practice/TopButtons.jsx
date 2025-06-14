@@ -1,6 +1,6 @@
 import React from 'react'
-import BackButton from '@/components/BackButton';
-import CloseButton from '../CloseButton';
+import BackButton from '@/components/miscellaneous/BackButton';
+import CloseButton from '../miscellaneous/CloseButton';
 
 const TopButtons = ({ exit = false, onClick }) => {
   return (

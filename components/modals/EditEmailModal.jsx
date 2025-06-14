@@ -88,7 +88,13 @@ const EditEmailModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <Alert variant="danger" show={formState.status === "ERROR" && !isPending && showError} onClose={() => setShowError(false)} dismissible>
+          <Alert 
+            variant="danger" 
+            aria-live="polite"
+            show={formState.status === "ERROR" && !isPending && showError} 
+            onClose={() => setShowError(false)} 
+            dismissible
+          >
             <Alert.Heading>Error</Alert.Heading>
             {formState.error}
           </Alert>
@@ -97,7 +103,7 @@ const EditEmailModal = (props) => {
             <Form.Group className="mb-30" controlId="email">
               <Form.Label className="fw-medium">Email</Form.Label>
               <Form.Control name="email" type="text" placeholder="Enter email" value={email.value} onBlur={validateEmail} onChange={updateEmailValue} className={email.valid === false && 'is-invalid'}/>
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid" aria-live="polite">
                 {email.message}
               </Form.Control.Feedback>
             </Form.Group>

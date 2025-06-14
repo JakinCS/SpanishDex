@@ -1,5 +1,5 @@
-import ButtonWithIcon from "../ButtonWithIcon";
-import IconButton from "../IconButton";
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import IconButton from '@/components/utils/IconButton';
 
 const FilterMenuToggler = ({ onClick, children }, ref) => {
   return (
@@ -11,7 +11,7 @@ const FilterMenuToggler = ({ onClick, children }, ref) => {
         className={`d-none d-md-block sort-search-button`} 
         iconSrc='icons/filter.svg' 
         iconHeight={24} 
-        altTag={'Filter icon'}
+        altTag={'Filter decks'}
       >
         {children}
       </ButtonWithIcon>
@@ -20,7 +20,7 @@ const FilterMenuToggler = ({ onClick, children }, ref) => {
         onClick={ (e) => {e.preventDefault(); onClick(e)} } 
         variant='light' 
         iconSrc={'/icons/filter.svg'} 
-        altTag={'Filter icon'} 
+        altTag={'Filter decks'} 
         size='sm' 
         className='d-block d-md-none sort-search-button'
       />

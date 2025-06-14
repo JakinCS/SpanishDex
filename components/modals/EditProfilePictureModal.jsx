@@ -7,9 +7,9 @@ import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useRef, useState } from 'react';
-import ProfileCircle from '../ProfileCircle';
-import ButtonWithIcon from '../ButtonWithIcon';
-import ProfilePictureInput from '../ProfilePictureInput';
+import ProfileCircle from '../miscellaneous/ProfileCircle';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
+import ProfilePictureInput from '../account/ProfilePictureInput';
 import { uploadImage } from '@/lib/actions';
 import { useSession } from 'next-auth/react';
 
@@ -84,20 +84,25 @@ const EditProfilePictureModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Stack gap={5}>
-          <Alert variant="danger" show={formState.status === "ERROR" && !isPending && showError} onClose={() => setShowError(false)} dismissible>
+          <Alert 
+            variant="danger" 
+            aria-live="polite"
+            show={formState.status === "ERROR" && !isPending && showError} 
+            onClose={() => setShowError(false)} 
+            dismissible
+          >
             <Alert.Heading>Error</Alert.Heading>
             {formState.error}
           </Alert>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
-
             <Container className='pt-10 pb-20 px-0 mb-30' fluid>
               <Row className='d-flex align-items-center justify-content-between'>
                 <Col xs={{ order: 1 }} sm={{ order: 0 }}>
                   <p className='mb-20 text-center text-sm-start'>Upload or delete your profile picture. <br /> The image size cannot be larger than 4.5MB.</p>
                   <div className='d-flex justify-content-center justify-content-sm-start'>
-                    <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='Upload icon' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
-                    <ButtonWithIcon size='sm' variant='danger' iconSrc='/icons/close.svg' iconHeight={16} iconFillColor={'white'} altTag='Close icon' onClick={() => {setProfilePicture({valid: null, name: '', value: null, message: ''})}}>Delete</ButtonWithIcon>
+                    <ButtonWithIcon size='sm' variant='secondary' iconSrc='/icons/upload.svg' iconHeight={16} altTag='' className='me-20' onClick={() => {fileInput.current.click()}}>Upload</ButtonWithIcon>
+                    <ButtonWithIcon size='sm' variant='danger' iconSrc='/icons/close.svg' iconHeight={16} iconFillColor={'white'} altTag='' onClick={() => {setProfilePicture({valid: null, name: '', value: null, message: ''})}}>Delete</ButtonWithIcon>
                   </div>
                   <p className={(profilePicture.valid === false ? 'd-block' : 'd-none') + ' mt-15 fw-medium text-danger text-center text-sm-start'}>{profilePicture.message}</p>
                 </Col>

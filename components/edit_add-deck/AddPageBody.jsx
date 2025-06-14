@@ -1,9 +1,9 @@
 'use client'
 
-import BackButton from '@/components/BackButton'
+import BackButton from '@/components/miscellaneous/BackButton'
 import Button from "react-bootstrap/Button";
 import Alert from 'react-bootstrap/Alert';
-import UnderlineContainer from '@/components/UnderlineContainer';
+import UnderlineContainer from '@/components/utils/UnderlineContainer';
 import Form from 'react-bootstrap/Form'
 import EditCardListItem from '@/components/edit_add-deck/EditCardListItem';
 import AddCardArea from '@/components/edit_add-deck/AddCardArea';
@@ -98,7 +98,14 @@ const AddPageBody = ({ initialData }) => {
 
   return (
     <>
-      <Alert variant="danger" className='mb-30 modified-margin' show={error.show} onClose={() => setError((prev) => ({...prev, show: false}))} dismissible>
+      <Alert 
+        variant="danger" 
+        className='mb-30 modified-margin' 
+        aria-live="polite"
+        show={error.show} 
+        onClose={() => setError((prev) => ({...prev, show: false}))} 
+        dismissible
+      >
         <Alert.Heading>Error</Alert.Heading>
         {error.message}
       </Alert>
@@ -118,44 +125,51 @@ const AddPageBody = ({ initialData }) => {
         </div>
       </div>
 
-      <p>Title</p>
-      <TitleEdit setState={setData} titleValue={data.title} />
+      <section>
+        <p>Title</p>
+        <TitleEdit setState={setData} titleValue={data.title} />
 
-      <p className='mt-30 mb-10'>Description</p>
-      <Form.Control 
-        className={data.description.length != 0 ? 'fw-normal' : ''}
-        name='description' 
-        as='textarea' 
-        rows='5' 
-        placeholder="Enter a description of your deck." 
-        style={{maxWidth: '31.25rem'}}
-        value={data.description}
-        onChange={(e) => { setData(prev => ({...prev, description: e.target.value})) }}
-      />
+        <p className='mt-30 mb-10' id="deck-description-label">Description</p>
+        <Form.Control 
+          className={data.description.length != 0 ? 'fw-normal' : ''}
+          name='description' 
+          as='textarea' 
+          aria-labelledby='deck-description-label'
+          rows='5' 
+          placeholder="Enter a description of your deck." 
+          style={{maxWidth: '31.25rem'}}
+          value={data.description}
+          onChange={(e) => { setData(prev => ({...prev, description: e.target.value})) }}
+        />
+      </section>
 
-      <UnderlineContainer className='mt-40 mb-30'>
-        <div className='d-flex align-items-center' style={{minHeight: '2.5rem'}}>
-          <h3 className='fw-medium'>Add a Card</h3>
-        </div>
-      </UnderlineContainer>
+      <section>
+        <UnderlineContainer className='mt-40 mb-30'>
+          <div className='d-flex align-items-center' style={{minHeight: '2.5rem'}}>
+            <h2 className='fw-medium fs-3'>Add a Card</h2>
+          </div>
+        </UnderlineContainer>
 
-      <AddCardArea setState={setData}/>
+        <AddCardArea setState={setData}/>
+      </section>
 
-      <UnderlineContainer className='mt-50 mb-30'>
-        <div className='d-flex align-items-center' style={{minHeight: '2.5rem'}}>
-          <h3 className='fw-medium'>All Cards ({data.cards.length})</h3>
-        </div>
-      </UnderlineContainer>
+      <section>
+        <UnderlineContainer className='mt-50 mb-30'>
+          <div className='d-flex align-items-center' style={{minHeight: '2.5rem'}}>
+            <h2 className='fw-medium fs-3'>All Cards ({data.cards.length})</h2>
+          </div>
+        </UnderlineContainer>
 
-      <div>
-        { data.cards.map((card, index) => {
-          return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
-        })}
-      </div>
+        <ul style={{marginBottom: 0, paddingLeft: 0}}>
+          { data.cards.map((card, index) => {
+            return <EditCardListItem key={card._id} number={index + 1} cardId={card._id} spanish={card.spanish} english={card.english} className='mb-15' setState={setData}/>
+          })}
+        </ul>
 
-      { data.cards.length === 0 && (
-        <p className='text-center'>There are no cards in this deck yet. Start by adding a card above.</p>
-      )}
+        { data.cards.length === 0 && (
+          <p className='text-center'>There are no cards in this deck yet. Start by adding a card above.</p>
+        )}
+      </section>
 
       <DiscardChangesModal show={showDiscardModal} closeModal={closeDiscardModal} deckTitle={data.title} />
       <UnsavedChangesModal show={showUnsavedChangesModal} closeModal={closeUnsavedChangesCard} />

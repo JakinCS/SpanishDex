@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import Icon from "./Icon"
+import Icon from "../utils/Icon"
 
 const BackToTopButton = () => {
   const [showButton, setShowButton] = useState(false)
@@ -25,7 +25,7 @@ const BackToTopButton = () => {
 
   return (
     <button onClick={() => window.scrollTo(0, 0)} className={'backToTopButton bg-white flex-column align-items-center ' + (showButton ? 'd-flex' : 'd-none')}>
-      <Icon height={24} src='/icons/arrow_upward.svg' alt="up arrow"/>
+      <Icon height={24} src='/icons/arrow_upward.svg' alt=""/>
       <span className="fs-5 lh-sm"><span id="spanFSReference">Back</span><br />to Top</span>
     </button>
   )

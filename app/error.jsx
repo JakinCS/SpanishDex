@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import rightChevron from "@/public/icons/chevron_right.svg";
 import downChevron from "@/public/icons/chevron_down.svg";
 import { useState, useEffect } from "react";
-import Icon from "@/components/Icon";
+import Icon from "@/components/utils/Icon";
 import * as Sentry from "@sentry/nextjs";
 
 const Error = ({ error, reset }) => {
@@ -50,12 +50,12 @@ const Error = ({ error, reset }) => {
         <div>
           <div className="d-flex align-items-center justify-content-center">
             <a href="#" className="d-flex align-items-center justify-content-center mb-3 blue-link" onClick={ (e) => {e.preventDefault(); setShowError( (prev) => !prev )} }>
-              <Icon height={30} alt={showError ? 'Down arrow' : 'Right arrow'} src={showError ? downChevron : rightChevron} />
-              <p className="pe-2">Error Message</p>
+              <Icon height={30} alt="" src={showError ? downChevron : rightChevron} />
+              <p className="pe-2">Show error message</p>
             </a>            
           </div>          
           <p className={"text-center " + (showError ? 'd-block' : 'd-none')}>{error.message || "An error occurred"}</p>
-        </div>        
+        </div>          
       </HomepageSection>
     </div>
   )

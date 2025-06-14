@@ -1,7 +1,7 @@
 'use client'
 
 import Form from 'react-bootstrap/Form'
-import ButtonWithIcon from '@/components/ButtonWithIcon';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
 import ExtraLetters from './ExtraLetters';
 import { useEffect, useRef, useState } from 'react';
 
@@ -103,6 +103,7 @@ const AddCardArea = ({ setState }) => {
               ref={spanishInputRef} 
               className={'add-word-input'} 
               name='spanish' 
+              aria-label='Spanish word'
               type="text" 
               placeholder="Type Spanish word"
               onKeyDown={(e) => {
@@ -110,7 +111,7 @@ const AddCardArea = ({ setState }) => {
               }}
               onBlur={formatSpanishWord}
             />
-            <div className="d-none d-sm_md-flex">
+            <div className="d-none d-lg-flex">
               <ExtraLetters updateInputValue={setSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
             </div>
             <div className='d-flex d-lg-none'>
@@ -126,6 +127,7 @@ const AddCardArea = ({ setState }) => {
                 onChange={updateEnglishWord} 
                 className={'add-word-input'}
                 name='english' 
+                aria-label='English word'
                 type="text" 
                 placeholder="Type English word" 
                 onFocus={() => {setShowSpanishFocus(false)}}
@@ -137,7 +139,7 @@ const AddCardArea = ({ setState }) => {
         <ButtonWithIcon 
           variant='primary' 
           iconSrc='/icons/add_3.svg' 
-          altTag='add icon' 
+          altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-block d-sm_md-none mt-40 w-100' 
@@ -149,7 +151,7 @@ const AddCardArea = ({ setState }) => {
         <ButtonWithIcon 
           variant='primary' 
           iconSrc='/icons/add_3.svg' 
-          altTag='add icon' 
+          altTag='' 
           iconHeight={16} 
           iconFillColor={'white'} 
           className='flex-shrink-0 d-none d-sm_md-block ms-0 ms-md-60 ms-md_lg-120 ms-lg-0' 

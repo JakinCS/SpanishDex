@@ -44,17 +44,25 @@ const ResetPasswordModal = ({forAccountPage, size, ...props}) => {
       <Modal.Body>
         <Stack gap={5}>
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
-          <p>Please enter your email address below, and we&apos;ll send you a link to reset your password.</p>
+          <p>Please enter your email address below, and we’ll send you a link to reset your password.</p>
           <Form action={formAction}>
             <Form.Group className='mb-5' controlId="resetPasswordEmail">
               <Form.Label className="fw-medium">Email Address</Form.Label>
               <Form.Control name="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email address" />
             </Form.Group>     
 
-            {(formState.status === "SUCCESS" && !defaultView && !isPending) && <p className="mb-5"><span className="fw-semibold text-success">Email Sent</span><br /> Didn&apos;t receive the email? {!email || isPending ? <span className="fw-medium">Resend Email</span> : <a href="" onClick={(e) => {e.preventDefault(); document.getElementById("invisibleSubmit").click()}}>Resend Email</a>}</p>} 
+            <p className="mb-5" aria-live="polite">
+              {(formState.status === "SUCCESS" && !defaultView && !isPending) && 
+                <><span className="fw-semibold text-success">Email Sent</span><br /> Didn’t receive the email? {!email || isPending ? <span className="fw-medium">Resend Email</span> : <a href="" onClick={(e) => {e.preventDefault(); document.getElementById("invisibleSubmit").click()}}>Resend Email</a>}</>
+              }              
+            </p>
             <Button id="invisibleSubmit" type="submit" className="d-none visually-hidden"></Button>
 
-            {(formState.status === "ERROR" && !defaultView && !isPending) && <p className="mb-5"><span className="fw-semibold text-danger">Error</span><br /> {formState.error} </p>} 
+            <p className="mb-5" aria-live="polite">
+              {(formState.status === "ERROR" && !defaultView && !isPending) &&
+                <><span className="fw-semibold text-danger">Error</span><br /> {formState.error}</>              
+              }
+            </p>
 
             <Container fluid className="d-flex gap-4 justify-content-end p-0">
               {formState.status === "SUCCESS" && !defaultView ?

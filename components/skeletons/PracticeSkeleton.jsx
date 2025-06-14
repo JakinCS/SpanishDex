@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
-import IconButton from '../IconButton';
-import BackButton from '../BackButton';
+import IconButton from '@/components/utils/IconButton';
+import BackButton from '../miscellaneous/BackButton';
 
 const PracticeSkeleton = () => {
   return (
@@ -26,7 +26,7 @@ const PracticeSkeleton = () => {
             disabled={true} 
             variant='gray' 
             iconSrc='/icons/arrow_back.svg' 
-            altTag='Back icon' 
+            altTag='Previous card icon' 
             size='sm'
           />
           <Button variant='secondary' disabled={true}>
@@ -37,7 +37,7 @@ const PracticeSkeleton = () => {
             disabled={true} 
             variant='gray' 
             iconSrc='/icons/arrow_forward.svg' 
-            altTag='Next icon' 
+            altTag='Next card icon' 
             size='sm'
           />
         </div> 

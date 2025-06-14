@@ -1,10 +1,14 @@
 
 import HomepageSection from "@/components/homepage/HomepageSection";
-import ResetPasswordForm from "@/components/ResetPasswordForm";
+import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
 import crypto from "crypto";
 import { MongoClient } from "mongodb";
 import { auth } from "@/auth"
 import { redirect } from 'next/navigation'
+
+export const metadata = {
+  title: "Reset Password - SpanishDex",
+};
 
 const ResetPassword = async ({ params }) => {
 

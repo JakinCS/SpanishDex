@@ -1,10 +1,10 @@
 import React from 'react'
-import BackButton from '../BackButton'
+import BackButton from '../miscellaneous/BackButton'
 import AccountPageCard from "@/components/account/AccountPageCard"
 import Container from "react-bootstrap/Container"
 import Stack from "react-bootstrap/Stack";
 import { EmailEditSection, ProfilePictureEditSection, UsernameEditSection } from "@/components/account/AccountPageEditSections";
-import IconButton from '../IconButton';
+import IconButton from '@/components/utils/IconButton';
 import Button from 'react-bootstrap/Button'
 
 const AccountPageSkeleton = () => {
@@ -41,7 +41,7 @@ const AccountPageSkeleton = () => {
                 </p>
               </div>
               <div>
-                <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'edit icon'} disabled={true}/>
+                <IconButton variant='light' size='sm' iconSrc={'/icons/edit.svg'} altTag={'Edit password icon'} disabled={true}/>
               </div>
             </div>
           </Stack>

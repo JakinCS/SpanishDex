@@ -59,7 +59,14 @@ const DeleteDeckModal = (props) => {
         <Modal.Title as='h2'>Delete Deck?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Alert variant="danger" className='mb-30' show={formState.status === "ERROR" && !isPending && showError} onClose={() => setShowError(false)} dismissible>
+        <Alert 
+          variant="danger" 
+          className='mb-30' 
+          aria-live="polite"
+          show={formState.status === "ERROR" && !isPending && showError} 
+          onClose={() => setShowError(false)} 
+          dismissible
+        >
           <Alert.Heading>Error</Alert.Heading>
           {formState.error}
         </Alert>

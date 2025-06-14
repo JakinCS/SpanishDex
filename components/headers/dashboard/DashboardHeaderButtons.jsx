@@ -1,7 +1,7 @@
 'use client'
 
 import Button from 'react-bootstrap/Button'
-import IconButton from '@/components/IconButton'
+import IconButton from '@/components/utils/IconButton';
 import { useSession } from "next-auth/react";
 import ProfileDropdown from '../ProfileDropdown';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import CreateAccountModal from "@/components/modals/CreateAccountModal"
 import LogInModal from "@/components/modals/LogInModal"
 import ResetPasswordModal from "@/components/modals/ResetPasswordModal";
 import LogOutModal from '@/components/modals/LogOutModal';
-import ButtonWithIcon from '@/components/ButtonWithIcon';
+import ButtonWithIcon from "@/components/utils/ButtonWithIcon";
 
 const DashboardHeaderButtons = () => {
   const { data: session } =  useSession();
@@ -58,8 +58,8 @@ const DashboardHeaderButtons = () => {
         <>
           <IconButton isLinkButton={true} href='/dashboard/deck/new' className={'btn btn-primary'} iconFillColor={'white'} iconSrc={'/icons/add.svg'} altTag={'New deck icon'} size={'md'}/>
 
-          <ButtonWithIcon isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-none d-sm_md-block' iconSrc='/icons/home-300-edited-blue.svg' iconHeight={20} altTag='Home icon'>Home</ButtonWithIcon>
-          <IconButton isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-block d-sm_md-none' iconSrc={'/icons/home-300-edited-blue.svg'} altTag={'Home icon'} size={'sm'}/>  
+          <ButtonWithIcon isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-none d-sm_md-block' iconSrc='/icons/home-300-edited-blue.svg' iconHeight={20} altTag=''>Home</ButtonWithIcon>
+          <IconButton isLinkButton={true} href='/dashboard' iconFillColor={'primary'} className='btn btn-outline-primary d-block d-sm_md-none' iconSrc={'/icons/home-300-edited-blue.svg'} altTag={'Go home icon'} size={'sm'}/>  
         </>
       }
 
