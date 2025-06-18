@@ -8,7 +8,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  title: "Spanish Vocabulary App | Efficient Spaced Repetition",
+  title: "SpanishDex | Free Flashcards App for Efficient Spaced Repetition",
   description: "Don't want to forget the Spanish words you've worked hard to learn? SpanishDex simplifies spaced repetition to help you retain vocabulary easily and efficiently.",
   openGraph: {
     title: 'SpanishDex: Simple & Easy Spanish Vocabulary Learning',
