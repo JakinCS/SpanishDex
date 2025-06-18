@@ -9,7 +9,7 @@ const GetStartedButton = () => {
   }
 
   return (
-    <Button variant='secondary' onClick={activateOtherButton}>Get Started</Button>
+    <Button variant='secondary' onClick={activateOtherButton}>Start Now For Free</Button>
   )
 }
 

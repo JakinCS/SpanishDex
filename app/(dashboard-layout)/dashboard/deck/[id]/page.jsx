@@ -9,7 +9,6 @@ import Link from 'next/link'
 import PageErrorMessage from '@/components/miscellaneous/PageErrorMessage'
 import { notFound } from 'next/navigation'
 import { getDeckInfo } from '@/lib/actions'
-import { auth } from '@/auth'
 import React from 'react'
 import Card from '@/components/utils/Card';
 
