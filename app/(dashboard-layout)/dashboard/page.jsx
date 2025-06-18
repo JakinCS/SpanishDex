@@ -8,7 +8,6 @@ import DecksArea from "@/components/dashboard/DecksArea";
 import Icon from "@/components/utils/Icon";
 import { getDashboardDeckInfo } from "@/lib/actions";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 
 export const metadata = {
   title: "Dashboard - SpanishDex",

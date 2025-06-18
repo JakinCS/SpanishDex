@@ -3,7 +3,6 @@ import EditPageBody from '@/components/edit_add-deck/EditPageBody';
 import PageErrorMessage from '@/components/miscellaneous/PageErrorMessage';
 import { notFound } from 'next/navigation'
 import { getEditDeckInfo } from '@/lib/actions'
-import { auth } from '@/auth';
 
 export const metadata = {
   title: "Edit Deck - SpanishDex",

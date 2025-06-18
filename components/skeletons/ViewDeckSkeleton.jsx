@@ -25,14 +25,14 @@ const ViewDeckSkeleton = () => {
       </div>
       <DashboardCard xPadding={30} yPadding={35} className="my-50" style={{maxWidth: '31.25rem'}}>
         <h3 className="fw-medium text-center text-xs_sm-start heading-underline-blue-100 lh-1 mb-40">Deck Information</h3>
-        <div className='d-flex flex-column flex-xs_sm-row gap-15 gap-xs_sm-30' style={{maxHeight: '1.75rem'}}>
+        <div className='d-flex flex-column flex-xs_sm-row gap-15 gap-xs_sm-30'>
 
-          <span className="d-flex align-items-center justify-content-center gap-3 fw-medium">
+          <span className="d-flex align-items-center justify-content-center gap-3 fw-medium" style={{maxHeight: '1.75rem'}}>
             <div className='placeholder-glow'>
               <span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '9rem' }}></span>
             </div>
           </span>
-          <span className="d-flex align-items-center justify-content-center gap-3 fw-medium">
+          <span className="d-flex align-items-center justify-content-center gap-3 fw-medium" style={{maxHeight: '1.75rem'}}>
             <div className='placeholder-glow'>
               <span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '9rem' }}></span>
             </div>
@@ -40,23 +40,23 @@ const ViewDeckSkeleton = () => {
 
         </div>
         <hr className='my-20'/>
-        <span className="d-flex flex-wrap justify-content-center justify-content-xs_sm-start gap-2" style={{maxHeight: '1.75rem'}}>
-          <div className='placeholder-glow'>
+        <span className="d-flex flex-wrap justify-content-center justify-content-xs_sm-start gap-2">
+          <div className='placeholder-glow' style={{maxHeight: '1.75rem'}}>
             <span className='placeholder bg-gray-150 rounded pe-3' style={{height: '1.75rem', width: '6rem' }}></span>
           </div>
-          <div className='placeholder-glow'>
+          <div className='placeholder-glow' style={{maxHeight: '1.75rem'}}>
             <span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '8.75rem' }}></span>
           </div>
         </span>
         <hr className='my-20'/>
-        <span className="d-flex flex-wrap justify-content-center justify-content-xs_sm-start gap-2" style={{maxHeight: '1.75rem'}}>
-          <div className='placeholder-glow'>
+        <div className="d-flex flex-wrap justify-content-center justify-content-xs_sm-start gap-2">
+          <div className='placeholder-glow' style={{maxHeight: '1.75rem'}}>
             <span className='placeholder bg-gray-150 rounded pe-3' style={{height: '1.75rem', width: '9.25rem' }}></span>
           </div>
-          <div className='placeholder-glow'>
+          <div className='placeholder-glow' style={{maxHeight: '1.75rem'}}>
             <span className='placeholder bg-gray-150 rounded' style={{height: '1.75rem', width: '5.75rem' }}></span>
           </div>
-        </span>
+        </div>
         <hr className='my-20'/>
         <Link href="#" role="button" className='btn btn-primary disabled d-block d-sm-inline-block mt-30 mt-sm-10'>Review All Cards</Link>
 
