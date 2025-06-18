@@ -34,7 +34,6 @@ export default function Homepage() {
         <p className="text-center" style={{maxWidth: '43.75rem'}}>
           SpanishDex is a flashcards application built to aid Spanish learners of all levels. 
           SpanishDex makes memorizing and retaining vocabulary easy and time efficient. <br />
-          Start now for free!
         </p> 
         <GetStartedButton />
         
@@ -81,11 +80,11 @@ export default function Homepage() {
       <HomepageSection py='60' py_sm={'80'} backgroundColor='white'>
         <h2 className="text-center" style={{maxWidth: '43.75rem'}}>History of SpanishDex</h2>
         <div style={{maxWidth: '43.75rem'}}>
-          <p className="text-center" style={{marginBottom: '1.125rem'}}>
+          <p className="text-start" style={{marginBottom: '1.125rem'}}>
             SpanishDex was created by Jakin Stahl, a Spanish learner desiring to use his time efficiently and practice words only when he needed to. 
             He built SpanishDex for Spanish learners like him who are looking for a simple tool for retaining vocabulary words.
           </p> 
-          <p className='text-center'>
+          <p className='text-start'>
             This application also demonstrates his skills in web development and web design. 
             It was designed in Figma and build with Next.js and Bootstrap.
           </p>
@@ -93,9 +92,9 @@ export default function Homepage() {
       </HomepageSection>
       <HomepageSection py='60' py_sm={'80'} backgroundColor='almost-white'>
         <h2 className='text-center'>Contact</h2>
-        <p className='text-center'>
-          Got questions? Suggestions? <br />
-          If you want to get in contact with Jakin in any way, use the form below.
+        <p className='text-center' style={{maxWidth: '34.375rem'}}>
+          Got questions? Have any suggestions?
+          Use the form below to get in contact with Jakin.
         </p>
         <ContactForm className='w-100' style={{maxWidth: '34.375rem'}}></ContactForm>
       </HomepageSection>
