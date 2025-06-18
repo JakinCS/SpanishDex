@@ -20,7 +20,7 @@ const ContactModal = ({ show, handleClose }) => {
           </p>
           <ContactForm submitButtonWide={true} />
           <div>
-            <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link'>
+            <a href="mailto:jakinstahl@gmail.com" className='me-3 px-2 py-3 blue-link' style={{marginLeft: '-5px'}}>
               <Icon height={30} src={mail} alt='E-mail icon'/>
             </a>
             <a href="https://www.linkedin.com/in/jakinstahl" className='px-2 py-3 blue-link' style={{marginRight: '-5px'}} target='_blank'>
