@@ -53,23 +53,23 @@ export default function Homepage() {
             It’s for learners who don’t want to forget words they’ve worked hard to learn.
           </p>
           <p>
-            SpanishDex accomplishes this with its simple interface and its use of spaced learning.
+            SpanishDex accomplishes this with its simple interface and its use of spaced repetition.
           </p>
         </div>       
       </HomepageSectionColumns>
       <HomepageSectionColumns 
         py='60' py_sm={'80'} backgroundColor='almost-white'
-        image={image2} imagePosition='right' headingText='Simplified Spaced Learning'
+        image={image2} imagePosition='right' headingText='Simplified Spaced Repetition'
       >
         <div>
           <p style={{marginBottom: '1.125rem'}}>
-            With spaced learning, words are only practiced when it’s necessary, right before they fade from your memory.
+            With spaced repetition, words are only practiced when it’s necessary, right before they fade from your memory.
             New words require more frequent practice. 
             But as words become solid in your memory, they will need less and less practice.
           </p>
           <p style={{marginBottom: '1.125rem'}}>
             Determining the best next practice time can get complicated. 
-            But SpanishDex simplifies spaced learning and does the work for you. 
+            But SpanishDex simplifies spaced repetition and does the work for you. 
             When words are ready for practice, they are labeled as “weak”.
           </p>
           <p>

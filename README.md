@@ -18,7 +18,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a spaced learning algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
+SpanishDex is a flashcards web application. This application is built specifically for Spanish learners as a place to store and practice new vocabulary words. It uses a spaced repetition algorithm to remind users to practice their vocabulary, allowing learners to retain Spanish words longer.
 
 ### Technologies
 
@@ -58,8 +58,8 @@ I created a Figma prototype for SpanishDex. It is high-quality, and I put a lot 
    - (**See More Details in Section Below**)
 
 
-### Spaced Learning Algorithm
-This application uses a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
+### Spaced Repetition Algorithm
+This application uses a spaced repetition algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
 When a user is practicing flashcards, SpanishDex asks the user, on a scale from 1 to 5, how well they did in guessing the definition of the word. SpanishDex uses this information to determine when the word should be practiced again.
 </br></br>
 Other factors used to determine this include:
