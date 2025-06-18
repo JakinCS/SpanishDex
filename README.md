@@ -11,12 +11,8 @@
 </figure>
 
 <br>
- 
-⚠️ **Notice**: This application is still currently in the development phase. See the [Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?node-id=526-6854&node-type=canvas&viewport=255%2C203%2C0.3&t=Zm7Bkl52VzJ6oVi6-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=526%3A6854) to get a glimpse at what's to come.
 
 <br>
-
-
 
 
 <!-- ABOUT THE PROJECT -->
@@ -35,10 +31,9 @@ SpanishDex is a flashcards web application. This application is built specifical
 
 ### Interactive Prototype!
 
-This application is still in the development phase. If you want to see what the application will look like, please take a look at the prototype.
-I created the prototype in Figma. It is high-quality, and I put a lot of effort into making it *interactive*. Check it out!
+I created a Figma prototype for SpanishDex. It is high-quality, and I put a lot of effort into making it interactive. Check it out!
 
-[Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?node-id=526-5542&node-type=canvas&viewport=255%2C203%2C0.3&t=Zm7Bkl52VzJ6oVi6-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=526%3A6854)
+[Figma Prototype](https://www.figma.com/proto/3fpV6gGIeCu5xWYL131f1m/SpanishDex?page-id=0%3A1&node-id=250-2232&viewport=-1967%2C-1489%2C0.67&t=bLKmcf5kulxvsmxj-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=250%3A2232&show-proto-sidebar=1&hide-ui=1)
 
 ### Project Features
  - Vocabulary Organization
@@ -62,9 +57,6 @@ I created the prototype in Figma. It is high-quality, and I put a lot of effort 
    - Users are given the option to practice just the "weak" words from their decks.
    - (**See More Details in Section Below**)
 
-### What's next?
- - Implement accessibility best practices
- - Add MongoDB indexes.
 
 ### Spaced Learning Algorithm
 This application uses a spaced learning algorithm to determine when a word is considered "weak" or, in other words, needs to be practiced.
