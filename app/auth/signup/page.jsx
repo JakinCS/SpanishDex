@@ -33,16 +33,18 @@ const SignUp = () => {
 
   // Function to check and update the validity of the username
   const validateUsername = () => {
-    const result = isUsernameValid(formValues.username.value);
+    // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their username.
+    const result = isUsernameValid(formValues.username.value.trim());
     
-    setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: result.valid, message: result.message}}));
+    setFormValues(prevState => ({...prevState, username: {...prevState.username, value: prevState.username.value.trim(), valid: result.valid, message: result.message}}));
   }
 
   // Function to ensure email field contains a valid email
   const validateEmail = () => {
-    const result = isEmailValid(formValues.email.value);
+    // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their email.
+    const result = isEmailValid(formValues.email.value.trim());
     
-    setFormValues(prevState => ({...prevState, email: {...prevState.email, valid: result.valid, message: result.message}}))
+    setFormValues(prevState => ({...prevState, email: {...prevState.email, value: prevState.email.value.trim(), valid: result.valid, message: result.message}}))
   }
 
   // function to clear the form
@@ -69,6 +71,8 @@ const SignUp = () => {
     const password1 = fieldValues.get("password1")
     const password2 = fieldValues.get("password2")
 
+    if (!formValues.username.valid || !formValues.email.valid || !formValues.password.valid || !formValues.password2.valid) return;
+    // return {status: 'SUCCESS'}
     try {
       const response = await createAccount(username, email, password1, password2);
 
@@ -133,6 +137,13 @@ const SignUp = () => {
 
   const [form2State, form2Action, form2Pending] = useActionState(handleSubmitForm2, {status: 'INITIAL'})
 
+  const isSubmitDisabled = (
+    (formValues.username.value.length <= 0 || formValues.password.value.length <= 0 || formValues.password2.value.length <= 0)
+    || (formValues.username.valid === false || formValues.email.valid === false || formValues.password.valid === false || formValues.password2.valid === false) 
+    || form1Pending 
+    || form2Pending
+  )
+
   return (
     <>
       <Alert 
@@ -154,7 +165,7 @@ const SignUp = () => {
         <Stack gap={5} style={showAccountCreated ? {opacity: '.15', pointerEvents: 'none', WebkitUserSelect: 'none', msUserSelect: 'none', userSelect: 'none'} : {}}>        
           <h1 className='fs-2'>Create Account</h1>
           <p className="d-none text-break hiddenError">{error.hiddenMsg}</p>
-          <Form action={form1Action}>
+          <Form action={form1Action} autoComplete="off">
             <Form.Group className="mb-20" controlId="createAccountUsername">
               <Form.Label className="fw-medium">Username</Form.Label>
               <Form.Control name='username' value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="Enter username" />
@@ -184,7 +195,11 @@ const SignUp = () => {
               </Form.Control.Feedback>
             </Form.Group>
             <div className='d-flex flex-column'>
-              <Button variant="primary" type='submit' disabled={!(formValues.username.valid && formValues.email.valid && formValues.password.valid && formValues.password2.valid) || form1Pending || form2Pending}>
+              <Button 
+                variant="primary" 
+                type='submit' 
+                disabled={isSubmitDisabled}
+              >
                 {form1Pending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Sign Up'}
               </Button>
             </div>

@@ -20,7 +20,7 @@ function LogInModal(props) {
     password: {value: '', valid: null}
   })
 
-  const updateUsernameValue = (e) => setFormValues(prevState => ({...prevState, username: {...prevState.username, value: e.target.value}}))
+  const updateUsernameValue = (e) => setFormValues(prevState => ({...prevState, username: {...prevState.username, value: e.target.value.trim()}}))
   const updatePasswordValue = (e) => setFormValues(prevState => ({...prevState, password: {...prevState.password, value: e.target.value}}))
   
 
@@ -34,7 +34,9 @@ function LogInModal(props) {
       isValid = false;
     }
 
-    setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: isValid}}))
+    // Include the trim() method to improve the UX. 
+    // A user may accidentally enter a space before or after their username. (And spaces aren't allowed in usernames anyway)
+    setFormValues(prevState => ({...prevState, username: {...prevState.username, value: prevState.username.value.trim(), valid: isValid}}))
   }
 
   // Function to check and update the validity of the password (can't be blank)
@@ -66,6 +68,8 @@ function LogInModal(props) {
   const handleSubmitForm1 = async (prevState, fieldValues) => {
     const username = fieldValues.get("username");
     const password = fieldValues.get("password");
+    
+    if (!formValues.username.valid || !formValues.password.valid) return;
     
     try {
       const response = await logInWithCredentials(username, password)
@@ -167,7 +171,7 @@ function LogInModal(props) {
                   </p>
                 </Form.Group>
               </div>        
-              <Button variant="primary" type="submit" disabled={!(formValues.username.valid && formValues.password.value.trim() !== '') || form1Pending || form2Pending}>
+              <Button variant="primary" type="submit" disabled={!(formValues.username.value.length > 0 && formValues.password.value.length > 0) || form1Pending || form2Pending}>
                 {form1Pending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
               </Button>  
             </Stack>              
