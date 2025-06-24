@@ -24,7 +24,7 @@ const ForgotPassword = () => {
           <p>Please enter your email address below, and we’ll send you a link to reset your password.</p>
           <Form action={formAction}>
             <Form.Group className='mb-5' controlId="resetPasswordEmail">
-              <Form.Label className="fw-medium">Email Address</Form.Label>
+              <Form.Label className="fw-medium">Email Address*</Form.Label>
               <Form.Control name="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email address" />
             </Form.Group>     
 

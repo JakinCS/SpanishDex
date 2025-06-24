@@ -18,8 +18,19 @@ const ResetPasswordForm = (props) => {
   })
 
   // These functions update the password state to contain updated values
-  const updatePasswordValue = (e) => setFormValues((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value}}))
-  const updatePassword2Value = (e) => setFormValues((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
+  const updatePassword1AndValidate = (e) => {
+    // Run a special utility funtion to check the validity of the password field
+    const newData = handlePasswordValidCheck({...formValues.password, value: e.target.value }, formValues.password2);
+
+    setFormValues((prevState) => ({ ...prevState, password: {...prevState.password, ...newData[0]}, password2: {...prevState.password2, ...newData[1]} }))
+  }
+
+  const updatePassword2AndValidate = (e) => {
+    // Run a special utility funtion to check the validity of the password field
+    const newData = handlePasswordValidCheck({...formValues.password2, value: e.target.value }, formValues.password);
+
+    setFormValues((prevState) => ({ ...prevState, password: {...prevState.password, ...newData[1]}, password2: {...prevState.password2, ...newData[0]} }))
+  }
 
   // State for the show/hide status of the error and success banners.
   const [showBanners, setShowBanners] = useState({error: false, success: false})
@@ -84,16 +95,28 @@ const ResetPasswordForm = (props) => {
         </Alert>
         <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
         <Form.Group className="mb-5" controlId="newPassword">
-          <Form.Label className="fw-medium">Password</Form.Label>
-          <PasswordInput name='password1' placeholder="Enter new password" value={formValues.password.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'}/>
+          <Form.Label className="fw-medium">Password*</Form.Label>
+          <PasswordInput 
+            name='password1' 
+            placeholder="Enter new password" 
+            value={formValues.password.value} 
+            onChange={updatePassword1AndValidate} 
+            className={formValues.password.valid === false && 'is-invalid'}
+          />
           <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid" aria-live="polite">
             {formValues.password.message}
           </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-40" controlId="newPassword2">
-          <Form.Label className="fw-medium">Confirm Password</Form.Label>
-          <PasswordInput name='password2' placeholder="Confirm password" value={formValues.password2.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} />
+          <Form.Label className="fw-medium">Confirm Password*</Form.Label>
+          <PasswordInput 
+            name='password2' 
+            placeholder="Confirm password" 
+            value={formValues.password2.value} 
+            onChange={updatePassword2AndValidate} 
+            className={formValues.password2.valid === false && 'is-invalid'} 
+          />
           <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid" aria-live="polite">
             {formValues.password2.message}
           </Form.Control.Feedback>

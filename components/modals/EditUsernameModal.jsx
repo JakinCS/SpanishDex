@@ -15,13 +15,14 @@ const EditUsernameModal = (props) => {
   // State for storing the values of the form
   const [username, setUsername] = useState({value: props.initialValue, valid: null, message: ''})
 
-  const updateUsernameValue = (e) => setUsername(prevState => ({...prevState, value: e.target.value}))
+  const updateUsernameAndValidate = (e) => {
+    const result = isUsernameValid(e.target.value.trim());
 
-  // Function to check and update the validity of the username
-  const validateUsername = () => {
-    const result = isUsernameValid(username.value);
-    
-    setUsername(prevState => ({...prevState, valid: result.valid, message: result.message}));
+    setUsername(prevState => ({...prevState, value: e.target.value, valid: result.valid, message: result.message}));
+  }
+
+  const handleUsernameBlur = () => {
+    setUsername(prevState => ({...prevState, value: prevState.value.trim()}))
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
@@ -98,8 +99,17 @@ const EditUsernameModal = (props) => {
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="username">
-              <Form.Label className="fw-medium">Username</Form.Label>
-              <Form.Control name="username" type="text" placeholder="Enter username" value={username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={username.valid === false && 'is-invalid'} required/>
+              <Form.Label className="fw-medium">Username*</Form.Label>
+              <Form.Control 
+                name="username" 
+                type="text" 
+                placeholder="Enter username" 
+                value={username.value} 
+                onBlur={handleUsernameBlur} 
+                onChange={updateUsernameAndValidate} 
+                className={username.valid === false && 'is-invalid'} 
+                required
+              />
               <Form.Control.Feedback type="invalid" aria-live="polite">
                 {username.message}
               </Form.Control.Feedback>

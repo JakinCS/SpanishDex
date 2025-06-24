@@ -16,13 +16,14 @@ const EditEmailModal = (props) => {
   // State for storing the values of the form
   const [email, setEmail] = useState({value: props.initialValue, valid: null, message: ''})
 
-  const updateEmailValue = (e) => setEmail(prevState => ({...prevState, value: e.target.value}))
-
-  // Function to check and update the validity of the email
-  const validateEmail = () => {
-    const result = isEmailValid(email.value);
+  const updateEmailAndValidate = (e) => {
+    const result = isEmailValid(e.target.value.trim());
     
-    setEmail(prevState => ({...prevState, valid: result.valid, message: result.message}));
+    setEmail(prevState => ({...prevState, value: e.target.value, valid: result.valid, message: result.message}));
+  }
+
+  const handleEmailBlur = () => {
+    setEmail(prevState => ({...prevState, value: prevState.value.trim()}))
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
@@ -102,7 +103,15 @@ const EditEmailModal = (props) => {
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="email">
               <Form.Label className="fw-medium">Email</Form.Label>
-              <Form.Control name="email" type="text" placeholder="Enter email" value={email.value} onBlur={validateEmail} onChange={updateEmailValue} className={email.valid === false && 'is-invalid'}/>
+              <Form.Control 
+                name="email" 
+                type="text" 
+                placeholder="Enter email" 
+                value={email.value} 
+                onBlur={handleEmailBlur} 
+                onChange={updateEmailAndValidate} 
+                className={email.valid === false && 'is-invalid'}
+              />
               <Form.Control.Feedback type="invalid" aria-live="polite">
                 {email.message}
               </Form.Control.Feedback>
