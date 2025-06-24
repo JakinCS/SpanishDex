@@ -125,21 +125,21 @@ function ContactForm({submitButtonWide, ...props}) {
       </Alert>
       <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
       <Form.Group className="mb-20" controlId="userName">
-        <Form.Label className="fw-medium">Name</Form.Label>
+        <Form.Label className="fw-medium">Name*</Form.Label>
         <Form.Control name='name' type="text" placeholder="Enter your name" value={formValues.name.value} className={formValues.name.valid === false && 'is-invalid'} onChange={ updateNameValue } onBlur={(e)=>validateName(e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           {formValues.name.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-20" controlId="userEmail">
-        <Form.Label className="fw-medium">Email address</Form.Label>
+        <Form.Label className="fw-medium">Email address*</Form.Label>
         <Form.Control name='email' type="email" placeholder="Enter your email" value={formValues.email.value} className={formValues.email.valid === false && 'is-invalid'} onChange={ updateEmailValue } onBlur={(e)=>validateEmail(e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           {formValues.email.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5" controlId="userMessage">
-        <Form.Label className="fw-medium">Comments or Questions</Form.Label>
+        <Form.Label className="fw-medium">Comments or Questions*</Form.Label>
         <Form.Control name='comment' as='textarea' rows='5' placeholder="Write your message" value={formValues.comments.value} className={formValues.comments.valid === false && 'is-invalid'} onChange={ updateCommentsValue } onBlur={(e)=>validateComments(e.target.value)}/>
         <Form.Control.Feedback type="invalid">
           {formValues.comments.message}

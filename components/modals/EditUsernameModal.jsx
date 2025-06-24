@@ -98,7 +98,7 @@ const EditUsernameModal = (props) => {
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="username">
-              <Form.Label className="fw-medium">Username</Form.Label>
+              <Form.Label className="fw-medium">Username*</Form.Label>
               <Form.Control name="username" type="text" placeholder="Enter username" value={username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={username.valid === false && 'is-invalid'} required/>
               <Form.Control.Feedback type="invalid" aria-live="polite">
                 {username.message}

@@ -95,7 +95,7 @@ const ResetPasswordForm = (props) => {
         </Alert>
         <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
         <Form.Group className="mb-5" controlId="newPassword">
-          <Form.Label className="fw-medium">Password</Form.Label>
+          <Form.Label className="fw-medium">Password*</Form.Label>
           <PasswordInput 
             name='password1' 
             placeholder="Enter new password" 
@@ -109,7 +109,7 @@ const ResetPasswordForm = (props) => {
         </Form.Group>
 
         <Form.Group className="mb-40" controlId="newPassword2">
-          <Form.Label className="fw-medium">Confirm Password</Form.Label>
+          <Form.Label className="fw-medium">Confirm Password*</Form.Label>
           <PasswordInput 
             name='password2' 
             placeholder="Confirm password" 
