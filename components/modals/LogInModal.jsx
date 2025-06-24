@@ -19,35 +19,31 @@ function LogInModal(props) {
     username: {value: '', valid: null},
     password: {value: '', valid: null}
   })
-
-  const updateUsernameValue = (e) => setFormValues(prevState => ({...prevState, username: {...prevState.username, value: e.target.value}}))
-  const updatePasswordValue = (e) => setFormValues(prevState => ({...prevState, password: {...prevState.password, value: e.target.value}}))
   
-
-  // Function to check and update the validity of the username/email (can't be blank)
-  const validateUsername = () => {
-    const currUsername = formValues.username.value;
-    
+  const updateUsernameAndValidate = (e) => {
     let isValid = true;
 
-    if (currUsername.trim().length === 0) {
+    if (e.target.value.trim().length === 0) {
       isValid = false;
     }
 
-    setFormValues(prevState => ({...prevState, username: {...prevState.username, valid: isValid}}))
+    setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: e.target.value, valid: isValid}}))
+  }
+  
+  const updatePasswordAndValidate = (e) => {
+    let isValid = true;
+
+    if (e.target.value.length === 0) {
+      isValid = false;
+    }
+
+    setFormValues((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value, valid: isValid}}))
   }
 
-  // Function to check and update the validity of the password (can't be blank)
-  const validatePassword = () => {
-    const currPassword = formValues.password.value;
-
-    let isValid = true;
-
-    if (currPassword.trim().length === 0) {
-      isValid = false;
-    }
-
-    setFormValues(prevState => ({...prevState, password: {...prevState.password, valid: isValid}}))
+  // These next two function are run when the username and password inputs are blurred
+  const handleUsernameBlur = () => {
+    // Remove extra space at the end.
+    setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: prevState.username.value.trim()}}))
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
@@ -66,6 +62,8 @@ function LogInModal(props) {
   const handleSubmitForm1 = async (prevState, fieldValues) => {
     const username = fieldValues.get("username");
     const password = fieldValues.get("password");
+    
+    if (!formValues.username.valid || !formValues.password.valid) return;
     
     try {
       const response = await logInWithCredentials(username, password)
@@ -147,15 +145,31 @@ function LogInModal(props) {
             <Stack gap={5}>
               <div>
                 <Form.Group className="mb-20" controlId="logInUsername">
-                  <Form.Label className="fw-medium">Username or Email</Form.Label>
-                  <Form.Control name="username" value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="Enter username or email" required/>
+                  <Form.Label className="fw-medium">Username or Email*</Form.Label>
+                  <Form.Control 
+                    name="username" 
+                    value={formValues.username.value} 
+                    onChange={updateUsernameAndValidate} 
+                    onBlur={handleUsernameBlur}
+                    className={formValues.username.valid === false && 'is-invalid'} 
+                    type="text" 
+                    placeholder="Enter username or email" 
+                    required
+                  />
                   <Form.Control.Feedback type="invalid" aria-live="polite">
                     Username is required
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="logInPassword">
-                  <Form.Label className="fw-medium">Password</Form.Label>
-                  <PasswordInput name="password" value={formValues.password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={formValues.password.valid === false && 'is-invalid'} placeholder="Enter password" required/>
+                  <Form.Label className="fw-medium">Password*</Form.Label>
+                  <PasswordInput 
+                    name="password" 
+                    value={formValues.password.value} 
+                    onChange={updatePasswordAndValidate} 
+                    className={formValues.password.valid === false && 'is-invalid'} 
+                    placeholder="Enter password" 
+                    required
+                  />
                   <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid" aria-live="polite">
                     Password is required
                   </Form.Control.Feedback>
@@ -167,7 +181,7 @@ function LogInModal(props) {
                   </p>
                 </Form.Group>
               </div>        
-              <Button variant="primary" type="submit" disabled={!(formValues.username.valid && formValues.password.value.trim() !== '') || form1Pending || form2Pending}>
+              <Button variant="primary" type="submit" disabled={!formValues.username.valid || !formValues.password.valid || form1Pending || form2Pending}>
                 {form1Pending ? <div style={{padding: '0rem 1rem'}}><div className="loader"></div><span className="visually-hidden">Loading...</span></div> : 'Log In'}
               </Button>  
             </Stack>              

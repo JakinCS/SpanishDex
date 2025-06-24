@@ -13,13 +13,10 @@ const DeleteAccountModal = (props) => {
   // State for storing the values of the form
   const [password, setPassword] = useState({value: '', valid: null, message: ''})
 
-  const updatePasswordValue = (e) => setPassword(prevState => ({...prevState, value: e.target.value}))
-
-  // Function to check and update the validity of the password
-  const validatePassword = () => {
-    const result = (password.value.length === 0) ? {valid: false, message: 'Password is required'} : {valid: true, message: ''};
+  const updatePasswordAndValidate = (e) => {
+    const result = (e.target.value.length === 0) ? {valid: false, message: 'Password is required'} : {valid: true, message: ''};
     
-    setPassword(prevState => ({...prevState, valid: result.valid, message: result.message}));
+    setPassword(prevState => ({...prevState, value: e.target.value, valid: result.valid, message: result.message}));
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
@@ -92,8 +89,14 @@ const DeleteAccountModal = (props) => {
           </p>
           <Form action={formAction}>
             <Form.Group className="mb-30" controlId="password">
-              <Form.Label className="fw-medium">Enter Password To Delete</Form.Label>
-              <PasswordInput name="password" placeholder="Enter password" value={password.value} onBlur={validatePassword} onChange={updatePasswordValue} className={password.valid === false && 'is-invalid'} required/>
+              <Form.Label className="fw-medium">Enter Password To Delete*</Form.Label>
+              <PasswordInput name="password" 
+                placeholder="Enter password" 
+                value={password.value}
+                onChange={updatePasswordAndValidate} 
+                className={password.valid === false && 'is-invalid'} 
+                required
+              />
               <Form.Control.Feedback className={password.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {password.message}
               </Form.Control.Feedback>
