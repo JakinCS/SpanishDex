@@ -18,31 +18,41 @@ function ContactForm({submitButtonWide, ...props}) {
   })
 
   // Functions to update the state of the form values on the change event
-  const updateNameValue = (e) => setFormValues((prev) => ({...prev, name: {...prev.name, value: e.target.value}}));
-  const updateEmailValue = (e) => setFormValues((prev) => ({...prev, email: {...prev.email, value: e.target.value}}));
-  const updateCommentsValue = (e) => setFormValues((prev) => ({...prev, comments: {...prev.comments, value: e.target.value}}));
+  const updateNameAndValidate = (e) => {
+    const validationResult = e.target.value.trim().length === 0 ? {valid: false, message: 'Name is required'} : {valid: true, message: ''}
 
-  // This function validates the input string to ensure it is a valid name
-  const validateName = (name) => {
-    const stateChange = name.trim().length === 0 ? {valid: false, message: 'Name is required'} : {valid: true, message: ''}
-
-    setFormValues((prev) => ({...prev, name: {...prev.name, ...stateChange}}));
+    setFormValues((prevState) => ({...prevState, name: {...prevState.name, value: e.target.value, valid: validationResult.valid, message: validationResult.message}}))
   }
 
-  // This function validates the input string to ensure it is a valid email
-  const validateEmail = (email) => {   
-    if (email.trim().length === 0) setFormValues((prev) => ({...prev, email: {...prev.email, valid: false, message: "Email address is required"}}));
-    else {
-      const validationResult = isEmailValid(email)
-      setFormValues((prev) => ({...prev, email: {...prev.email, valid: validationResult.valid, message: validationResult.message}}));
+  const updateEmailAndValidate = (e) => {
+    const validation = {valid: null, message: null}
+    if (e.target.value.trim().length === 0) {
+      validation.valid = false;
+      validation.message = "Email address is required";
     }
+    else {
+      const validationResult = isEmailValid(e.target.value.trim())
+      validation.valid = validationResult.valid;
+      validation.message = validationResult.message;
+    }
+
+    setFormValues((prevState) => ({...prevState, email: {...prevState.email, value: e.target.value, valid: validation.valid, message: validation.message}}))
   }
 
-  // This function validates the input string to ensure it is a valid comment
-  const validateComments = (comment) => {
-    const newStateValues = comment.trim().length === 0 ? {valid: false, message: 'Message field is required'} : {valid: true, message: ''}
+  const updateCommentsAndValidate = (e) => {
+    const validationResult = e.target.value.trim().length === 0 ? {valid: false, message: 'Message field is required'} : {valid: true, message: ''}
 
-    setFormValues((prev) => ({...prev, comments: {...prev.comments, ...newStateValues}}));
+    setFormValues((prevState) => ({...prevState, comments: {...prevState.comments, value: e.target.value, valid: validationResult.valid, message: validationResult.message}}))
+  }
+
+  // The following two functions are run when the name and email inputs are blurred.
+  // The functions remove unnecessary and problematic spaces.
+  const handleNameBlur = () => {
+    setFormValues((prevState) => ({...prevState, name: {...prevState.name, value: prevState.name.value.trim()}}))
+  }
+
+  const handleEmailBlur = (e) => {
+    setFormValues((prevState) => ({...prevState, email: {...prevState.email, value: e.target.value.trim()}}))
   }
 
   // State for the show/hide status of the error and success banners.
@@ -126,21 +136,46 @@ function ContactForm({submitButtonWide, ...props}) {
       <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
       <Form.Group className="mb-20" controlId="userName">
         <Form.Label className="fw-medium">Name*</Form.Label>
-        <Form.Control name='name' type="text" placeholder="Enter your name" value={formValues.name.value} className={formValues.name.valid === false && 'is-invalid'} onChange={ updateNameValue } onBlur={(e)=>validateName(e.target.value)}/>
+        <Form.Control 
+          name='name' 
+          type="text" 
+          placeholder="Enter your name" 
+          value={formValues.name.value} 
+          className={formValues.name.valid === false && 'is-invalid'} 
+          onChange={ updateNameAndValidate } 
+          onBlur={handleNameBlur}
+        />
         <Form.Control.Feedback type="invalid">
           {formValues.name.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-20" controlId="userEmail">
         <Form.Label className="fw-medium">Email address*</Form.Label>
-        <Form.Control name='email' type="email" placeholder="Enter your email" value={formValues.email.value} className={formValues.email.valid === false && 'is-invalid'} onChange={ updateEmailValue } onBlur={(e)=>validateEmail(e.target.value)}/>
+        <Form.Control 
+          name='email' 
+          type="text" 
+          placeholder="Enter your email" 
+          value={formValues.email.value} 
+          className={formValues.email.valid === false && 'is-invalid'} 
+          onChange={updateEmailAndValidate} 
+          onBlur={handleEmailBlur}
+          required
+        />
         <Form.Control.Feedback type="invalid">
           {formValues.email.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-5" controlId="userMessage">
         <Form.Label className="fw-medium">Comments or Questions*</Form.Label>
-        <Form.Control name='comment' as='textarea' rows='5' placeholder="Write your message" value={formValues.comments.value} className={formValues.comments.valid === false && 'is-invalid'} onChange={ updateCommentsValue } onBlur={(e)=>validateComments(e.target.value)}/>
+        <Form.Control 
+          name='comment' 
+          as='textarea' 
+          rows='5' 
+          placeholder="Write your message" 
+          value={formValues.comments.value} 
+          className={formValues.comments.valid === false && 'is-invalid'} 
+          onChange={ updateCommentsAndValidate } 
+        />
         <Form.Control.Feedback type="invalid">
           {formValues.comments.message}
         </Form.Control.Feedback>

@@ -35,7 +35,7 @@ const SignUp = () => {
   }
 
   const updateEmailAndValidate = (e) => {
-    // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their username.
+    // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their email.
     const result = isEmailValid(e.target.value.trim());
 
     setFormValues((prevState) => ({...prevState, email: {...prevState.email, value: e.target.value, valid: result.valid, message: result.message}}))
