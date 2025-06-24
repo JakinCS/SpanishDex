@@ -5,7 +5,7 @@ import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { useActionState, useEffect, useState } from 'react';
-import { handlePasswordValidCheck, isPasswordValid } from '@/lib/utils';
+import { handlePasswordValidCheck } from '@/lib/utils';
 import PasswordInput from '../utils/PasswordInput';
 import { editPassword } from '@/lib/actions';
 
@@ -18,15 +18,24 @@ const EditPasswordModal = (props) => {
     password2: {value: '', valid: null, errorType: null, message: ''}
   })
 
-  const updateCurrPasswordValue = (e) => setFormValues(prevState => ({...prevState, currPassword: {...prevState.currPassword, value: e.target.value}}))
-  const updatePassword1Value = (e) => setFormValues(prevState => ({...prevState, password: {...prevState.password, value: e.target.value}}))
-  const updatePassword2Value = (e) => setFormValues(prevState => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
+  const updateCurrPasswordAndValidate = (e) => {
+    const validationResult = (e.target.value.length === 0) ? {valid: false, message: 'Password is required'} : {valid: true, message: ''};
 
-  // Function to check and update the validity of the password
-  const validateCurrPassword = () => {
-    const result = (formValues.currPassword.value.length === 0) ? {valid: false, message: 'Password is required'} : {valid: true, message: ''};
-    
-    setFormValues(prevState => ({...prevState, currPassword: {...prevState.currPassword, valid: result.valid, message: result.message}}));
+    setFormValues(prevState => ({...prevState, currPassword: {...prevState.currPassword, value: e.target.value, valid: validationResult.valid, message: validationResult.message}}));
+  }
+
+  const updatePassword1AndValidate = (e) => {
+    // Run a special utility funtion to check the validity of the password field
+    const newData = handlePasswordValidCheck({...formValues.password, value: e.target.value }, formValues.password2);
+
+    setFormValues((prevState) => ({ ...prevState, password: {...prevState.password, ...newData[0]}, password2: {...prevState.password2, ...newData[1]} }))
+  }
+
+  const updatePassword2AndValidate = (e) => {
+    // Run a special utility funtion to check the validity of the password field
+    const newData = handlePasswordValidCheck({...formValues.password2, value: e.target.value }, formValues.password);
+
+    setFormValues((prevState) => ({ ...prevState, password: {...prevState.password, ...newData[1]}, password2: {...prevState.password2, ...newData[0]} }))
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
@@ -103,8 +112,15 @@ const EditPasswordModal = (props) => {
           <p className="d-none text-break hiddenError">{formState.hiddenError}</p>
           <Form action={formAction}>
             <Form.Group className='' controlId="currPassword">
-              <Form.Label className="fw-medium">Current Password</Form.Label>
-              <PasswordInput name="currPassword" placeholder="Current password" value={formValues.currPassword.value} onBlur={validateCurrPassword} onChange={updateCurrPasswordValue} className={formValues.currPassword.valid === false && 'is-invalid'} required/>
+              <Form.Label className="fw-medium">Current Password*</Form.Label>
+              <PasswordInput 
+                name="currPassword" 
+                placeholder="Current password" 
+                value={formValues.currPassword.value} 
+                onChange={updateCurrPasswordAndValidate} 
+                className={formValues.currPassword.valid === false && 'is-invalid'} 
+                required
+              />
               <Form.Control.Feedback className={formValues.currPassword.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {formValues.currPassword.message}
               </Form.Control.Feedback>
@@ -121,15 +137,29 @@ const EditPasswordModal = (props) => {
               </div>
             </div>
             <Form.Group className="mb-30" controlId="password1">
-              <Form.Label className="fw-medium">New Password</Form.Label>
-              <PasswordInput name="password1" placeholder="New password" value={formValues.password.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} onChange={updatePassword1Value} className={formValues.password.valid === false && 'is-invalid'} required/>
+              <Form.Label className="fw-medium">New Password*</Form.Label>
+              <PasswordInput 
+                name="password1" 
+                placeholder="New password" 
+                value={formValues.password.value} 
+                onChange={updatePassword1AndValidate} 
+                className={formValues.password.valid === false && 'is-invalid'} 
+                required
+              />
               <Form.Control.Feedback className={formValues.password.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {formValues.password.message}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-30" controlId="password2">
-              <Form.Label className="fw-medium">Confirm New Password</Form.Label>
-              <PasswordInput name="password2" placeholder="Confirm password" value={formValues.password2.value} onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} onChange={updatePassword2Value} className={formValues.password2.valid === false && 'is-invalid'} required/>
+              <Form.Label className="fw-medium">Confirm New Password*</Form.Label>
+              <PasswordInput 
+                name="password2" 
+                placeholder="Confirm password" 
+                value={formValues.password2.value} 
+                onChange={updatePassword2AndValidate} 
+                className={formValues.password2.valid === false && 'is-invalid'} 
+                required
+              />
               <Form.Control.Feedback className={formValues.password2.valid === false && 'd-block'} type="invalid" aria-live="polite">
                 {formValues.password2.message}
               </Form.Control.Feedback>

@@ -2,7 +2,7 @@
 import GoogleAuthButton from "@/components/miscellaneous/GoogleAuthButton";
 import OrSeparator from "@/components/miscellaneous/OrSeparator";
 import { createAccount, logInWithCredentials, logInWithGoogle } from "@/lib/actions";
-import { handlePasswordValidCheck, handlePasswordValidCheck2, isEmailValid, isUsernameValid } from "@/lib/utils";
+import { handlePasswordValidCheck, isEmailValid, isUsernameValid } from "@/lib/utils";
 import { useActionState, useEffect, useState } from 'react';
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -21,17 +21,13 @@ function CreateAccountModal(props) {
     password2: {value: '', valid: null, errorType: null, message: null}
   })
 
-  // Functions to update the value of the username and password fields' states
-  const updateUsernameValue = (e) => setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: e.target.value}}))
-  const updateEmailValue = (e) => setFormValues(prevState => ({...prevState, email: {...prevState.email, value: e.target.value}}))
-  const updatePasswordValue = (e) => setFormValues((prevState) => ({...prevState, password: {...prevState.password, value: e.target.value}}))
-  const updatePassword2Value = (e) => setFormValues((prevState) => ({...prevState, password2: {...prevState.password2, value: e.target.value}}))
-
+  // Functions to update and validate the values of the username, email and password fields' states
+  // These functions are run onChange of the input fields.
   const updateUsernameAndValidate = (e) => {
     // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their username.
     const result = isUsernameValid(e.target.value.trim());
 
-    setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: e.target.value.trim(), valid: result.valid, message: result.message}}))
+    setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: e.target.value, valid: result.valid, message: result.message}}))
   }
 
   const updateEmailAndValidate = (e) => {
@@ -40,37 +36,29 @@ function CreateAccountModal(props) {
 
     setFormValues((prevState) => ({...prevState, email: {...prevState.email, value: e.target.value, valid: result.valid, message: result.message}}))
   }
-
-  const handleEmailBlur = () => {
-    setFormValues((prevState) => ({...prevState, email: {...prevState.email, value: prevState.email.value.trim()}}))
-  }
-
+  
   const updatePassword1AndValidate = (e) => {
-    const newData = handlePasswordValidCheck2({...formValues.password, value: e.target.value }, formValues.password2, setFormValues, 1);
+    // Run a special utility funtion to check the validity of the password field
+    const newData = handlePasswordValidCheck({...formValues.password, value: e.target.value }, formValues.password2);
 
     setFormValues((prevState) => ({ ...prevState, password: {...prevState.password, ...newData[0]}, password2: {...prevState.password2, ...newData[1]} }))
   }
 
   const updatePassword2AndValidate = (e) => {
-    const newData = handlePasswordValidCheck2({...formValues.password2, value: e.target.value }, formValues.password, setFormValues, 2);
+    // Run a special utility funtion to check the validity of the password field
+    const newData = handlePasswordValidCheck({...formValues.password2, value: e.target.value }, formValues.password);
 
     setFormValues((prevState) => ({ ...prevState, password: {...prevState.password, ...newData[1]}, password2: {...prevState.password2, ...newData[0]} }))
   }
-  
-  // Function to check and update the validity of the username
-  const validateUsername = () => {
-    // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their username.
-    const result = isUsernameValid(formValues.username.value.trim());
-    
-    setFormValues(prevState => ({...prevState, username: {...prevState.username, value: prevState.username.value.trim(), valid: result.valid, message: result.message}}));
+
+  // Remove extra spaces from the beginning and end of the username on blur
+  const handleUsernameBlur = () => {
+    setFormValues((prevState) => ({...prevState, username: {...prevState.username, value: prevState.username.value.trim()}}))
   }
 
-  // Function to ensure email field contains a valid email
-  const validateEmail = () => {
-    // Include the trim() method to improve the UX. A user may accidentally enter a space before or after their email.
-    const result = isEmailValid(formValues.email.value.trim());
-    
-    setFormValues(prevState => ({...prevState, email: {...prevState.email, value: prevState.email.value.trim(), valid: result.valid, message: result.message}}))
+  // Remove extra spaces from the beginning and end of the email on blur
+  const handleEmailBlur = () => {
+    setFormValues((prevState) => ({...prevState, email: {...prevState.email, value: prevState.email.value.trim()}}))
   }
 
   // Function for resetting the state of the form (useful when triggered on 'modal open')
@@ -99,7 +87,6 @@ function CreateAccountModal(props) {
 
     if (!formValues.username.valid || !formValues.email.valid || !formValues.password.valid || !formValues.password2.valid) return;
 
-    return {status: 'SUCCESS'}
     try {
       const response = await createAccount(username, email, password1, password2);
 
@@ -203,12 +190,12 @@ function CreateAccountModal(props) {
           <p className="d-none text-break hiddenError">{error.hiddenMsg}</p>
           <Form action={form1Action} autoComplete="off">
             <Form.Group className="mb-20" controlId="createAccountUsername">
-              <Form.Label className="fw-medium">Username</Form.Label>
-              {/* <Form.Control name="username" value={formValues.username.value} onBlur={validateUsername} onChange={updateUsernameValue} className={formValues.username.valid === false && 'is-invalid'} type="text" placeholder="Enter username" /> */}
+              <Form.Label className="fw-medium">Username*</Form.Label>
               <Form.Control 
                 name="username" 
                 value={formValues.username.value} 
                 onChange={updateUsernameAndValidate} 
+                onBlur={handleUsernameBlur}
                 className={formValues.username.valid === false && 'is-invalid'} 
                 type="text" 
                 placeholder="Enter username" 
@@ -219,15 +206,6 @@ function CreateAccountModal(props) {
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountEmail">
               <Form.Label className="fw-medium">Email (optional)</Form.Label>
-              {/* <Form.Control 
-                name='email' 
-                value={formValues.email.value} 
-                onBlur={validateEmail} 
-                onChange={updateEmailValue} 
-                className={formValues.email.valid === false && 'is-invalid'} 
-                type="text" 
-                placeholder="Enter email" 
-              /> */}
               <Form.Control 
                 name='email' 
                 value={formValues.email.value} 
@@ -242,15 +220,7 @@ function CreateAccountModal(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-20" controlId="createAccountPassword">
-              <Form.Label className="fw-medium">Password</Form.Label>
-              {/* <PasswordInput 
-                name="password1" 
-                value={formValues.password.value} 
-                placeholder="Enter password" 
-                onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 1)} 
-                onChange={updatePasswordValue} 
-                className={formValues.password.valid === false && 'is-invalid'}
-              /> */}
+              <Form.Label className="fw-medium">Password*</Form.Label>
               <PasswordInput 
                 name="password1" 
                 value={formValues.password.value} 
@@ -263,15 +233,7 @@ function CreateAccountModal(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-5" controlId="createAccountPassword2">
-              <Form.Label className="fw-medium">Confirm Password</Form.Label>
-              {/* <PasswordInput 
-                name='password2' 
-                value={formValues.password2.value} 
-                placeholder="Enter password" 
-                onBlur={() => handlePasswordValidCheck(formValues, setFormValues, 2)} 
-                onChange={updatePassword2Value} 
-                className={formValues.password2.valid === false && 'is-invalid'}
-              /> */}
+              <Form.Label className="fw-medium">Confirm Password*</Form.Label>
               <PasswordInput 
                 name='password2' 
                 value={formValues.password2.value} 
