@@ -19,6 +19,8 @@ const SignOut = () => {
   // Function for handling the logging out of the user
   const handleFormSubmit = async (prevState) => {    
     try {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait a second. Otherwise log out seems too quick.
+
       await logOut('/')
 
       return { ...prevState, status: "SUCCESS"}

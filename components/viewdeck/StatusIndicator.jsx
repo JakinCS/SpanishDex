@@ -25,10 +25,10 @@ const getDateString = (date) => {
     return calculation === 1 ? '1 Day' : `${calculation} Days`;
   }
   if (Math.floor(result / (3600000 * 24)) < 366) { // Whenever it is less than 366 days
-    const calculation = datePast.getMonth() < dateToday.getMonth() ? dateToday.getMonth() - datePast.getMonth() : 12 - (datePast.getMonth() - dateToday.getMonth())
+    const calculation = dateToday.getMonth() < dateFuture.getMonth() ? dateFuture.getMonth() - dateToday.getMonth() : 12 - (dateToday.getMonth() - dateFuture.getMonth())
     return calculation > 11 ? '1 Year' : calculation === 1 ? '1 Month' : `${calculation} Months`;
   }
-  const yearsAgo = dateToday.getFullYear() - datePast.getFullYear(); // The last resort is to display the time in years
+  const yearsAgo = dateFuture.getFullYear() - dateToday.getFullYear(); // The last resort is to display the time in years
   return yearsAgo === 1 ? '1 Year' : `${yearsAgo} Years`
 }
 
