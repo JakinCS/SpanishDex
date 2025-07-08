@@ -76,6 +76,10 @@ const AddCardArea = ({ setState }) => {
     // Turn off the focus of the spanish input
     setShowSpanishFocus(false)
 
+    // Ensure that the two inputs don't have trailing whitespace
+    formatSpanishWord();
+    formatEnglishWord();
+
     // Do a check on the validity of the inputs
     const result = validateInputs();
     if (!result.valid) return;
@@ -109,7 +113,6 @@ const AddCardArea = ({ setState }) => {
               onKeyDown={(e) => {
                 if (e.key === 'Tab' && e.shiftKey) setShowSpanishFocus(false);
               }}
-              onBlur={formatSpanishWord}
             />
             <div className="d-none d-lg-flex">
               <ExtraLetters updateInputValue={setSpanishWord} inputValue={spanishWord} inputRef={spanishInputRef} style={{marginBottom: "-2.5rem"}}/>
@@ -131,7 +134,6 @@ const AddCardArea = ({ setState }) => {
                 type="text" 
                 placeholder="Type English word" 
                 onFocus={() => {setShowSpanishFocus(false)}}
-                onBlur={formatEnglishWord}
               />
             </Form.Group>
           </div>
