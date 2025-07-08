@@ -341,8 +341,12 @@ input[type="password"]:not(:placeholder-shown) {
     font-weight: 400;
 }
 
-// Change font weight when placeholder isn't how
+// Change font weight when placeholder isn't shown
 input[type="text"]:not(:placeholder-shown) {
+    font-weight: 400;
+}
+
+textarea:not(:placeholder-shown) {
     font-weight: 400;
 }
 

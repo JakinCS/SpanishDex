@@ -15,7 +15,10 @@ const ExtraLetters = ({ updateInputValue, inputValue, inputRef, ...otherProps })
   const addLetter = (letter) => {
     const cursorPositionStart = inputRef.current.selectionStart; // Get the current cursor position start
     const cursorPositionEnd = inputRef.current.selectionEnd; // Get the current cursor position end
+    console.log(cursorPositionStart, cursorPositionEnd)
+    console.log(inputValue.length)
     const newString = inputValue.slice(0, cursorPositionStart) + letter + inputValue.slice(cursorPositionEnd); // Insert the letter at the cursor position
+    console.log(newString)
     updateInputValue(newString);
     inputRef.current.focus();
     setTimeout(() => {
